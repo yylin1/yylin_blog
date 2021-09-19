@@ -1,0 +1,11 @@
+# 基本設置
+baseURL = "http://blog.yylin.io"
+title = "Frank's Blog"
+languageCode = "en-us"
+
+# 主題設置
+theme="ananke"
+
+# 連結設置
+[permalinks]
+  posts = "/:year/:month/:title/"
