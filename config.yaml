@@ -1,8 +1,8 @@
-baseurl: https://blog.yylin.io
+baseurl: http://blog.yylin.io
 languageCode: en-us
 theme: hugo-theme-stack
 paginate: 5
-title: Example Site
+title: Frank's Blog
 
 # Change it to your Disqus shortname before using
 disqusShortname: hugo-theme-stack
