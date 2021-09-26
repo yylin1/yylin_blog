@@ -1,18 +1,18 @@
 baseurl: https://blog.yylin.io
-languageCode: en-us
+languageCode: en-tw
 theme: hugo-theme-stack
-paginate: 5
-title: Frank's Blog
+paginate: 10
+title: Frank's Notes
 
 # Change it to your Disqus shortname before using
 disqusShortname: hugo-theme-stack
 
 # GA Tracking ID
-googleAnalytics:
+googleAnalytics: G-60ZBHV66GB
 
 # Theme i18n support
 # Available values: en, fr, id, ja, ko, pt-br, zh-cn, es, de, nl, it
-DefaultContentLanguage: en
+DefaultContentLanguage: zh-tw
 
 permalinks:
     post: /p/:slug/
@@ -23,7 +23,7 @@ params:
         - post
     featuredImageField: image
     rssFullContent: true
-    favicon:
+    favicon: 
 
     footer:
         since: 2020
@@ -34,12 +34,12 @@ params:
         lastUpdated: Jan 02, 2006 15:04 MST
 
     sidebar:
-        emoji: 🍥
-        subtitle: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        emoji: ✍
+        subtitle: 拆解｜復盤 | 筆記
         avatar:
             enabled: true
             local: true
-            src: img/avatar.png
+            src: img/yiyang.png
 
     article:
         math: false
