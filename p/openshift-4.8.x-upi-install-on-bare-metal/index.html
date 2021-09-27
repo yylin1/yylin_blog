@@ -1,23 +1,14 @@
 <!doctype html><html lang=en-tw>
 <head><meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="tags: OCP 4+、Blog 發文 本篇文章主要是說明 OpenShift 4.8 裸機伺服器(Bare-metal Server)部署過程與環境架構整理，並針對過程遇到問題透過記錄整理過程，延伸可能經常遇到的問題與探討。
- [註記] 由於硬體環境資源有限，本實驗是透過 Proxmox Environment 單一伺服器節點來模擬部署 OpenShift 叢集，並依據官網配置建議硬體需求(Server sizing)資源。 [共同編輯]: Kyle Bai
- 部署版本說明：  Proxmox Environment v6.1-7  CPU: 8-Core, 16-Thread Unlocked / Memory: 128 GB   OpenShift v4.8.x.  Reference  參考官網文件 - Installing a user-provisioned cluster on bare metal  事前準備 開始前，需要先準備以下資訊與要求。
-Download URLs  User-provisioned infrastructure: 可下載 OpenShift Installer、CLI 與 Pull secrets(需要登入 Red Hat 註冊帳號權限) Public OpenShift 4."><title>OpenShift 4.8.x UPI install on Bare metal</title>
+<meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="本篇文章主要是說明 OpenShift 4.8 裸機伺服器(Bare-metal Server)部署過程與環境架構整理，並針對過程遇到問題透過記錄整理過程，延伸可能經常遇到的問題與探討。"><title>OpenShift 4.8.x UPI install on Bare metal</title>
 <link rel=canonical href=https://blog.yylin.io/p/openshift-4.8.x-upi-install-on-bare-metal/>
 <link rel=stylesheet href=/scss/style.min.css><meta property="og:title" content="OpenShift 4.8.x UPI install on Bare metal">
-<meta property="og:description" content="tags: OCP 4+、Blog 發文 本篇文章主要是說明 OpenShift 4.8 裸機伺服器(Bare-metal Server)部署過程與環境架構整理，並針對過程遇到問題透過記錄整理過程，延伸可能經常遇到的問題與探討。
- [註記] 由於硬體環境資源有限，本實驗是透過 Proxmox Environment 單一伺服器節點來模擬部署 OpenShift 叢集，並依據官網配置建議硬體需求(Server sizing)資源。 [共同編輯]: Kyle Bai
- 部署版本說明：  Proxmox Environment v6.1-7  CPU: 8-Core, 16-Thread Unlocked / Memory: 128 GB   OpenShift v4.8.x.  Reference  參考官網文件 - Installing a user-provisioned cluster on bare metal  事前準備 開始前，需要先準備以下資訊與要求。
-Download URLs  User-provisioned infrastructure: 可下載 OpenShift Installer、CLI 與 Pull secrets(需要登入 Red Hat 註冊帳號權限) Public OpenShift 4.">
+<meta property="og:description" content="本篇文章主要是說明 OpenShift 4.8 裸機伺服器(Bare-metal Server)部署過程與環境架構整理，並針對過程遇到問題透過記錄整理過程，延伸可能經常遇到的問題與探討。">
 <meta property="og:url" content="https://blog.yylin.io/p/openshift-4.8.x-upi-install-on-bare-metal/">
 <meta property="og:site_name" content="Frank's Notes">
-<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:published_time" content="2021-09-26T14:54:40+08:00"><meta property="article:modified_time" content="2021-09-26T14:54:40+08:00">
+<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="OCP 4.x"><meta property="article:published_time" content="2021-09-26T14:54:40+08:00"><meta property="article:modified_time" content="2021-09-26T14:54:40+08:00">
 <meta name=twitter:title content="OpenShift 4.8.x UPI install on Bare metal">
-<meta name=twitter:description content="tags: OCP 4+、Blog 發文 本篇文章主要是說明 OpenShift 4.8 裸機伺服器(Bare-metal Server)部署過程與環境架構整理，並針對過程遇到問題透過記錄整理過程，延伸可能經常遇到的問題與探討。
- [註記] 由於硬體環境資源有限，本實驗是透過 Proxmox Environment 單一伺服器節點來模擬部署 OpenShift 叢集，並依據官網配置建議硬體需求(Server sizing)資源。 [共同編輯]: Kyle Bai
- 部署版本說明：  Proxmox Environment v6.1-7  CPU: 8-Core, 16-Thread Unlocked / Memory: 128 GB   OpenShift v4.8.x.  Reference  參考官網文件 - Installing a user-provisioned cluster on bare metal  事前準備 開始前，需要先準備以下資訊與要求。
-Download URLs  User-provisioned infrastructure: 可下載 OpenShift Installer、CLI 與 Pull secrets(需要登入 Red Hat 註冊帳號權限) Public OpenShift 4.">
+<meta name=twitter:description content="本篇文章主要是說明 OpenShift 4.8 裸機伺服器(Bare-metal Server)部署過程與環境架構整理，並針對過程遇到問題透過記錄整理過程，延伸可能經常遇到的問題與探討。">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-60ZBHV66GB"></script>
 <script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-60ZBHV66GB',{anonymize_ip:!1})}</script>
 </head>
@@ -34,9 +25,17 @@ extended">
 <article class=main-article>
 <header class=article-header>
 <div class=article-details>
+<header class=article-category>
+<a href=/categories/openshift/>
+OpenShift
+</a>
+</header>
 <h2 class=article-title>
 <a href=/p/openshift-4.8.x-upi-install-on-bare-metal/>OpenShift 4.8.x UPI install on Bare metal</a>
 </h2>
+<h3 class=article-subtitle>
+本篇文章主要是說明 OpenShift 4.8 裸機伺服器(Bare-metal Server)部署過程與環境架構整理，並針對過程遇到問題透過記錄整理過程，延伸可能經常遇到的問題與探討。
+</h3>
 <footer class=article-time>
 <div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
 <time class=article-time--published>Sep 26, 2021</time>
@@ -49,8 +48,6 @@ extended">
 </div>
 </header>
 <section class=article-content>
-<h6 id=tags-ocp-4blog-發文>tags: <code>OCP 4+</code>、<code>Blog 發文</code></h6>
-<p>本篇文章主要是說明 OpenShift 4.8 裸機伺服器(Bare-metal Server)部署過程與環境架構整理，並針對過程遇到問題透過記錄整理過程，延伸可能經常遇到的問題與探討。</p>
 <blockquote>
 <p>[註記] 由於硬體環境資源有限，本實驗是透過 <a class=link href=https://pve.proxmox.com/wiki/Main_Page target=_blank rel=noopener><code>Proxmox Environment</code></a> 單一伺服器節點來模擬部署 <code>OpenShift</code> 叢集，並依據官網配置建議硬體需求(Server sizing)資源。
 [共同編輯]: <a class=link href=https://k2r2bai.com/ target=_blank rel=noopener>Kyle Bai</a></p>
@@ -688,6 +685,9 @@ $ oc get no
 </ul>
 </section>
 <footer class=article-footer>
+<section class=article-tags>
+<a href=/tags/ocp-4.x/>OCP 4.x</a>
+</section>
 <section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
 <span>Licensed under CC BY-NC-SA 4.0</span>
 </section>
@@ -758,15 +758,6 @@ $ oc get no
 <div class=widget--toc>
 <nav id=TableOfContents>
 <ol>
-<li>
-<ol>
-<li>
-<ol>
-<li></li>
-</ol>
-</li>
-</ol>
-</li>
 <li><a href=#部署版本說明>部署版本說明：</a></li>
 <li><a href=#reference>Reference</a></li>
 <li><a href=#事前準備>事前準備</a>
