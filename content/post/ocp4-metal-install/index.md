@@ -10,7 +10,7 @@ tags:
 ---
 
 > [註記] 由於硬體環境資源有限，本實驗是透過 [`Proxmox Environment`](https://pve.proxmox.com/wiki/Main_Page) 單一伺服器節點來模擬部署 `OpenShift` 叢集，並依據官網配置建議硬體需求(Server sizing)資源。
-> [共同編輯]: [Kyle Bai](https://k2r2bai.com/)
+> [共同撰寫編輯]: [Kyle Bai](https://k2r2bai.com/)
 
 ## 部署版本說明：
 - Proxmox Environment v6.1-7
@@ -217,11 +217,12 @@ EOF
 
 ```sh
 # dig domain @dns_server
-$ dig bastion.${DOMAIN} @10.77.110.39
+$ dig bastion.${DOMAIN} @192.168.101.9
 
 # dig -x ip @dns_server
-$ dig -x 10.77.110.39 @10.77.110.39
+$ dig -x 192.168.101.9 @192.168.101.9
 ```
+> 請驗證填寫自己對應的 `ip address`
 
 ### 安裝與設定 HTTP Server
 安裝與設定 httpd 套件:
@@ -236,7 +237,7 @@ $ yum -y install httpd
 #Listen 12.34.56.78:80
 Listen 8080	
 ```
-&gt; 因為 80 是 Ingress-http 使用，除非將 HAProxy 拆成不同節點或用 External LB。
+> 因為 80 是 Ingress-http 使用，除非將 HAProxy 拆成不同節點或用 External LB。
 
 啟動 httpd 服務:
 
@@ -354,14 +355,11 @@ $ sudo nmtui
 
 ![](https://i.imgur.com/qINQqLa.png)
 
-
-
-&gt; 確保網卡 IP address 設定為 `xx.xx.xx.xx/24`，若沒有設定 Network mask 的話，就會用預設 `xx.xx.xx.xx/8`。
+> 確保網卡 IP address 設定為 `xx.xx.xx.xx/24`，若沒有設定 Network mask 的話，就會用預設 `xx.xx.xx.xx/8`。
 
 重新啟動網卡設定:
 
 ![](https://i.imgur.com/KMvs0UZ.png)
-
 
 透過以下指令檢查設定結果:
 
@@ -434,16 +432,15 @@ $ sudo nmtui
 確認沒問題後，執行以下指令來安裝 RHCOS，並設定為 Masters 節點:
 
 ```sh
-$ curl http://10.77.110.39:8080/ignition/coreos-install.sh --output coreos-install.sh
+$ curl http://192.168.101.9:8080/ignition/coreos-install.sh --output coreos-install.sh
 $ chmod u+x coreos-install.sh
 $ export IGNITION_FILE=master.ign
 $ ./coreos-install.sh
 
-# 安裝完成後
-$ lsblk -f
+# 安裝完後
 $ reboot
 ```
-&gt; 安裝沒問題後，重新啟動機器，並將 CD-ROM 移除。
+> 安裝沒問題後，重新啟動機器，並將 CD-ROM 移除。
 
 Masters 都開啟完成後，回到 `bastion` 節點執行以下指令來檢查部署狀況:
 
@@ -492,7 +489,7 @@ $ ssh core@maste-1.lab.yiylin.internal
 ```sh
 $ sudo nmtui
 ```
-&gt; 網路參考 Bootstrap 設定流程。
+> 網路參考 Bootstrap 設定流程。
 
 確認沒問題後，執行以下指令來安裝 RHCOS，並設定為 Workers &amp; Infras 節點:
 
@@ -529,7 +526,7 @@ DEBUG Using Install Config loaded from state file
 INFO Waiting up to 40m0s for the cluster at https://api.lab.yiylin.internal:6443 to initialize...
 DEBUG Still waiting for the cluster to initialize: Some cluster operators are still updating: authentication, console, ingress, monitoring
 ```
-> 出現 `DEBUG` 即可往下操作，因為這部分會需要下載 Images 會比較久。
+> 出現 `DEBUG` 即可往下操作，因為這部分會需要下載 Images 會比較久
 
 開啟一個新的 Terminal，在 `bastion` 節點 Approve workers CSR:
 
