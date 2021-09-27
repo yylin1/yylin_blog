@@ -35,7 +35,7 @@ params:
 
     sidebar:
         emoji: 🍥
-        subtitle: 拆解｜復盤 | 筆記
+        subtitle: 拆解|筆記|復盤
         avatar:
             enabled: true
             local: true

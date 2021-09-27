@@ -2,10 +2,12 @@
 title: "OpenShift 4.8.x UPI install on Bare metal"
 date: 2021-09-26T14:54:40+08:00
 draft: false
+description: "本篇文章主要是說明 OpenShift 4.8 裸機伺服器(Bare-metal Server)部署過程與環境架構整理，並針對過程遇到問題透過記錄整理過程，延伸可能經常遇到的問題與探討。"
+categories:
+  - OpenShift
+tags:
+  - OCP 4.x 
 ---
-###### tags: `OCP 4+`、`Blog 發文`
-
-本篇文章主要是說明 OpenShift 4.8 裸機伺服器(Bare-metal Server)部署過程與環境架構整理，並針對過程遇到問題透過記錄整理過程，延伸可能經常遇到的問題與探討。
 
 > [註記] 由於硬體環境資源有限，本實驗是透過 [`Proxmox Environment`](https://pve.proxmox.com/wiki/Main_Page) 單一伺服器節點來模擬部署 `OpenShift` 叢集，並依據官網配置建議硬體需求(Server sizing)資源。
 > [共同編輯]: [Kyle Bai](https://k2r2bai.com/)
