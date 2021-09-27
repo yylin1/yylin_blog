@@ -50,7 +50,7 @@ OpenShift
 <section class=article-content>
 <blockquote>
 <p>[註記] 由於硬體環境資源有限，本實驗是透過 <a class=link href=https://pve.proxmox.com/wiki/Main_Page target=_blank rel=noopener><code>Proxmox Environment</code></a> 單一伺服器節點來模擬部署 <code>OpenShift</code> 叢集，並依據官網配置建議硬體需求(Server sizing)資源。
-[共同編輯]: <a class=link href=https://k2r2bai.com/ target=_blank rel=noopener>Kyle Bai</a></p>
+[共同撰寫編輯]: <a class=link href=https://k2r2bai.com/ target=_blank rel=noopener>Kyle Bai</a></p>
 </blockquote>
 <h2 id=部署版本說明>部署版本說明：</h2>
 <ul>
@@ -299,17 +299,22 @@ nameserver 127.0.0.1
 EOF
 </code></pre></div><p>驗證 DNS server 正反解:</p>
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=c1># dig domain @dns_server</span>
-$ dig bastion.<span class=si>${</span><span class=nv>DOMAIN</span><span class=si>}</span> @10.77.110.39
+$ dig bastion.<span class=si>${</span><span class=nv>DOMAIN</span><span class=si>}</span> @192.168.101.9
 
 <span class=c1># dig -x ip @dns_server</span>
-$ dig -x 10.77.110.39 @10.77.110.39
-</code></pre></div><h3 id=安裝與設定-http-server>安裝與設定 HTTP Server</h3>
+$ dig -x 192.168.101.9 @192.168.101.9
+</code></pre></div><blockquote>
+<p>請驗證填寫自己對應的 <code>ip address</code></p>
+</blockquote>
+<h3 id=安裝與設定-http-server>安裝與設定 HTTP Server</h3>
 <p>安裝與設定 httpd 套件:</p>
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>$ yum -y install httpd
 </code></pre></div><p>編輯 <code>/etc/httpd/conf/httpd.conf</code> 設定檔:</p>
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=c1>#Listen 12.34.56.78:80</span>
 Listen 8080	
-</code></pre></div><p>> 因為 80 是 Ingress-http 使用，除非將 HAProxy 拆成不同節點或用 External LB。</p>
+</code></pre></div><blockquote>
+<p>因為 80 是 Ingress-http 使用，除非將 HAProxy 拆成不同節點或用 External LB。</p>
+</blockquote>
 <p>啟動 httpd 服務:</p>
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>$ systemctl <span class=nb>enable</span> httpd<span class=p>;</span> systemctl start httpd
 </code></pre></div><h3 id=產生-openshift-ignition-fils>產生 OpenShift Ignition fils</h3>
@@ -401,7 +406,9 @@ $ chmod <span class=m>664</span> -R /var/www/html/ignition/*
 <img src=https://i.imgur.com/qINQqLa.png loading=lazy>
 </a>
 </figure></p>
-<p>> 確保網卡 IP address 設定為 <code>xx.xx.xx.xx/24</code>，若沒有設定 Network mask 的話，就會用預設 <code>xx.xx.xx.xx/8</code>。</p>
+<blockquote>
+<p>確保網卡 IP address 設定為 <code>xx.xx.xx.xx/24</code>，若沒有設定 Network mask 的話，就會用預設 <code>xx.xx.xx.xx/8</code>。</p>
+</blockquote>
 <p>重新啟動網卡設定:</p>
 <p><figure>
 <a href=https://i.imgur.com/KMvs0UZ.png>
@@ -456,15 +463,16 @@ e7a3dbc6e0bc0       About a minute ago   Ready               etcd-bootstrap-memb
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>$ sudo nmtui
 </code></pre></div><p>> 網路參考 Bootstrap 設定流程。</p>
 <p>確認沒問題後，執行以下指令來安裝 RHCOS，並設定為 Masters 節點:</p>
-<div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>$ curl http://10.77.110.39:8080/ignition/coreos-install.sh --output coreos-install.sh
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>$ curl http://192.168.101.9:8080/ignition/coreos-install.sh --output coreos-install.sh
 $ chmod u+x coreos-install.sh
 $ <span class=nb>export</span> <span class=nv>IGNITION_FILE</span><span class=o>=</span>master.ign
 $ ./coreos-install.sh
 
-<span class=c1># 安裝完成後</span>
-$ lsblk -f
+<span class=c1># 安裝完後</span>
 $ reboot
-</code></pre></div><p>> 安裝沒問題後，重新啟動機器，並將 CD-ROM 移除。</p>
+</code></pre></div><blockquote>
+<p>安裝沒問題後，重新啟動機器，並將 CD-ROM 移除。</p>
+</blockquote>
 <p>Masters 都開啟完成後，回到 <code>bastion</code> 節點執行以下指令來檢查部署狀況:</p>
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>$ openshift-install wait-for bootstrap-complete --dir<span class=o>=</span><span class=nv>$HOME</span>/ocp4/ignition --log-level debug
 ...
@@ -496,7 +504,9 @@ master-3.lab.yiylin.internal   Ready    master   10m   v1.21.1+051ac4f
 <p>透過 vCenter 建立 Workers & Infras 節點，並掛載 RHCOS Live ISO，並進入 Console 執行以下操作。</p>
 <p>首先進入系統後，先設定 Network 資訊:</p>
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>$ sudo nmtui
-</code></pre></div><p>> 網路參考 Bootstrap 設定流程。</p>
+</code></pre></div><blockquote>
+<p>網路參考 Bootstrap 設定流程。</p>
+</blockquote>
 <p>確認沒問題後，執行以下指令來安裝 RHCOS，並設定為 Workers & Infras 節點:</p>
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>$ curl http://192.168.101.9:8080/ignition/coreos-install.sh --output coreos-install.sh
 $ chmod u+x coreos-install.sh
@@ -528,7 +538,7 @@ DEBUG Using Install Config loaded from state file
 INFO Waiting up to 40m0s <span class=k>for</span> the cluster at https://api.lab.yiylin.internal:6443 to initialize...
 DEBUG Still waiting <span class=k>for</span> the cluster to initialize: Some cluster operators are still updating: authentication, console, ingress, monitoring
 </code></pre></div><blockquote>
-<p>出現 <code>DEBUG</code> 即可往下操作，因為這部分會需要下載 Images 會比較久。</p>
+<p>出現 <code>DEBUG</code> 即可往下操作，因為這部分會需要下載 Images 會比較久</p>
 </blockquote>
 <p>開啟一個新的 Terminal，在 <code>bastion</code> 節點 Approve workers CSR:</p>
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>$ <span class=nb>export</span> <span class=nv>KUBECONFIG</span><span class=o>=</span><span class=nv>$HOME</span>/ocp4/kubeconfig

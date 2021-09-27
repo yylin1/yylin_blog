@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Frank's Notes</title><link>https://blog.yylin.io/</link><description>Recent content on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>en-tw</language><lastBuildDate>Sun, 26 Sep 2021 14:54:40 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/index.xml" rel="self" type="application/rss+xml"/><item><title>OpenShift 4.8.x UPI install on Bare metal</title><link>https://blog.yylin.io/p/openshift-4.8.x-upi-install-on-bare-metal/</link><pubDate>Sun, 26 Sep 2021 14:54:40 +0800</pubDate><guid>https://blog.yylin.io/p/openshift-4.8.x-upi-install-on-bare-metal/</guid><description>&lt;blockquote>
 &lt;p>[註記] 由於硬體環境資源有限，本實驗是透過 &lt;a class="link" href="https://pve.proxmox.com/wiki/Main_Page" target="_blank" rel="noopener"
 >&lt;code>Proxmox Environment&lt;/code>&lt;/a> 單一伺服器節點來模擬部署 &lt;code>OpenShift&lt;/code> 叢集，並依據官網配置建議硬體需求(Server sizing)資源。
-[共同編輯]: &lt;a class="link" href="https://k2r2bai.com/" target="_blank" rel="noopener"
+[共同撰寫編輯]: &lt;a class="link" href="https://k2r2bai.com/" target="_blank" rel="noopener"
 >Kyle Bai&lt;/a>&lt;/p>
 &lt;/blockquote>
 &lt;h2 id="部署版本說明">部署版本說明：&lt;/h2>
@@ -252,16 +252,21 @@ nameserver 127.0.0.1
 EOF
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>驗證 DNS server 正反解:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="c1"># dig domain @dns_server&lt;/span>
-$ dig bastion.&lt;span class="si">${&lt;/span>&lt;span class="nv">DOMAIN&lt;/span>&lt;span class="si">}&lt;/span> @10.77.110.39
+$ dig bastion.&lt;span class="si">${&lt;/span>&lt;span class="nv">DOMAIN&lt;/span>&lt;span class="si">}&lt;/span> @192.168.101.9
 &lt;span class="c1"># dig -x ip @dns_server&lt;/span>
-$ dig -x 10.77.110.39 @10.77.110.39
-&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="安裝與設定-http-server">安裝與設定 HTTP Server&lt;/h3>
+$ dig -x 192.168.101.9 @192.168.101.9
+&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
+&lt;p>請驗證填寫自己對應的 &lt;code>ip address&lt;/code>&lt;/p>
+&lt;/blockquote>
+&lt;h3 id="安裝與設定-http-server">安裝與設定 HTTP Server&lt;/h3>
 &lt;p>安裝與設定 httpd 套件:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ yum -y install httpd
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>編輯 &lt;code>/etc/httpd/conf/httpd.conf&lt;/code> 設定檔:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="c1">#Listen 12.34.56.78:80&lt;/span>
 Listen 8080
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;gt; 因為 80 是 Ingress-http 使用，除非將 HAProxy 拆成不同節點或用 External LB。&lt;/p>
+&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
+&lt;p>因為 80 是 Ingress-http 使用，除非將 HAProxy 拆成不同節點或用 External LB。&lt;/p>
+&lt;/blockquote>
 &lt;p>啟動 httpd 服務:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ systemctl &lt;span class="nb">enable&lt;/span> httpd&lt;span class="p">;&lt;/span> systemctl start httpd
 &lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="產生-openshift-ignition-fils">產生 OpenShift Ignition fils&lt;/h3>
@@ -361,7 +366,9 @@ loading="lazy"
 >
 &lt;/a>
 &lt;/figure>&lt;/p>
-&lt;p>&amp;gt; 確保網卡 IP address 設定為 &lt;code>xx.xx.xx.xx/24&lt;/code>，若沒有設定 Network mask 的話，就會用預設 &lt;code>xx.xx.xx.xx/8&lt;/code>。&lt;/p>
+&lt;blockquote>
+&lt;p>確保網卡 IP address 設定為 &lt;code>xx.xx.xx.xx/24&lt;/code>，若沒有設定 Network mask 的話，就會用預設 &lt;code>xx.xx.xx.xx/8&lt;/code>。&lt;/p>
+&lt;/blockquote>
 &lt;p>重新啟動網卡設定:&lt;/p>
 &lt;p>&lt;figure
 >
@@ -416,14 +423,15 @@ e7a3dbc6e0bc0 About a minute ago Ready etcd-bootstrap-member-localhost openshift
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ sudo nmtui
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;gt; 網路參考 Bootstrap 設定流程。&lt;/p>
 &lt;p>確認沒問題後，執行以下指令來安裝 RHCOS，並設定為 Masters 節點:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ curl http://10.77.110.39:8080/ignition/coreos-install.sh --output coreos-install.sh
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ curl http://192.168.101.9:8080/ignition/coreos-install.sh --output coreos-install.sh
 $ chmod u+x coreos-install.sh
 $ &lt;span class="nb">export&lt;/span> &lt;span class="nv">IGNITION_FILE&lt;/span>&lt;span class="o">=&lt;/span>master.ign
 $ ./coreos-install.sh
-&lt;span class="c1"># 安裝完成後&lt;/span>
-$ lsblk -f
+&lt;span class="c1"># 安裝完後&lt;/span>
 $ reboot
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;gt; 安裝沒問題後，重新啟動機器，並將 CD-ROM 移除。&lt;/p>
+&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
+&lt;p>安裝沒問題後，重新啟動機器，並將 CD-ROM 移除。&lt;/p>
+&lt;/blockquote>
 &lt;p>Masters 都開啟完成後，回到 &lt;code>bastion&lt;/code> 節點執行以下指令來檢查部署狀況:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ openshift-install wait-for bootstrap-complete --dir&lt;span class="o">=&lt;/span>&lt;span class="nv">$HOME&lt;/span>/ocp4/ignition --log-level debug
 ...
@@ -454,7 +462,9 @@ master-3.lab.yiylin.internal Ready master 10m v1.21.1+051ac4f
 &lt;p>透過 vCenter 建立 Workers &amp;amp; Infras 節點，並掛載 RHCOS Live ISO，並進入 Console 執行以下操作。&lt;/p>
 &lt;p>首先進入系統後，先設定 Network 資訊:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ sudo nmtui
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;gt; 網路參考 Bootstrap 設定流程。&lt;/p>
+&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
+&lt;p>網路參考 Bootstrap 設定流程。&lt;/p>
+&lt;/blockquote>
 &lt;p>確認沒問題後，執行以下指令來安裝 RHCOS，並設定為 Workers &amp;amp; Infras 節點:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ curl http://192.168.101.9:8080/ignition/coreos-install.sh --output coreos-install.sh
 $ chmod u+x coreos-install.sh
@@ -485,7 +495,7 @@ DEBUG Using Install Config loaded from state file
 INFO Waiting up to 40m0s &lt;span class="k">for&lt;/span> the cluster at https://api.lab.yiylin.internal:6443 to initialize...
 DEBUG Still waiting &lt;span class="k">for&lt;/span> the cluster to initialize: Some cluster operators are still updating: authentication, console, ingress, monitoring
 &lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
-&lt;p>出現 &lt;code>DEBUG&lt;/code> 即可往下操作，因為這部分會需要下載 Images 會比較久。&lt;/p>
+&lt;p>出現 &lt;code>DEBUG&lt;/code> 即可往下操作，因為這部分會需要下載 Images 會比較久&lt;/p>
 &lt;/blockquote>
 &lt;p>開啟一個新的 Terminal，在 &lt;code>bastion&lt;/code> 節點 Approve workers CSR:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ &lt;span class="nb">export&lt;/span> &lt;span class="nv">KUBECONFIG&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nv">$HOME&lt;/span>/ocp4/kubeconfig
