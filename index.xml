@@ -1,4 +1,82 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Frank's Notes</title><link>https://blog.yylin.io/</link><description>Recent content on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>en-tw</language><lastBuildDate>Sun, 26 Sep 2021 14:54:40 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/index.xml" rel="self" type="application/rss+xml"/><item><title>OpenShift 4.8.x UPI install on Bare metal</title><link>https://blog.yylin.io/p/openshift-4.8.x-upi-install-on-bare-metal/</link><pubDate>Sun, 26 Sep 2021 14:54:40 +0800</pubDate><guid>https://blog.yylin.io/p/openshift-4.8.x-upi-install-on-bare-metal/</guid><description>&lt;blockquote>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Frank's Notes</title><link>https://blog.yylin.io/</link><description>Recent content on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>en-tw</language><lastBuildDate>Thu, 30 Sep 2021 00:53:25 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Openshift Intsall Troubleshooting 筆記</title><link>https://blog.yylin.io/p/openshift-intsall-troubleshooting-%E7%AD%86%E8%A8%98/</link><pubDate>Thu, 30 Sep 2021 00:53:25 +0800</pubDate><guid>https://blog.yylin.io/p/openshift-intsall-troubleshooting-%E7%AD%86%E8%A8%98/</guid><description>&lt;p>延伸上一篇 OCP UPI 部署(&lt;a class="link" href="https://blog.yylin.io/p/openshift-4.8.x-upi-install-on-bare-metal" target="_blank" rel="noopener"
+>OpenShift 4.8.x UPI install on Bare metal&lt;/a>)過程遇到問題彙整。&lt;/p>
+&lt;blockquote>
+&lt;p>備註: 由於資源有限情況下，透過單一伺服器(主機)透過 VM 模擬實際節點硬體資源環境，這邊主要透過檢測與除錯，來確保 OpenShift 部署成功，&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="部署常見問題整理-持續更新">部署常見問題整理 (持續更新)&lt;/h2>
+&lt;h3 id="超時等待-bootstrap-節點啟動">超時等待 &lt;code>bootstrap&lt;/code> 節點啟動&lt;/h3>
+&lt;ul>
+&lt;li>發現特定 Pod 持續&lt;code>RunningNotReady&lt;/code> 狀態&lt;/li>
+&lt;/ul>
+&lt;pre tabindex="0">&lt;code class="language-bash=" data-lang="bash=">W0830 11:16:37.087497 35214 reflector.go:436] k8s.io/client-go/tools/watch/informerwatcher.go:146: watch of *v1.ConfigMap ended with: very short watch: k8s.io/client-go/tools/watch/informerwatcher.go:146: Unexpected watch close - watch lasted less than a second and no items received
+apiserver - &amp;gt; RunningNotReady
+Aug 30 03:42:37 bootstrap.lab.yiylin.internal bootkube.sh[644199]: Pod Status:openshift-kube-apiserver/kube-apiserver RunningNotReady
+&lt;/code>&lt;/pre>&lt;blockquote>
+&lt;p>此情境請透過收集&lt;code>bootstrap&lt;/code> 節點日誌，來確認環境問題&lt;/p>
+&lt;/blockquote>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ ./openshift-install gather bootstrap --dir&lt;span class="o">=&lt;/span>&amp;lt;installation_directory&amp;gt;
+...
+INFO Pulling debug logs from the bootstrap machine
+INFO Bootstrap gather logs captured here &lt;span class="s2">&amp;#34;&amp;lt;installation_directory&amp;gt;/log-bundle-&amp;lt;timestamp&amp;gt;.tar.gz&amp;#34;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;li>蒐集包含 bootstrap process / bootstrap 上所有 Pod/Container 的 log&lt;/li>
+&lt;li>下載完後解壓縮 &lt;code>.tar.gz&lt;/code> 檔案，針對可能部署或未啟動的&lt;code>Pod&lt;/code>檢查log錯誤狀態，來找到對應的錯誤資訊&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>補充說明 bootstrap 主要分成兩個動作&lt;/p>
+&lt;ol>
+&lt;li>安裝自己跟建立自己的 cluster(Pod)&lt;/li>
+&lt;li>引導安裝 master x 3&lt;/li>
+&lt;li>master bootstrap 全部安裝完，然後下 wait for complete 確認最終才可移除 bootstrap node&lt;/li>
+&lt;/ol>
+&lt;/blockquote>
+&lt;h4 id="reference">Reference:&lt;/h4>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://docs.openshift.com/container-platform/4.8/installing/installing-troubleshooting.html#installation-bootstrap-gather_installing-troubleshooting" target="_blank" rel="noopener"
+>Gathering logs from a failed installation&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://docs.openshift.com/container-platform/4.8/installing/installing_bare_metal/installing-bare-metal.html#installation-installing-bare-metal_installing-bare-metal" target="_blank" rel="noopener"
+>Waiting for the bootstrap process to complete&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>wait for complete 那行只是確認 bootkube 服務完成了沒，並不是觸發安裝或是任何動作，那行只是確認而已&lt;/p>
+&lt;h3 id="master-node-部署不起來檢查並驗證-etcd-運行之硬碟是否正常運作-">Master Node 部署不起來，檢查並驗證 etcd 運行之硬碟是否正常運作 ?&lt;/h3>
+&lt;ul>
+&lt;li>大部分 master 無法建置情境，通常可能會有原因是硬碟速度問題(硬碟壞軌)&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>造成叢集有時候部署成功有時候會失敗的情況&lt;/p>
+&lt;/blockquote>
+&lt;p>透過簡單運行 &lt;code>fio&lt;/code> 來測試 etcd benchamrk performance 檢測&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ oc debug node/&amp;lt;master_node&amp;gt;
+&lt;span class="o">[&lt;/span>...&lt;span class="o">]&lt;/span>
+sh-4.4# chroot /host bash
+&lt;span class="o">[&lt;/span>root@&amp;lt;master_node&amp;gt; /&lt;span class="o">]&lt;/span>&lt;span class="c1"># podman run --volume /var/lib/etcd:/var/lib/etcd:Z quay.io/openshift-scale/etcd-perf&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="reference-1">Reference:&lt;/h4>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://access.redhat.com/solutions/4885641" target="_blank" rel="noopener"
+>How to Use &amp;lsquo;fio&amp;rsquo; to Check Etcd Disk Performance in OCP
+&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.youtube.com/watch?v=6qjsh9J3ndM&amp;amp;ab_channel=PingChunHuang" target="_blank" rel="noopener"
+>[參考影片說明] OpenShift 4 如何使用 fio 驗證 etcd 運行之硬碟是否可以正常運作 / Use &amp;lsquo;fio&amp;rsquo; to Check Etcd Disk Performance&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.ibm.com/docs/en/cloud-private/3.2.x?topic=requirements-hardware-recommendations" target="_blank" rel="noopener"
+>Hardware requirements and recommendations&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="補充檢查---除錯流程">補充|檢查 - 除錯流程&lt;/h2>
+&lt;ol>
+&lt;li>
+&lt;p>部署過程都透過 bootkube 確認部署狀態資訊，log 會不斷顯示錯誤然後 loop 確認環節，嘗試能不能從他錯誤訊息找出規則(也就是他跳錯誤的地方，通常是在 log restart之前)&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>嘗試 SSH 到 Master Node，透過 &lt;code>netstat -plnt&lt;/code> 檢查三個服務，這三個通常只要好，這台 Master 就沒問題 (6443| 22623|2379|2380)，分別是 OpenShift API/Kubernetes API/ETCD/Machine Config Operator&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>如果以上幾個 Pod 有問題，透過 &lt;code>crictl ps&lt;/code> 跟 &lt;code>crictl log&lt;/code> 去查看 Container Log，問題有可能是連續的錯誤，所以可能是 API 有問題，可能是 Controller/Scheduler 引起，細節需要透過上面提到方式，下載節點所有 Log 日誌來比對檢查，找到正確的錯誤資訊來排除錯誤&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;h2 id="reference-2">Reference:&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://connect.redhat.com/en/blog/openshift-troubleshooting-resources" target="_blank" rel="noopener"
+>OpenShift Troubleshooting Resources&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>OpenShift 4.8.x UPI install on Bare metal</title><link>https://blog.yylin.io/p/openshift-4.8.x-upi-install-on-bare-metal/</link><pubDate>Sun, 26 Sep 2021 14:54:40 +0800</pubDate><guid>https://blog.yylin.io/p/openshift-4.8.x-upi-install-on-bare-metal/</guid><description>&lt;blockquote>
 &lt;p>[註記] 由於硬體環境資源有限，本實驗是透過 &lt;a class="link" href="https://pve.proxmox.com/wiki/Main_Page" target="_blank" rel="noopener"
 >&lt;code>Proxmox Environment&lt;/code>&lt;/a> 單一伺服器節點來模擬部署 &lt;code>OpenShift&lt;/code> 叢集，並依據官網配置建議硬體需求(Server sizing)資源。
 [共同撰寫編輯]: &lt;a class="link" href="https://k2r2bai.com/" target="_blank" rel="noopener"
