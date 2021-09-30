@@ -1,6 +1,6 @@
 ---
-title: "Openshift Intsall Troubleshooting 筆記"
-date: 2021-09-30T00:53:25+08:00
+title: "OpenShift Intsall Troubleshooting Notes"
+date: 2021-09-29T00:53:25+08:00
 draft: false
 description: "本篇文章主要是整理 OpenShift 4.x 安裝遇到問題與相關除錯常用介紹。"
 categories:
@@ -11,7 +11,7 @@ tags:
 
 延伸上一篇 OCP UPI 部署([OpenShift 4.8.x UPI install on Bare metal](https://blog.yylin.io/p/openshift-4.8.x-upi-install-on-bare-metal))過程遇到問題彙整。
 
-> 備註: 由於資源有限情況下，透過單一伺服器(主機)透過 VM 模擬實際節點硬體資源環境，這邊主要透過檢測與除錯，來確保 OpenShift 部署成功，
+> 備註: 由於資源有限情況下，透過單一伺服器(主機)透過 VM 模擬實際節點硬體資源環境，這邊主要透過檢測與除錯，來確保 OpenShift 部署成功。
 
 ## 部署常見問題整理 (持續更新)
 
@@ -45,8 +45,6 @@ INFO Bootstrap gather logs captured here "<installation_directory>/log-bundle-<t
 
 - [Gathering logs from a failed installation](https://docs.openshift.com/container-platform/4.8/installing/installing-troubleshooting.html#installation-bootstrap-gather_installing-troubleshooting)
 - [Waiting for the bootstrap process to complete](https://docs.openshift.com/container-platform/4.8/installing/installing_bare_metal/installing-bare-metal.html#installation-installing-bare-metal_installing-bare-metal)
-
-wait for complete 那行只是確認 bootkube 服務完成了沒，並不是觸發安裝或是任何動作，那行只是確認而已
 
 ### Master Node 部署不起來，檢查並驗證 etcd 運行之硬碟是否正常運作 ?
 
