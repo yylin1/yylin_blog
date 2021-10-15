@@ -249,3 +249,6 @@ I: Cluster 'rosacluster' will start uninstalling now
 I: To watch your cluster uninstallation logs, run 'rosa logs uninstall -c rosacluster --watch
 ```
 
+## Reference
+
+- [Red Hat OpenShift Service on AWS](rosaworkshop.io)
