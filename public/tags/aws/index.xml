@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>AWS on Frank&#39;s Notes</title>
+    <link>https://blog.yylin.io/tags/aws/</link>
+    <description>Recent content in AWS on Frank&#39;s Notes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-tw</language>
+    <lastBuildDate>Thu, 30 Sep 2021 14:54:40 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/tags/aws/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Red Hat OpenShift Platform on AWS (ROSA) 快速部署上手</title>
+      <link>https://blog.yylin.io/p/redhat-aws-rosa/</link>
+      <pubDate>Thu, 30 Sep 2021 14:54:40 +0800</pubDate>
+      
+      <guid>https://blog.yylin.io/p/redhat-aws-rosa/</guid>
+      <description>事前準備： 開始前，需要先準備以下資訊與要求。
+啟用 ROSA  開始配置 AWS 服務前，使用者必須以 IAM 身份(參考文件: Customer Requirements)
+ 登入 AWS 管理控制台，確認當前使用者已啟用 Red Hat OpenShift服務  
+下載 AWS CLI 與 OpenShift CLI 工具: URL Dowload
+  選擇當前環境下載對應CLI ( Command-line interface (CLI) tools)
+ 
+  or
+Command Dowload
+ 下載 AWS/OpenShift CLI 工具，並解壓縮檔案到 /usr/local/bin/ 底下:  # CLI $ wget -c https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest/rosa-linux.tar.gz -O - | tar -xz $ mv rosa /usr/local/bin/ $ rosa version 1.</description>
+    </item>
+    
+  </channel>
+</rss>

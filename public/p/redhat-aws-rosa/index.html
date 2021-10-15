@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en-tw">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='本篇文章主要分享如何透過 ROSA 完全託管叢集資源配置，使基礎設施團隊在AWS上能更快速使用 Red Hat OpenShift 服務。'><title>Red Hat OpenShift Platform on AWS (ROSA) 快速部署上手</title>
+
+<link rel='canonical' href='https://blog.yylin.io/p/redhat-aws-rosa/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Red Hat OpenShift Platform on AWS (ROSA) 快速部署上手'>
+<meta property='og:description' content='本篇文章主要分享如何透過 ROSA 完全託管叢集資源配置，使基礎設施團隊在AWS上能更快速使用 Red Hat OpenShift 服務。'>
+<meta property='og:url' content='https://blog.yylin.io/p/redhat-aws-rosa/'>
+<meta property='og:site_name' content='Frank&#39;s Notes'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='AWS' /><meta property='article:tag' content='OpenShift' /><meta property='article:tag' content='ROSA' /><meta property='article:published_time' content='2021-09-30T14:54:40&#43;08:00'/><meta property='article:modified_time' content='2021-09-30T14:54:40&#43;08:00'/>
+<meta name="twitter:title" content="Red Hat OpenShift Platform on AWS (ROSA) 快速部署上手">
+<meta name="twitter:description" content="本篇文章主要分享如何透過 ROSA 完全託管叢集資源配置，使基礎設施團隊在AWS上能更快速使用 Red Hat OpenShift 服務。">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-60ZBHV66GB"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-60ZBHV66GB', { 'anonymize_ip': false });
+}
+</script>
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="https://blog.yylin.io" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span></span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/rosa/" >
+                ROSA
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/redhat-aws-rosa/">Red Hat OpenShift Platform on AWS (ROSA) 快速部署上手</a>
+    </h2>
+
+    
+    <h3 class="article-subtitle">
+        本篇文章主要分享如何透過 ROSA 完全託管叢集資源配置，使基礎設施團隊在AWS上能更快速使用 Red Hat OpenShift 服務。
+    </h3>
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Sep 30, 2021</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <h2 id="事前準備">事前準備：</h2>
+<p>開始前，需要先準備以下資訊與要求。</p>
+<h3 id="啟用-rosa">啟用 ROSA</h3>
+<blockquote>
+<p>開始配置 AWS 服務前，使用者必須以 <a class="link" href="https://docs.openshift.com/rosa/rosa_getting_started/rosa-aws-prereqs.html#rosa-policy-iam_prerequisites"  target="_blank" rel="noopener"
+    >IAM</a> 身份(參考文件: <a class="link" href="https://docs.openshift.com/rosa/rosa_getting_started/rosa-aws-prereqs.html#rosa-customer-requirements_prerequisites"  target="_blank" rel="noopener"
+    >Customer Requirements</a>)</p>
+</blockquote>
+<p>登入 AWS 管理控制台，確認當前使用者<code>已啟用 Red Hat OpenShift</code>服務
+<figure 
+	>
+	<a href="https://i.imgur.com/lbpYgG6.png" >
+		<img src="https://i.imgur.com/lbpYgG6.png"
+			
+			
+			
+			loading="lazy"
+			>
+	</a>
+	
+</figure></p>
+<h3 id="下載-aws-cli-與-openshift-cli-工具">下載 AWS CLI 與 OpenShift CLI 工具:</h3>
+<p><strong>URL Dowload</strong></p>
+<ul>
+<li>
+<p>選擇當前環境下載對應<code>CLI</code> ( <a class="link" href="https://console.redhat.com/openshift/downloads"  target="_blank" rel="noopener"
+    >Command-line interface (CLI) tools</a>)</p>
+<p><figure 
+	>
+	<a href="https://i.imgur.com/c64k4mB.png" >
+		<img src="https://i.imgur.com/c64k4mB.png"
+			
+			
+			
+			loading="lazy"
+			>
+	</a>
+	
+</figure></p>
+</li>
+</ul>
+<p>or</p>
+<p><strong>Command Dowload</strong></p>
+<ul>
+<li>下載 <code>AWS/OpenShift CLI</code> 工具，並解壓縮檔案到 /usr/local/bin/ 底下:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># CLI</span>
+$ wget -c https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest/rosa-linux.tar.gz -O - <span class="p">|</span> tar -xz
+$ mv rosa /usr/local/bin/
+$ rosa version
+1.1.1
+
+$ wget -c https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest-4.8/openshift-client-linux.tar.gz -O - <span class="p">|</span> tar -xz
+$ mv <span class="o">{</span>oc,kubectl<span class="o">}</span> /usr/local/bin/
+$ oc version
+Client Version: 4.8.2
+$ oc version
+Client Version: 4.8.10
+Server Version: 4.8.12
+Kubernetes Version: v1.21.1+d8043e1
+</code></pre></div><blockquote>
+<p>創建 Red Hat 帳號
+OpenShift 由 Red Hat SaaS 提供，因此您需要創建一個 Red Hat 帳戶。
+<a class="link" href="https://cloud.redhat.com/"  target="_blank" rel="noopener"
+    >https://cloud.redhat.com/</a></p>
+</blockquote>
+<hr>
+<h2 id="透過-rosa-指令檢查憑證與資源配置">透過 ROSA 指令檢查憑證與資源配置</h2>
+<p>這邊以 Red Hat 部署 ROSA 文件部署為主 (<a class="link" href="https://docs.openshift.com/rosa/rosa_getting_started/rosa-creating-cluster.html"  target="_blank" rel="noopener"
+    >Red Hat OpenShift Service on AWS - Creating a ROSA cluster</a>)</p>
+<p>首先，使用 <code>ROSA CLI</code> 檢查 AWS 憑證</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ rosa verify permissions
+I: Validating SCP policies...
+I: AWS SCP policies ok
+</code></pre></div><p>第一次登錄時，你會需要一個 Token 來登入你的 Red Hat 帳號</p>
+<blockquote>
+<p>需要創建一組 Red Hat 帳號</p>
+</blockquote>
+<p>確認登入訊息：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ rosa login
+I: Logged in as <span class="s1">&#39;xxxx@mail.com&#39;</span> on <span class="s1">&#39;https://api.openshift.com&#39;</span>
+</code></pre></div><p>配置完成後可以透過 <code>rosa whoami</code> 來檢查你目前所有登錄憑證與狀態</p>
+<blockquote>
+<p>Red Hat 帳號會附帶 OpenShift Cluster Manager (OCM) 資訊與你的 AWS 帳戶顯示。</p>
+</blockquote>
+<pre tabindex="0"><code>$ rosa whoami
+AWS Account ID:               xxxxxxxxxxxx
+AWS Default Region:           us-west-2
+AWS ARN:                      arn:aws:iam::xxxxxxxxxxxx:user/user
+OCM API:                      https://api.openshift.com
+OCM Account ID:               xxxxxxxxxxxxxxxxxxxxxx
+OCM Account Name:             xxxxxx
+OCM Account Username:         xxxxx@xxxxx.com
+OCM Account Email:            xxxxx@xxxxx.com
+OCM Organization ID:         xxxxxxxxxxxxxxxxxxxxxx
+OCM Organization Name:        Red Hat
+OCM Organization External ID: xxxxxxxx
+</code></pre><p>以上檢查沒問題後，接下運行 <code>rosa init</code> 運行指令來確保 ROSA 配置與相關資源狀態沒問題</p>
+<pre tabindex="0"><code>$ rosa init
+I: Logged in as 'xxxxxx@mail.com' on 'https://api.openshift.com'
+I: Validating AWS credentials...
+I: AWS credentials are valid!
+I: Validating SCP policies...
+I: AWS SCP policies ok
+I: Validating AWS quota...
+I: AWS quota ok. If cluster installation fails, validate actual AWS resource usage against https://docs.openshift.com/rosa/rosa_getting_started/rosa-required-aws-service-quotas.html
+I: Ensuring cluster administrator user 'osdCcsAdmin'...
+I: Admin user 'osdCcsAdmin' already exists!
+I: Validating SCP policies for 'osdCcsAdmin'...
+I: AWS SCP policies ok
+I: Validating cluster creation...
+I: Cluster creation valid
+I: Verifying whether OpenShift command-line tool is available...
+I: Current OpenShift Client Version: 4.8.10
+</code></pre><blockquote>
+<p>需要驗證當前環境，是否已經登入 AWS並確認透過<code>rosa init</code> 來確認 AWS 資源與配置是否能足夠創建 OpenShift</p>
+</blockquote>
+<h3 id="申請-aws-帳戶配額">申請 AWS 帳戶配額</h3>
+<p>在配置 ROSA 時作為預先檢查 <code>$ rosa verify quota --region=${cluster}</code> 叢集名稱。如果您在剛剛部署但未執行任何操作的帳戶上運行它，您將收到錯誤訊息 EC2 <code>quota 配置不足</code>。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ rosa verify quota --region<span class="o">=</span>us-west-2
+I: Validating AWS quota...
+E: Insufficient AWS quotas
+E: Service quota is insufficient <span class="k">for</span> the following service quota codes:
+- Service ec2 quota code L-1216C47A Running On-Demand Standard <span class="o">(</span>A, C, D, H, I, M, R, T, Z<span class="o">)</span> instances not valid, expected quota of at least 100, but got <span class="m">5</span>
+</code></pre></div><p>這邊需要額外申請 AWS EC2 限制增加配額
+<figure 
+	>
+	<a href="https://i.imgur.com/X2PtefK.png" >
+		<img src="https://i.imgur.com/X2PtefK.png"
+			
+			
+			
+			loading="lazy"
+			>
+	</a>
+	
+</figure></p>
+<p>需要提供申請需求與相關資訊，才能申請限制配額成功</p>
+<p><figure 
+	>
+	<a href="https://i.imgur.com/fMprN3I.png" >
+		<img src="https://i.imgur.com/fMprN3I.png"
+			
+			
+			
+			loading="lazy"
+			>
+	</a>
+	
+</figure></p>
+<p>相關配額資訊參考</p>
+<ul>
+<li><a class="link" href="https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html"  target="_blank" rel="noopener"
+    >AWS service quotas</a></li>
+<li><a class="link" href="https://docs.openshift.com/rosa/rosa_getting_started/rosa-required-aws-service-quotas.html"  target="_blank" rel="noopener"
+    >Required AWS service quotas</a></li>
+</ul>
+<p><figure 
+	>
+	<a href="https://i.imgur.com/4K3BWLp.png" >
+		<img src="https://i.imgur.com/4K3BWLp.png"
+			
+			
+			
+			loading="lazy"
+			>
+	</a>
+	
+</figure></p>
+<p>以上完成申請後，再次驗證</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ rosa verify quota --region<span class="o">=</span>us-west-2
+I: Validating AWS quota...
+I: AWS quota ok. If cluster installation fails, validate actual AWS resource usage against https://docs.openshift.com/rosa/rosa_getting_started/rosa-required-aws-service-quotas.htm
+</code></pre></div><hr>
+<h2 id="透過-rosa-指令快速創建-red-hat-openshift">透過 ROSA 指令快速創建 Red Hat OpenShift</h2>
+<ul>
+<li>透過 <code>rosa create cluster</code> 開始部署 OpenShift Cluster (部署Cluster 大約需要30-40分鐘)</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ rosa create cluster --cluster-name<span class="o">=</span>rosacluster
+I: Creating cluster <span class="s1">&#39;rosacluster&#39;</span>
+I: To view a list of clusters and their status, run <span class="s1">&#39;rosa list clusters&#39;</span>
+I: Cluster <span class="s1">&#39;rosacluster&#39;</span> has been created.
+I: Once the cluster is installed you will need to add an Identity Provider before you can login into the cluster. See <span class="s1">&#39;rosa create idp --help&#39;</span> <span class="k">for</span> more information.
+I: To determine when your cluster is Ready, run <span class="s1">&#39;rosa describe cluster -c newsblogcluster&#39;</span>.
+I: To watch your cluster installation logs, run <span class="s1">&#39;rosa logs install -c newsblogcluster --watch&#39;</span>.
+Name:                       newsblogcluster
+ID:                         XXXXXXXXXXXXXXXXXXXX
+External ID:                
+OpenShift Version:          
+Channel Group:              stable
+DNS:                        newsblogcluster.phnh.p1.openshiftapps.com
+AWS Account:                <span class="m">123456789012</span>
+API URL:                    
+Console URL:                
+Region:                     xxxxxxxxxxx
+Multi-AZ:                   <span class="nb">false</span>
+Nodes:
+ - Master:                  <span class="m">3</span>
+ - Infra:                   <span class="m">2</span>
+ - Compute:                 <span class="m">2</span> <span class="o">(</span>m5.xlarge<span class="o">)</span>
+Network:
+ - Service CIDR:            172.30.0.0/16
+ - Machine CIDR:            10.0.0.0/16
+ - Pod CIDR:                10.128.0.0/14
+ - Host Prefix:             /23
+State:                      pending <span class="o">(</span>Preparing account<span class="o">)</span>
+Private:                    No
+Created:                    xxxxxxxxxxxxxxxx
+Details Page:               https://cloud.redhat.com/openshift/details/XXXXXXXXXXXXXXXXXXXX
+</code></pre></div><p>執行命令後，您可以透過 <code>rosa describe cluster</code> 或 <code>rosa logs install</code> 指令檢查 OpenShift Cluster 狀態。您還可以從 URL 訪問 OpenShift Console 進行確認。</p>
+<p><figure 
+	>
+	<a href="https://i.imgur.com/DvBaXFH.png" >
+		<img src="https://i.imgur.com/DvBaXFH.png"
+			
+			
+			
+			loading="lazy"
+			>
+	</a>
+	
+</figure>
+<figure 
+	>
+	<a href="https://i.imgur.com/KkZJ3zn.png" >
+		<img src="https://i.imgur.com/KkZJ3zn.png"
+			
+			
+			
+			loading="lazy"
+			>
+	</a>
+	
+</figure></p>
+<p><figure 
+	>
+	<a href="https://i.imgur.com/LUfY9n9.png" >
+		<img src="https://i.imgur.com/LUfY9n9.png"
+			
+			
+			
+			loading="lazy"
+			>
+	</a>
+	
+</figure></p>
+<pre tabindex="0"><code>$ rosa create admin -c rosacluster
+W: It is recommended to add an identity provider to login to this cluster. See 'rosa create idp --help' for more information.
+I: Admin account has been added to cluster 'rosacluster'.
+I: Please securely store this generated password. If you lose this password you can delete and recreate the cluster admin user.
+I: To login, run the following command:
+
+   oc login https://api.rosacluster.hffh.p1.openshiftapps.com:6443 --username cluster-admin --password fTwWy-rYJJU-wUua7-W3G6Z
+
+I: It may take up to a minute for the account to become active.
+</code></pre><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ oc login https://api.rosacluster.hffh.p1.openshiftapps.com:6443 --username cluster-admin --password fTwWy-rYJJU-wUua7-W3G6Z
+Login successful.
+
+You have access to <span class="m">87</span> projects, the list has been suppressed. You can list all projects with <span class="s1">&#39;oc projects&#39;</span>
+
+Using project <span class="s2">&#34;default&#34;</span>.
+</code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ oc get no
+NAME                                         STATUS   ROLES          AGE   VERSION
+ip-10-0-153-95.us-west-2.compute.internal    Ready    worker         42m   v1.21.1+d8043e1
+ip-10-0-171-119.us-west-2.compute.internal   Ready    infra,worker   17m   v1.21.1+d8043e1
+ip-10-0-175-165.us-west-2.compute.internal   Ready    infra,worker   18m   v1.21.1+d8043e1
+ip-10-0-202-234.us-west-2.compute.internal   Ready    master         49m   v1.21.1+d8043e1
+ip-10-0-239-231.us-west-2.compute.internal   Ready    master         49m   v1.21.1+d8043e1
+ip-10-0-242-134.us-west-2.compute.internal   Ready    master         49m   v1.21.1+d8043e1
+ip-10-0-252-208.us-west-2.compute.internal   Ready    worker         42m   v1.21.1+d8043e1
+</code></pre></div><h2 id="刪除-cluster">刪除 Cluster</h2>
+<p><code>rosa delete cluster</code> 可以使用指令刪除使用 ROSA 創建的cluster。順便說一下，集群的刪除在大約 10 分鐘內完成。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ rosa delete cluster --cluster<span class="o">=</span>rosacluster
+? Are you sure you want to delete cluster rosacluster? Yes
+I: Cluster <span class="s1">&#39;rosacluster&#39;</span> will start uninstalling now
+I: To watch your cluster uninstallation logs, run <span class="err">&#39;</span>rosa logs uninstall -c rosacluster --watch
+</code></pre></div><h2 id="reference">Reference</h2>
+<ul>
+<li><a class="link" href="rosaworkshop.io" >Red Hat OpenShift Service on AWS</a></li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/aws/">AWS</a>
+        
+            <a href="/tags/openshift/">OpenShift</a>
+        
+            <a href="/tags/rosa/">ROSA</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2021 Frank&#39;s Notes
+    </section>
+    
+    <section class="powerby">
+         <br />
+        
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title"></h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#事前準備">事前準備：</a>
+      <ol>
+        <li><a href="#啟用-rosa">啟用 ROSA</a></li>
+        <li><a href="#下載-aws-cli-與-openshift-cli-工具">下載 AWS CLI 與 OpenShift CLI 工具:</a></li>
+      </ol>
+    </li>
+    <li><a href="#透過-rosa-指令檢查憑證與資源配置">透過 ROSA 指令檢查憑證與資源配置</a>
+      <ol>
+        <li><a href="#申請-aws-帳戶配額">申請 AWS 帳戶配額</a></li>
+      </ol>
+    </li>
+    <li><a href="#透過-rosa-指令快速創建-red-hat-openshift">透過 ROSA 指令快速創建 Red Hat OpenShift</a></li>
+    <li><a href="#刪除-cluster">刪除 Cluster</a></li>
+    <li><a href="#reference">Reference</a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

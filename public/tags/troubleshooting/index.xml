@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Troubleshooting on Frank&#39;s Notes</title>
+    <link>https://blog.yylin.io/tags/troubleshooting/</link>
+    <description>Recent content in Troubleshooting on Frank&#39;s Notes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-tw</language>
+    <lastBuildDate>Wed, 29 Sep 2021 00:53:25 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/tags/troubleshooting/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OpenShift Intsall Troubleshooting Notes</title>
+      <link>https://blog.yylin.io/p/openshift-intsall-troubleshooting-notes/</link>
+      <pubDate>Wed, 29 Sep 2021 00:53:25 +0800</pubDate>
+      
+      <guid>https://blog.yylin.io/p/openshift-intsall-troubleshooting-notes/</guid>
+      <description>延伸上一篇 OCP UPI 部署(OpenShift 4.8.x UPI install on Bare metal)過程遇到問題彙整。
+ 備註: 由於資源有限情況下，透過單一伺服器(主機)透過 VM 模擬實際節點硬體資源環境，這邊主要透過檢測與除錯，來確保 OpenShift 部署成功。
+ 部署常見問題整理 (持續更新) 超時等待 bootstrap 節點啟動  發現特定 Pod 持續RunningNotReady 狀態  W0830 11:16:37.087497 35214 reflector.go:436] k8s.io/client-go/tools/watch/informerwatcher.go:146: watch of *v1.ConfigMap ended with: very short watch: k8s.io/client-go/tools/watch/informerwatcher.go:146: Unexpected watch close - watch lasted less than a second and no items received apiserver - &amp;gt; RunningNotReady Aug 30 03:42:37 bootstrap.lab.yiylin.internal bootkube.sh[644199]: Pod Status:openshift-kube-apiserver/kube-apiserver RunningNotReady  此情境請透過收集bootstrap 節點日誌，來確認環境問題</description>
+    </item>
+    
+  </channel>
+</rss>
