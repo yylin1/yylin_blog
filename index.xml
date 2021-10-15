@@ -237,7 +237,10 @@ ip-10-0-252-208.us-west-2.compute.internal Ready worker 42m v1.21.1+d8043e1
 ? Are you sure you want to delete cluster rosacluster? Yes
 I: Cluster &lt;span class="s1">&amp;#39;rosacluster&amp;#39;&lt;/span> will start uninstalling now
 I: To watch your cluster uninstallation logs, run &lt;span class="err">&amp;#39;&lt;/span>rosa logs uninstall -c rosacluster --watch
-&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>OpenShift Intsall Troubleshooting Notes</title><link>https://blog.yylin.io/p/openshift-intsall-troubleshooting-notes/</link><pubDate>Wed, 29 Sep 2021 00:53:25 +0800</pubDate><guid>https://blog.yylin.io/p/openshift-intsall-troubleshooting-notes/</guid><description>&lt;p>延伸上一篇 OCP UPI 部署(&lt;a class="link" href="https://blog.yylin.io/p/openshift-4.8.x-upi-install-on-bare-metal" target="_blank" rel="noopener"
+&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="reference">Reference&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a class="link" href="rosaworkshop.io" >Red Hat OpenShift Service on AWS&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>OpenShift Intsall Troubleshooting Notes</title><link>https://blog.yylin.io/p/openshift-intsall-troubleshooting-notes/</link><pubDate>Wed, 29 Sep 2021 00:53:25 +0800</pubDate><guid>https://blog.yylin.io/p/openshift-intsall-troubleshooting-notes/</guid><description>&lt;p>延伸上一篇 OCP UPI 部署(&lt;a class="link" href="https://blog.yylin.io/p/openshift-4.8.x-upi-install-on-bare-metal" target="_blank" rel="noopener"
 >OpenShift 4.8.x UPI install on Bare metal&lt;/a>)過程遇到問題彙整。&lt;/p>
 &lt;blockquote>
 &lt;p>備註: 由於資源有限情況下，透過單一伺服器(主機)透過 VM 模擬實際節點硬體資源環境，這邊主要透過檢測與除錯，來確保 OpenShift 部署成功。&lt;/p>
