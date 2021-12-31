@@ -36,7 +36,7 @@ tags:
 - [2020-年度回顧 (舊 Blog 搬家中)](https://www.yylin.io/2020/12/31/2020-retrospect-prospect/)
 
 > 2022 繼續爬山
-![](https://i.imgur.com/15ZihrD.jpg)
+![](01.jpg)
 
 - Photography Blog (https://medium.com/yiyang-lins-life)
 
