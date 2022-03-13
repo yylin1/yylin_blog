@@ -1,2 +1,26 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Registry on Frank's Notes</title><link>https://blog.yylin.io/tags/registry/</link><description>Recent content in Registry on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Mon, 07 Mar 2022 00:53:25 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/tags/registry/index.xml" rel="self" type="application/rss+xml"/><item><title>Disconnected Environment - Introducing Mirror Registry for Red Hat OpenShift</title><link>https://blog.yylin.io/openshift/mirror-registry-for-ocp4-install/</link><pubDate>Mon, 07 Mar 2022 00:53:25 +0800</pubDate><guid>https://blog.yylin.io/openshift/mirror-registry-for-ocp4-install/</guid><description>本文件如何安裝 OpenShift 4.8 版本至虛擬機器上，這邊將以 RHEL 環境來進行測試。
-RHEL 8 or Fedora machine with podman v3.3 installed Fully qualified domain name for the Quay service (must resolve via DNS, or at least /etc/hosts) Passwordless sudo access on the target host (rootless install tbd) Key-based SSH connectivity on the target host (will be set up automatically for local installs, in case of remote hosts see here) make (only if compiling your own installer) 當我們的基礎設施處於離線環境時，需要創建容器鏡像倉庫(Registry)來託管安裝 OpenShift Container Platform 所需的相關鏡像檔，來正常部署 OpenShift 叢集。</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Registry on Frank's Notes</title><link>https://blog.yylin.io/tags/registry/</link><description>Recent content in Registry on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Mon, 07 Mar 2022 00:53:25 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/tags/registry/index.xml" rel="self" type="application/rss+xml"/><item><title>Disconnected Environment - Introducing Mirror Registry for Red Hat OpenShift</title><link>https://blog.yylin.io/openshift/mirror-registry-for-ocp4-install/</link><pubDate>Mon, 07 Mar 2022 00:53:25 +0800</pubDate><guid>https://blog.yylin.io/openshift/mirror-registry-for-ocp4-install/</guid><description>&lt;p>本文件如何安裝 OpenShift 4.8 版本至虛擬機器上，這邊將以 RHEL 環境來進行測試。&lt;/p>
+&lt;ul>
+&lt;li>RHEL 8 or Fedora machine with podman v3.3 installed&lt;/li>
+&lt;li>Fully qualified domain name for the Quay service (must resolve via DNS, or at least /etc/hosts)&lt;/li>
+&lt;li>Passwordless sudo access on the target host (rootless install tbd)&lt;/li>
+&lt;li>Key-based SSH connectivity on the target host (will be set up automatically for local installs, in case of remote hosts see here)&lt;/li>
+&lt;li>make (only if compiling your own installer)&lt;/li>
+&lt;/ul>
+&lt;p>當我們的基礎設施處於離線環境時，需要創建容器鏡像倉庫(Registry)來託管安裝 OpenShift Container Platform 所需的相關鏡像檔，來正常部署 OpenShift 叢集。&lt;/p>
+&lt;p>這是有關 mirror registry for Red Hat OpenShift OpenShift 4 的官方流程圖（可在 Red Hat Blog 頁面中找到）：&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/49Qc3LU.png"
+loading="lazy"
+>&lt;/p>
+&lt;h2 id="事前準備">事前準備&lt;/h2>
+&lt;hr>
+&lt;h2 id="reference">Reference&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://cloud.redhat.com/blog/introducing-mirror-registry-for-red-hat-openshift" target="_blank" rel="noopener"
+>https://cloud.redhat.com/blog/introducing-mirror-registry-for-red-hat-openshift&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://access.redhat.com/support/policy/updates/openshift#omr" target="_blank" rel="noopener"
+>https://access.redhat.com/support/policy/updates/openshift#omr&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.youtube.com/watch?v=j5e4OT71N0A" target="_blank" rel="noopener"
+>https://www.youtube.com/watch?v=j5e4OT71N0A&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://cloud.redhat.com/blog/introducing-mirror-registry-for-red-hat-openshift" target="_blank" rel="noopener"
+>https://cloud.redhat.com/blog/introducing-mirror-registry-for-red-hat-openshift&lt;/a>&lt;/li>
+&lt;/ul></description></item></channel></rss>

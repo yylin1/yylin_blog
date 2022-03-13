@@ -1,26 +1,58 @@
-<!doctype html><html lang=zh-tw>
+<!doctype html><html lang=zh-tw dir=ltr>
 <head><meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="本篇文章主要分享如何透過 ROSA 完全託管叢集資源配置，使基礎設施團隊在AWS上能更快速使用 Red Hat OpenShift 服務。"><title>Red Hat OpenShift Platform on AWS (ROSA) 快速部署上手</title>
 <link rel=canonical href=https://blog.yylin.io/openshift/rosa/>
-<link rel=stylesheet href=/scss/style.min.css><meta property="og:title" content="Red Hat OpenShift Platform on AWS (ROSA) 快速部署上手">
+<link rel=stylesheet href=/scss/style.min.928dafc209520427d84d431c729b0a24ba49909c88287821bd42fe1e43edb51d.css><meta property="og:title" content="Red Hat OpenShift Platform on AWS (ROSA) 快速部署上手">
 <meta property="og:description" content="本篇文章主要分享如何透過 ROSA 完全託管叢集資源配置，使基礎設施團隊在AWS上能更快速使用 Red Hat OpenShift 服務。">
 <meta property="og:url" content="https://blog.yylin.io/openshift/rosa/">
 <meta property="og:site_name" content="Frank's Notes">
-<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="AWS"><meta property="article:tag" content="OpenShift"><meta property="article:tag" content="ROSA"><meta property="article:published_time" content="2021-09-30T14:54:40+08:00"><meta property="article:modified_time" content="2022-03-13T14:18:23+00:00">
+<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="AWS"><meta property="article:tag" content="OpenShift"><meta property="article:tag" content="ROSA"><meta property="article:published_time" content="2021-09-30T14:54:40+08:00"><meta property="article:modified_time" content="2022-03-13T14:27:23+00:00">
 <meta name=twitter:title content="Red Hat OpenShift Platform on AWS (ROSA) 快速部署上手">
 <meta name=twitter:description content="本篇文章主要分享如何透過 ROSA 完全託管叢集資源配置，使基礎設施團隊在AWS上能更快速使用 Red Hat OpenShift 服務。">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-60ZBHV66GB"></script>
 <script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-60ZBHV66GB',{anonymize_ip:!1})}</script>
 </head>
-<body class="article-page has-toc">
+<body class=article-page>
 <script>(function(){const a='StackColorScheme';localStorage.getItem(a)||localStorage.setItem(a,"auto")})()</script><script>(function(){const b='StackColorScheme',a=localStorage.getItem(b),c=window.matchMedia('(prefers-color-scheme: dark)').matches===!0;a=='dark'||a==='auto'&&c?document.documentElement.dataset.scheme='dark':document.documentElement.dataset.scheme='light'})()</script>
-<div class="container main-container flex
-extended">
-<div id=article-toolbar>
-<a href=https://blog.yylin.io class=back-home><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="15 6 9 12 15 18"/></svg>
-<span></span>
-</a>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky">
+<button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label=切換選單>
+<span class=hamburger-box>
+<span class=hamburger-inner></span>
+</span>
+</button>
+<header>
+<div class=site-meta>
+<h1 class=site-name><a href=/>Frank's Notes</a></h1>
+<h2 class=site-description>拆解|筆記|復盤</h2>
 </div>
+</header><ol class=menu id=main-menu>
+<li>
+<a href=/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span>
+</a>
+</li>
+<li>
+<a href=/about/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>About</span>
+</a>
+</li>
+<li>
+<a href=/archives/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span>
+</a>
+</li>
+<li>
+<a href=/search/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span>
+</a>
+</li>
+<div class=menu-bottom-section>
+<li id=dark-mode-toggle><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>夜晚模式</span>
+</li>
+</div>
+</ol>
+</aside>
 <main class="main full-width">
 <article class=main-article>
 <header class=article-header>
@@ -30,18 +62,21 @@ extended">
 Cloud Service Provider
 </a>
 </header>
+<div class=article-title-wrapper>
 <h2 class=article-title>
 <a href=/openshift/rosa/>Red Hat OpenShift Platform on AWS (ROSA) 快速部署上手</a>
 </h2>
 <h3 class=article-subtitle>
 本篇文章主要分享如何透過 ROSA 完全託管叢集資源配置，使基礎設施團隊在AWS上能更快速使用 Red Hat OpenShift 服務。
 </h3>
+</div>
 <footer class=article-time>
 <div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
 <time class=article-time--published>Sep 30, 2021</time>
 </div>
 <div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
 <time class=article-time--reading>
+閱讀時間: 5 分鐘
 </time>
 </div>
 </footer>
@@ -55,21 +90,13 @@ Cloud Service Provider
 <p>開始配置 AWS 服務前，使用者必須以 <a class=link href=https://docs.openshift.com/rosa/rosa_getting_started/rosa-aws-prereqs.html#rosa-policy-iam_prerequisites target=_blank rel=noopener>IAM</a> 身份(參考文件: <a class=link href=https://docs.openshift.com/rosa/rosa_getting_started/rosa-aws-prereqs.html#rosa-customer-requirements_prerequisites target=_blank rel=noopener>Customer Requirements</a>)</p>
 </blockquote>
 <p>登入 AWS 管理控制台，確認當前使用者<code>已啟用 Red Hat OpenShift</code>服務
-<figure>
-<a href=https://i.imgur.com/lbpYgG6.png>
-<img src=https://i.imgur.com/lbpYgG6.png loading=lazy>
-</a>
-</figure></p>
+<img src=https://i.imgur.com/lbpYgG6.png loading=lazy></p>
 <h3 id=下載-aws-cli-與-openshift-cli-工具>下載 AWS CLI 與 OpenShift CLI 工具:</h3>
 <p><strong>URL Dowload</strong></p>
 <ul>
 <li>
 <p>選擇當前環境下載對應<code>CLI</code> ( <a class=link href=https://console.redhat.com/openshift/downloads target=_blank rel=noopener>Command-line interface (CLI) tools</a>)</p>
-<p><figure>
-<a href=https://i.imgur.com/c64k4mB.png>
-<img src=https://i.imgur.com/c64k4mB.png loading=lazy>
-</a>
-</figure></p>
+<p><img src=https://i.imgur.com/c64k4mB.png loading=lazy></p>
 </li>
 </ul>
 <p>or</p>
@@ -242,27 +269,15 @@ E: Service quota is insufficient <span class=k>for</span> the following service 
 </code></pre></td></tr></table>
 </div>
 </div><p>這邊需要額外申請 AWS EC2 限制增加配額
-<figure>
-<a href=https://i.imgur.com/X2PtefK.png>
-<img src=https://i.imgur.com/X2PtefK.png loading=lazy>
-</a>
-</figure></p>
+<img src=https://i.imgur.com/X2PtefK.png loading=lazy></p>
 <p>需要提供申請需求與相關資訊，才能申請限制配額成功</p>
-<p><figure>
-<a href=https://i.imgur.com/fMprN3I.png>
-<img src=https://i.imgur.com/fMprN3I.png loading=lazy>
-</a>
-</figure></p>
+<p><img src=https://i.imgur.com/fMprN3I.png loading=lazy></p>
 <p>相關配額資訊參考</p>
 <ul>
 <li><a class=link href=https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html target=_blank rel=noopener>AWS service quotas</a></li>
 <li><a class=link href=https://docs.openshift.com/rosa/rosa_getting_started/rosa-required-aws-service-quotas.html target=_blank rel=noopener>Required AWS service quotas</a></li>
 </ul>
-<p><figure>
-<a href=https://i.imgur.com/4K3BWLp.png>
-<img src=https://i.imgur.com/4K3BWLp.png loading=lazy>
-</a>
-</figure></p>
+<p><img src=https://i.imgur.com/4K3BWLp.png loading=lazy></p>
 <p>以上完成申請後，再次驗證</p>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
@@ -350,21 +365,9 @@ Details Page:               https://cloud.redhat.com/openshift/details/XXXXXXXXX
 </code></pre></td></tr></table>
 </div>
 </div><p>執行命令後，您可以透過 <code>rosa describe cluster</code> 或 <code>rosa logs install</code> 指令檢查 OpenShift Cluster 狀態。您還可以從 URL 訪問 OpenShift Console 進行確認。</p>
-<p><figure>
-<a href=https://i.imgur.com/DvBaXFH.png>
-<img src=https://i.imgur.com/DvBaXFH.png loading=lazy>
-</a>
-</figure>
-<figure>
-<a href=https://i.imgur.com/KkZJ3zn.png>
-<img src=https://i.imgur.com/KkZJ3zn.png loading=lazy>
-</a>
-</figure></p>
-<p><figure>
-<a href=https://i.imgur.com/LUfY9n9.png>
-<img src=https://i.imgur.com/LUfY9n9.png loading=lazy>
-</a>
-</figure></p>
+<p><img src=https://i.imgur.com/DvBaXFH.png loading=lazy>
+<img src=https://i.imgur.com/KkZJ3zn.png loading=lazy></p>
+<p><img src=https://i.imgur.com/LUfY9n9.png loading=lazy></p>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
@@ -463,12 +466,12 @@ I: To watch your cluster uninstallation logs, run <span class=err>&#39;</span>ro
 </section>
 <section class=article-lastmod><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
 <span>
-Mar 13, 2022 14:18 UTC
+最後更新 Mar 13, 2022 14:27 UTC
 </span>
 </section></footer>
 </article>
 <aside class=related-contents--wrapper>
-<h2 class=section-title></h2>
+<h2 class=section-title>相關文章</h2>
 <div class=related-contents>
 <div class="flex article-list--tile">
 <article>
@@ -483,7 +486,7 @@ Mar 13, 2022 14:18 UTC
 </aside>
 <div class=disqus-container>
 <div id=disqus_thread></div>
-<script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return}var b=document,a=b.createElement('script');a.async=!0,a.src='//hugo-theme-stack.disqus.com/embed.js',a.setAttribute('data-timestamp',+new Date),(b.head||b.body).appendChild(a)})()</script>
+<script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return}var b=document,a=b.createElement('script');a.async=!0,a.src='//hugo-theme-stack-v3.10.disqus.com/embed.js',a.setAttribute('data-timestamp',+new Date),(b.head||b.body).appendChild(a)})()</script>
 <noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript>
 <a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a>
 </div>
@@ -495,7 +498,8 @@ Mar 13, 2022 14:18 UTC
 2022 Frank's Notes
 </section>
 <section class=powerby>
-<br>
+Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> <br>
+Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.10.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a>
 </section>
 </footer>
 <div class=pswp tabindex=-1 role=dialog aria-hidden=true>
@@ -539,7 +543,7 @@ Mar 13, 2022 14:18 UTC
 <section class="widget archives">
 <div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg>
 </div>
-<h2 class="widget-title section-title"></h2>
+<h2 class="widget-title section-title">目錄</h2>
 <div class=widget--toc>
 <nav id=TableOfContents>
 <ol>
@@ -563,7 +567,7 @@ Mar 13, 2022 14:18 UTC
 </section>
 </aside>
 </div>
-<script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin=anonymous defer></script><script type=text/javascript src=/ts/main.js defer></script>
+<script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script>
 <script>(function(){const a=document.createElement('link');a.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",a.type="text/css",a.rel="stylesheet",document.head.appendChild(a)})()</script>
 </body>
 </html>

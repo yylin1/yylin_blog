@@ -1,2 +1,48 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Retrospect on Frank's Notes</title><link>https://blog.yylin.io/tags/retrospect/</link><description>Recent content in Retrospect on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Fri, 31 Dec 2021 13:33:28 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/tags/retrospect/index.xml" rel="self" type="application/rss+xml"/><item><title>2021 年度回顧</title><link>https://blog.yylin.io/year/2021-retrospect-and-prospect/</link><pubDate>Fri, 31 Dec 2021 13:33:28 +0800</pubDate><guid>https://blog.yylin.io/year/2021-retrospect-and-prospect/</guid><description>2021 年有非常多的轉變與抉擇，是讓自己很深刻的一年，雖然年初有一些個人因素，影響後續許多計畫與安排，但之後從個人職涯選擇以及決定，為自己嘗試更多各種不同的挑戰，雖然過程很不容易，但能能充實的過完這一年。
-2021 回顧 協助前公司部分產品 Containerized 建置與Kuberentes - IT 初期工作流程基礎規劃，學習很多寶貴的維運經驗。 下半年決定為自己職涯嘗試新的挑戰，轉換職務，雖然過程花很多時間為認知與技能做轉換，過程參與事件活動非常多，但忙得有意義，非常充實。 在 COSCUP 2021 協助 CNTUG 社群議程軌-開源運河上的雲原生號擔任主持人：首次 COSCUP 線上虛擬舉行，體會主持人如何引導議程進行時，與講者會眾互動 Q&amp;amp;A ，並完成整個整個議程軌活動，難得且充實的年會體驗。 擔任 HPC Summit 2021 講者：有機會分享抽空研究DeepOps 的專案，如何對於 AI/ML Infra 建置的部署工具與企業場景實際應用分析(簡報連結)。 擔任 Kuberentes Summit 2021 - WorkShop 講者: 學習如何用會眾角度規劃整個工作坊設計。 回歸山岳攝影-登山健行: 持續撰寫登山系列文章，跟一群好友組了登山興趣小組，開始嘗試(台灣中級山系列、台北大縱走路線完成4/7段[持續進行中])，脫離城市的大自然體驗。 自己動手做一顆手工肥皂，感謝 SU VIDA x 私 生活 開設的工作坊 攀岩(抱石) 維持 LV2 等級都順利完攀，持續往下一級前進。 終於換了新一台相機 Sony A7 IV 2022 展望 增強專業能力部分，提升各方面不足點 花更多時間在技術文章撰寫 完成先前未完成的證照 回歸開源專案貢獻，積極參與 Conference / Meetup 分享 持續健身運動維持飲食控制，為百岳做後續準備 Related Posts 2020-年度回顧 (舊 Blog 搬家中) 2022 繼續爬山</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Retrospect on Frank's Notes</title><link>https://blog.yylin.io/tags/retrospect/</link><description>Recent content in Retrospect on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Fri, 31 Dec 2021 13:33:28 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/tags/retrospect/index.xml" rel="self" type="application/rss+xml"/><item><title>2021 年度回顧</title><link>https://blog.yylin.io/year/2021-retrospect-and-prospect/</link><pubDate>Fri, 31 Dec 2021 13:33:28 +0800</pubDate><guid>https://blog.yylin.io/year/2021-retrospect-and-prospect/</guid><description>&lt;p>2021 年有非常多的轉變與抉擇，是讓自己很深刻的一年，雖然年初有一些個人因素，影響後續許多計畫與安排，但之後從個人職涯選擇以及決定，為自己嘗試更多各種不同的挑戰，雖然過程很不容易，但能能充實的過完這一年。&lt;/p>
+&lt;h2 id="2021-回顧">2021 回顧&lt;/h2>
+&lt;ul>
+&lt;li>協助前公司部分產品 Containerized 建置與Kuberentes - IT 初期工作流程基礎規劃，學習很多寶貴的維運經驗。&lt;/li>
+&lt;li>下半年決定為自己職涯嘗試新的挑戰，轉換職務，雖然過程花很多時間為認知與技能做轉換，過程參與事件活動非常多，但忙得有意義，非常充實。&lt;/li>
+&lt;li>在 &lt;a class="link" href="https://coscup.org/2021/zh-TW/session/9X7UAG" target="_blank" rel="noopener"
+>COSCUP 2021&lt;/a> 協助 CNTUG 社群議程軌-開源運河上的雲原生號擔任主持人：首次 COSCUP 線上虛擬舉行，體會主持人如何引導議程進行時，與講者會眾互動 Q&amp;amp;A ，並完成整個整個議程軌活動，難得且充實的年會體驗。&lt;/li>
+&lt;li>擔任 &lt;a class="link" href="https://www.garaotus.com/HPC2021/vod/" target="_blank" rel="noopener"
+>HPC Summit 2021&lt;/a> 講者：有機會分享抽空研究DeepOps 的專案，如何對於 AI/ML Infra 建置的部署工具與企業場景實際應用分析(&lt;a class="link" href="https://speakerdeck.com/yylin1/deepops-an-efficient-way-to-deploy-gpu-cluster-for-computing" target="_blank" rel="noopener"
+>簡報連結&lt;/a>)。&lt;/li>
+&lt;li>擔任 &lt;a class="link" href="https://k8s.ithome.com.tw/lab-page/553" target="_blank" rel="noopener"
+>Kuberentes Summit 2021 - WorkShop&lt;/a> 講者: 學習如何用會眾角度規劃整個工作坊設計。&lt;/li>
+&lt;li>回歸山岳攝影-登山健行: 持續撰寫&lt;a class="link" href="https://medium.com/yiyang-lins-life" target="_blank" rel="noopener"
+>登山系列文章&lt;/a>，跟一群好友組了登山興趣小組，開始嘗試(台灣中級山系列、台北大縱走路線完成4/7段[持續進行中])，脫離城市的大自然體驗。&lt;/li>
+&lt;li>自己動手做一顆手工肥皂，感謝 &lt;a class="link" href="https://www.instagram.com/suvida_tw/" target="_blank" rel="noopener"
+>SU VIDA x 私 生活&lt;/a> 開設的工作坊&lt;/li>
+&lt;li>攀岩(抱石) 維持 LV2 等級都順利完攀，持續往下一級前進。&lt;/li>
+&lt;li>終於換了新一台相機 Sony A7 IV&lt;/li>
+&lt;/ul>
+&lt;h2 id="2022-展望">2022 展望&lt;/h2>
+&lt;ul>
+&lt;li>增強專業能力部分，提升各方面不足點&lt;/li>
+&lt;li>花更多時間在技術文章撰寫&lt;/li>
+&lt;li>完成先前未完成的證照&lt;/li>
+&lt;li>回歸開源專案貢獻，積極參與 Conference / Meetup 分享&lt;/li>
+&lt;li>持續健身運動維持飲食控制，為百岳做後續準備&lt;/li>
+&lt;/ul>
+&lt;h3 id="related-posts">Related Posts&lt;/h3>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://www.yylin.io/2020/12/31/2020-retrospect-prospect/" target="_blank" rel="noopener"
+>2020-年度回顧 (舊 Blog 搬家中)&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>2022 繼續爬山
+&lt;img src="https://blog.yylin.io/year/2021-retrospect-and-prospect/01.jpg"
+width="1620"
+height="1080"
+srcset="https://blog.yylin.io/year/2021-retrospect-and-prospect/01_hucbf4df3e07792eaecaff75330300fcc5_1642419_480x0_resize_q75_box.jpg 480w, https://blog.yylin.io/year/2021-retrospect-and-prospect/01_hucbf4df3e07792eaecaff75330300fcc5_1642419_1024x0_resize_q75_box.jpg 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="150"
+data-flex-basis="360px"
+>&lt;/p>
+&lt;/blockquote>
+&lt;ul>
+&lt;li>Photography Blog (&lt;a class="link" href="https://medium.com/yiyang-lins-life" target="_blank" rel="noopener"
+>https://medium.com/yiyang-lins-life&lt;/a>)&lt;/li>
+&lt;/ul></description></item></channel></rss>
