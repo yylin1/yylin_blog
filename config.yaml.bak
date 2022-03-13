@@ -1,5 +1,5 @@
 baseurl: https://blog.yylin.io
-languageCode: zh-tw
+languageCode: en-tw
 theme: hugo-theme-stack
 paginate: 10
 title: Frank's Notes
@@ -11,15 +11,11 @@ disqusShortname: hugo-theme-stack
 googleAnalytics: G-60ZBHV66GB
 
 # Theme i18n support
-# Available values: en, fr, id, ja, ko, pt-br, zh-cn, zh-tw, es, de, nl, it, th, el, uk, ar
+# Available values: en, fr, id, ja, ko, pt-br, zh-cn, es, de, nl, it
 DefaultContentLanguage: zh-tw
 
-# Set hasCJKLanguage to true if DefaultContentLanguage is in [zh-cn ja ko]
-# This will make .Summary and .WordCount behave correctly for CJK languages.
-hasCJKLanguage: false
-
 permalinks:
-    post: /post/:filename/
+    post: /p/:slug/
     page: /:slug/
 
 params:
@@ -27,10 +23,10 @@ params:
         - post
     featuredImageField: image
     rssFullContent: true
-    favicon:
+    favicon: 
 
     footer:
-        since: 2022
+        since: 2020
         customText:
 
     dateFormat:
@@ -43,7 +39,7 @@ params:
         avatar:
             enabled: true
             local: true
-            src: img/avatar.png
+            src: img/yiyang.png
 
     article:
         math: false
@@ -104,12 +100,6 @@ params:
             path:
             lang:
 
-        # See https://cactus.chat/docs/reference/web-client/#configuration for description of the various options
-        cactus:
-            defaultHomeserverUrl: "https://matrix.cactus.chat:8448"
-            serverName: "cactus.chat"
-            siteName: "" # You must insert a unique identifier here matching the one you registered (See https://cactus.chat/docs/getting-started/quick-start/#register-your-site)
-
         giscus:
             repo:
             repoID:
@@ -122,30 +112,23 @@ params:
             emitMetadata: 0
 
         gitalk:
-            owner:
-            admin:
-            repo:
-            clientID:
-            clientSecret:
+            owner: 
+            admin:  
+            repo: 
+            clientID: 
+            clientSecret: 
 
-        cusdis:
-            host:
-            id:
     widgets:
-        homepage:
-            - type: search
-            - type: about
-            - type: archives
-              params:
-                  limit: 5
-            - type: categories
-              params:
-                  limit: 10
-            - type: tag-cloud
-              params:
-                  limit: 10
-        page:
-            - type: toc
+        enabled:
+            - search
+            - archives
+            - tag-cloud
+
+        archives:
+            limit: 5
+
+        tagCloud:
+            limit: 10
 
     opengraph:
         twitter:
@@ -178,8 +161,16 @@ params:
 ### See https://docs.stack.jimmycai.com/configuration/custom-menu.html
 ### To remove about, archive and search page menu item, remove `menu` field from their FrontMatter
 menu:
-    main: []
-     
+    main:
+        - identifier: home
+          name: Home
+          url: /
+          weight: -100
+          params:
+              ### For demonstration purpose, the home link will be open in a new tab
+              newTab: true
+       
+
 related:
     includeNewer: true
     threshold: 60
@@ -202,12 +193,3 @@ markup:
         startLevel: 2
     highlight:
         noClasses: false
-        codeFences: true
-        guessSyntax: true
-        lineNoStart: 1
-        lineNos: true
-        lineNumbersInTable: true
-        tabWidth: 4
-frontmatter:
-  lastmod: [":fileModTime", "lastmod"]
-

@@ -2,6 +2,7 @@
 title: "OpenShift Intsall Troubleshooting Notes"
 date: 2021-09-29T00:53:25+08:00
 draft: false
+url: "openshift/install-troubleshooting"
 description: "本篇文章主要是整理 OpenShift 4.x 安裝遇到問題與相關除錯常用介紹。"
 categories:
   - OpenShift

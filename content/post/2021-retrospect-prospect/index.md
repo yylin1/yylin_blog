@@ -1,12 +1,13 @@
 ---
 title: "2021 年度回顧"
 date: 2021-12-31T13:33:28+08:00
+url: "year/2021-retrospect-and-prospect"
 draft: false
 description: "2021 最後一刻，年度回顧與明年展望"
 categories:
-  - review
+  - Retrospect
 tags:
-  - review
+  - Retrospect
 ---
 
 2021 年有非常多的轉變與抉擇，是讓自己很深刻的一年，雖然年初有一些個人因素，影響後續許多計畫與安排，但之後從個人職涯選擇以及決定，為自己嘗試更多各種不同的挑戰，雖然過程很不容易，但能能充實的過完這一年。

@@ -1,11 +1,12 @@
 ---
 title: "Red Hat OpenShift Platform on AWS (ROSA) 快速部署上手"
 slug:  "rosa"
+url: "openshift/rosa"
 date: 2021-09-30T14:54:40+08:00
 draft: false
 description: "本篇文章主要分享如何透過 ROSA 完全託管叢集資源配置，使基礎設施團隊在AWS上能更快速使用 Red Hat OpenShift 服務。"
 categories:
-  - ROSA
+  - Cloud Service Provider 
 tags:
   - AWS
   - OpenShift

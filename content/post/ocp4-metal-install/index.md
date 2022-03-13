@@ -1,6 +1,7 @@
 ---
 title: "OpenShift 4.8.x UPI install on Bare metal"
 date: 2021-09-26T14:54:40+08:00
+url: "openshift/ocp4-install"
 draft: false
 description: "本篇文章主要是說明 OpenShift 4.8 裸機伺服器(Bare-metal Server)部署過程與環境架構整理，並針對過程遇到問題透過記錄整理過程，延伸可能經常遇到的問題與探討。"
 categories:
