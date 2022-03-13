@@ -1,4 +1,34 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Frank's Notes</title><link>https://blog.yylin.io/</link><description>Recent content on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>en-tw</language><lastBuildDate>Fri, 31 Dec 2021 13:33:28 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/index.xml" rel="self" type="application/rss+xml"/><item><title>2021 年度回顧</title><link>https://blog.yylin.io/p/2021-%E5%B9%B4%E5%BA%A6%E5%9B%9E%E9%A1%A7/</link><pubDate>Fri, 31 Dec 2021 13:33:28 +0800</pubDate><guid>https://blog.yylin.io/p/2021-%E5%B9%B4%E5%BA%A6%E5%9B%9E%E9%A1%A7/</guid><description>&lt;p>2021 年有非常多的轉變與抉擇，是讓自己很深刻的一年，雖然年初有一些個人因素，影響後續許多計畫與安排，但之後從個人職涯選擇以及決定，為自己嘗試更多各種不同的挑戰，雖然過程很不容易，但能能充實的過完這一年。&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Frank's Notes</title><link>https://blog.yylin.io/</link><description>Recent content on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><atom:link href="https://blog.yylin.io/index.xml" rel="self" type="application/rss+xml"/><item><title>從零開始快速建置 - Microsoft Azure Red Hat OpenShift (ARO)</title><link>https://blog.yylin.io/openshift/aro/</link><pubDate>Sun, 13 Mar 2022 21:40:40 +0800</pubDate><guid>https://blog.yylin.io/openshift/aro/</guid><description/></item><item><title>Disconnected Environment - Introducing Mirror Registry for Red Hat OpenShift</title><link>https://blog.yylin.io/openshift/mirror-registry-for-ocp4-install/</link><pubDate>Mon, 07 Mar 2022 00:53:25 +0800</pubDate><guid>https://blog.yylin.io/openshift/mirror-registry-for-ocp4-install/</guid><description>&lt;p>本文件如何安裝 OpenShift 4.8 版本至虛擬機器上，這邊將以 RHEL 環境來進行測試。&lt;/p>
+&lt;ul>
+&lt;li>RHEL 8 or Fedora machine with podman v3.3 installed&lt;/li>
+&lt;li>Fully qualified domain name for the Quay service (must resolve via DNS, or at least /etc/hosts)&lt;/li>
+&lt;li>Passwordless sudo access on the target host (rootless install tbd)&lt;/li>
+&lt;li>Key-based SSH connectivity on the target host (will be set up automatically for local installs, in case of remote hosts see here)&lt;/li>
+&lt;li>make (only if compiling your own installer)&lt;/li>
+&lt;/ul>
+&lt;p>當我們的基礎設施處於離線環境時，需要創建容器鏡像倉庫(Registry)來託管安裝 OpenShift Container Platform 所需的相關鏡像檔，來正常部署 OpenShift 叢集。&lt;/p>
+&lt;p>這是有關 mirror registry for Red Hat OpenShift OpenShift 4 的官方流程圖（可在 Red Hat Blog 頁面中找到）：&lt;/p>
+&lt;p>&lt;figure
+>
+&lt;a href="https://i.imgur.com/49Qc3LU.png" >
+&lt;img src="https://i.imgur.com/49Qc3LU.png"
+loading="lazy"
+>
+&lt;/a>
+&lt;/figure>&lt;/p>
+&lt;h2 id="事前準備">事前準備&lt;/h2>
+&lt;hr>
+&lt;h2 id="reference">Reference&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://cloud.redhat.com/blog/introducing-mirror-registry-for-red-hat-openshift" target="_blank" rel="noopener"
+>https://cloud.redhat.com/blog/introducing-mirror-registry-for-red-hat-openshift&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://access.redhat.com/support/policy/updates/openshift#omr" target="_blank" rel="noopener"
+>https://access.redhat.com/support/policy/updates/openshift#omr&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.youtube.com/watch?v=j5e4OT71N0A" target="_blank" rel="noopener"
+>https://www.youtube.com/watch?v=j5e4OT71N0A&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://cloud.redhat.com/blog/introducing-mirror-registry-for-red-hat-openshift" target="_blank" rel="noopener"
+>https://cloud.redhat.com/blog/introducing-mirror-registry-for-red-hat-openshift&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>2021 年度回顧</title><link>https://blog.yylin.io/year/2021-retrospect-and-prospect/</link><pubDate>Fri, 31 Dec 2021 13:33:28 +0800</pubDate><guid>https://blog.yylin.io/year/2021-retrospect-and-prospect/</guid><description>&lt;p>2021 年有非常多的轉變與抉擇，是讓自己很深刻的一年，雖然年初有一些個人因素，影響後續許多計畫與安排，但之後從個人職涯選擇以及決定，為自己嘗試更多各種不同的挑戰，雖然過程很不容易，但能能充實的過完這一年。&lt;/p>
 &lt;h2 id="2021-回顧">2021 回顧&lt;/h2>
 &lt;ul>
 &lt;li>協助前公司部分產品 Containerized 建置與Kuberentes - IT 初期工作流程基礎規劃，學習很多寶貴的維運經驗。&lt;/li>
@@ -38,11 +68,11 @@ style="
 flex-grow: 150;
 flex-basis: 360px"
 >
-&lt;a href="https://blog.yylin.io/p/2021-%E5%B9%B4%E5%BA%A6%E5%9B%9E%E9%A1%A7/01.jpg" data-size="1620x1080">
-&lt;img src="https://blog.yylin.io/p/2021-%E5%B9%B4%E5%BA%A6%E5%9B%9E%E9%A1%A7/01.jpg"
+&lt;a href="https://blog.yylin.io/year/2021-retrospect-and-prospect/01.jpg" data-size="1620x1080">
+&lt;img src="https://blog.yylin.io/year/2021-retrospect-and-prospect/01.jpg"
 width="1620"
 height="1080"
-srcset="https://blog.yylin.io/p/2021-%E5%B9%B4%E5%BA%A6%E5%9B%9E%E9%A1%A7/01_hucbf4df3e07792eaecaff75330300fcc5_1642419_480x0_resize_q75_box.jpg 480w, https://blog.yylin.io/p/2021-%E5%B9%B4%E5%BA%A6%E5%9B%9E%E9%A1%A7/01_hucbf4df3e07792eaecaff75330300fcc5_1642419_1024x0_resize_q75_box.jpg 1024w"
+srcset="https://blog.yylin.io/year/2021-retrospect-and-prospect/01_hucbf4df3e07792eaecaff75330300fcc5_1642419_480x0_resize_q75_box.jpg 480w, https://blog.yylin.io/year/2021-retrospect-and-prospect/01_hucbf4df3e07792eaecaff75330300fcc5_1642419_1024x0_resize_q75_box.jpg 1024w"
 loading="lazy"
 >
 &lt;/a>
@@ -51,7 +81,7 @@ loading="lazy"
 &lt;ul>
 &lt;li>Photography Blog (&lt;a class="link" href="https://medium.com/yiyang-lins-life" target="_blank" rel="noopener"
 >https://medium.com/yiyang-lins-life&lt;/a>)&lt;/li>
-&lt;/ul></description></item><item><title>Red Hat OpenShift Platform on AWS (ROSA) 快速部署上手</title><link>https://blog.yylin.io/p/rosa/</link><pubDate>Thu, 30 Sep 2021 14:54:40 +0800</pubDate><guid>https://blog.yylin.io/p/rosa/</guid><description>&lt;h2 id="事前準備">事前準備：&lt;/h2>
+&lt;/ul></description></item><item><title>Red Hat OpenShift Platform on AWS (ROSA) 快速部署上手</title><link>https://blog.yylin.io/openshift/rosa/</link><pubDate>Thu, 30 Sep 2021 14:54:40 +0800</pubDate><guid>https://blog.yylin.io/openshift/rosa/</guid><description>&lt;h2 id="事前準備">事前準備：&lt;/h2>
 &lt;p>開始前，需要先準備以下資訊與要求。&lt;/p>
 &lt;h3 id="啟用-rosa">啟用 ROSA&lt;/h3>
 &lt;blockquote>
@@ -89,7 +119,25 @@ loading="lazy"
 &lt;ul>
 &lt;li>下載 &lt;code>AWS/OpenShift CLI&lt;/code> 工具，並解壓縮檔案到 /usr/local/bin/ 底下:&lt;/li>
 &lt;/ul>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="c1"># CLI&lt;/span>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="c1"># CLI&lt;/span>
 $ wget -c https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest/rosa-linux.tar.gz -O - &lt;span class="p">|&lt;/span> tar -xz
 $ mv rosa /usr/local/bin/
 $ rosa version
@@ -102,7 +150,9 @@ $ oc version
 Client Version: 4.8.10
 Server Version: 4.8.12
 Kubernetes Version: v1.21.1+d8043e1
-&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
 &lt;p>創建 Red Hat 帳號
 OpenShift 由 Red Hat SaaS 提供，因此您需要創建一個 Red Hat 帳戶。
 &lt;a class="link" href="https://cloud.redhat.com/" target="_blank" rel="noopener"
@@ -113,21 +163,54 @@ OpenShift 由 Red Hat SaaS 提供，因此您需要創建一個 Red Hat 帳戶�
 &lt;p>這邊以 Red Hat 部署 ROSA 文件部署為主 (&lt;a class="link" href="https://docs.openshift.com/rosa/rosa_getting_started/rosa-creating-cluster.html" target="_blank" rel="noopener"
 >Red Hat OpenShift Service on AWS - Creating a ROSA cluster&lt;/a>)&lt;/p>
 &lt;p>首先，使用 &lt;code>ROSA CLI&lt;/code> 檢查 AWS 憑證&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ rosa verify permissions
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ rosa verify permissions
 I: Validating SCP policies...
 I: AWS SCP policies ok
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>第一次登錄時，你會需要一個 Token 來登入你的 Red Hat 帳號&lt;/p>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>第一次登錄時，你會需要一個 Token 來登入你的 Red Hat 帳號&lt;/p>
 &lt;blockquote>
 &lt;p>需要創建一組 Red Hat 帳號&lt;/p>
 &lt;/blockquote>
 &lt;p>確認登入訊息：&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ rosa login
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ rosa login
 I: Logged in as &lt;span class="s1">&amp;#39;xxxx@mail.com&amp;#39;&lt;/span> on &lt;span class="s1">&amp;#39;https://api.openshift.com&amp;#39;&lt;/span>
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>配置完成後可以透過 &lt;code>rosa whoami&lt;/code> 來檢查你目前所有登錄憑證與狀態&lt;/p>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>配置完成後可以透過 &lt;code>rosa whoami&lt;/code> 來檢查你目前所有登錄憑證與狀態&lt;/p>
 &lt;blockquote>
 &lt;p>Red Hat 帳號會附帶 OpenShift Cluster Manager (OCM) 資訊與你的 AWS 帳戶顯示。&lt;/p>
 &lt;/blockquote>
-&lt;pre tabindex="0">&lt;code>$ rosa whoami
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ rosa whoami
 AWS Account ID: xxxxxxxxxxxx
 AWS Default Region: us-west-2
 AWS ARN: arn:aws:iam::xxxxxxxxxxxx:user/user
@@ -139,34 +222,69 @@ OCM Account Email: xxxxx@xxxxx.com
 OCM Organization ID: xxxxxxxxxxxxxxxxxxxxxx
 OCM Organization Name: Red Hat
 OCM Organization External ID: xxxxxxxx
-&lt;/code>&lt;/pre>&lt;p>以上檢查沒問題後，接下運行 &lt;code>rosa init&lt;/code> 運行指令來確保 ROSA 配置與相關資源狀態沒問題&lt;/p>
-&lt;pre tabindex="0">&lt;code>$ rosa init
-I: Logged in as 'xxxxxx@mail.com' on 'https://api.openshift.com'
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>以上檢查沒問題後，接下運行 &lt;code>rosa init&lt;/code> 運行指令來確保 ROSA 配置與相關資源狀態沒問題&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ rosa init
+I: Logged in as &amp;#39;xxxxxx@mail.com&amp;#39; on &amp;#39;https://api.openshift.com&amp;#39;
 I: Validating AWS credentials...
 I: AWS credentials are valid!
 I: Validating SCP policies...
 I: AWS SCP policies ok
 I: Validating AWS quota...
 I: AWS quota ok. If cluster installation fails, validate actual AWS resource usage against https://docs.openshift.com/rosa/rosa_getting_started/rosa-required-aws-service-quotas.html
-I: Ensuring cluster administrator user 'osdCcsAdmin'...
-I: Admin user 'osdCcsAdmin' already exists!
-I: Validating SCP policies for 'osdCcsAdmin'...
+I: Ensuring cluster administrator user &amp;#39;osdCcsAdmin&amp;#39;...
+I: Admin user &amp;#39;osdCcsAdmin&amp;#39; already exists!
+I: Validating SCP policies for &amp;#39;osdCcsAdmin&amp;#39;...
 I: AWS SCP policies ok
 I: Validating cluster creation...
 I: Cluster creation valid
 I: Verifying whether OpenShift command-line tool is available...
 I: Current OpenShift Client Version: 4.8.10
-&lt;/code>&lt;/pre>&lt;blockquote>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
 &lt;p>需要驗證當前環境，是否已經登入 AWS並確認透過&lt;code>rosa init&lt;/code> 來確認 AWS 資源與配置是否能足夠創建 OpenShift&lt;/p>
 &lt;/blockquote>
 &lt;h3 id="申請-aws-帳戶配額">申請 AWS 帳戶配額&lt;/h3>
 &lt;p>在配置 ROSA 時作為預先檢查 &lt;code>$ rosa verify quota --region=${cluster}&lt;/code> 叢集名稱。如果您在剛剛部署但未執行任何操作的帳戶上運行它，您將收到錯誤訊息 EC2 &lt;code>quota 配置不足&lt;/code>。&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ rosa verify quota --region&lt;span class="o">=&lt;/span>us-west-2
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ rosa verify quota --region&lt;span class="o">=&lt;/span>us-west-2
 I: Validating AWS quota...
 E: Insufficient AWS quotas
 E: Service quota is insufficient &lt;span class="k">for&lt;/span> the following service quota codes:
 - Service ec2 quota code L-1216C47A Running On-Demand Standard &lt;span class="o">(&lt;/span>A, C, D, H, I, M, R, T, Z&lt;span class="o">)&lt;/span> instances not valid, expected quota of at least 100, but got &lt;span class="m">5&lt;/span>
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>這邊需要額外申請 AWS EC2 限制增加配額
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>這邊需要額外申請 AWS EC2 限制增加配額
 &lt;figure
 >
 &lt;a href="https://i.imgur.com/X2PtefK.png" >
@@ -200,15 +318,59 @@ loading="lazy"
 &lt;/a>
 &lt;/figure>&lt;/p>
 &lt;p>以上完成申請後，再次驗證&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ rosa verify quota --region&lt;span class="o">=&lt;/span>us-west-2
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ rosa verify quota --region&lt;span class="o">=&lt;/span>us-west-2
 I: Validating AWS quota...
 I: AWS quota ok. If cluster installation fails, validate actual AWS resource usage against https://docs.openshift.com/rosa/rosa_getting_started/rosa-required-aws-service-quotas.htm
-&lt;/code>&lt;/pre>&lt;/div>&lt;hr>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
 &lt;h2 id="透過-rosa-指令快速創建-red-hat-openshift">透過 ROSA 指令快速創建 Red Hat OpenShift&lt;/h2>
 &lt;ul>
 &lt;li>透過 &lt;code>rosa create cluster&lt;/code> 開始部署 OpenShift Cluster (部署Cluster 大約需要30-40分鐘)&lt;/li>
 &lt;/ul>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ rosa create cluster --cluster-name&lt;span class="o">=&lt;/span>rosacluster
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ rosa create cluster --cluster-name&lt;span class="o">=&lt;/span>rosacluster
 I: Creating cluster &lt;span class="s1">&amp;#39;rosacluster&amp;#39;&lt;/span>
 I: To view a list of clusters and their status, run &lt;span class="s1">&amp;#39;rosa list clusters&amp;#39;&lt;/span>
 I: Cluster &lt;span class="s1">&amp;#39;rosacluster&amp;#39;&lt;/span> has been created.
@@ -239,7 +401,9 @@ State: pending &lt;span class="o">(&lt;/span>Preparing account&lt;span class="o"
 Private: No
 Created: xxxxxxxxxxxxxxxx
 Details Page: https://cloud.redhat.com/openshift/details/XXXXXXXXXXXXXXXXXXXX
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>執行命令後，您可以透過 &lt;code>rosa describe cluster&lt;/code> 或 &lt;code>rosa logs install&lt;/code> 指令檢查 OpenShift Cluster 狀態。您還可以從 URL 訪問 OpenShift Console 進行確認。&lt;/p>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>執行命令後，您可以透過 &lt;code>rosa describe cluster&lt;/code> 或 &lt;code>rosa logs install&lt;/code> 指令檢查 OpenShift Cluster 狀態。您還可以從 URL 訪問 OpenShift Console 進行確認。&lt;/p>
 &lt;p>&lt;figure
 >
 &lt;a href="https://i.imgur.com/DvBaXFH.png" >
@@ -264,18 +428,58 @@ loading="lazy"
 >
 &lt;/a>
 &lt;/figure>&lt;/p>
-&lt;pre tabindex="0">&lt;code>$ rosa create admin -c rosacluster
-W: It is recommended to add an identity provider to login to this cluster. See 'rosa create idp --help' for more information.
-I: Admin account has been added to cluster 'rosacluster'.
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ rosa create admin -c rosacluster
+W: It is recommended to add an identity provider to login to this cluster. See &amp;#39;rosa create idp --help&amp;#39; for more information.
+I: Admin account has been added to cluster &amp;#39;rosacluster&amp;#39;.
 I: Please securely store this generated password. If you lose this password you can delete and recreate the cluster admin user.
 I: To login, run the following command:
 oc login https://api.rosacluster.hffh.p1.openshiftapps.com:6443 --username cluster-admin --password fTwWy-rYJJU-wUua7-W3G6Z
 I: It may take up to a minute for the account to become active.
-&lt;/code>&lt;/pre>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ oc login https://api.rosacluster.hffh.p1.openshiftapps.com:6443 --username cluster-admin --password fTwWy-rYJJU-wUua7-W3G6Z
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ oc login https://api.rosacluster.hffh.p1.openshiftapps.com:6443 --username cluster-admin --password fTwWy-rYJJU-wUua7-W3G6Z
 Login successful.
 You have access to &lt;span class="m">87&lt;/span> projects, the list has been suppressed. You can list all projects with &lt;span class="s1">&amp;#39;oc projects&amp;#39;&lt;/span>
 Using project &lt;span class="s2">&amp;#34;default&amp;#34;&lt;/span>.
-&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ oc get no
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ oc get no
 NAME STATUS ROLES AGE VERSION
 ip-10-0-153-95.us-west-2.compute.internal Ready worker 42m v1.21.1+d8043e1
 ip-10-0-171-119.us-west-2.compute.internal Ready infra,worker 17m v1.21.1+d8043e1
@@ -284,16 +488,28 @@ ip-10-0-202-234.us-west-2.compute.internal Ready master 49m v1.21.1+d8043e1
 ip-10-0-239-231.us-west-2.compute.internal Ready master 49m v1.21.1+d8043e1
 ip-10-0-242-134.us-west-2.compute.internal Ready master 49m v1.21.1+d8043e1
 ip-10-0-252-208.us-west-2.compute.internal Ready worker 42m v1.21.1+d8043e1
-&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="刪除-cluster">刪除 Cluster&lt;/h2>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="刪除-cluster">刪除 Cluster&lt;/h2>
 &lt;p>&lt;code>rosa delete cluster&lt;/code> 可以使用指令刪除使用 ROSA 創建的cluster。順便說一下，集群的刪除在大約 10 分鐘內完成。&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ rosa delete cluster --cluster&lt;span class="o">=&lt;/span>rosacluster
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ rosa delete cluster --cluster&lt;span class="o">=&lt;/span>rosacluster
 ? Are you sure you want to delete cluster rosacluster? Yes
 I: Cluster &lt;span class="s1">&amp;#39;rosacluster&amp;#39;&lt;/span> will start uninstalling now
 I: To watch your cluster uninstallation logs, run &lt;span class="err">&amp;#39;&lt;/span>rosa logs uninstall -c rosacluster --watch
-&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="reference">Reference&lt;/h2>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="reference">Reference&lt;/h2>
 &lt;ul>
 &lt;li>rosaworkshop.io&lt;/li>
-&lt;/ul></description></item><item><title>OpenShift Intsall Troubleshooting Notes</title><link>https://blog.yylin.io/p/openshift-intsall-troubleshooting-notes/</link><pubDate>Wed, 29 Sep 2021 00:53:25 +0800</pubDate><guid>https://blog.yylin.io/p/openshift-intsall-troubleshooting-notes/</guid><description>&lt;p>延伸上一篇 OCP UPI 部署(&lt;a class="link" href="https://blog.yylin.io/p/openshift-4.8.x-upi-install-on-bare-metal" target="_blank" rel="noopener"
+&lt;/ul></description></item><item><title>OpenShift Intsall Troubleshooting Notes</title><link>https://blog.yylin.io/openshift/install-troubleshooting/</link><pubDate>Wed, 29 Sep 2021 00:53:25 +0800</pubDate><guid>https://blog.yylin.io/openshift/install-troubleshooting/</guid><description>&lt;p>延伸上一篇 OCP UPI 部署(&lt;a class="link" href="https://blog.yylin.io/p/openshift-4.8.x-upi-install-on-bare-metal" target="_blank" rel="noopener"
 >OpenShift 4.8.x UPI install on Bare metal&lt;/a>)過程遇到問題彙整。&lt;/p>
 &lt;blockquote>
 &lt;p>備註: 由於資源有限情況下，透過單一伺服器(主機)透過 VM 模擬實際節點硬體資源環境，這邊主要透過檢測與除錯，來確保 OpenShift 部署成功。&lt;/p>
@@ -303,17 +519,36 @@ I: To watch your cluster uninstallation logs, run &lt;span class="err">&amp;#39;
 &lt;ul>
 &lt;li>發現特定 Pod 持續&lt;code>RunningNotReady&lt;/code> 狀態&lt;/li>
 &lt;/ul>
-&lt;pre tabindex="0">&lt;code class="language-bash=" data-lang="bash=">W0830 11:16:37.087497 35214 reflector.go:436] k8s.io/client-go/tools/watch/informerwatcher.go:146: watch of *v1.ConfigMap ended with: very short watch: k8s.io/client-go/tools/watch/informerwatcher.go:146: Unexpected watch close - watch lasted less than a second and no items received
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">W0830 11:16:37.087497 35214 reflector.go:436] k8s.io/client-go/tools/watch/informerwatcher.go:146: watch of *v1.ConfigMap ended with: very short watch: k8s.io/client-go/tools/watch/informerwatcher.go:146: Unexpected watch close - watch lasted less than a second and no items received
 apiserver - &amp;gt; RunningNotReady
 Aug 30 03:42:37 bootstrap.lab.yiylin.internal bootkube.sh[644199]: Pod Status:openshift-kube-apiserver/kube-apiserver RunningNotReady
-&lt;/code>&lt;/pre>&lt;blockquote>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
 &lt;p>此情境請透過收集&lt;code>bootstrap&lt;/code> 節點日誌，來確認環境問題&lt;/p>
 &lt;/blockquote>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ ./openshift-install gather bootstrap --dir&lt;span class="o">=&lt;/span>&amp;lt;installation_directory&amp;gt;
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ ./openshift-install gather bootstrap --dir&lt;span class="o">=&lt;/span>&amp;lt;installation_directory&amp;gt;
 ...
 INFO Pulling debug logs from the bootstrap machine
 INFO Bootstrap gather logs captured here &lt;span class="s2">&amp;#34;&amp;lt;installation_directory&amp;gt;/log-bundle-&amp;lt;timestamp&amp;gt;.tar.gz&amp;#34;&lt;/span>
-&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
 &lt;li>蒐集包含 bootstrap process / bootstrap 上所有 Pod/Container 的 log&lt;/li>
 &lt;li>下載完後解壓縮 &lt;code>.tar.gz&lt;/code> 檔案，針對可能部署或未啟動的&lt;code>Pod&lt;/code>檢查log錯誤狀態，來找到對應的錯誤資訊&lt;/li>
 &lt;/ul>
@@ -340,11 +575,21 @@ INFO Bootstrap gather logs captured here &lt;span class="s2">&amp;#34;&amp;lt;in
 &lt;p>造成叢集有時候部署成功有時候會失敗的情況&lt;/p>
 &lt;/blockquote>
 &lt;p>透過簡單運行 &lt;code>fio&lt;/code> 來測試 etcd benchamrk performance 檢測&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ oc debug node/&amp;lt;master_node&amp;gt;
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ oc debug node/&amp;lt;master_node&amp;gt;
 &lt;span class="o">[&lt;/span>...&lt;span class="o">]&lt;/span>
 sh-4.4# chroot /host bash
 &lt;span class="o">[&lt;/span>root@&amp;lt;master_node&amp;gt; /&lt;span class="o">]&lt;/span>&lt;span class="c1"># podman run --volume /var/lib/etcd:/var/lib/etcd:Z quay.io/openshift-scale/etcd-perf&lt;/span>
-&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="reference-1">Reference:&lt;/h4>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h4 id="reference-1">Reference:&lt;/h4>
 &lt;ul>
 &lt;li>&lt;a class="link" href="https://access.redhat.com/solutions/4885641" target="_blank" rel="noopener"
 >How to Use &amp;lsquo;fio&amp;rsquo; to Check Etcd Disk Performance in OCP
@@ -370,7 +615,7 @@ sh-4.4# chroot /host bash
 &lt;ul>
 &lt;li>&lt;a class="link" href="https://connect.redhat.com/en/blog/openshift-troubleshooting-resources" target="_blank" rel="noopener"
 >OpenShift Troubleshooting Resources&lt;/a>&lt;/li>
-&lt;/ul></description></item><item><title>OpenShift 4.8.x UPI install on Bare metal</title><link>https://blog.yylin.io/p/openshift-4.8.x-upi-install-on-bare-metal/</link><pubDate>Sun, 26 Sep 2021 14:54:40 +0800</pubDate><guid>https://blog.yylin.io/p/openshift-4.8.x-upi-install-on-bare-metal/</guid><description>&lt;blockquote>
+&lt;/ul></description></item><item><title>OpenShift 4.8.x UPI install on Bare metal</title><link>https://blog.yylin.io/openshift/ocp4-install/</link><pubDate>Sun, 26 Sep 2021 14:54:40 +0800</pubDate><guid>https://blog.yylin.io/openshift/ocp4-install/</guid><description>&lt;blockquote>
 &lt;p>[註記] 由於硬體環境資源有限，本實驗是透過 &lt;a class="link" href="https://pve.proxmox.com/wiki/Main_Page" target="_blank" rel="noopener"
 >&lt;code>Proxmox Environment&lt;/code>&lt;/a> 單一伺服器節點來模擬部署 &lt;code>OpenShift&lt;/code> 叢集，並依據官網配置建議硬體需求(Server sizing)資源。
 [共同撰寫編輯]: &lt;a class="link" href="https://k2r2bai.com/" target="_blank" rel="noopener"
@@ -530,29 +775,85 @@ loading="lazy"
 &lt;/blockquote>
 &lt;h3 id="事前準備-1">事前準備&lt;/h3>
 &lt;p>進入 &lt;code>bastion&lt;/code> 機器，安裝 jq 與 wget 工具等:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ sudo su -
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ sudo su -
 $ yum install -y wget jq vim
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>關閉 bastion 防火牆:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">$ systemctl stop firewalld
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>關閉 bastion 防火牆:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">$ systemctl stop firewalld
 $ systemctl disable firewalld
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;gt; 這邊方便測試，所以直接關閉 :D。&lt;/p>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&amp;gt; 這邊方便測試，所以直接關閉 :D。&lt;/p>
 &lt;p>設定與關閉 SELinux:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">$ vim /etc/selinux/config
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">$ vim /etc/selinux/config
 &lt;span class="nv">SELINUX&lt;/span>&lt;span class="o">=&lt;/span>disabled
 $ setenforce &lt;span class="m">0&lt;/span>
-&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
 &lt;p>這邊方便測試實驗，所以直接關閉。&lt;/p>
 &lt;/blockquote>
 &lt;p>建立 SSH Keys:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ ssh-keygen -t rsa
-&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ ssh-keygen -t rsa
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
 &lt;p>這邊方便測試，以 root 來建立。&lt;/p>
 &lt;/blockquote>
 &lt;p>導入以下環境變數:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="nb">export&lt;/span> &lt;span class="nv">DOMAIN&lt;/span>&lt;span class="o">=&lt;/span>lab.yiylin.internal
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="nb">export&lt;/span> &lt;span class="nv">DOMAIN&lt;/span>&lt;span class="o">=&lt;/span>lab.yiylin.internal
 &lt;span class="nb">export&lt;/span> &lt;span class="nv">OCP_NETWORK_CIDR&lt;/span>&lt;span class="o">=&lt;/span>192.168.101.0/24
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>下載 OpenShift Installer 與 CLI 工具，並解壓縮檔案到 &lt;code>/usr/local/bin/&lt;/code> 底下:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="c1"># CLI&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>下載 OpenShift Installer 與 CLI 工具，並解壓縮檔案到 &lt;code>/usr/local/bin/&lt;/code> 底下:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="c1"># CLI&lt;/span>
 $ wget -c https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest-4.8/openshift-client-linux.tar.gz -O - &lt;span class="p">|&lt;/span> tar -xz
 $ mv &lt;span class="o">{&lt;/span>oc,kubectl&lt;span class="o">}&lt;/span> /usr/local/bin/
 $ oc version
@@ -562,15 +863,78 @@ $ wget -c https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest-4.8/o
 $ mv openshift-install /usr/local/bin/
 $ openshift-install version
 openshift-install 4.8.2
-&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="安裝與設定-dns-server">安裝與設定 DNS Server&lt;/h3>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="安裝與設定-dns-server">安裝與設定 DNS Server&lt;/h3>
 &lt;p>安裝 DNS server 套件，這邊使用 &lt;code>dnsmasq&lt;/code> 來提供服務:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ yum -y install dnsmasq bind-utils
-&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ yum -y install dnsmasq bind-utils
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
 &lt;p>這部分也可參考 OCP 官網安裝 &lt;a class="link" href="https://docs.openshift.com/container-platform/4.8/installing/installing_bare_metal/installing-bare-metal.html#installation-dns-user-infra-example_installing-bare-metal" target="_blank" rel="noopener"
 >BIND&lt;/a>，關於不同 &lt;code>DNS Server&lt;/code> 相關配置方法，會額外補充於後續文章介紹。&lt;/p>
 &lt;/blockquote>
 &lt;p>編輯 &lt;code>/etc/dnsmasq.d/openshift.conf&lt;/code> 設定檔，以設定 A Record 與 PTR:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ cat &amp;lt;&amp;lt; &lt;span class="s2">&amp;#34;EOF&amp;#34;&lt;/span> &amp;gt; /etc/dnsmasq.d/openshift.conf
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;span class="lnt">49
+&lt;/span>&lt;span class="lnt">50
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ cat &amp;lt;&amp;lt; &lt;span class="s2">&amp;#34;EOF&amp;#34;&lt;/span> &amp;gt; /etc/dnsmasq.d/openshift.conf
 &lt;span class="nv">server&lt;/span>&lt;span class="o">=&lt;/span>8.8.8.8
 &lt;span class="nv">domain&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">DOMAIN&lt;/span>&lt;span class="si">}&lt;/span>,&lt;span class="si">${&lt;/span>&lt;span class="nv">OCP_NETWORK_CIDR&lt;/span>&lt;span class="si">}&lt;/span>,local
 &lt;span class="c1"># A Records(api)&lt;/span>
@@ -614,38 +978,125 @@ srv-host&lt;span class="o">=&lt;/span>_etcd-server-ssl._tcp.&lt;span class="si">
 &lt;span class="nv">address&lt;/span>&lt;span class="o">=&lt;/span>/infra-2.&lt;span class="si">${&lt;/span>&lt;span class="nv">DOMAIN&lt;/span>&lt;span class="si">}&lt;/span>/192.168.101.42
 &lt;span class="nv">address&lt;/span>&lt;span class="o">=&lt;/span>/infra-3.&lt;span class="si">${&lt;/span>&lt;span class="nv">DOMAIN&lt;/span>&lt;span class="si">}&lt;/span>/192.168.101.43
 EOF
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>啟動 dnsmasq 服務，並檢測 dnsmasq 設定是否正確:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ systemctl &lt;span class="nb">enable&lt;/span> dnsmasq&lt;span class="p">;&lt;/span> systemctl start dnsmasq
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>啟動 dnsmasq 服務，並檢測 dnsmasq 設定是否正確:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ systemctl &lt;span class="nb">enable&lt;/span> dnsmasq&lt;span class="p">;&lt;/span> systemctl start dnsmasq
 $ dnsmasq --test
 dnsmasq: syntax check OK.
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>編輯 &lt;code>/etc/resolv.conf&lt;/code> 檔案，修改 nameserver:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ cat &amp;lt;&amp;lt; &lt;span class="s2">&amp;#34;EOF&amp;#34;&lt;/span> &amp;gt; /etc/resolv.conf
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>編輯 &lt;code>/etc/resolv.conf&lt;/code> 檔案，修改 nameserver:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ cat &amp;lt;&amp;lt; &lt;span class="s2">&amp;#34;EOF&amp;#34;&lt;/span> &amp;gt; /etc/resolv.conf
 nameserver 127.0.0.1
 EOF
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>驗證 DNS server 正反解:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="c1"># dig domain @dns_server&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>驗證 DNS server 正反解:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="c1"># dig domain @dns_server&lt;/span>
 $ dig bastion.&lt;span class="si">${&lt;/span>&lt;span class="nv">DOMAIN&lt;/span>&lt;span class="si">}&lt;/span> @192.168.101.9
 &lt;span class="c1"># dig -x ip @dns_server&lt;/span>
 $ dig -x 192.168.101.9 @192.168.101.9
-&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
 &lt;p>請驗證填寫自己對應的 &lt;code>ip address&lt;/code>&lt;/p>
 &lt;/blockquote>
 &lt;h3 id="安裝與設定-http-server">安裝與設定 HTTP Server&lt;/h3>
 &lt;p>安裝與設定 httpd 套件:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ yum -y install httpd
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>編輯 &lt;code>/etc/httpd/conf/httpd.conf&lt;/code> 設定檔:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="c1">#Listen 12.34.56.78:80&lt;/span>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ yum -y install httpd
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>編輯 &lt;code>/etc/httpd/conf/httpd.conf&lt;/code> 設定檔:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="c1">#Listen 12.34.56.78:80&lt;/span>
 Listen 8080
-&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
 &lt;p>因為 80 是 Ingress-http 使用，除非將 HAProxy 拆成不同節點或用 External LB。&lt;/p>
 &lt;/blockquote>
 &lt;p>啟動 httpd 服務:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ systemctl &lt;span class="nb">enable&lt;/span> httpd&lt;span class="p">;&lt;/span> systemctl start httpd
-&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="產生-openshift-ignition-fils">產生 OpenShift Ignition fils&lt;/h3>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ systemctl &lt;span class="nb">enable&lt;/span> httpd&lt;span class="p">;&lt;/span> systemctl start httpd
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="產生-openshift-ignition-fils">產生 OpenShift Ignition fils&lt;/h3>
 &lt;p>建立放置 OpenShift Config 檔案的目錄:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ &lt;span class="nb">cd&lt;/span> &lt;span class="nv">$HOME&lt;/span> &lt;span class="p">;&lt;/span> mkdir &lt;span class="nv">$HOME&lt;/span>/ocp4/ignition&lt;span class="p">;&lt;/span>&lt;span class="nb">cd&lt;/span> &lt;span class="nv">$HOME&lt;/span>/ocp4/ignition
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>建立與編輯 &lt;code>install-config.yaml&lt;/code> 檔案:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="nt">apiVersion&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">v1&lt;/span>&lt;span class="w">
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ &lt;span class="nb">cd&lt;/span> &lt;span class="nv">$HOME&lt;/span> &lt;span class="p">;&lt;/span> mkdir &lt;span class="nv">$HOME&lt;/span>/ocp4/ignition&lt;span class="p">;&lt;/span>&lt;span class="nb">cd&lt;/span> &lt;span class="nv">$HOME&lt;/span>/ocp4/ignition
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>建立與編輯 &lt;code>install-config.yaml&lt;/code> 檔案:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="nt">apiVersion&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">v1&lt;/span>&lt;span class="w">
 &lt;/span>&lt;span class="w">&lt;/span>&lt;span class="nt">baseDomain&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">yiylin.internal&lt;/span>&lt;span class="w">
 &lt;/span>&lt;span class="w">&lt;/span>&lt;span class="nt">compute&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
 &lt;/span>&lt;span class="w">&lt;/span>- &lt;span class="nt">hyperthreading&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Enabled&lt;/span>&lt;span class="w">
@@ -668,7 +1119,9 @@ Listen 8080
 &lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nt">none&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>{}&lt;span class="w">
 &lt;/span>&lt;span class="w">&lt;/span>&lt;span class="nt">pullSecret&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s1">&amp;#39;{&amp;#34;auths&amp;#34;:{ YOUR_PULL_SECRETE }}&amp;#39;&lt;/span>&lt;span class="w">
 &lt;/span>&lt;span class="w">&lt;/span>&lt;span class="nt">sshKey&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;SSH_PUB_KEY&amp;#34;&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
 &lt;ul>
 &lt;li>Pull secret 可在 &lt;a class="link" href="https://cloud.redhat.com/openshift/install/metal/user-provisioned" target="_blank" rel="noopener"
 >Create Cluster by user provisioned&lt;/a> 取得。&lt;/li>
@@ -678,21 +1131,67 @@ Listen 8080
 &lt;/ul>
 &lt;/blockquote>
 &lt;p>產生 manifests 相關檔案:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ cp install-config.yaml install-config.yaml.bak
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ cp install-config.yaml install-config.yaml.bak
 $ openshift-install create manifests --dir&lt;span class="o">=&lt;/span>&lt;span class="nv">$HOME&lt;/span>/ocp4/ignition
 $ ls &lt;span class="nv">$HOME&lt;/span>/ocp4/ignition
 manifests openshift
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>編輯 &lt;code>manifests/cluster-scheduler-02-config.yml&lt;/code> 檔案，設定 &lt;code>mastersSchedulable&lt;/code> 值，以確保 master 不作為工作負載節點:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="nn">...&lt;/span>&lt;span class="w">
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>編輯 &lt;code>manifests/cluster-scheduler-02-config.yml&lt;/code> 檔案，設定 &lt;code>mastersSchedulable&lt;/code> 值，以確保 master 不作為工作負載節點:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="nn">...&lt;/span>&lt;span class="w">
 &lt;/span>&lt;span class="w">&lt;/span>&lt;span class="nt">spec&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
 &lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nt">mastersSchedulable&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">false&lt;/span>&lt;span class="w">
 &lt;/span>&lt;span class="w">&lt;/span>&lt;span class="nn">...&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>產生 OCP 使用的 Ignition files:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ openshift-install create ignition-configs --dir&lt;span class="o">=&lt;/span>&lt;span class="nv">$HOME&lt;/span>/ocp4/ignition
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>產生 OCP 使用的 Ignition files:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ openshift-install create ignition-configs --dir&lt;span class="o">=&lt;/span>&lt;span class="nv">$HOME&lt;/span>/ocp4/ignition
 $ ls &lt;span class="nv">$HOME&lt;/span>/ocp4/ignition
 auth bootstrap.ign master.ign metadata.json worker.ign
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>撰寫方面安裝 RHCOS 的腳本 &lt;code>$HOME/ocp4/ignition/coreos-install.sh&lt;/code>:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="cp">#!/bin/bash
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>撰寫方面安裝 RHCOS 的腳本 &lt;code>$HOME/ocp4/ignition/coreos-install.sh&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="cp">#!/bin/bash
 &lt;/span>&lt;span class="cp">&lt;/span>
 &lt;span class="nb">set&lt;/span> -eu
 &lt;span class="nb">export&lt;/span> &lt;span class="nv">DEVICE_NAME&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">DEVICE_NAME&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="p">/dev/sda&lt;/span>&lt;span class="si">}&lt;/span>
@@ -703,17 +1202,38 @@ sudo coreos-installer install &lt;span class="si">${&lt;/span>&lt;span class="nv
 &lt;/span>&lt;span class="se">&lt;/span> --ignition-url&lt;span class="o">=&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">IGNITION_URL&lt;/span>&lt;span class="si">}&lt;/span> &lt;span class="se">\
 &lt;/span>&lt;span class="se">&lt;/span> --firstboot-args rd.neednet&lt;span class="o">=&lt;/span>&lt;span class="m">1&lt;/span> &lt;span class="se">\
 &lt;/span>&lt;span class="se">&lt;/span> --copy-network
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>複製 &lt;code>*.ign&lt;/code> 與腳本 到 &lt;code>/var/www/html/ignition&lt;/code> 目錄:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ mkdir /var/www/html/ignition
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>複製 &lt;code>*.ign&lt;/code> 與腳本 到 &lt;code>/var/www/html/ignition&lt;/code> 目錄:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ mkdir /var/www/html/ignition
 $ cp -rp &lt;span class="nv">$HOME&lt;/span>/ocp4/ignition/&lt;span class="o">{&lt;/span>*.ign,coreos-install.sh&lt;span class="o">}&lt;/span> /var/www/html/ignition
 $ ls /var/www/html/ignition
 bootstrap.ign master.ign worker.ign coreos-install.sh
 $ chmod &lt;span class="m">664&lt;/span> -R /var/www/html/ignition/*
-&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="bootstrap">Bootstrap&lt;/h2>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="bootstrap">Bootstrap&lt;/h2>
 &lt;p>透過 PVE 建立 Bootstrap 節點，並掛載 RHCOS Live ISO，並進入 Console 執行以下操作。&lt;/p>
 &lt;p>首先進入系統後，先設定 Network 資訊:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ sudo nmtui
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>設定網卡資訊:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ sudo nmtui
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>設定網卡資訊:&lt;/p>
 &lt;p>&lt;figure
 >
 &lt;a href="https://i.imgur.com/tJFSkiO.png" >
@@ -751,22 +1271,56 @@ loading="lazy"
 &lt;/a>
 &lt;/figure>&lt;/p>
 &lt;p>透過以下指令檢查設定結果:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ ip -4 a
-&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ ip -4 a
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
 &lt;p>確認網路與 DNS 都能夠被解析到。&lt;/p>
 &lt;/blockquote>
 &lt;p>確認沒問題後，執行以下指令來安裝 RHCOS，並設定為 Bootstrap 節點:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ curl http://192.168.101.9:8080/ignition/coreos-install.sh --output coreos-install.sh
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ curl http://192.168.101.9:8080/ignition/coreos-install.sh --output coreos-install.sh
 $ chmod u+x coreos-install.sh
 $ ./coreos-install.sh
 &lt;span class="c1"># 安裝完成後&lt;/span>
 $ lsblk -f
 $ reboot
-&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
 &lt;p>安裝沒問題後，重新啟動機器，並將 CD-ROM 移除。&lt;/p>
 &lt;/blockquote>
 &lt;p>Bootstrap 開啟完成後，回到 &lt;code>bastion&lt;/code> 節點執行以下指令來檢查部署狀況:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ openshift-install wait-for bootstrap-complete --dir&lt;span class="o">=&lt;/span>&lt;span class="nv">$HOME&lt;/span>/ocp4/ignition --log-level debug
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ openshift-install wait-for bootstrap-complete --dir&lt;span class="o">=&lt;/span>&lt;span class="nv">$HOME&lt;/span>/ocp4/ignition --log-level debug
 DEBUG OpenShift Installer 4.8.2
 DEBUG Built from commit a5ddd2dd6c72d8a5ea0a5f17acd8b964b6a3d1be
 INFO Waiting up to 20m0s &lt;span class="k">for&lt;/span> the Kubernetes API at https://api.lab.yiylin.internal:6443...
@@ -775,13 +1329,38 @@ INFO Waiting up to 30m0s &lt;span class="k">for&lt;/span> bootstrapping to compl
 &lt;span class="c1"># 確認 openshift-api-server 以及 machine-config-server LB 可以通&lt;/span>
 $ curl -k https://api-int.&lt;span class="si">${&lt;/span>&lt;span class="nv">DOMAIN&lt;/span>&lt;span class="si">}&lt;/span>:6443
 $ curl -k https://api-int.&lt;span class="si">${&lt;/span>&lt;span class="nv">DOMAIN&lt;/span>&lt;span class="si">}&lt;/span>:22623/config/master &lt;span class="p">|&lt;/span> jq .
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>當看到此訊息時，就能並往下進行安裝 Masters。若等待過久，可以透過 bastion 進入 bootstrap 節點查看狀況:&lt;/p>
-&lt;pre tabindex="0">&lt;code>$ ssh core@bootstrap.lab.yiylin.internal
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>當看到此訊息時，就能並往下進行安裝 Masters。若等待過久，可以透過 bastion 進入 bootstrap 節點查看狀況:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ ssh core@bootstrap.lab.yiylin.internal
 core $ sudo crictl pods
 core $ sudo crictl ps -a
 core $ sudo journalctl -b -f -u bootkube.service
-&lt;/code>&lt;/pre>&lt;p>正常情況 Pods 要如以下:&lt;/p>
-&lt;pre tabindex="0">&lt;code>POD ID CREATED STATE NAME NAMESPACE ATTEMPT RUNTIME
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>正常情況 Pods 要如以下:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">POD ID CREATED STATE NAME NAMESPACE ATTEMPT RUNTIME
 8101e41b16f9e 52 seconds ago Ready bootstrap-kube-scheduler-localhost kube-system 0 (default)
 907d0a933771a 52 seconds ago Ready bootstrap-kube-controller-manager-localhost kube-system 0 (default)
 a8b709f7caeaa 52 seconds ago Ready bootstrap-kube-apiserver-localhost kube-system 0 (default)
@@ -789,30 +1368,85 @@ a8b709f7caeaa 52 seconds ago Ready bootstrap-kube-apiserver-localhost kube-syste
 49a1cdb2b25f9 52 seconds ago Ready bootstrap-cluster-version-operator-localhost openshift-cluster-version 0 (default)
 c5098e42b5aa5 About a minute ago Ready bootstrap-machine-config-operator-localhost default 0 (default)
 e7a3dbc6e0bc0 About a minute ago Ready etcd-bootstrap-member-localhost openshift-etcd 0 (default)
-&lt;/code>&lt;/pre>&lt;h2 id="maters">Maters&lt;/h2>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="maters">Maters&lt;/h2>
 &lt;p>透過 vCenter 建立 Master 節點，並掛載 RHCOS Live ISO，並進入 Console 執行以下操作。&lt;/p>
 &lt;p>首先進入系統後，先設定 Network 資訊:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ sudo nmtui
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;gt; 網路參考 Bootstrap 設定流程。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ sudo nmtui
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&amp;gt; 網路參考 Bootstrap 設定流程。&lt;/p>
 &lt;p>確認沒問題後，執行以下指令來安裝 RHCOS，並設定為 Masters 節點:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ curl http://192.168.101.9:8080/ignition/coreos-install.sh --output coreos-install.sh
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ curl http://192.168.101.9:8080/ignition/coreos-install.sh --output coreos-install.sh
 $ chmod u+x coreos-install.sh
 $ &lt;span class="nb">export&lt;/span> &lt;span class="nv">IGNITION_FILE&lt;/span>&lt;span class="o">=&lt;/span>master.ign
 $ ./coreos-install.sh
 &lt;span class="c1"># 安裝完後&lt;/span>
 $ reboot
-&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
 &lt;p>安裝沒問題後，重新啟動機器，並將 CD-ROM 移除。&lt;/p>
 &lt;/blockquote>
 &lt;p>Masters 都開啟完成後，回到 &lt;code>bastion&lt;/code> 節點執行以下指令來檢查部署狀況:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ openshift-install wait-for bootstrap-complete --dir&lt;span class="o">=&lt;/span>&lt;span class="nv">$HOME&lt;/span>/ocp4/ignition --log-level debug
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ openshift-install wait-for bootstrap-complete --dir&lt;span class="o">=&lt;/span>&lt;span class="nv">$HOME&lt;/span>/ocp4/ignition --log-level debug
 ...
 INFO Waiting up to 30m0s &lt;span class="k">for&lt;/span> bootstrapping to complete...
 DEBUG Bootstrap status: &lt;span class="nb">complete&lt;/span>
 INFO It is now safe to remove the bootstrap resources
 INFO Time elapsed: 0s
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>在 &lt;code>bastion&lt;/code> 執行以下指令來查看叢集狀況:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ cp &lt;span class="nv">$HOME&lt;/span>/ocp4/ignition/auth/kubeconfig &lt;span class="nv">$HOME&lt;/span>/ocp4/kubeconfig
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>在 &lt;code>bastion&lt;/code> 執行以下指令來查看叢集狀況:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ cp &lt;span class="nv">$HOME&lt;/span>/ocp4/ignition/auth/kubeconfig &lt;span class="nv">$HOME&lt;/span>/ocp4/kubeconfig
 $ &lt;span class="nb">export&lt;/span> &lt;span class="nv">KUBECONFIG&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nv">$HOME&lt;/span>/ocp4/kubeconfig
 $ oc get csr
 NAME AGE SIGNERNAME REQUESTOR CONDITION
@@ -828,28 +1462,79 @@ NAME STATUS ROLES AGE VERSION
 master-1.lab.yiylin.internal Ready master 31m v1.21.1+051ac4f
 master-2.lab.yiylin.internal Ready master 15m v1.21.1+051ac4f
 master-3.lab.yiylin.internal Ready master 10m v1.21.1+051ac4f
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>完成後，即可進行 Workers 與 Infras 部署，並移除 Bootstrap。若等待過久，可以透過 bastion 進入 masters 節點查看狀況:&lt;/p>
-&lt;pre tabindex="0">&lt;code>$ ssh core@maste-1.lab.yiylin.internal
-&lt;/code>&lt;/pre>&lt;h2 id="workers-amp-infras">Workers &amp;amp; Infras&lt;/h2>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>完成後，即可進行 Workers 與 Infras 部署，並移除 Bootstrap。若等待過久，可以透過 bastion 進入 masters 節點查看狀況:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ ssh core@maste-1.lab.yiylin.internal
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="workers-amp-infras">Workers &amp;amp; Infras&lt;/h2>
 &lt;p>透過 vCenter 建立 Workers &amp;amp; Infras 節點，並掛載 RHCOS Live ISO，並進入 Console 執行以下操作。&lt;/p>
 &lt;p>首先進入系統後，先設定 Network 資訊:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ sudo nmtui
-&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ sudo nmtui
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
 &lt;p>網路參考 Bootstrap 設定流程。&lt;/p>
 &lt;/blockquote>
 &lt;p>確認沒問題後，執行以下指令來安裝 RHCOS，並設定為 Workers &amp;amp; Infras 節點:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ curl http://192.168.101.9:8080/ignition/coreos-install.sh --output coreos-install.sh
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ curl http://192.168.101.9:8080/ignition/coreos-install.sh --output coreos-install.sh
 $ chmod u+x coreos-install.sh
 $ &lt;span class="nb">export&lt;/span> &lt;span class="nv">IGNITION_FILE&lt;/span>&lt;span class="o">=&lt;/span>worker.ign
 $ ./coreos-install.sh
 &lt;span class="c1"># 安裝完成後&lt;/span>
 $ lsblk -f
 $ reboot
-&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
 &lt;p>安裝沒問題後，重新啟動機器，並將 CD-ROM 移除。&lt;/p>
 &lt;/blockquote>
 &lt;p>Workers &amp;amp; Infras 都開啟完成後，就可以回到 &lt;code>bastion&lt;/code> 節點執行以下指令來檢查部署狀況:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ openshift-install wait-for install-complete --dir&lt;span class="o">=&lt;/span>&lt;span class="nv">$HOME&lt;/span>/ocp4/ignition --log-level debug
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ openshift-install wait-for install-complete --dir&lt;span class="o">=&lt;/span>&lt;span class="nv">$HOME&lt;/span>/ocp4/ignition --log-level debug
 DEBUG OpenShift Installer 4.8.2
 DEBUG Built from commit a5ddd2dd6c72d8a5ea0a5f17acd8b964b6a3d1be
 DEBUG Loading Install Config...
@@ -866,11 +1551,33 @@ DEBUG Loading Platform...
 DEBUG Using Install Config loaded from state file
 INFO Waiting up to 40m0s &lt;span class="k">for&lt;/span> the cluster at https://api.lab.yiylin.internal:6443 to initialize...
 DEBUG Still waiting &lt;span class="k">for&lt;/span> the cluster to initialize: Some cluster operators are still updating: authentication, console, ingress, monitoring
-&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
 &lt;p>出現 &lt;code>DEBUG&lt;/code> 即可往下操作，因為這部分會需要下載 Images 會比較久&lt;/p>
 &lt;/blockquote>
 &lt;p>開啟一個新的 Terminal，在 &lt;code>bastion&lt;/code> 節點 Approve workers CSR:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ &lt;span class="nb">export&lt;/span> &lt;span class="nv">KUBECONFIG&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nv">$HOME&lt;/span>/ocp4/kubeconfig
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ &lt;span class="nb">export&lt;/span> &lt;span class="nv">KUBECONFIG&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nv">$HOME&lt;/span>/ocp4/kubeconfig
 $ oc get csr -ojson &lt;span class="p">|&lt;/span> jq -r .items&lt;span class="o">[]&lt;/span> &lt;span class="p">|&lt;/span> &lt;span class="k">select&lt;/span>&lt;span class="o">(&lt;/span>.status &lt;span class="o">==&lt;/span> &lt;span class="o">{}&lt;/span> &lt;span class="o">)&lt;/span> &lt;span class="p">|&lt;/span> .metadata.name &lt;span class="p">|&lt;/span> xargs oc adm certificate approve
 &lt;span class="c1"># 確認機器都起來&lt;/span>
 $ oc get no
@@ -885,11 +1592,36 @@ worker0 Ready worker 12m v1.21.1+051ac4f
 worker1 Ready worker 12m v1.21.1+051ac4f
 worker2 Ready worker 12m v1.21.1+051ac4f
 worker3 Ready worker 12m v1.21.1+051ac4f
-&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="搬移資源至-infra-nodes">搬移資源至 Infra nodes&lt;/h3>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="搬移資源至-infra-nodes">搬移資源至 Infra nodes&lt;/h3>
 &lt;p>接著要將 Worker 與 Infra 角色做拆分，確保系統與 Operator 服務不影響業務服務的負載，參考 &lt;a class="link" href="https://docs.openshift.com/container-platform/4.8/machine_management/creating-infrastructure-machinesets.html#infrastructure-components_creating-infrastructure-machinesets" target="_blank" rel="noopener"
 >Creating infrastructure machine sets&lt;/a>&lt;/p>
 &lt;p>設定 infra nodes 的 labels:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ &lt;span class="k">for&lt;/span> i in &lt;span class="o">{&lt;/span>1..2&lt;span class="o">}&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">do&lt;/span>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ &lt;span class="k">for&lt;/span> i in &lt;span class="o">{&lt;/span>1..2&lt;span class="o">}&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">do&lt;/span>
 oc label node worker-&lt;span class="si">${&lt;/span>&lt;span class="nv">i&lt;/span>&lt;span class="si">}&lt;/span> node-role.kubernetes.io/app&lt;span class="o">=&lt;/span> --overwrite
 &lt;span class="k">done&lt;/span>
 $ &lt;span class="k">for&lt;/span> i in &lt;span class="o">{&lt;/span>1..3&lt;span class="o">}&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">do&lt;/span>
@@ -906,14 +1638,50 @@ master-2.lab.yiylin.internal Ready master 140m v1.21.1+051ac4f
 master-3.lab.yiylin.internal Ready master 135m v1.21.1+051ac4f
 worker-1.lab.yiylin.internal Ready app,worker 31m v1.21.1+051ac4f
 worker-2.lab.yiylin.internal Ready app,worker 31m v1.21.1+051ac4f
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>編輯 &lt;code>Scheduler&lt;/code> 物件，並調整預設 &lt;code>NodeSelector&lt;/code>:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ oc edit scheduler cluster
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>編輯 &lt;code>Scheduler&lt;/code> 物件，並調整預設 &lt;code>NodeSelector&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ oc edit scheduler cluster
 ...
 spec:
 defaultNodeSelector: node-role.kubernetes.io/app&lt;span class="o">=&lt;/span>
 ...
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>建立 Infra 機器的 Machine Config Pool 檔案:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ cat &lt;span class="p">&amp;amp;&lt;/span>lt&lt;span class="p">;&amp;amp;&lt;/span>lt&lt;span class="p">;&lt;/span>EOF &lt;span class="p">|&lt;/span> oc apply -f -
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>建立 Infra 機器的 Machine Config Pool 檔案:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ cat &lt;span class="p">&amp;amp;&lt;/span>lt&lt;span class="p">;&amp;amp;&lt;/span>lt&lt;span class="p">;&lt;/span>EOF &lt;span class="p">|&lt;/span> oc apply -f -
 apiVersion: machineconfiguration.openshift.io/v1
 kind: MachineConfigPool
 metadata:
@@ -931,11 +1699,27 @@ matchLabels:
 node-role.kubernetes.io/infra:
 EOF
 $ oc get mcp
-&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
 &lt;p>這時 Infra 節點會重新啟動。&lt;/p>
 &lt;/blockquote>
 &lt;p>搬移 Router 元件至 Infra 節點上:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ oc edit IngressController default -n openshift-ingress-operator
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ oc edit IngressController default -n openshift-ingress-operator
 ...
 spec:
 nodePlacement:
@@ -944,16 +1728,74 @@ matchLabels:
 node-role.kubernetes.io/infra:
 replicas: &lt;span class="m">2&lt;/span>
 $ oc -n openshift-ingress get pod -o wide
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>搬移 Image Registry 元件至 Infra 節點上:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ oc edit configs.imageregistry.operator.openshift.io/cluster
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>搬移 Image Registry 元件至 Infra 節點上:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ oc edit configs.imageregistry.operator.openshift.io/cluster
 ...
 spec:
 nodeSelector:
 node-role.kubernetes.io/infra:
 ...
 $ oc -n openshift-image-registry get pods -o wide
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>搬移 Monitoring 元件至 Infra 節點上:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ cat &amp;lt;&amp;lt; &lt;span class="s2">&amp;#34;EOF&amp;#34;&lt;/span> &amp;gt; oc apply -f -
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>搬移 Monitoring 元件至 Infra 節點上:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ cat &amp;lt;&amp;lt; &lt;span class="s2">&amp;#34;EOF&amp;#34;&lt;/span> &amp;gt; oc apply -f -
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -990,16 +1832,33 @@ nodeSelector:
 node-role.kubernetes.io/infra:
 EOF
 $ watch -n 0.1 oc -n openshift-monitoring get pod -o wide
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;gt; 其他資源請參考 &lt;a class="link" href="https://docs.openshift.com/container-platform/4.8/machine_management/creating-infrastructure-machinesets.html#infrastructure-moving-logging_creating-infrastructure-machinesets" target="_blank" rel="noopener"
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&amp;gt; 其他資源請參考 &lt;a class="link" href="https://docs.openshift.com/container-platform/4.8/machine_management/creating-infrastructure-machinesets.html#infrastructure-moving-logging_creating-infrastructure-machinesets" target="_blank" rel="noopener"
 >Moving OpenShift Logging resources&lt;/a> 搬移。&lt;/p>
 &lt;p>叢集初始化會需要一點時間，完成後就可以透過 Console 查看整體狀況。&lt;/p>
 &lt;h2 id="web-console">Web Console&lt;/h2>
 &lt;p>透過 oc 取得 Web console 的 route URL:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ oc -n openshift-console get route console -o&lt;span class="o">=&lt;/span>&lt;span class="nv">jsonpath&lt;/span>&lt;span class="o">={&lt;/span>.spec.host&lt;span class="o">}{&lt;/span>&lt;span class="se">\n&lt;/span>&lt;span class="o">}&lt;/span>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ oc -n openshift-console get route console -o&lt;span class="o">=&lt;/span>&lt;span class="nv">jsonpath&lt;/span>&lt;span class="o">={&lt;/span>.spec.host&lt;span class="o">}{&lt;/span>&lt;span class="se">\n&lt;/span>&lt;span class="o">}&lt;/span>
 console-openshift-console.apps.lab.yiylin.internal
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>取得 OpenShift 的 &lt;code>kubeadmin&lt;/code> 密碼:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ cat &lt;span class="nv">$HOME&lt;/span>/ocp4/ignition/auth/kubeadmin-password
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;figure
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>取得 OpenShift 的 &lt;code>kubeadmin&lt;/code> 密碼:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ cat &lt;span class="nv">$HOME&lt;/span>/ocp4/ignition/auth/kubeadmin-password
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;figure
 >
 &lt;a href="https://i.imgur.com/7ykeVUc.png" >
 &lt;img src="https://i.imgur.com/7ykeVUc.png"
@@ -1010,9 +1869,17 @@ loading="lazy"
 &lt;hr>
 &lt;h2 id="terminal-login">Terminal Login&lt;/h2>
 &lt;p>開啟一個新的 Terminal，在 bastion 節點配置 &lt;code>KUBECONFIG&lt;/code>&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">$ &lt;span class="nb">export&lt;/span> &lt;span class="nv">KUBECONFIG&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nv">$HOME&lt;/span>/ocp4/kubeconfig
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">$ &lt;span class="nb">export&lt;/span> &lt;span class="nv">KUBECONFIG&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nv">$HOME&lt;/span>/ocp4/kubeconfig
 $ oc get no
-&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="references">References&lt;/h2>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="references">References&lt;/h2>
 &lt;ul>
 &lt;li>&lt;a class="link" href="https://github.com/openshift/machine-config-operator/blob/master/docs/custom-pools.md" target="_blank" rel="noopener"
 >https://github.com/openshift/machine-config-operator/blob/master/docs/custom-pools.md&lt;/a>&lt;/li>
