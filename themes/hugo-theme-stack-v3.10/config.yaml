@@ -1,26 +1,7 @@
-baseurl: https://blog.yylin.io
-languageCode: zh-tw
-theme: hugo-theme-stack-v3.10
-paginate: 10
-title: Frank's Notes
-
-# Change it to your Disqus shortname before using
-disqusShortname: hugo-theme-stack-v3.10
-
-# GA Tracking ID
-googleAnalytics: G-60ZBHV66GB
-
-# Theme i18n support
-# Available values: en, fr, id, ja, ko, pt-br, zh-cn, zh-tw, es, de, nl, it, th, el, uk, ar
-DefaultContentLanguage: zh-tw
-
-# Set hasCJKLanguage to true if DefaultContentLanguage is in [zh-cn ja ko]
-# This will make .Summary and .WordCount behave correctly for CJK languages.
-hasCJKLanguage: false
-
-permalinks:
-    post: /post/:filename/
-    page: /:slug/
+module:
+    hugoVersion:
+        extended: true
+        min: "0.87.0"
 
 params:
     mainSections:
@@ -30,7 +11,7 @@ params:
     favicon:
 
     footer:
-        since: 2022
+        since:
         customText:
 
     dateFormat:
@@ -38,8 +19,9 @@ params:
         lastUpdated: Jan 02, 2006 15:04 MST
 
     sidebar:
-        emoji: 🍥
-        subtitle: 拆解|筆記|復盤
+        compact: false
+        emoji:
+        subtitle:
         avatar:
             enabled: true
             local: true
@@ -50,11 +32,11 @@ params:
         toc: true
         readingTime: true
         license:
-            enabled: true
+            enabled: false
             default: Licensed under CC BY-NC-SA 4.0
 
     comments:
-        enabled: true
+        enabled: false
         provider: disqus
 
         disqusjs:
@@ -104,12 +86,6 @@ params:
             path:
             lang:
 
-        # See https://cactus.chat/docs/reference/web-client/#configuration for description of the various options
-        cactus:
-            defaultHomeserverUrl: "https://matrix.cactus.chat:8448"
-            serverName: "cactus.chat"
-            siteName: "" # You must insert a unique identifier here matching the one you registered (See https://cactus.chat/docs/getting-started/quick-start/#register-your-site)
-
         giscus:
             repo:
             repoID:
@@ -120,6 +96,7 @@ params:
             darkTheme:
             reactionsEnabled: 1
             emitMetadata: 0
+            lang:
 
         gitalk:
             owner:
@@ -131,21 +108,10 @@ params:
         cusdis:
             host:
             id:
+
     widgets:
-        homepage:
-            - type: search
-            - type: about
-            - type: archives
-              params:
-                  limit: 5
-            - type: categories
-              params:
-                  limit: 10
-            - type: tag-cloud
-              params:
-                  limit: 10
-        page:
-            - type: toc
+        homepage: []
+        page: []
 
     opengraph:
         twitter:
@@ -173,41 +139,3 @@ params:
             enabled: true
         content:
             enabled: true
-
-### Custom menu
-### See https://docs.stack.jimmycai.com/configuration/custom-menu.html
-### To remove about, archive and search page menu item, remove `menu` field from their FrontMatter
-menu:
-    main: []
-     
-related:
-    includeNewer: true
-    threshold: 60
-    toLower: false
-    indices:
-        - name: tags
-          weight: 100
-
-        - name: categories
-          weight: 200
-
-markup:
-    goldmark:
-        renderer:
-            ## Set to true if you have HTML content inside Markdown
-            unsafe: false
-    tableOfContents:
-        endLevel: 4
-        ordered: true
-        startLevel: 2
-    highlight:
-        noClasses: false
-        codeFences: true
-        guessSyntax: true
-        lineNoStart: 1
-        lineNos: true
-        lineNumbersInTable: true
-        tabWidth: 4
-frontmatter:
-  lastmod: [":fileModTime", "lastmod"]
-
