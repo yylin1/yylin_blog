@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>GPU on Frank's Notes</title><link>https://blog.yylin.io/tags/gpu/</link><description>Recent content in GPU on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Mon, 28 Feb 2022 21:40:40 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/tags/gpu/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA GPU Operator on OpenShift4</title><link>https://blog.yylin.io/openshift/gpu-operator/</link><pubDate>Mon, 28 Feb 2022 21:40:40 +0800</pubDate><guid>https://blog.yylin.io/openshift/gpu-operator/</guid><description>&lt;p>Nvidia GPU Operator v1.9 on OpenShift 4.9.9 包含以上版本，安裝不用再進行額外權限配置]&lt;/p>
+&lt;h2 id="openshift-499-或更高的版本-1">OpenShift 4.9.9 或更高的版本 [1]&lt;/h2>
+&lt;p>針對 driver toolkit 取消必要安裝要求:&lt;/p>
+&lt;ul>
+&lt;li>Set up an entitlement&lt;/li>
+&lt;li>Mirror the RPM packages in a disconnected environment&lt;/li>
+&lt;li>Configure a proxy to access the package repository&lt;/li>
+&lt;/ul>
+&lt;p>[1] &lt;a class="link" href="https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/steps-overview.html#entitlement-free-supported-versions" target="_blank" rel="noopener"
+>https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/steps-overview.html#entitlement-free-supported-versions&lt;/a>&lt;/p>
+&lt;h2 id="openshift-498-與以下版本-2">OpenShift 4.9.8 與以下版本 [2]&lt;/h2>
+&lt;p>需手動操作獲取 OCP 憑證，創建 MachineConfig 來認證 OCP 叢集，擴大授權 Images 使用權限範圍，來安裝 Nvidia Operator :&lt;/p>
+&lt;ol>
+&lt;li>從 Red Hat Customer Portal 下載 Red Hat OpenShift Container Platform 訂閱憑證 (啟用權限需要登入 OCP 憑證）。&lt;/li>
+&lt;li>創建一個 MachineConfig 啟用訂閱管理平台並提供有效訂閱憑證。等待 MachineConfigOperator 重啟節點並完成 MachineConfig。&lt;/li>
+&lt;li>驗證叢集所有節點更新權限是否正常。&lt;/li>
+&lt;/ol>
+&lt;blockquote>
+&lt;p>補充 - NVIDIA GPU Operator 安裝會部署幾個 Pod 服務，用於管理和啟用 GPU 在 OpenShift 中運作。其中一些 Pod 需要 OpenShift 使用一些非 Universal Base Image (UBI) 默認授權的 Images。必須在 OpenShift Cluster 中啟用信任的授權 Images，來啟動 NVIDIA GPU 驅動程式的容器運行。&lt;/p>
+&lt;/blockquote>
+&lt;p>[1] &lt;a class="link" href="https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/steps-overview.html#entitlement-free-supported-versions" target="_blank" rel="noopener"
+>https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/steps-overview.html#entitlement-free-supported-versions&lt;/a>
+[2] &lt;a class="link" href="https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/cluster-entitlement.html#enabling-a-cluster-wide-entitlemenent" target="_blank" rel="noopener"
+>https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/cluster-entitlement.html#enabling-a-cluster-wide-entitlemenent&lt;/a>&lt;/p>
+&lt;h2 id="install-operator---node-feature-discovery">Install Operator - Node Feature Discovery&lt;/h2>
+&lt;p>&lt;img src="https://i.imgur.com/3J8zoZU.png"
+loading="lazy"
+>
+&lt;img src="https://i.imgur.com/NDepxYJ.png"
+loading="lazy"
+>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">[lab-user@bastion ~]$ oc get no
+NAME STATUS ROLES AGE VERSION
+ip-10-0-135-51.us-east-2.compute.internal Ready worker 3h5m v1.22.3+e790d7f
+ip-10-0-142-219.us-east-2.compute.internal Ready master 3h14m v1.22.3+e790d7f
+ip-10-0-167-35.us-east-2.compute.internal Ready worker 3h5m v1.22.3+e790d7f
+ip-10-0-186-251.us-east-2.compute.internal Ready master 3h14m v1.22.3+e790d7f
+ip-10-0-213-103.us-east-2.compute.internal Ready master 3h14m v1.22.3+e790d7f
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;img src="https://i.imgur.com/456JizI.png"
+loading="lazy"
+>&lt;/p>
+&lt;ul>
+&lt;li>要驗證實例是否已創建，請運行：&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">[lab-user@bastion ~]$ oc get pods -n openshift-nfd
+NAME READY STATUS RESTARTS AGE
+nfd-controller-manager-6f65f47cf6-tg6gj 2/2 Running 0 24m
+nfd-master-d7cqw 1/1 Running 0 35s
+nfd-master-j42m9 1/1 Running 0 35s
+nfd-master-r64nv 1/1 Running 0 35s
+nfd-worker-24tzn 1/1 Running 0 35s
+nfd-worker-5rsg2 1/1 Running 0 35s
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>成功的部署會顯示一個Running狀態。&lt;/li>
+&lt;/ul>
+&lt;h2 id="installing-the-nvidia-gpu-operator">Installing the NVIDIA GPU Operator&lt;/h2>
+&lt;p>With the Node Feature Discovery Operator installed you can continue with the final step and install the NVIDIA GPU Operator.&lt;/p>
+&lt;p>As a cluster administrator, you can install the NVIDIA GPU Operator using the OpenShift Container Platform CLI or the web console.&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/zSZnOQc.png"
+loading="lazy"
+>
+&lt;img src="https://i.imgur.com/H5mLoWH.png"
+loading="lazy"
+>
+&lt;img src="https://i.imgur.com/gV3G6kq.png"
+loading="lazy"
+>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">kind: ClusterPolicy
+apiVersion: nvidia.com/v1
+metadata:
+name: gpu-cluster-policy
+spec:
+dcgmExporter:
+config:
+name: &amp;#39;&amp;#39;
+dcgm:
+enabled: true
+daemonsets: {}
+devicePlugin: {}
+driver:
+enabled: true
+use_ocp_driver_toolkit: true
+repoConfig:
+configMapName: &amp;#39;&amp;#39;
+certConfig:
+name: &amp;#39;&amp;#39;
+licensingConfig:
+nlsEnabled: false
+configMapName: &amp;#39;&amp;#39;
+virtualTopology:
+config: &amp;#39;&amp;#39;
+gfd: {}
+migManager:
+enabled: true
+nodeStatusExporter:
+enabled: true
+operator:
+defaultRuntime: crio
+deployGFD: true
+initContainer: {}
+mig:
+strategy: single
+toolkit:
+enabled: true
+validator:
+plugin:
+env:
+- name: WITH_WORKLOAD
+value: &amp;#39;true&amp;#39;
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Create the ClusterPolicy custom resource. This CRD will create several OCP resources. It will evaluate all the labels for the each node in the cluster and look for this:&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/k4xdsx8.png"
+loading="lazy"
+>&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/45ygkxL.png"
+loading="lazy"
+>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc project nvidia-gpu-operator
+$ oc get pod -o wide
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="validating-the-gpu-availability">Validating the GPU availability&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;span class="lnt">49
+&lt;/span>&lt;span class="lnt">50
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">[lab-user@bastion ~]$ oc get pod | grep nvidia-device-plugin-daemonset
+nvidia-device-plugin-daemonset-bspfh 1/1 Running 0 21m
+nvidia-device-plugin-daemonset-n62dm 1/1 Running 0 21m
+[lab-user@bastion ~]$ oc exec -ti nvidia-device-plugin-daemonset-bspfh -- nvidia-smi
+Defaulted container &amp;#34;nvidia-device-plugin-ctr&amp;#34; out of: nvidia-device-plugin-ctr, toolkit-validation (init)
+Fri Jan 28 06:47:21 2022
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 470.82.01 Driver Version: 470.82.01 CUDA Version: 11.4 |
+|-------------------------------+----------------------+----------------------+
+| GPU Name Persistence-M| Bus-Id Disp.A | Volatile Uncorr. ECC |
+| Fan Temp Perf Pwr:Usage/Cap| Memory-Usage | GPU-Util Compute M. |
+| | | MIG M. |
+|===============================+======================+======================|
+| 0 Tesla V100-SXM2... On | 00000000:00:1E.0 Off | 0 |
+| N/A 32C P0 23W / 300W | 0MiB / 16160MiB | 0% Default |
+| | | N/A |
++-------------------------------+----------------------+----------------------+
++-----------------------------------------------------------------------------+
+| Processes: |
+| GPU GI CI PID Type Process name GPU Memory |
+| ID ID Usage |
+|=============================================================================|
+| No running processes found |
++-----------------------------------------------------------------------------+
+...
+...
+$ oc exec -ti nvidia-device-plugin-daemonset-n62dm -- nvidia-smi
+Defaulted container &amp;#34;nvidia-device-plugin-ctr&amp;#34; out of: nvidia-device-plugin-ctr, toolkit-validation (init)
+Fri Jan 28 06:47:44 2022
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 470.82.01 Driver Version: 470.82.01 CUDA Version: 11.4 |
+|-------------------------------+----------------------+----------------------+
+| GPU Name Persistence-M| Bus-Id Disp.A | Volatile Uncorr. ECC |
+| Fan Temp Perf Pwr:Usage/Cap| Memory-Usage | GPU-Util Compute M. |
+| | | MIG M. |
+|===============================+======================+======================|
+| 0 Tesla V100-SXM2... On | 00000000:00:1E.0 Off | 0 |
+| N/A 26C P0 24W / 300W | 0MiB / 16160MiB | 0% Default |
+| | | N/A |
++-------------------------------+----------------------+----------------------+
++-----------------------------------------------------------------------------+
+| Processes: |
+| GPU GI CI PID Type Process name GPU Memory |
+| ID ID Usage |
+|=============================================================================|
+| No running processes found |
++-----------------------------------------------------------------------------+
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="running-a-sample-gpu-application">Running a sample GPU Application&lt;/h2>
+&lt;p>Run a simple CUDA VectorAdd sample, which adds two vectors together to ensure the GPUs have bootstrapped correctly.&lt;/p>
+&lt;ol>
+&lt;li>Run the following:&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">cat &amp;lt;&amp;lt; EOF | oc create -f -
+apiVersion: v1
+kind: Pod
+metadata:
+name: cuda-vectoradd
+spec:
+restartPolicy: OnFailure
+containers:
+- name: cuda-vectoradd
+image: &amp;#34;nvidia/samples:vectoradd-cuda11.2.1&amp;#34;
+resources:
+limits:
+nvidia.com/gpu: 1
+EOF
+pod/cuda-vectoradd created
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="2">
+&lt;li>Check the logs of the container:&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">[lab-user@bastion ~]$ oc logs cuda-vectoradd
+[Vector addition of 50000 elements]
+Copy input data from the host memory to the CUDA device
+CUDA kernel launch with 196 blocks of 256 threads
+Copy output data from the CUDA device to the host memory
+Test PASSED
+Done
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="getting-information-about-the-gpu">Getting information about the GPU¶&lt;/h2>
+&lt;p>The nvidia-smi shows memory usage, GPU utilization and the temperature of the GPU. Test the GPU access by running the popular nvidia-smi command within the pod.&lt;/p>
+&lt;p>To view GPU utilization, run nvidia-smi from a pod in the GPU Operator daemonset.&lt;/p>
+&lt;ol>
+&lt;li>Change to the nvidia-gpu-operator project:&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc project nvidia-gpu-operator
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="2">
+&lt;li>Run the following command to view these new pods:&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc get pod -owide -lopenshift.driver-toolkit=true
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">NAME READY STATUS RESTARTS AGE IP NODE NOMINATED NODE READINESS GATES
+nvidia-driver-daemonset-49.84.202201102104-0-gl557 2/2 Running 0 26m 10.131.0.106 ip-10-0-167-35.us-east-2.compute.internal &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+nvidia-driver-daemonset-49.84.202201102104-0-k9sg5 2/2 Running 0 26m 10.128.2.17 ip-10-0-135-51.us-east-2.compute.internal &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="3">
+&lt;li>Run the nvidia-smi command within the pod:&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc exec -it nvidia-driver-daemonset-48.84.202110270303-0-9df9j -- nvidia-smi
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item></channel></rss>

@@ -11,7 +11,143 @@
 &lt;p>&lt;img src="https://i.imgur.com/49Qc3LU.png"
 loading="lazy"
 >&lt;/p>
-&lt;h2 id="事前準備">事前準備&lt;/h2>
+&lt;h2 id="情境與使用目標">情境與使用目標&lt;/h2>
+&lt;p>OpenShift 通常是在受控制離線網路的情況下運行 Production Cluster。而客戶要使用 Red Hat Quay 在 OpenShift 上運行優勢包含，有更多擴充性與部署元件配置整合性。要在離線環境安裝 OpenShift 前提條件，需要一個存放的安裝所需的相關鏡像的鏡像倉庫 (e.g., Quay, Harbor, Docker registry)，這邊就會有雞生蛋蛋生雞問題。&lt;/p>
+&lt;p>解決方案/目標：&lt;/p>
+&lt;p>Red Hat 提供一個 “mirror registry”工具，只針對 OpenShift 部署的引導(Bootstrap)鏡像倉庫，透過自動化腳本安裝程序，提供在 RHEL 8 (or Fedora) 的系統環境，快速部署一個精簡版的 Quay ，提供保存下載特定版本 OpenShift、OpenShiftHub 鏡像檔。mirror registry 提供針對離線環境或只是單純 PoC OpenShift 情境使用的 Registry，可以透過自動化腳本，快速部署設置安裝單節點(all-in-one)的 Quay ，所需要的相關手動繁瑣設定，例如：完整網域名稱 FQDN、使用者自定義 SSL/TLS 憑證、訪問權權限 SSH key 及運行的環境選擇。&lt;/p>
+&lt;p>情境: 離線環境，安裝 OpenShift 運行流程 [3] :&lt;/p>
+&lt;ol>
+&lt;li>在可連線外部網路環境中，透過 mirror registry 部署第一座容器鏡像倉庫(Online Mirror) 進行 OpenShift、OpenShiftHub 必要鏡像檔存放。&lt;/li>
+&lt;li>同樣在離線環境中，透過 mirror registry 部署第二座容器鏡像倉庫(Air-gapped Mirror)，從 Online Mirror 拷貝並要的映像檔存放於 Air-gapped Mirror&lt;/li>
+&lt;li>透過 Air-gapped Mirror 部署 OpenShift Production/Infra Cluster&lt;/li>
+&lt;li>OpenShift 安裝 Quay Operator 提供內部服務及應用所需的鏡像存放&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ ./mirror-registry install --quayHostname registry.redhat.demolab --ssh-key ~/.ssh/id_rsa
+...
+...
+INFO[2022-03-01 00:52:38] Quay installed successfully, permanent data are stored in /etc/quay-install
+INFO[2022-03-01 00:52:38] Quay is available at https://registry.yylin.demolab:8443 with credentials (init, xxxxxxxxxxxxxxxxxxxxxx)
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="環境變數配置">環境變數配置&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">環境配置
+export OCP_RELEASE=$(oc version -o json --client | jq -r &amp;#39;.releaseClientVersion&amp;#39;)
+export LOCAL_REGISTRY=&amp;#34;registry.demolab:8443&amp;#34;
+export LOCAL_REPOSITORY=&amp;#34;ocp4/openshift4&amp;#34;
+export PRODUCT_REPO=&amp;#34;openshift-release-dev&amp;#34;
+export LOCAL_SECRET_JSON=$HOME/mirror-registry-demo/pull-secret.json
+export RELEASE_NAME=&amp;#34;ocp-release&amp;#34;
+export ARCHITECTURE=x86_64
+export REMOVABLE_MEDIA_PATH=&amp;#34;$HOME/openshift4/registry/images&amp;#34;
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="安裝筆記">安裝筆記&lt;/h2>
+&lt;ol>
+&lt;li>Review the images and configuration manifests to mirror:&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc adm release mirror -a ${LOCAL_SECRET_JSON} --from=quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE} --to=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY} --to-release-image=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY}:${OCP_RELEASE}-${ARCHITECTURE} --dry-run
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="2">
+&lt;li>Mirror the images to a directory on the removable media:&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc adm release mirror -a ${LOCAL_SECRET_JSON} --to-dir=${REMOVABLE_MEDIA_PATH}/mirror quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE}
+info: Mirroring completed in 3m6.3s (66.22MB/s)
+Success
+Update image: openshift/release:4.10.0-rc.3-x86_64
+To upload local images to a registry, run:
+oc image mirror --from-dir=/root/openshift4/registry/images/mirror &amp;#39;file://openshift/release:4.10.0-rc.3-x86_64*&amp;#39; REGISTRY/REPOSITORY
+Configmap signature file /root/openshift4/registry/images/mirror/config/signature-sha256-3d4ada825f4aa4d2.yaml created
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="3">
+&lt;li>Take the media to the restricted network environment and upload the images to the local container registry.&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc image mirror -a ${LOCAL_SECRET_JSON} --from-dir=${REMOVABLE_MEDIA_PATH}/mirror &amp;#34;file://openshift/release:${OCP_RELEASE}*&amp;#34; ${LOCAL_REGISTRY}/${LOCAL_REPOSITORY}
+phase 0:
+registry.redhat.demolab:8443 ocp4/openshift4 blobs=334 mounts=0 manifests=163 shared=0
+info: Planning completed in 2.12s
+uploading: registry.redhat.demolab:8443/ocp4/openshift4 sha256:7253c5d7bf339222334565e0ec7ac88dd017dc9b9ec01654d26e8dda07408548 81.38MiB
+uploading: registry.redhat.demolab:8443/ocp4/openshift4 sha256:8e549eaeb17902a2a516d03776112ad7a9bfd10cd2d1c298fe31b1c15d3b4166 154.4MiB
+uploading: registry.redhat.demolab:8443/ocp4/openshift4 sha256:11456a2e94a652afe44f2645d83a051160119fd953b2459167cc88232adbf9ed 31.45MiB
+uploading: registry.redhat.demolab:8443/ocp4/openshift4 sha256:4ceffbad995c4d6e76142c6b46e7f2e06fcd2ddb6eb2c3624cc0244ae018356f 106.9MiB
+...
+...
+sha256:2d80cc5beffc10607a53eb6c013e87d03e267cdf0b8fc678b40acf5432957714 registry.redhat.demolab:8443/ocp4/openshift4:4.10.0-rc.3-x86_64-multus-networkpolicy
+sha256:df3b0ec40395ea460fbf2728ca7adff79dbaebddcffce003e88b3fb9cb2c9759 registry.redhat.demolab:8443/ocp4/openshift4:4.10.0-rc.3-x86_64-must-gather
+sha256:a340ea3d86560de8cf9ee2c1afe42ad24e5eefc9903a0073abe9dc54815bf710 registry.redhat.demolab:8443/ocp4/openshift4:4.10.0-rc.3-x86_64-console-operator
+sha256:f532e7f50cadfc757a6d277ab5476a31a4f24aac0afc615da6ff9f7ce5e2b538 registry.redhat.demolab:8443/ocp4/openshift4:4.10.0-rc.3-x86_64-cluster-image-registry-operator
+info: Mirroring completed in 1m17.77s (5.572MB/s)
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="mirror-後結果">mirror 後結果&lt;/h2>
+&lt;p>&lt;img src="https://i.imgur.com/APzRuyc.png"
+loading="lazy"
+>.&lt;/p>
 &lt;hr>
 &lt;h2 id="reference">Reference&lt;/h2>
 &lt;ul>
