@@ -40,42 +40,123 @@ Red Hat 提供一個 “mirror registry”工具，只針對 OpenShift 部署的
 3. 透過 Air-gapped Mirror 部署 OpenShift Production/Infra Cluster
 4. OpenShift 安裝 Quay Operator 提供內部服務及應用所需的鏡像存放
 
+## 事前準備
 
+- 從 [OpenShift console Downloads](https://console.redhat.com/openshift/downloads#tool-mirror-registry) 下載最新版本的 `mirror-registry.tar.gz`
+- 準備 pull-secret.json 檔案
+
+
+## 安裝
+
+- 在當前環境安裝 mirror registry 
 
 ```
-$ ./mirror-registry install --quayHostname registry.redhat.demolab --ssh-key ~/.ssh/id_rsa
+$ ./mirror-registry install --quayHostname <host_example_com> --ssh-key <~/.ssh/my_ssh_key>
 ...
+
+- 最後輸出顯示 registry host 與登入資訊
 ...
 INFO[2022-03-01 00:52:38] Quay installed successfully, permanent data are stored in /etc/quay-install
 INFO[2022-03-01 00:52:38] Quay is available at https://registry.yylin.demolab:8443 with credentials (init, xxxxxxxxxxxxxxxxxxxxxx)
 ```
 
-## 環境變數配置
+- 產生 Registry Basic Auth 之認證資訊
+```
+# (init, xxxxxxxxxxxxxxxxxxxxxx)
+echo -n '<username>:<password>' | base64 -w0 
+```
+
+- 在 pull-secret 加入本地 Registry 認證資訊
+```
+    "registry.yylin.demolab:8443": {
+       "auth": "aW5pdDo3TzlNV1hBMDhQcTJKZGh0M0M2elZJNU5EMWlsYkJ3NA=="
+    }
+```
+
+- 驗證登入registry
 
 ```
-環境配置
-export OCP_RELEASE=$(oc version -o json  --client | jq -r '.releaseClientVersion')
-export LOCAL_REGISTRY="registry.demolab:8443"
+$ podman login -u init --authfile pull-secret.json registry.yylin.demolab:8443
+Error: authenticating creds for "registry.yylin.demolab:8443": pinging container registry registry.yylin.demolab:8443: Get "https://registry.yylin.demolab:8443/v2/": x509: certificate signed by unknown authority (possibly because of "crypto/rsa: verification error" while trying to verify candidate authority certificate "bastion.redhat.kubedev.org")
+```
+
+- 安裝更新 quay 憑證
+
+> mirror registry 預設會配置好 CA 憑證，請將 PEM 文件格式添加憑證到系統中信任的 CA 列表中，這邊複製到 /usr/share/pki/ca-trust-source/anchors/ 目錄中
+
+```
+$ cp /etc/quay-install/quay-rootCA/rootCA.pem /usr/share/pki/ca-trust-source/anchors/rootCA.cert
+```
+
+> 更新系統範圍的信任儲存配置，請使用 update-ca-trust 命令：
+``
+$ update-ca-trust
+```
+
+- 再次登入mirror registry - Quay 確認憑證狀態是不是已經更新
+
+```
+$ podman login -u init --authfile pull-secret.json bastion.redhat.kubedev.org:8443
+Password:
+Login Succeeded!
+```
+
+
+## 開始備份 OpenShift images
+
+1. 建立備份路徑
+ 
+```
+$ mkdir -p $HOME/openshift4/registry/images
+```
+
+2. 匯入環境變數
+
+```
+# vim upgrade-env
+export OCP_RELEASE=$(oc version -o json  --client | jq -r '.releaseClientVersion') 
+export LOCAL_REGISTRY="registry.yylin.demolab:8443"
 export LOCAL_REPOSITORY="ocp4/openshift4"
 export PRODUCT_REPO="openshift-release-dev"
-export LOCAL_SECRET_JSON=$HOME/mirror-registry-demo/pull-secret.json
+
+# /註記/ 請確認 pull-secret.json 裡面有包含 mirror rigistry 資訊
+export LOCAL_SECRET_JSON=$HOME/mirror-registry/pull-secret.json  
+
 export RELEASE_NAME="ocp-release"
 export ARCHITECTURE=x86_64
+
+# 指定 images 存放路徑
 export REMOVABLE_MEDIA_PATH="$HOME/openshift4/registry/images"
+
+# 匯入環境變數
+source upgrade-env
 ```
 
-## 安裝筆記
+3. 備份 Image
 
-1. Review the images and configuration manifests to mirror: 
+-  /#1/ Review the images and configuration manifests to mirror :
  
 ```
 $ oc adm release mirror -a ${LOCAL_SECRET_JSON}       --from=quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE}      --to=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY}      --to-release-image=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY}:${OCP_RELEASE}-${ARCHITECTURE} --dry-run
 ```
 
-2. Mirror the images to a directory on the removable media:
+```
+imageContentSources:
+- mirrors:
+  - registry.yylin.demolab:8443/ocp4/openshift4
+  source: quay.io/openshift-release-dev/ocp-release
+- mirrors:
+  - registry.yylin.demolab:8443/ocp4/openshift4
+  source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
+```
+
+- /#2/ Mirror the images to a directory on the removable media:
+
 ```
 $ oc adm release mirror -a ${LOCAL_SECRET_JSON} --to-dir=${REMOVABLE_MEDIA_PATH}/mirror quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE}
+```
 
+```
 info: Mirroring completed in 3m6.3s (66.22MB/s)
 
 Success
@@ -88,11 +169,13 @@ To upload local images to a registry, run:
 Configmap signature file /root/openshift4/registry/images/mirror/config/signature-sha256-3d4ada825f4aa4d2.yaml created
 ```
 
-3. Take the media to the restricted network environment and upload the images to the local container registry.
+- /#3/ Take the media to the restricted network environment and upload the images to the local container registry.
 
 ```
 $ oc image mirror -a ${LOCAL_SECRET_JSON} --from-dir=${REMOVABLE_MEDIA_PATH}/mirror "file://openshift/release:${OCP_RELEASE}*" ${LOCAL_REGISTRY}/${LOCAL_REPOSITORY} 
+```
 
+```
 phase 0:
   registry.redhat.demolab:8443 ocp4/openshift4 blobs=334 mounts=0 manifests=163 shared=0
 
@@ -110,9 +193,16 @@ sha256:f532e7f50cadfc757a6d277ab5476a31a4f24aac0afc615da6ff9f7ce5e2b538 registry
 info: Mirroring completed in 1m17.77s (5.572MB/s)
 ```
 
+- /#4/ Directly push the release images to the local registry by using following command:
+
+```
+$ oc adm release mirror -a ${LOCAL_SECRET_JSON} --from=quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE} --to=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY} --apply-release-image-signature
+```
+
+> [更多配置請參考 Mirroring the OpenShift Container Platform image repository](https://docs.openshift.com/container-platform/4.10/openshift_images/samples-operator-alt-registry.html)
+
 ## mirror 後結果
 ![](https://i.imgur.com/APzRuyc.png). 
-
 
 
 ---
@@ -120,9 +210,9 @@ info: Mirroring completed in 1m17.77s (5.572MB/s)
 
 ## Reference
 
+- [Mirroring on a local host with mirror registry for Red Hat OpenShift](https://docs.openshift.com/container-platform/4.10/installing/disconnected_install/installing-mirroring-creating-registry.html#mirror-registry-localhost_installing-mirroring-creating-registry)
 - https://cloud.redhat.com/blog/introducing-mirror-registry-for-red-hat-openshift
 - https://access.redhat.com/support/policy/updates/openshift#omr
 - https://www.youtube.com/watch?v=j5e4OT71N0A
-- https://cloud.redhat.com/blog/introducing-mirror-registry-for-red-hat-openshift
 
 
