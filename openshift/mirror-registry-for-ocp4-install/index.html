@@ -6,7 +6,7 @@
 <meta property="og:description" content="本篇文章介紹，如何透過 `Mirror Regristry` 一座輕量精簡的容器鏡像倉庫(Regristry)，為使用者提供了在沒有 Regristry 的離線環境中，提供託管 OpenShift 4 安裝所需的相關容器鏡像。">
 <meta property="og:url" content="https://blog.yylin.io/openshift/mirror-registry-for-ocp4-install/">
 <meta property="og:site_name" content="Frank's Notes">
-<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="Registry"><meta property="article:published_time" content="2022-03-07T00:53:25+08:00"><meta property="article:modified_time" content="2022-04-06T02:11:53+00:00">
+<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="Registry"><meta property="article:published_time" content="2022-03-07T00:53:25+08:00"><meta property="article:modified_time" content="2022-05-19T18:20:13+00:00">
 <meta name=twitter:title content="Disconnected Environment - Introducing Mirror Registry for Red Hat OpenShift">
 <meta name=twitter:description content="本篇文章介紹，如何透過 `Mirror Regristry` 一座輕量精簡的容器鏡像倉庫(Regristry)，為使用者提供了在沒有 Regristry 的離線環境中，提供託管 OpenShift 4 安裝所需的相關容器鏡像。">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-60ZBHV66GB"></script>
@@ -76,7 +76,7 @@ OpenShift
 </div>
 <div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
 <time class=article-time--reading>
-閱讀時間: 2 分鐘
+閱讀時間: 4 分鐘
 </time>
 </div>
 </footer>
@@ -105,23 +105,15 @@ OpenShift
 <li>透過 Air-gapped Mirror 部署 OpenShift Production/Infra Cluster</li>
 <li>OpenShift 安裝 Quay Operator 提供內部服務及應用所需的鏡像存放</li>
 </ol>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span><span class=lnt>2
-</span><span class=lnt>3
-</span><span class=lnt>4
-</span><span class=lnt>5
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>$ ./mirror-registry install --quayHostname registry.redhat.demolab --ssh-key ~/.ssh/id_rsa
-...
-...
-INFO[2022-03-01 00:52:38] Quay installed successfully, permanent data are stored in /etc/quay-install
-INFO[2022-03-01 00:52:38] Quay is available at https://registry.yylin.demolab:8443 with credentials (init, xxxxxxxxxxxxxxxxxxxxxx)
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=環境變數配置>環境變數配置</h2>
+<h2 id=事前準備>事前準備</h2>
+<ul>
+<li>從 <a class=link href=https://console.redhat.com/openshift/downloads#tool-mirror-registry target=_blank rel=noopener>OpenShift console Downloads</a> 下載最新版本的 <code>mirror-registry.tar.gz</code></li>
+<li>準備 pull-secret.json 檔案</li>
+</ul>
+<h2 id=安裝>安裝</h2>
+<ul>
+<li>在當前環境安裝 mirror registry</li>
+</ul>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
@@ -131,69 +123,252 @@ INFO[2022-03-01 00:52:38] Quay is available at https://registry.yylin.demolab:84
 </span><span class=lnt>5
 </span><span class=lnt>6
 </span><span class=lnt>7
-</span><span class=lnt>8
-</span><span class=lnt>9
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>環境配置
-export OCP_RELEASE=$(oc version -o json  --client | jq -r &#39;.releaseClientVersion&#39;)
-export LOCAL_REGISTRY=&#34;registry.demolab:8443&#34;
-export LOCAL_REPOSITORY=&#34;ocp4/openshift4&#34;
-export PRODUCT_REPO=&#34;openshift-release-dev&#34;
-export LOCAL_SECRET_JSON=$HOME/mirror-registry-demo/pull-secret.json
-export RELEASE_NAME=&#34;ocp-release&#34;
-export ARCHITECTURE=x86_64
-export REMOVABLE_MEDIA_PATH=&#34;$HOME/openshift4/registry/images&#34;
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>$ ./mirror-registry install --quayHostname &lt;host_example_com&gt; --ssh-key &lt;~/.ssh/my_ssh_key&gt;
+...
+
+- 最後輸出顯示 registry host 與登入資訊
+...
+INFO[2022-03-01 00:52:38] Quay installed successfully, permanent data are stored in /etc/quay-install
+INFO[2022-03-01 00:52:38] Quay is available at https://registry.yylin.demolab:8443 with credentials (init, xxxxxxxxxxxxxxxxxxxxxx)
 </code></pre></td></tr></table>
 </div>
-</div><h2 id=安裝筆記>安裝筆記</h2>
-<ol>
-<li>Review the images and configuration manifests to mirror:</li>
-</ol>
+</div><ul>
+<li>產生 Registry Basic Auth 之認證資訊</li>
+</ul>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback># (init, xxxxxxxxxxxxxxxxxxxxxx)
+echo -n &#39;&lt;username&gt;:&lt;password&gt;&#39; | base64 -w0 
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>在 pull-secret 加入本地 Registry 認證資訊</li>
+</ul>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>    &#34;registry.yylin.demolab:8443&#34;: {
+       &#34;auth&#34;: &#34;aW5pdDo3TzlNV1hBMDhQcTJKZGh0M0M2elZJNU5EMWlsYkJ3NA==&#34;
+    }
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>驗證登入registry</li>
+</ul>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>$ podman login -u init --authfile pull-secret.json registry.yylin.demolab:8443
+Error: authenticating creds for &#34;registry.yylin.demolab:8443&#34;: pinging container registry registry.yylin.demolab:8443: Get &#34;https://registry.yylin.demolab:8443/v2/&#34;: x509: certificate signed by unknown authority (possibly because of &#34;crypto/rsa: verification error&#34; while trying to verify candidate authority certificate &#34;bastion.redhat.kubedev.org&#34;)
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>安裝更新 quay 憑證</li>
+</ul>
+<blockquote>
+<p>mirror registry 預設會配置好 CA 憑證，請將 PEM 文件格式添加憑證到系統中信任的 CA 列表中，這邊複製到 /usr/share/pki/ca-trust-source/anchors/ 目錄中</p>
+</blockquote>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>$ oc adm release mirror -a ${LOCAL_SECRET_JSON}       --from=quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE}      --to=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY}      --to-release-image=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY}:${OCP_RELEASE}-${ARCHITECTURE} --dry-run
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>$ cp /etc/quay-install/quay-rootCA/rootCA.pem /usr/share/pki/ca-trust-source/anchors/rootCA.cert
 </code></pre></td></tr></table>
 </div>
-</div><ol start=2>
-<li>Mirror the images to a directory on the removable media:</li>
-</ol>
+</div><blockquote>
+<p>更新系統範圍的信任儲存配置，請使用 update-ca-trust 命令：
+``
+$ update-ca-trust</p>
+</blockquote>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
-</span><span class=lnt> 2
-</span><span class=lnt> 3
-</span><span class=lnt> 4
-</span><span class=lnt> 5
-</span><span class=lnt> 6
-</span><span class=lnt> 7
-</span><span class=lnt> 8
-</span><span class=lnt> 9
-</span><span class=lnt>10
-</span><span class=lnt>11
-</span><span class=lnt>12
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>$ oc adm release mirror -a ${LOCAL_SECRET_JSON} --to-dir=${REMOVABLE_MEDIA_PATH}/mirror quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE}
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>
+- 再次登入mirror registry - Quay 確認憑證狀態是不是已經更新
 
-info: Mirroring completed in 3m6.3s (66.22MB/s)
-
-Success
-Update image:  openshift/release:4.10.0-rc.3-x86_64
-
-To upload local images to a registry, run:
-
-    oc image mirror --from-dir=/root/openshift4/registry/images/mirror &#39;file://openshift/release:4.10.0-rc.3-x86_64*&#39; REGISTRY/REPOSITORY
-
-Configmap signature file /root/openshift4/registry/images/mirror/config/signature-sha256-3d4ada825f4aa4d2.yaml created
 </code></pre></td></tr></table>
 </div>
-</div><ol start=3>
-<li>Take the media to the restricted network environment and upload the images to the local container registry.</li>
-</ol>
+</div><p>$ podman login -u init &ndash;authfile pull-secret.json bastion.redhat.kubedev.org:8443
+Password:
+Login Succeeded!</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>
+
+## 開始備份 OpenShift images
+
+1. 建立備份路徑
+ 
+</code></pre></td></tr></table>
+</div>
+</div><p>$ mkdir -p $HOME/openshift4/registry/images</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>
+2. 匯入環境變數
+
+</code></pre></td></tr></table>
+</div>
+</div><h1 id=vim-upgrade-env>vim upgrade-env</h1>
+<p>export OCP_RELEASE=$(oc version -o json &ndash;client | jq -r &lsquo;.releaseClientVersion&rsquo;)
+export LOCAL_REGISTRY=&ldquo;registry.yylin.demolab:8443&rdquo;
+export LOCAL_REPOSITORY=&ldquo;ocp4/openshift4&rdquo;
+export PRODUCT_REPO=&ldquo;openshift-release-dev&rdquo;</p>
+<h1 id=註記-請確認-pull-secretjson-裡面有包含-mirror-rigistry-資訊>/註記/ 請確認 pull-secret.json 裡面有包含 mirror rigistry 資訊</h1>
+<p>export LOCAL_SECRET_JSON=$HOME/mirror-registry/pull-secret.json</p>
+<p>export RELEASE_NAME=&ldquo;ocp-release&rdquo;
+export ARCHITECTURE=x86_64</p>
+<h1 id=指定-images-存放路徑>指定 images 存放路徑</h1>
+<p>export REMOVABLE_MEDIA_PATH="$HOME/openshift4/registry/images"</p>
+<h1 id=匯入環境變數>匯入環境變數</h1>
+<p>source upgrade-env</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>
+3. 備份 Image
+
+-  /#1/ Review the images and configuration manifests to mirror :
+ 
+</code></pre></td></tr></table>
+</div>
+</div><p>$ oc adm release mirror -a ${LOCAL_SECRET_JSON} &ndash;from=quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE} &ndash;to=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY} &ndash;to-release-image=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY}:${OCP_RELEASE}-${ARCHITECTURE} &ndash;dry-run</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>
+</code></pre></td></tr></table>
+</div>
+</div><p>imageContentSources:</p>
+<ul>
+<li>mirrors:
+<ul>
+<li>registry.yylin.demolab:8443/ocp4/openshift4
+source: quay.io/openshift-release-dev/ocp-release</li>
+</ul>
+</li>
+<li>mirrors:
+<ul>
+<li>registry.yylin.demolab:8443/ocp4/openshift4
+source: quay.io/openshift-release-dev/ocp-v4.0-art-dev</li>
+</ul>
+</li>
+</ul>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>
+- /#2/ Mirror the images to a directory on the removable media:
+
+</code></pre></td></tr></table>
+</div>
+</div><p>$ oc adm release mirror -a ${LOCAL_SECRET_JSON} &ndash;to-dir=${REMOVABLE_MEDIA_PATH}/mirror quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE}</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>
+</code></pre></td></tr></table>
+</div>
+</div><p>info: Mirroring completed in 3m6.3s (66.22MB/s)</p>
+<p>Success
+Update image: openshift/release:4.10.0-rc.3-x86_64</p>
+<p>To upload local images to a registry, run:</p>
+<pre><code>oc image mirror --from-dir=/root/openshift4/registry/images/mirror 'file://openshift/release:4.10.0-rc.3-x86_64*' REGISTRY/REPOSITORY
+</code></pre>
+<p>Configmap signature file /root/openshift4/registry/images/mirror/config/signature-sha256-3d4ada825f4aa4d2.yaml created</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>
+- /#3/ Take the media to the restricted network environment and upload the images to the local container registry.
+
+</code></pre></td></tr></table>
+</div>
+</div><p>$ oc image mirror -a ${LOCAL_SECRET_JSON} &ndash;from-dir=${REMOVABLE_MEDIA_PATH}/mirror &ldquo;file://openshift/release:${OCP_RELEASE}*&rdquo; ${LOCAL_REGISTRY}/${LOCAL_REPOSITORY}</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>
+</code></pre></td></tr></table>
+</div>
+</div><p>phase 0:
+registry.redhat.demolab:8443 ocp4/openshift4 blobs=334 mounts=0 manifests=163 shared=0</p>
+<p>info: Planning completed in 2.12s
+uploading: registry.redhat.demolab:8443/ocp4/openshift4 sha256:7253c5d7bf339222334565e0ec7ac88dd017dc9b9ec01654d26e8dda07408548 81.38MiB
+uploading: registry.redhat.demolab:8443/ocp4/openshift4 sha256:8e549eaeb17902a2a516d03776112ad7a9bfd10cd2d1c298fe31b1c15d3b4166 154.4MiB
+uploading: registry.redhat.demolab:8443/ocp4/openshift4 sha256:11456a2e94a652afe44f2645d83a051160119fd953b2459167cc88232adbf9ed 31.45MiB
+uploading: registry.redhat.demolab:8443/ocp4/openshift4 sha256:4ceffbad995c4d6e76142c6b46e7f2e06fcd2ddb6eb2c3624cc0244ae018356f 106.9MiB
+&mldr;
+&mldr;
+sha256:2d80cc5beffc10607a53eb6c013e87d03e267cdf0b8fc678b40acf5432957714 registry.redhat.demolab:8443/ocp4/openshift4:4.10.0-rc.3-x86_64-multus-networkpolicy
+sha256:df3b0ec40395ea460fbf2728ca7adff79dbaebddcffce003e88b3fb9cb2c9759 registry.redhat.demolab:8443/ocp4/openshift4:4.10.0-rc.3-x86_64-must-gather
+sha256:a340ea3d86560de8cf9ee2c1afe42ad24e5eefc9903a0073abe9dc54815bf710 registry.redhat.demolab:8443/ocp4/openshift4:4.10.0-rc.3-x86_64-console-operator
+sha256:f532e7f50cadfc757a6d277ab5476a31a4f24aac0afc615da6ff9f7ce5e2b538 registry.redhat.demolab:8443/ocp4/openshift4:4.10.0-rc.3-x86_64-cluster-image-registry-operator
+info: Mirroring completed in 1m17.77s (5.572MB/s)</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>
+- /#4/ Directly push the release images to the local registry by using following command:
+
+</code></pre></td></tr></table>
+</div>
+</div><p>$ oc adm release mirror -a ${LOCAL_SECRET_JSON} &ndash;from=quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE} &ndash;to=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY} &ndash;apply-release-image-signature</p>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt> 1
@@ -213,37 +388,30 @@ Configmap signature file /root/openshift4/registry/images/mirror/config/signatur
 </span><span class=lnt>15
 </span><span class=lnt>16
 </span><span class=lnt>17
+</span><span class=lnt>18
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>$ oc image mirror -a ${LOCAL_SECRET_JSON} --from-dir=${REMOVABLE_MEDIA_PATH}/mirror &#34;file://openshift/release:${OCP_RELEASE}*&#34; ${LOCAL_REGISTRY}/${LOCAL_REPOSITORY} 
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>
+&gt; [更多配置請參考 Mirroring the OpenShift Container Platform image repository](https://docs.openshift.com/container-platform/4.10/openshift_images/samples-operator-alt-registry.html)
 
-phase 0:
-  registry.redhat.demolab:8443 ocp4/openshift4 blobs=334 mounts=0 manifests=163 shared=0
+## mirror 後結果
+![](https://i.imgur.com/APzRuyc.png). 
 
-info: Planning completed in 2.12s
-uploading: registry.redhat.demolab:8443/ocp4/openshift4 sha256:7253c5d7bf339222334565e0ec7ac88dd017dc9b9ec01654d26e8dda07408548 81.38MiB
-uploading: registry.redhat.demolab:8443/ocp4/openshift4 sha256:8e549eaeb17902a2a516d03776112ad7a9bfd10cd2d1c298fe31b1c15d3b4166 154.4MiB
-uploading: registry.redhat.demolab:8443/ocp4/openshift4 sha256:11456a2e94a652afe44f2645d83a051160119fd953b2459167cc88232adbf9ed 31.45MiB
-uploading: registry.redhat.demolab:8443/ocp4/openshift4 sha256:4ceffbad995c4d6e76142c6b46e7f2e06fcd2ddb6eb2c3624cc0244ae018356f 106.9MiB
-...
-...
-sha256:2d80cc5beffc10607a53eb6c013e87d03e267cdf0b8fc678b40acf5432957714 registry.redhat.demolab:8443/ocp4/openshift4:4.10.0-rc.3-x86_64-multus-networkpolicy
-sha256:df3b0ec40395ea460fbf2728ca7adff79dbaebddcffce003e88b3fb9cb2c9759 registry.redhat.demolab:8443/ocp4/openshift4:4.10.0-rc.3-x86_64-must-gather
-sha256:a340ea3d86560de8cf9ee2c1afe42ad24e5eefc9903a0073abe9dc54815bf710 registry.redhat.demolab:8443/ocp4/openshift4:4.10.0-rc.3-x86_64-console-operator
-sha256:f532e7f50cadfc757a6d277ab5476a31a4f24aac0afc615da6ff9f7ce5e2b538 registry.redhat.demolab:8443/ocp4/openshift4:4.10.0-rc.3-x86_64-cluster-image-registry-operator
-info: Mirroring completed in 1m17.77s (5.572MB/s)
+
+---
+
+
+## Reference
+
+- [Mirroring on a local host with mirror registry for Red Hat OpenShift](https://docs.openshift.com/container-platform/4.10/installing/disconnected_install/installing-mirroring-creating-registry.html#mirror-registry-localhost_installing-mirroring-creating-registry)
+- https://cloud.redhat.com/blog/introducing-mirror-registry-for-red-hat-openshift
+- https://access.redhat.com/support/policy/updates/openshift#omr
+- https://www.youtube.com/watch?v=j5e4OT71N0A
+
+
 </code></pre></td></tr></table>
 </div>
-</div><h2 id=mirror-後結果>mirror 後結果</h2>
-<p><img src=https://i.imgur.com/APzRuyc.png loading=lazy>.</p>
-<hr>
-<h2 id=reference>Reference</h2>
-<ul>
-<li><a class=link href=https://cloud.redhat.com/blog/introducing-mirror-registry-for-red-hat-openshift target=_blank rel=noopener>https://cloud.redhat.com/blog/introducing-mirror-registry-for-red-hat-openshift</a></li>
-<li><a class=link href=https://access.redhat.com/support/policy/updates/openshift#omr target=_blank rel=noopener>https://access.redhat.com/support/policy/updates/openshift#omr</a></li>
-<li><a class=link href="https://www.youtube.com/watch?v=j5e4OT71N0A" target=_blank rel=noopener>https://www.youtube.com/watch?v=j5e4OT71N0A</a></li>
-<li><a class=link href=https://cloud.redhat.com/blog/introducing-mirror-registry-for-red-hat-openshift target=_blank rel=noopener>https://cloud.redhat.com/blog/introducing-mirror-registry-for-red-hat-openshift</a></li>
-</ul>
+</div>
 </section>
 <footer class=article-footer>
 <section class=article-tags>
@@ -254,7 +422,7 @@ info: Mirroring completed in 1m17.77s (5.572MB/s)
 </section>
 <section class=article-lastmod><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
 <span>
-最後更新 Apr 06, 2022 02:11 UTC
+最後更新 May 19, 2022 18:20 UTC
 </span>
 </section></footer>
 </article>
@@ -350,10 +518,8 @@ Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=
 <nav id=TableOfContents>
 <ol>
 <li><a href=#情境與使用目標>情境與使用目標</a></li>
-<li><a href=#環境變數配置>環境變數配置</a></li>
-<li><a href=#安裝筆記>安裝筆記</a></li>
-<li><a href=#mirror-後結果>mirror 後結果</a></li>
-<li><a href=#reference>Reference</a></li>
+<li><a href=#事前準備>事前準備</a></li>
+<li><a href=#安裝>安裝</a></li>
 </ol>
 </nav>
 </div>
