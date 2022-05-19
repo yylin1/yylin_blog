@@ -33,7 +33,7 @@ OpenShift 通常是在受控制離線網路的情況下運行 Production Cluster
 
 Red Hat 提供一個 “mirror registry”工具，只針對 OpenShift 部署的引導(Bootstrap)鏡像倉庫，透過自動化腳本安裝程序，提供在 RHEL 8 (or Fedora) 的系統環境，快速部署一個精簡版的 Quay ，提供保存下載特定版本 OpenShift、OpenShiftHub 鏡像檔。mirror registry 提供針對離線環境或只是單純 PoC OpenShift 情境使用的 Registry，可以透過自動化腳本，快速部署設置安裝單節點(all-in-one)的 Quay ，所需要的相關手動繁瑣設定，例如：完整網域名稱 FQDN、使用者自定義 SSL/TLS 憑證、訪問權權限 SSH key 及運行的環境選擇。
 
-情境: 離線環境，安裝 OpenShift 運行流程 [3] :
+情境: 離線環境，安裝 OpenShift 運行流程:
 
 1. 在可連線外部網路環境中，透過 mirror registry 部署第一座容器鏡像倉庫(Online Mirror) 進行 OpenShift、OpenShiftHub 必要鏡像檔存放。
 2. 同樣在離線環境中，透過 mirror registry 部署第二座容器鏡像倉庫(Air-gapped Mirror)，從 Online Mirror 拷貝並要的映像檔存放於 Air-gapped Mirror
@@ -52,10 +52,10 @@ Red Hat 提供一個 “mirror registry”工具，只針對 OpenShift 部署的
 
 ```
 $ ./mirror-registry install --quayHostname <host_example_com> --ssh-key <~/.ssh/my_ssh_key>
-...
+```
 
 - 最後輸出顯示 registry host 與登入資訊
-...
+```
 INFO[2022-03-01 00:52:38] Quay installed successfully, permanent data are stored in /etc/quay-install
 INFO[2022-03-01 00:52:38] Quay is available at https://registry.yylin.demolab:8443 with credentials (init, xxxxxxxxxxxxxxxxxxxxxx)
 ```
@@ -89,7 +89,8 @@ $ cp /etc/quay-install/quay-rootCA/rootCA.pem /usr/share/pki/ca-trust-source/anc
 ```
 
 > 更新系統範圍的信任儲存配置，請使用 update-ca-trust 命令：
-``
+
+```
 $ update-ca-trust
 ```
 
@@ -134,7 +135,7 @@ source upgrade-env
 
 3. 備份 Image
 
--  /#1/ Review the images and configuration manifests to mirror :
+-  /#1/ Review the images and configuration manifests to mirror:
  
 ```
 $ oc adm release mirror -a ${LOCAL_SECRET_JSON}       --from=quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE}      --to=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY}      --to-release-image=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY}:${OCP_RELEASE}-${ARCHITECTURE} --dry-run
@@ -169,7 +170,7 @@ To upload local images to a registry, run:
 Configmap signature file /root/openshift4/registry/images/mirror/config/signature-sha256-3d4ada825f4aa4d2.yaml created
 ```
 
-- /#3/ Take the media to the restricted network environment and upload the images to the local container registry.
+- /#3/ Take the media to the restricted network environment and upload the images to the local container registry:
 
 ```
 $ oc image mirror -a ${LOCAL_SECRET_JSON} --from-dir=${REMOVABLE_MEDIA_PATH}/mirror "file://openshift/release:${OCP_RELEASE}*" ${LOCAL_REGISTRY}/${LOCAL_REPOSITORY} 
@@ -202,11 +203,9 @@ $ oc adm release mirror -a ${LOCAL_SECRET_JSON} --from=quay.io/${PRODUCT_REPO}/$
 > [更多配置請參考 Mirroring the OpenShift Container Platform image repository](https://docs.openshift.com/container-platform/4.10/openshift_images/samples-operator-alt-registry.html)
 
 ## mirror 後結果
-![](https://i.imgur.com/APzRuyc.png). 
-
+![](https://i.imgur.com/APzRuyc.png)
 
 ---
-
 
 ## Reference
 
@@ -214,5 +213,3 @@ $ oc adm release mirror -a ${LOCAL_SECRET_JSON} --from=quay.io/${PRODUCT_REPO}/$
 - https://cloud.redhat.com/blog/introducing-mirror-registry-for-red-hat-openshift
 - https://access.redhat.com/support/policy/updates/openshift#omr
 - https://www.youtube.com/watch?v=j5e4OT71N0A
-
-
