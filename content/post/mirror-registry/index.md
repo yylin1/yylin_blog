@@ -3,7 +3,7 @@ title: "Disconnected Environment - Introducing Mirror Registry for Red Hat OpenS
 date: 2022-03-07T00:53:25+08:00
 draft: false
 url: "openshift/mirror-registry-for-ocp4-install"
-description: "本篇文章介紹，如何透過 `Mirror Regristry` 一座輕量精簡的容器鏡像倉庫(Regristry)，為使用者提供了在沒有 Regristry 的離線環境中，提供託管 OpenShift 4 安裝所需的相關容器鏡像。"
+description: "本篇文章介紹，如何透過 `mirror regristry` 一座輕量精簡的容器鏡像倉庫(Regristry)，為使用者提供了在沒有 Regristry 的離線環境中，提供託管 OpenShift 4 安裝所需的相關容器鏡像。"
 categories:
   - OpenShift
 tags:
