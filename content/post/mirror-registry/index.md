@@ -51,7 +51,14 @@ Red Hat 提供一個 “mirror registry”工具，只針對 OpenShift 部署的
 - 在當前環境安裝 mirror registry 
 
 ```
-$ ./mirror-registry install --quayHostname <host_example_com> --ssh-key <~/.ssh/my_ssh_key>
+$ vim /etc/hosts
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+127.0.0.1 registry.yylin.demolab
+
+$ export HOSTNAME="registry.yylin.demolab"
+$ ./mirror-registry install --quayHostname ${HOSTNAME} --ssh-key <~/.ssh/my_id_rsa>
 ```
 
 - 最後輸出顯示 registry host 與登入資訊
