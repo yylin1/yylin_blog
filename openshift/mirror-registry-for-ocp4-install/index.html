@@ -1,14 +1,14 @@
 <!doctype html><html lang=zh-tw dir=ltr>
 <head><meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="本篇文章介紹，如何透過 `Mirror Regristry` 一座輕量精簡的容器鏡像倉庫(Regristry)，為使用者提供了在沒有 Regristry 的離線環境中，提供託管 OpenShift 4 安裝所需的相關容器鏡像。"><title>Disconnected Environment - Introducing Mirror Registry for Red Hat OpenShift</title>
+<meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="本篇文章介紹，如何透過 `mirror regristry` 一座輕量精簡的容器鏡像倉庫(Regristry)，為使用者提供了在沒有 Regristry 的離線環境中，提供託管 OpenShift 4 安裝所需的相關容器鏡像。"><title>Disconnected Environment - Introducing Mirror Registry for Red Hat OpenShift</title>
 <link rel=canonical href=https://blog.yylin.io/openshift/mirror-registry-for-ocp4-install/>
 <link rel=stylesheet href=/scss/style.min.928dafc209520427d84d431c729b0a24ba49909c88287821bd42fe1e43edb51d.css><meta property="og:title" content="Disconnected Environment - Introducing Mirror Registry for Red Hat OpenShift">
-<meta property="og:description" content="本篇文章介紹，如何透過 `Mirror Regristry` 一座輕量精簡的容器鏡像倉庫(Regristry)，為使用者提供了在沒有 Regristry 的離線環境中，提供託管 OpenShift 4 安裝所需的相關容器鏡像。">
+<meta property="og:description" content="本篇文章介紹，如何透過 `mirror regristry` 一座輕量精簡的容器鏡像倉庫(Regristry)，為使用者提供了在沒有 Regristry 的離線環境中，提供託管 OpenShift 4 安裝所需的相關容器鏡像。">
 <meta property="og:url" content="https://blog.yylin.io/openshift/mirror-registry-for-ocp4-install/">
 <meta property="og:site_name" content="Frank's Notes">
-<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="Registry"><meta property="article:published_time" content="2022-03-07T00:53:25+08:00"><meta property="article:modified_time" content="2022-05-19T18:27:46+00:00">
+<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="Registry"><meta property="article:published_time" content="2022-03-07T00:53:25+08:00"><meta property="article:modified_time" content="2022-05-31T10:32:54+00:00">
 <meta name=twitter:title content="Disconnected Environment - Introducing Mirror Registry for Red Hat OpenShift">
-<meta name=twitter:description content="本篇文章介紹，如何透過 `Mirror Regristry` 一座輕量精簡的容器鏡像倉庫(Regristry)，為使用者提供了在沒有 Regristry 的離線環境中，提供託管 OpenShift 4 安裝所需的相關容器鏡像。">
+<meta name=twitter:description content="本篇文章介紹，如何透過 `mirror regristry` 一座輕量精簡的容器鏡像倉庫(Regristry)，為使用者提供了在沒有 Regristry 的離線環境中，提供託管 OpenShift 4 安裝所需的相關容器鏡像。">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-60ZBHV66GB"></script>
 <script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-60ZBHV66GB',{anonymize_ip:!1})}</script>
 </head>
@@ -67,7 +67,7 @@ OpenShift
 <a href=/openshift/mirror-registry-for-ocp4-install/>Disconnected Environment - Introducing Mirror Registry for Red Hat OpenShift</a>
 </h2>
 <h3 class=article-subtitle>
-本篇文章介紹，如何透過 `Mirror Regristry` 一座輕量精簡的容器鏡像倉庫(Regristry)，為使用者提供了在沒有 Regristry 的離線環境中，提供託管 OpenShift 4 安裝所需的相關容器鏡像。
+本篇文章介紹，如何透過 `mirror regristry` 一座輕量精簡的容器鏡像倉庫(Regristry)，為使用者提供了在沒有 Regristry 的離線環境中，提供託管 OpenShift 4 安裝所需的相關容器鏡像。
 </h3>
 </div>
 <footer class=article-time>
@@ -117,9 +117,23 @@ OpenShift
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>$ ./mirror-registry install --quayHostname &lt;host_example_com&gt; --ssh-key &lt;~/.ssh/my_ssh_key&gt;
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>$ vim /etc/hosts
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+127.0.0.1 registry.yylin.demolab
+
+$ export HOSTNAME=&#34;registry.yylin.demolab&#34;
+$ ./mirror-registry install --quayHostname ${HOSTNAME} --ssh-key &lt;~/.ssh/my_id_rsa&gt;
 </code></pre></td></tr></table>
 </div>
 </div><ul>
@@ -423,7 +437,7 @@ info: Mirroring completed in 1m17.77s (5.572MB/s)
 </section>
 <section class=article-lastmod><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
 <span>
-最後更新 May 19, 2022 18:27 UTC
+最後更新 May 31, 2022 10:32 UTC
 </span>
 </section></footer>
 </article>
