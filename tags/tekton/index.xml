@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tekton on Frank's Notes</title><link>https://blog.yylin.io/tags/tekton/</link><description>Recent content in Tekton on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Tue, 21 Jun 2022 21:40:40 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/tags/tekton/index.xml" rel="self" type="application/rss+xml"/><item><title>CI/CD: Tekton Pipeline 實戰</title><link>https://blog.yylin.io/openshift/pipelines/</link><pubDate>Tue, 21 Jun 2022 21:40:40 +0800</pubDate><guid>https://blog.yylin.io/openshift/pipelines/</guid><description>&lt;p>OpenShift Pipelines 是一個基於 Kubernetes 資源的雲塊的持續和持續交付（持續集成和持續交付，簡稱 CI/CD）的解決方案。它通過執行執行的細節，使用 Tekton 進行跨平台的自動部署。Tekton 引入了多種標準的自定義資源定義 (CRD)，定義可跨 Kubernetes 分佈用於 CI/CD 管道。&lt;/p>
+&lt;h2 id="主要特性">主要特性&lt;/h2>
+&lt;ul>
+&lt;li>OpenShift Pipelines 是一個無服務器的 CI/CD 系統，它在獨立的容器中運行 Pipelines，以及所有需要的依賴組件。&lt;/li>
+&lt;li>OpenShift Pipelines 是為開發微服務架構的非中心化團隊設計的。&lt;/li>
+&lt;li>OpenShift Pipelines 使用標準 CI（pipeline）定義，這些與現有的 Kubernetes 工具集成擴展可擴展和擴展，可讓您定義和擴展 Kubernetes。&lt;/li>
+&lt;li>您可以通過 OpenShift Pipelines 使用 Kubernetes （如 Source-to-Image (S2I)、Buildah、Buildpacks 和 Kaniko）構建鏡像，這些工具可以移植到任何 Kubernetes 平台。&lt;/li>
+&lt;li>您可以使用 OpenShift Container Platform 開發運行（Developer Console）來創建 Tekton 資源，查看 Pipeline 的日誌，並管理 OpenShift Container Platform 設計空間中的管道。&lt;/li>
+&lt;/ul>
+&lt;p>成功運行 Pipeline 結果:&lt;/p>
+&lt;p>&lt;img src="https://www.redhat.com/architect/sites/default/files/styles/embed_large/public/2022-06/4-pipeline.png?itok=Eex7RxG9"
+loading="lazy"
+>&lt;/p>
+&lt;p>失敗運行 Pipeline 結果：&lt;/p>
+&lt;p>&lt;img src="https://www.redhat.com/architect/sites/default/files/styles/embed_large/public/2022-06/5-ci-dev-pipeline-failed.png?itok=dzFYWfKl"
+loading="lazy"
+>&lt;/p></description></item></channel></rss>

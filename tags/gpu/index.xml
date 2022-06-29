@@ -1,4 +1,107 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>GPU on Frank's Notes</title><link>https://blog.yylin.io/tags/gpu/</link><description>Recent content in GPU on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Mon, 28 Feb 2022 21:40:40 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/tags/gpu/index.xml" rel="self" type="application/rss+xml"/><item><title>NVIDIA GPU Operator on OpenShift4</title><link>https://blog.yylin.io/openshift/gpu-operator/</link><pubDate>Mon, 28 Feb 2022 21:40:40 +0800</pubDate><guid>https://blog.yylin.io/openshift/gpu-operator/</guid><description>&lt;p>Nvidia GPU Operator v1.9 on OpenShift 4.9.9 包含以上版本，安裝不用再進行額外權限配置]&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>GPU on Frank's Notes</title><link>https://blog.yylin.io/tags/gpu/</link><description>Recent content in GPU on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Tue, 28 Jun 2022 21:40:40 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/tags/gpu/index.xml" rel="self" type="application/rss+xml"/><item><title>OpenShift 啟用 GPU Operator Dashboard</title><link>https://blog.yylin.io/openshift/gpu-utilization/</link><pubDate>Tue, 28 Jun 2022 21:40:40 +0800</pubDate><guid>https://blog.yylin.io/openshift/gpu-utilization/</guid><description>&lt;h2 id="先決條件">先決條件：&lt;/h2>
+&lt;ul>
+&lt;li>Bastion 安裝 Helm&lt;/li>
+&lt;li>當前 OpenShift 版本為 4.10+&lt;/li>
+&lt;li>Nvidia GPU Operator 已經完成安裝&lt;/li>
+&lt;/ul>
+&lt;h2 id="啟用-nvidia-gpu-operator-usage-資訊">啟用 NVIDIA GPU Operator Usage 資訊&lt;/h2>
+&lt;ol>
+&lt;li>添加 helm repo:&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ helm repo add rh-ecosystem-edge https://rh-ecosystem-edge.github.io/console-plugin-nvidia-gpu
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="2">
+&lt;li>更新 repo:&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ helm repo update
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="3">
+&lt;li>安裝 &lt;code>helm chart&lt;/code> 於預設 NVIDIA GPU Operator namespace:&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ helm install -n nvidia-gpu-operator console-plugin-nvidia-gpu rh-ecosystem-edge/console-plugin-nvidia-gpu
+$ kubectl -n nvidia-gpu-operator get all -l app.kubernetes.io/name=console-plugin-nvidia-gpu
+# 啟用 plugin 執行以下 command:
+$ kubectl patch consoles.operator.openshift.io cluster --patch &amp;#39;[{&amp;#34;op&amp;#34;: &amp;#34;add&amp;#34;, &amp;#34;path&amp;#34;: &amp;#34;/spec/plugins/-&amp;#34;, &amp;#34;value&amp;#34;: &amp;#34;console-plugin-nvidia-gpu&amp;#34; }]&amp;#39; --type=json
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="4">
+&lt;li>查看部署的資源：&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc -n nvidia-gpu-operator get all -l app.kubernetes.io/name=console-plugin-nvidia-gpu
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="5">
+&lt;li>驗證 plugins 是否已指定&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc get consoles.operator.openshift.io cluster --output=jsonpath=&amp;#34;{.spec.plugins}&amp;#34;
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>如果未指定，則運行以下 command 以啟用 plugin：&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc patch consoles.operator.openshift.io cluster --patch &amp;#39;{ &amp;#34;spec&amp;#34;: { &amp;#34;plugins&amp;#34;: [&amp;#34;console-plugin-nvidia-gpu&amp;#34;] } }&amp;#39; --type=merge
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>如果指定，則運行以下 command 以啟用 plugin：&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc patch consoles.operator.openshift.io cluster --patch &amp;#39;[{&amp;#34;op&amp;#34;: &amp;#34;add&amp;#34;, &amp;#34;path&amp;#34;: &amp;#34;/spec/plugins/-&amp;#34;, &amp;#34;value&amp;#34;: &amp;#34;console-plugin-nvidia-gpu&amp;#34; }]&amp;#39; --type=json
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>在 OCP Web Console 頁面中（Home &amp;gt; Overview）就可以查閱 GPU utilization:&lt;/p>
+&lt;p>&lt;img src="https://docs.nvidia.com/datacenter/cloud-native/_images/gpu_overview_dashboard1.png"
+loading="lazy"
+>&lt;/p>
+&lt;hr>
+&lt;h2 id="reference">Reference&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/enable-gpu-op-dashboard.html" target="_blank" rel="noopener"
+>https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/enable-gpu-op-dashboard.html&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>NVIDIA GPU Operator on OpenShift4</title><link>https://blog.yylin.io/openshift/gpu-operator/</link><pubDate>Mon, 28 Feb 2022 21:40:40 +0800</pubDate><guid>https://blog.yylin.io/openshift/gpu-operator/</guid><description>&lt;p>Nvidia GPU Operator v1.9 on OpenShift 4.9.9 包含以上版本，安裝不用再進行額外權限配置]&lt;/p>
 &lt;h2 id="openshift-499-或更高的版本-1">OpenShift 4.9.9 或更高的版本 [1]&lt;/h2>
 &lt;p>針對 driver toolkit 取消必要安裝要求:&lt;/p>
 &lt;ul>
