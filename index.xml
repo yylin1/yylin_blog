@@ -1,4 +1,94 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Frank's Notes</title><link>https://blog.yylin.io/</link><description>Recent content on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><atom:link href="https://blog.yylin.io/index.xml" rel="self" type="application/rss+xml"/><item><title>OpenShift 啟用 GPU Operator Dashboard</title><link>https://blog.yylin.io/openshift/gpu-utilization/</link><pubDate>Tue, 28 Jun 2022 21:40:40 +0800</pubDate><guid>https://blog.yylin.io/openshift/gpu-utilization/</guid><description>&lt;h2 id="先決條件">先決條件：&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Frank's Notes</title><link>https://blog.yylin.io/</link><description>Recent content on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><atom:link href="https://blog.yylin.io/index.xml" rel="self" type="application/rss+xml"/><item><title>COSCUP 2022 - 那些年我們在開源社群的日子 - Cloud Native Taiwan</title><link>https://blog.yylin.io/community/coscup2022/</link><pubDate>Sun, 28 Aug 2022 03:40:40 +0800</pubDate><guid>https://blog.yylin.io/community/coscup2022/</guid><description>&lt;p>&lt;a class="link" href="https://coscup.org/2022/zh-TW/" target="_blank" rel="noopener"
+>COSCUP x KCD Taiwan&lt;/a>，今年終於變回實體線下活動，能透過線下活動人與人交流到處尋覓老朋友、聊現況，真的是每年最熱鬧的一刻。&lt;/p>
+&lt;p>這次我們社群 &lt;a class="link" href="https://cloudnative.tw/" target="_blank" rel="noopener"
+>CNTUG&lt;/a> 申請主辦台灣地區的 &lt;a class="link" href="https://community.cncf.io/events/details/cncf-kcd-taiwan-presents-coscup-x-kcd-taiwan-2022/?fbclid=IwAR3ceTLw2_Lsd8JjbrMQkuxiBC3KQq2KhvC4qhi9MG3UhdIomaZWdrhPrKY" target="_blank" rel="noopener"
+>Kubernetes Community Day&lt;/a> (KCD)，KCD 為 CNCF 官方的活動，性質跟 KubeConf 有點不太一樣，KCD 主要是藉由各地區當地的社群來推廣 Cloud Native 以及 Kubernetes 文化的一個活動，所以會由各國家地區的社群來主持這個活動，而台灣地區的就是 KCD Taiwan。&lt;/p>
+&lt;p>&lt;img src="https://lh3.googleusercontent.com/pw/AL9nZEVSyhHoIPq0-FpjgSI0wYT80UMjYHX03C5x7KHvSJE17pZcv_YJgfbaLn89JCRh-pUuBUBM_JXZcZYxy_KlpJM04a3ZXMRJjWoat1h7PGXl_Wrh141Z9uDk2esnwZWvpGkZqLqqjjIjz1zewTb4Xm5S=w1620-h1080-no?authuser=1"
+loading="lazy"
+>&lt;/p>
+&lt;p>今年 KCD Taiwan 跟 COSCUP 2022 一起合作，所以可以看到 COSCUP 2022 官網會有 COSCUP x KCD Taiwan 2022 以及吉祥物，而有一個主議程軌 (7/30 AU 視聽館)是專門給 KCD Taiwan 的，有興趣的朋友可以參考&lt;a class="link" href="https://coscup.org/2022/zh-TW/session" target="_blank" rel="noopener"
+>議程表&lt;/a>。&lt;/p>
+&lt;h2 id="talk---那些年我們在開源社群的日子-cloud-native-taiwantalk---那些年我們在開源社群的日子-cloud-native-taiwan">Talk - 那些年我們在開源社群的日子 Cloud Native Taiwan&lt;a class="link" href="#talk---%e9%82%a3%e4%ba%9b%e5%b9%b4%e6%88%91%e5%80%91%e5%9c%a8%e9%96%8b%e6%ba%90%e7%a4%be%e7%be%a4%e7%9a%84%e6%97%a5%e5%ad%90-cloud-native-taiwan" >&lt;/a>&lt;/h2>
+&lt;p>今年很榮幸跟社群夥伴 &lt;a class="link" href="https://blog.phshih.com/" target="_blank" rel="noopener"
+>Po-Hsien&lt;/a> 一起投稿開源新手村，投稿題目是 &lt;strong>「那些年我們在開源社群的日子 - Cloud Native Taiwan」&lt;/strong>，主要是以社群志工角度，介紹我們對於參與開源社群的一些想法，整理一些建議給想參與社群的會眾。&lt;/p>
+&lt;p>&lt;img src="https://live.staticflickr.com/65535/52303613392_fb3654134a_6k.jpg"
+loading="lazy"
+>&lt;/p>
+&lt;p>&lt;img src="https://live.staticflickr.com/65535/52304743814_2f87221ab8_6k.jpg"
+loading="lazy"
+>
+(照片來源: COSCUP 2022 官方相簿)&lt;/p>
+&lt;p>我們認為社群就是 一群志同道合宅宅聚集而成的團體，目的為&lt;strong>分享&lt;/strong>、&lt;strong>學習&lt;/strong>、&lt;strong>推廣&lt;/strong>、&lt;strong>交流&lt;/strong>以及&lt;strong>貢獻&lt;/strong>開源技術，有點類似學校的社團一樣，大家對於共同領域有熱情，並一起投入進去的感覺。&lt;/p>
+&lt;h3 id="如何參與社群如何參與社群">如何參與社群?&lt;a class="link" href="#%e5%a6%82%e4%bd%95%e5%8f%83%e8%88%87%e7%a4%be%e7%be%a4" >&lt;/a>&lt;/h3>
+&lt;p>在此 Talk 中我們整理了四個參與社群的簡單步驟:&lt;/p>
+&lt;ol>
+&lt;li>尋找動機&lt;/li>
+&lt;li>尋找管道&lt;/li>
+&lt;li>參與社群&lt;/li>
+&lt;li>支持與貢獻&lt;/li>
+&lt;/ol>
+&lt;h3 id="尋找動機尋找動機">尋找動機&lt;a class="link" href="#%e5%b0%8b%e6%89%be%e5%8b%95%e6%a9%9f" >&lt;/a>&lt;/h3>
+&lt;p>顧名思義，就是尋找你想參與社群的目的或是動機，這裡可以再細分成兩步。第一步可以先找出你有興趣的領域，例如系統、程式、硬體、資安、開源、產品或是平台都可以，也可以多個。找到有興趣的領域後，第二步就是尋找你的動機跟目的，想增進技術？想擴展人脈? 想交流或是請教技術？想要貢獻技術？還是想要增加眼界？這些都可以變成你加入社群的動機，可以統整下來，並以這些目標前進，但還是需要注意，目標已不影響他人為主！&lt;/p>
+&lt;h3 id="尋找管道尋找管道">尋找管道&lt;a class="link" href="#%e5%b0%8b%e6%89%be%e7%ae%a1%e9%81%93" >&lt;/a>&lt;/h3>
+&lt;p>有了動機跟目的後，可以開始尋找資源，透過各種管道找到社群的資訊，這邊推薦幾種常見的管道:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://hackmd.io/@SITCON/floss-community-list" target="_blank" rel="noopener"
+>台灣開源社群推廣目錄&lt;/a>&lt;/li>
+&lt;li>社群平台 (Facebook、Twitter、Slack、Telegram 等等)&lt;/li>
+&lt;li>社群官方網站&lt;/li>
+&lt;li>各式研討會 (SITCON/COSCUP/HITCON/iThome…)&lt;/li>
+&lt;li>親朋好友或是實驗室跟學校社團&lt;/li>
+&lt;/ul>
+&lt;p>可以根據關鍵字或是地區來進行搜索，目前台灣有非常多的社群，可以直接參與。在這些方法中我個人很推薦參與研討會，參與研討會可以讓你見識不同領域的新技術以及認識各式各樣的公司或是社群，是一個很好的機會與人交流以及尋找自己的方向的地方，除了可以聽聽演講以外，許多社群或是公司也會有擺攤、Workshop 活動，可以多加參與進一步暸解社群以及文化。&lt;/p>
+&lt;p>如果自己想要的領域比較冷門或是還沒有相關社群時，可以考慮自己創立一個社群，也許有人覺得創立社群很困難，一開始就要多大多複雜的組織架構，但其實回歸到最原始的定義，社群只是『一群對同樣領域有熱情的人組成的團體』，所以其實是可以從小團體開始經營，例如小型讀書會、聚會或是可以從建立社群平台粉專開始，等到穩定之後，再慢慢擴大規模，例如從幾個朋友之間，變成實驗室，再變成系上或是學校，甚至還可以開始跟其他社群合作或是投稿研討會增加社群能見度，都是不錯的方式。&lt;/p>
+&lt;h3 id="參與社群參與社群">參與社群&lt;a class="link" href="#%e5%8f%83%e8%88%87%e7%a4%be%e7%be%a4" >&lt;/a>&lt;/h3>
+&lt;p>找到適合的社群後，就可以積極的參與各項社群活動，包括:&lt;/p>
+&lt;ol>
+&lt;li>社群活動 (Meetup/Conference/Workshop…)&lt;/li>
+&lt;li>與其他會眾交流&lt;/li>
+&lt;li>於各式活動支持社群攤位&lt;/li>
+&lt;li>加入社群平台社團交流&lt;/li>
+&lt;li>旁聽社群定期會議&lt;/li>
+&lt;li>擔任講者分享經驗 (增加自己的能見度)&lt;/li>
+&lt;/ol>
+&lt;p>可以多參加不同的社群，了解不同社群文化以及經營，也可以多方學習不同種類的技術，多與人交流，也許可以獲得不錯的寶貴經驗。&lt;/p>
+&lt;p>不過大多數人是比較害羞內向的，在參與社群時，可能比較難以跟其他人交流，在這裡分享一個小技巧，從請教問題開始切入。一開始可以先當聽眾就好，不用刻意要找人聊天，專心參與以及聽分享，也許某一次的分享的內容你剛好很有共鳴或是有疑問，就可以去請教講者，這就是一個很好的交流切入點，有時候在與講者討論時，其他會眾也加入一起討論，就可以趁這機會多認識人，慢慢的在交流上就會更有自信，也可以提升人脈。&lt;/p>
+&lt;h3 id="擔任志工擔任志工">擔任志工&lt;a class="link" href="#%e6%93%94%e4%bb%bb%e5%bf%97%e5%b7%a5" >&lt;/a>&lt;/h3>
+&lt;p>若有閒暇之餘，也可以擔任社群志工，為社群經營盡一份力，志工主要負責以下這些項目:&lt;/p>
+&lt;ol>
+&lt;li>協助籌辦各式活動&lt;/li>
+&lt;li>協助尋找講者&lt;/li>
+&lt;li>參與社群定期會議&lt;/li>
+&lt;li>管理社群相關營運事務 (社團、官方網站)&lt;/li>
+&lt;/ol>
+&lt;p>由於經營社群會佔用到一些個人的時間，因此可以根據自身狀況盡力協助，志工之間彼此互相 Cover。&lt;/p>
+&lt;h3 id="如何支持及貢獻開源技術社群如何支持及貢獻開源技術社群">如何支持及貢獻開源技術社群&lt;a class="link" href="#%e5%a6%82%e4%bd%95%e6%94%af%e6%8c%81%e5%8f%8a%e8%b2%a2%e7%8d%bb%e9%96%8b%e6%ba%90%e6%8a%80%e8%a1%93%e7%a4%be%e7%be%a4" >&lt;/a>&lt;/h3>
+&lt;p>在參與社群一段時間後，可以選擇協助支持或是貢獻開源技術社群，支持有許多種形式，可以選擇最適合自己的方式:&lt;/p>
+&lt;ol>
+&lt;li>積極社群活動 (Meetup/Conference/Workshop…)&lt;/li>
+&lt;li>使用及推廣開源技術&lt;/li>
+&lt;li>貢獻專案，成為 Contributor 或是 Member&lt;/li>
+&lt;li>於各式活動分享相關專案或技術經驗&lt;/li>
+&lt;li>擔任志工協助經營社群&lt;/li>
+&lt;li>贊助社群&lt;/li>
+&lt;/ol>
+&lt;h3 id="參與社群後對生活及職涯的影響參與社群後對生活及職涯的影響">參與社群後對生活及職涯的影響&lt;a class="link" href="#%e5%8f%83%e8%88%87%e7%a4%be%e7%be%a4%e5%be%8c%e5%b0%8d%e7%94%9f%e6%b4%bb%e5%8f%8a%e8%81%b7%e6%b6%af%e7%9a%84%e5%bd%b1%e9%9f%bf" >&lt;/a>&lt;/h3>
+&lt;p>參與社群除了能提升專業、自信以及能見度以外，我個人認為最重要的是人脈，能認識許多志同道合的朋友以及業界的夥伴，這不管在未來職涯還是生活上都很有幫助。若是參與志工，更能學習到如何組織活動、與其他人溝通及協同作業，這些都是實用且寶貴的經歷。&lt;/p>
+&lt;p>套用社群朋友的一句話 &lt;strong>社群就是一個很大的「舞台」&lt;/strong>，這個舞台提供了許多能夠讓人分享、交流以及貢獻的機會，並在這些過程中，不斷學習精進，透過社群內部的交流以及社群與社群間交流，互相學習補足各領域不足的資訊，讓整個社群圈變成一個知識共同體，讓技術不斷向邁進，這是我認為社群最棒的文化。&lt;/p>
+&lt;p>&lt;img src="https://lh3.googleusercontent.com/pw/AL9nZEUbyDsuT6PLFdvGM8e2KvwyquDytQbHey4-H_zj-8ThWVSUCCA3-k8goXa02dn4hElH69X1JnUet3w1PBokvykwmiuMAVUqrPXuffImGrVSNELH4NFVxSEIa1uGz8Xc5Z8VuKWPCHyDcxyoUISDrYpx=w2292-h1528-no?authuser=1"
+loading="lazy"
+>&lt;/p>
+&lt;h3 id="referencereference">Reference&lt;a class="link" href="#reference" >&lt;/a>&lt;/h3>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://hackmd.io/@SITCON/floss-community-list" target="_blank" rel="noopener"
+>開源社群推廣目錄&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://ocf.tw/p/community" target="_blank" rel="noopener"
+>OCF - 社群專案&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.bnext.com.tw/article/37063/BN-2015-08-16-131320-34" target="_blank" rel="noopener"
+>[王景弘] 談談COSCUP：讓整個社群圈變成一個知識共同體。&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.yourator.co/articles/215?fbclid=IwAR0ENbxcYKK689wj-AX3COHxGja9KiYgSBxqX0FLwB_jKK_JoX7fcZAjfk0" target="_blank" rel="noopener"
+>用社群實踐開源精神，Denny 不平凡的技術社群人生－專訪 SITCON 共同發起人 Denny Huang&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>OpenShift 啟用 GPU Operator Dashboard</title><link>https://blog.yylin.io/openshift/gpu-utilization/</link><pubDate>Tue, 28 Jun 2022 21:40:40 +0800</pubDate><guid>https://blog.yylin.io/openshift/gpu-utilization/</guid><description>&lt;h2 id="先決條件">先決條件：&lt;/h2>
 &lt;ul>
 &lt;li>Bastion 安裝 Helm&lt;/li>
 &lt;li>當前 OpenShift 版本為 4.10+&lt;/li>
@@ -1068,7 +1158,17 @@ Name ResourceGroup Location ProvisioningState WorkerCount URL
 aro-demo openenv-hdpnp eastus Succeeded 3 https://console-openshift-console.apps.yylin.io/
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item><item><title>About</title><link>https://blog.yylin.io/about/</link><pubDate>Sun, 13 Mar 2022 17:19:42 +0800</pubDate><guid>https://blog.yylin.io/about/</guid><description/></item><item><title>Disconnected Environment - Introducing Mirror Registry for Red Hat OpenShift</title><link>https://blog.yylin.io/openshift/mirror-registry-for-ocp4-install/</link><pubDate>Mon, 07 Mar 2022 00:53:25 +0800</pubDate><guid>https://blog.yylin.io/openshift/mirror-registry-for-ocp4-install/</guid><description>&lt;p>本文件如何安裝 OpenShift 4.8 版本至虛擬機器上，這邊將以 RHEL 環境來進行測試。&lt;/p>
+&lt;/div></description></item><item><title>關於我</title><link>https://blog.yylin.io/%E9%97%9C%E6%96%BC%E6%88%91/</link><pubDate>Sun, 13 Mar 2022 17:19:42 +0800</pubDate><guid>https://blog.yylin.io/%E9%97%9C%E6%96%BC%E6%88%91/</guid><description>&lt;h2 id="profile">Profile&lt;/h2>
+&lt;p>Hello, 我是 Frank Lin&lt;/p>
+&lt;p>此 Blog 主要是用來「拆解」一些工作上接觸到或是開源專案，遇到技術疑問「復盤」思維脈絡。
+並透過學習過程「筆記」文章，歡迎大家一起交流討論！&lt;/p>
+&lt;h2 id="contact">Contact&lt;/h2>
+&lt;ul>
+&lt;li>GitHub: &lt;a class="link" href="https://github.com/dwchiang" target="_blank" rel="noopener"
+>https://github.com/dwchiang&lt;/a>&lt;/li>
+&lt;li>Speaker Deck: &lt;a class="link" href="https://speakerdeck.com/yylin1" target="_blank" rel="noopener"
+>https://speakerdeck.com/yylin1&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>Disconnected Environment - Introducing Mirror Registry for Red Hat OpenShift</title><link>https://blog.yylin.io/openshift/mirror-registry-for-ocp4-install/</link><pubDate>Mon, 07 Mar 2022 00:53:25 +0800</pubDate><guid>https://blog.yylin.io/openshift/mirror-registry-for-ocp4-install/</guid><description>&lt;p>本文件如何安裝 OpenShift 4.8 版本至虛擬機器上，這邊將以 RHEL 環境來進行測試。&lt;/p>
 &lt;ul>
 &lt;li>RHEL 8 or Fedora machine with podman v3.3 installed&lt;/li>
 &lt;li>Fully qualified domain name for the Quay service (must resolve via DNS, or at least /etc/hosts)&lt;/li>
