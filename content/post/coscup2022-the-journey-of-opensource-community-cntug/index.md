@@ -1,0 +1,116 @@
+---
+title: "COSCUP 2022 - 那些年我們在開源社群的日子 - Cloud Native Taiwan"
+slug:  "community"
+url: "community/coscup2022"
+date: 2022-08-28T03:40:40+08:00
+draft: false
+description: "一年一度臺灣最大開源社群聚會大活動 COSCUP，能齊聚一堂為開源貢獻做些什麼，是讓大家持續成長的幕後動力。"
+categories:
+  - community
+tags:
+  - COSCUP
+  - KCD
+---
+[COSCUP x KCD Taiwan](https://coscup.org/2022/zh-TW/)，今年終於變回實體線下活動，能透過線下活動人與人交流到處尋覓老朋友、聊現況，真的是每年最熱鬧的一刻。
+
+這次我們社群 [CNTUG](https://cloudnative.tw/) 申請主辦台灣地區的 [Kubernetes Community Day](https://community.cncf.io/events/details/cncf-kcd-taiwan-presents-coscup-x-kcd-taiwan-2022/?fbclid=IwAR3ceTLw2_Lsd8JjbrMQkuxiBC3KQq2KhvC4qhi9MG3UhdIomaZWdrhPrKY) (KCD)，KCD 為 CNCF 官方的活動，性質跟 KubeConf 有點不太一樣，KCD 主要是藉由各地區當地的社群來推廣 Cloud Native 以及 Kubernetes 文化的一個活動，所以會由各國家地區的社群來主持這個活動，而台灣地區的就是 KCD Taiwan。
+
+![](https://lh3.googleusercontent.com/pw/AL9nZEVSyhHoIPq0-FpjgSI0wYT80UMjYHX03C5x7KHvSJE17pZcv_YJgfbaLn89JCRh-pUuBUBM_JXZcZYxy_KlpJM04a3ZXMRJjWoat1h7PGXl_Wrh141Z9uDk2esnwZWvpGkZqLqqjjIjz1zewTb4Xm5S=w1620-h1080-no?authuser=1)
+
+今年 KCD Taiwan 跟 COSCUP 2022 一起合作，所以可以看到 COSCUP 2022 官網會有 COSCUP x KCD Taiwan 2022 以及吉祥物，而有一個主議程軌 (7/30 AU 視聽館)是專門給 KCD Taiwan 的，有興趣的朋友可以參考[議程表](https://coscup.org/2022/zh-TW/session)。
+
+
+Talk - 那些年我們在開源社群的日子 Cloud Native Taiwan[](#talk---那些年我們在開源社群的日子-cloud-native-taiwan)
+-------------------------------------------------------------------------------------
+
+今年很榮幸跟社群夥伴 [Po-Hsien](https://blog.phshih.com/) 一起投稿開源新手村，投稿題目是 **「那些年我們在開源社群的日子 - Cloud Native Taiwan」**，主要是以社群志工角度，介紹我們對於參與開源社群的一些想法，整理一些建議給想參與社群的會眾。
+
+![](https://live.staticflickr.com/65535/52303613392_fb3654134a_6k.jpg)
+
+![](https://live.staticflickr.com/65535/52304743814_2f87221ab8_6k.jpg)
+(照片來源: COSCUP 2022 官方相簿)
+ 
+
+我們認為社群就是 一群志同道合宅宅聚集而成的團體，目的為**分享**、**學習**、**推廣**、**交流**以及**貢獻**開源技術，有點類似學校的社團一樣，大家對於共同領域有熱情，並一起投入進去的感覺。
+
+### 如何參與社群?[](#如何參與社群)
+
+在此 Talk 中我們整理了四個參與社群的簡單步驟:
+
+1.  尋找動機
+2.  尋找管道
+3.  參與社群
+4.  支持與貢獻
+
+### 尋找動機[](#尋找動機)
+
+顧名思義，就是尋找你想參與社群的目的或是動機，這裡可以再細分成兩步。第一步可以先找出你有興趣的領域，例如系統、程式、硬體、資安、開源、產品或是平台都可以，也可以多個。找到有興趣的領域後，第二步就是尋找你的動機跟目的，想增進技術？想擴展人脈? 想交流或是請教技術？想要貢獻技術？還是想要增加眼界？這些都可以變成你加入社群的動機，可以統整下來，並以這些目標前進，但還是需要注意，目標已不影響他人為主！
+
+### 尋找管道[](#尋找管道)
+
+有了動機跟目的後，可以開始尋找資源，透過各種管道找到社群的資訊，這邊推薦幾種常見的管道:
+
+*   [台灣開源社群推廣目錄](https://hackmd.io/@SITCON/floss-community-list)
+*   社群平台 (Facebook、Twitter、Slack、Telegram 等等)
+*   社群官方網站
+*   各式研討會 (SITCON/COSCUP/HITCON/iThome…)
+*   親朋好友或是實驗室跟學校社團
+
+可以根據關鍵字或是地區來進行搜索，目前台灣有非常多的社群，可以直接參與。在這些方法中我個人很推薦參與研討會，參與研討會可以讓你見識不同領域的新技術以及認識各式各樣的公司或是社群，是一個很好的機會與人交流以及尋找自己的方向的地方，除了可以聽聽演講以外，許多社群或是公司也會有擺攤、Workshop 活動，可以多加參與進一步暸解社群以及文化。
+
+如果自己想要的領域比較冷門或是還沒有相關社群時，可以考慮自己創立一個社群，也許有人覺得創立社群很困難，一開始就要多大多複雜的組織架構，但其實回歸到最原始的定義，社群只是『一群對同樣領域有熱情的人組成的團體』，所以其實是可以從小團體開始經營，例如小型讀書會、聚會或是可以從建立社群平台粉專開始，等到穩定之後，再慢慢擴大規模，例如從幾個朋友之間，變成實驗室，再變成系上或是學校，甚至還可以開始跟其他社群合作或是投稿研討會增加社群能見度，都是不錯的方式。
+
+### 參與社群[](#參與社群)
+
+找到適合的社群後，就可以積極的參與各項社群活動，包括:
+
+1.  社群活動 (Meetup/Conference/Workshop…)
+2.  與其他會眾交流
+3.  於各式活動支持社群攤位
+4.  加入社群平台社團交流
+5.  旁聽社群定期會議
+6.  擔任講者分享經驗 (增加自己的能見度)
+
+可以多參加不同的社群，了解不同社群文化以及經營，也可以多方學習不同種類的技術，多與人交流，也許可以獲得不錯的寶貴經驗。
+
+不過大多數人是比較害羞內向的，在參與社群時，可能比較難以跟其他人交流，在這裡分享一個小技巧，從請教問題開始切入。一開始可以先當聽眾就好，不用刻意要找人聊天，專心參與以及聽分享，也許某一次的分享的內容你剛好很有共鳴或是有疑問，就可以去請教講者，這就是一個很好的交流切入點，有時候在與講者討論時，其他會眾也加入一起討論，就可以趁這機會多認識人，慢慢的在交流上就會更有自信，也可以提升人脈。
+
+### 擔任志工[](#擔任志工)
+
+若有閒暇之餘，也可以擔任社群志工，為社群經營盡一份力，志工主要負責以下這些項目:
+
+1.  協助籌辦各式活動
+2.  協助尋找講者
+3.  參與社群定期會議
+4.  管理社群相關營運事務 (社團、官方網站)
+
+由於經營社群會佔用到一些個人的時間，因此可以根據自身狀況盡力協助，志工之間彼此互相 Cover。
+
+### 如何支持及貢獻開源技術社群[](#如何支持及貢獻開源技術社群)
+
+在參與社群一段時間後，可以選擇協助支持或是貢獻開源技術社群，支持有許多種形式，可以選擇最適合自己的方式:
+
+1.  積極社群活動 (Meetup/Conference/Workshop…)
+2.  使用及推廣開源技術
+3.  貢獻專案，成為 Contributor 或是 Member
+4.  於各式活動分享相關專案或技術經驗
+5.  擔任志工協助經營社群
+6.  贊助社群
+
+### 參與社群後對生活及職涯的影響[](#參與社群後對生活及職涯的影響)
+
+參與社群除了能提升專業、自信以及能見度以外，我個人認為最重要的是人脈，能認識許多志同道合的朋友以及業界的夥伴，這不管在未來職涯還是生活上都很有幫助。若是參與志工，更能學習到如何組織活動、與其他人溝通及協同作業，這些都是實用且寶貴的經歷。
+
+套用社群朋友的一句話 **社群就是一個很大的「舞台」**，這個舞台提供了許多能夠讓人分享、交流以及貢獻的機會，並在這些過程中，不斷學習精進，透過社群內部的交流以及社群與社群間交流，互相學習補足各領域不足的資訊，讓整個社群圈變成一個知識共同體，讓技術不斷向邁進，這是我認為社群最棒的文化。
+
+
+![](https://lh3.googleusercontent.com/pw/AL9nZEUbyDsuT6PLFdvGM8e2KvwyquDytQbHey4-H_zj-8ThWVSUCCA3-k8goXa02dn4hElH69X1JnUet3w1PBokvykwmiuMAVUqrPXuffImGrVSNELH4NFVxSEIa1uGz8Xc5Z8VuKWPCHyDcxyoUISDrYpx=w2292-h1528-no?authuser=1)
+
+
+
+### Reference[](#reference)
+
+*   [開源社群推廣目錄](https://hackmd.io/@SITCON/floss-community-list)
+*   [OCF - 社群專案](https://ocf.tw/p/community)
+*   [\[王景弘\] 談談COSCUP：讓整個社群圈變成一個知識共同體。](https://www.bnext.com.tw/article/37063/BN-2015-08-16-131320-34)
+*   [用社群實踐開源精神，Denny 不平凡的技術社群人生－專訪 SITCON 共同發起人 Denny Huang](https://www.yourator.co/articles/215?fbclid=IwAR0ENbxcYKK689wj-AX3COHxGja9KiYgSBxqX0FLwB_jKK_JoX7fcZAjfk0)
