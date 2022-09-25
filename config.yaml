@@ -1,7 +1,7 @@
 baseurl: https://blog.yylin.io
 languageCode: zh-tw
 theme: hugo-theme-stack-v3.10
-paginate: 10
+paginate: 5
 title: Frank's Notes
 
 # Change it to your Disqus shortname before using

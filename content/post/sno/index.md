@@ -1,10 +1,10 @@
 ---
-title: "單節點 OpenShift 部署"
+title: "單節點 OpenShift 部署與應用探討"
 slug:  "openshift"
 url: "openshift/sno-installer"
 date: 2022-09-24T21:40:40+08:00
 draft: false
-description: "所謂的單節點 OpenShift，就是在單臺實體或虛擬伺服器部署 All-in-One 的 OpenShift 叢集功能，可用於OpenShift控制與執行使用者工作負載，但 SNO 部署適合哪些應用場景？是我們值得探討與規劃的。"
+description: "所謂的單節點（Single Node OpenShift，SNO），就是在單臺實體或虛擬伺服器部署 All-in-One 的 OpenShift 叢集功能，可用於 OpenShift 控制與執行使用者工作負載，但 SNO 部署適合哪些應用場景？是我們值得探討與規劃的。"
 categories:
   - OpenShift
 tags:
@@ -41,7 +41,8 @@ OpenShift 4.9 開始正式推出提供單節點部署（Single Node OpenShift，
 | Internal API | api-int.<cluster_name>.<base_domain> | 
 | Ingress route | \*.apps.<cluster_name>.<base_domain> |
 
-<br/>
+- 參考 How to try out single-node OpenShift from Red Hat 安裝指南：
+{{< youtube QFf0yVAHQKc >}}
 
 ## 2. 登入安裝 [console.redhat.com](https://console.redhat.com/), 創建 OpenShift 單節點部署
 
@@ -122,8 +123,7 @@ OpenShift 4.9 開始正式推出提供單節點部署（Single Node OpenShift，
 ![](https://i.imgur.com/BidpalP.jpg)
 
 
-- 補充 Youtube 安裝參考：
-{{< youtube QFf0yVAHQKc >}}
+
 
 
 ## Reference
