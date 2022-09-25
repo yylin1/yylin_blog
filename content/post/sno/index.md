@@ -133,4 +133,5 @@ OpenShift 4.9 開始正式推出提供單節點部署（Single Node OpenShift，
 4. [OpenShift Virtualization on a Single Node Cluster](https://www.youtube.com/watch?v=PE8W8OKJoXc&ab_channel=OpenShift)
 5. [Meet single node OpenShift: Our newest small OpenShift footprint for edge architectures](https://www.redhat.com/en/blog/meet-single-node-openshift-our-smallest-openshift-footprint-edge-architectures)
 6. https://github.com/lees07/tech-docs/blob/master/e1-sno-by-assisted-installer.md
+7. https://www.youtube.com/watch?v=leJa9HmvdI0&ab_channel=RyanNix
 
