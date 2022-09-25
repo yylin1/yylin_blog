@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>OpenShift on Frank's Notes</title><link>https://blog.yylin.io/tags/openshift/</link><description>Recent content in OpenShift on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Sat, 24 Sep 2022 21:40:40 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/tags/openshift/index.xml" rel="self" type="application/rss+xml"/><item><title>單節點 OpenShift 部署</title><link>https://blog.yylin.io/openshift/sno-installer/</link><pubDate>Sat, 24 Sep 2022 21:40:40 +0800</pubDate><guid>https://blog.yylin.io/openshift/sno-installer/</guid><description>&lt;p>OpenShift 4.9 開始正式推出提供單節點部署（Single Node OpenShift，SNO），以支援小型、全功能的企業級Kubernetes叢集的應用，常見客戶 POC 應用需求如資料中心伺服器資源有限情況下，單節點 OpenShift 部署型態能夠更容易處理，可協助企業擴充既有應用程式開發與部署規模，以及管理相關工作流程，更支援邊緣資料資料中心的執行需求。&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>OpenShift on Frank's Notes</title><link>https://blog.yylin.io/tags/openshift/</link><description>Recent content in OpenShift on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Sat, 24 Sep 2022 21:40:40 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/tags/openshift/index.xml" rel="self" type="application/rss+xml"/><item><title>單節點 OpenShift 部署與應用探討</title><link>https://blog.yylin.io/openshift/sno-installer/</link><pubDate>Sat, 24 Sep 2022 21:40:40 +0800</pubDate><guid>https://blog.yylin.io/openshift/sno-installer/</guid><description>&lt;p>OpenShift 4.9 開始正式推出提供單節點部署（Single Node OpenShift，SNO），以支援小型、全功能的企業級Kubernetes叢集的應用，常見客戶 POC 應用需求如資料中心伺服器資源有限情況下，單節點 OpenShift 部署型態能夠更容易處理，可協助企業擴充既有應用程式開發與部署規模，以及管理相關工作流程，更支援邊緣資料資料中心的執行需求。&lt;/p>
 &lt;p>單節點部署可以使用 RHACM 或者在線的安裝引導進行安装，此篇以安裝引導進行 SNO 部署說明：&lt;/p>
 &lt;h2 id="1-準備好本地的安裝環境">1. 準備好本地的安裝環境：&lt;/h2>
 &lt;ul>
@@ -52,7 +52,18 @@
 &lt;/tr>
 &lt;/tbody>
 &lt;/table>
-&lt;br/>
+&lt;ul>
+&lt;li>參考 How to try out single-node OpenShift from Red Hat 安裝指南：
+&lt;div class="video-wrapper">
+&lt;iframe loading="lazy"
+src="https://www.youtube.com/embed/QFf0yVAHQKc"
+allowfullscreen
+title="YouTube Video"
+>
+&lt;/iframe>
+&lt;/div>
+&lt;/li>
+&lt;/ul>
 &lt;h2 id="2-登入安裝-consoleredhatcomhttpsconsoleredhatcom-創建-openshift-單節點部署">2. 登入安裝 &lt;a class="link" href="https://console.redhat.com/" target="_blank" rel="noopener"
 >console.redhat.com&lt;/a>, 創建 OpenShift 單節點部署&lt;/h2>
 &lt;h3 id="installation---assisted-install">Installation - Assisted Install&lt;/h3>
@@ -179,18 +190,6 @@ loading="lazy"
 &lt;img src="https://i.imgur.com/BidpalP.jpg"
 loading="lazy"
 >&lt;/p>
-&lt;ul>
-&lt;li>補充 Youtube 安裝參考：
-&lt;div class="video-wrapper">
-&lt;iframe loading="lazy"
-src="https://www.youtube.com/embed/QFf0yVAHQKc"
-allowfullscreen
-title="YouTube Video"
->
-&lt;/iframe>
-&lt;/div>
-&lt;/li>
-&lt;/ul>
 &lt;h2 id="reference">Reference&lt;/h2>
 &lt;ol>
 &lt;li>&lt;a class="link" href="https://www.youtube.com/watch?v=QFf0yVAHQKc&amp;amp;ab_channel=OpenShift" target="_blank" rel="noopener"
