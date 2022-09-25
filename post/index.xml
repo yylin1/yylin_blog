@@ -1,4 +1,211 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Frank's Notes</title><link>https://blog.yylin.io/post/</link><description>Recent content in Posts on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Sun, 28 Aug 2022 03:40:40 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/post/index.xml" rel="self" type="application/rss+xml"/><item><title>COSCUP 2022 - 那些年我們在開源社群的日子 - Cloud Native Taiwan</title><link>https://blog.yylin.io/community/coscup2022/</link><pubDate>Sun, 28 Aug 2022 03:40:40 +0800</pubDate><guid>https://blog.yylin.io/community/coscup2022/</guid><description>&lt;p>&lt;a class="link" href="https://coscup.org/2022/zh-TW/" target="_blank" rel="noopener"
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Frank's Notes</title><link>https://blog.yylin.io/post/</link><description>Recent content in Posts on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Sat, 24 Sep 2022 21:40:40 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/post/index.xml" rel="self" type="application/rss+xml"/><item><title>單節點 OpenShift 部署</title><link>https://blog.yylin.io/openshift/sno-installer/</link><pubDate>Sat, 24 Sep 2022 21:40:40 +0800</pubDate><guid>https://blog.yylin.io/openshift/sno-installer/</guid><description>&lt;p>OpenShift 4.9 開始正式推出提供單節點部署（Single Node OpenShift，SNO），以支援小型、全功能的企業級Kubernetes叢集的應用，常見客戶 POC 應用需求如資料中心伺服器資源有限情況下，單節點 OpenShift 部署型態能夠更容易處理，可協助企業擴充既有應用程式開發與部署規模，以及管理相關工作流程，更支援邊緣資料資料中心的執行需求。&lt;/p>
+&lt;p>單節點部署可以使用 RHACM 或者在線的安裝引導進行安装，此篇以安裝引導進行 SNO 部署說明：&lt;/p>
+&lt;h2 id="1-準備好本地的安裝環境">1. 準備好本地的安裝環境：&lt;/h2>
+&lt;ul>
+&lt;li>本文章使用 &lt;a class="link" href="https://access.redhat.com/zh_CN/content/4218151" target="_blank" rel="noopener"
+>Red Hat Virtualization&lt;/a>虛擬化環境，部署 SNO 叢集的最低配置要求如 &lt;code>Prerequisite&lt;/code> 下表資訊&lt;/li>
+&lt;li>生成 SSH 密鑰(用於SSH登陸)&lt;/li>
+&lt;li>配置部署的虛擬機 IP 或使用DHCP配置叢集網路及 DNS 伺服器解析&lt;/li>
+&lt;/ul>
+&lt;h3 id="prerequisite">Prerequisite&lt;/h3>
+&lt;p>&lt;strong>主機資源要求&lt;/strong>&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>CPU&lt;/th>
+&lt;th>Memory&lt;/th>
+&lt;th>Disk&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>8vCPU&lt;/td>
+&lt;td>16GB&lt;/td>
+&lt;td>120GB&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;blockquote>
+&lt;p>Requirements for installing OpenShift on a single node - &lt;a class="link" href="https://docs.openshift.com/container-platform/4.10/installing/installing_sno/install-sno-preparing-to-install-sno.html#install-sno-requirements-for-installing-on-a-single-node_install-sno-preparing" target="_blank" rel="noopener"
+>minimum resource requirements&lt;/a>&lt;/p>
+&lt;/blockquote>
+&lt;h3 id="dns-設定">&lt;strong>DNS 設定&lt;/strong>&lt;/h3>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Usage&lt;/th>
+&lt;th>FQDN&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>Kubernetes API&lt;/td>
+&lt;td>api.&amp;lt;cluster_name&amp;gt;.&amp;lt;base_domain&amp;gt;&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Internal API&lt;/td>
+&lt;td>api-int.&amp;lt;cluster_name&amp;gt;.&amp;lt;base_domain&amp;gt;&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Ingress route&lt;/td>
+&lt;td>*.apps.&amp;lt;cluster_name&amp;gt;.&amp;lt;base_domain&amp;gt;&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;br/>
+&lt;h2 id="2-登入安裝-consoleredhatcomhttpsconsoleredhatcom-創建-openshift-單節點部署">2. 登入安裝 &lt;a class="link" href="https://console.redhat.com/" target="_blank" rel="noopener"
+>console.redhat.com&lt;/a>, 創建 OpenShift 單節點部署&lt;/h2>
+&lt;h3 id="installation---assisted-install">Installation - Assisted Install&lt;/h3>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;strong>開啟 &lt;a class="link" href="https://console.redhat.com" target="_blank" rel="noopener"
+>https://console.redhat.com&lt;/a>，選擇 OpenShift&lt;/strong>
+&lt;img src="https://i.imgur.com/Qzz1mj4.png"
+loading="lazy"
+>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>點擊上方 Create Cluster&lt;/strong>
+&lt;img src="https://i.imgur.com/mNKB6GQ.png"
+loading="lazy"
+>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>選擇 Datacenter 並點擊 Create Cluster&lt;/strong>
+&lt;img src="https://i.imgur.com/tGSYnXs.png"
+loading="lazy"
+>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>輸入 Cluster 相關參數，勾選 Install single node OpenShift&lt;/strong>
+&lt;img src="https://i.imgur.com/oPwZ5kx.png"
+loading="lazy"
+>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>Host network 部分選擇 Static network configuration&lt;/strong>
+&lt;img src="https://i.imgur.com/wV0rcAv.png"
+loading="lazy"
+>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>輸入相關網路參數&lt;/strong>&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>此部分範例設置為 192.168.10.0/24 網段&lt;/p>
+&lt;/blockquote>
+&lt;p>&lt;img src="https://i.imgur.com/SgPDkJ5.png"
+loading="lazy"
+>
+&lt;img src="https://i.imgur.com/X9XE6Ev.png"
+loading="lazy"
+>&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;strong>點選 Add host&lt;/strong>
+&lt;img src="https://i.imgur.com/vhYpStz.png"
+loading="lazy"
+>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>選擇 Minimal image file，並輸入對應 ssh public key 內容&lt;/strong>
+&lt;img src="https://i.imgur.com/zJwFOr9.png"
+loading="lazy"
+>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>下載 Discovery ISO&lt;/strong>
+&lt;img src="https://i.imgur.com/1N1LkT7.png"
+loading="lazy"
+>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>啟動 VM 並掛載該 ISO，等待其自動安裝與設定，完成後應該看到 Host Inventory 顯示如下&lt;/strong>
+&lt;img src="https://i.imgur.com/QngzQ70.png"
+loading="lazy"
+>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>針對錯誤部分進行修改，此處問題為 hostname 不能為 localhost&lt;/strong>
+&lt;img src="https://i.imgur.com/vEYp79z.png"
+loading="lazy"
+>
+&lt;img src="https://i.imgur.com/TI0hOOP.png"
+loading="lazy"
+>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>確認沒問題後即可進行下一步&lt;/strong>
+&lt;img src="https://i.imgur.com/yzBx0w6.png"
+loading="lazy"
+>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>最後檢查一遍設定，確認無誤後點擊 Install cluster&lt;/strong>
+&lt;img src="https://i.imgur.com/sxKA3O1.png"
+loading="lazy"
+>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>等待安裝完畢&lt;/strong>&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>單節點安裝時間大約 40 分鐘&lt;/p>
+&lt;/blockquote>
+&lt;p>&lt;img src="https://i.imgur.com/rE8Ykdw.png"
+loading="lazy"
+>&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;img src="https://i.imgur.com/5hl2Gqc.png"
+loading="lazy"
+>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>安裝完成後即可根據以下連線資訊使用 Single Node OCP&lt;/strong>&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://i.imgur.com/Bvn1ERs.png"
+loading="lazy"
+>&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>最終登入 OCP 查看狀態&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://i.imgur.com/tZG1QkE.png"
+loading="lazy"
+>
+&lt;img src="https://i.imgur.com/BidpalP.jpg"
+loading="lazy"
+>&lt;/p>
+&lt;ul>
+&lt;li>補充 Youtube 安裝參考：
+&lt;div class="video-wrapper">
+&lt;iframe loading="lazy"
+src="https://www.youtube.com/embed/QFf0yVAHQKc"
+allowfullscreen
+title="YouTube Video"
+>
+&lt;/iframe>
+&lt;/div>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="reference">Reference&lt;/h2>
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://www.youtube.com/watch?v=QFf0yVAHQKc&amp;amp;ab_channel=OpenShift" target="_blank" rel="noopener"
+>Demo: How to try out single-node OpenShift from Red Hat&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://docs.openshift.com/container-platform/4.10/installing/installing_sno/install-sno-preparing-to-install-sno.html" target="_blank" rel="noopener"
+>Preparing to install on a single node&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://docs.openshift.com/container-platform/4.10/installing/installing_sno/install-sno-installing-sno.html" target="_blank" rel="noopener"
+>OpenShift 4.10 - Installing OpenShift on a single node&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.youtube.com/watch?v=PE8W8OKJoXc&amp;amp;ab_channel=OpenShift" target="_blank" rel="noopener"
+>OpenShift Virtualization on a Single Node Cluster&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.redhat.com/en/blog/meet-single-node-openshift-our-smallest-openshift-footprint-edge-architectures" target="_blank" rel="noopener"
+>Meet single node OpenShift: Our newest small OpenShift footprint for edge architectures&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://github.com/lees07/tech-docs/blob/master/e1-sno-by-assisted-installer.md" target="_blank" rel="noopener"
+>https://github.com/lees07/tech-docs/blob/master/e1-sno-by-assisted-installer.md&lt;/a>&lt;/li>
+&lt;/ol></description></item><item><title>COSCUP 2022 - 那些年我們在開源社群的日子 - Cloud Native Taiwan</title><link>https://blog.yylin.io/community/coscup2022/</link><pubDate>Sun, 28 Aug 2022 03:40:40 +0800</pubDate><guid>https://blog.yylin.io/community/coscup2022/</guid><description>&lt;p>&lt;a class="link" href="https://coscup.org/2022/zh-TW/" target="_blank" rel="noopener"
 >COSCUP x KCD Taiwan&lt;/a>，今年終於變回實體線下活動，能透過線下活動人與人交流到處尋覓老朋友、聊現況，真的是每年最熱鬧的一刻。&lt;/p>
 &lt;p>這次我們社群 &lt;a class="link" href="https://cloudnative.tw/" target="_blank" rel="noopener"
 >CNTUG&lt;/a> 申請主辦台灣地區的 &lt;a class="link" href="https://community.cncf.io/events/details/cncf-kcd-taiwan-presents-coscup-x-kcd-taiwan-2022/?fbclid=IwAR3ceTLw2_Lsd8JjbrMQkuxiBC3KQq2KhvC4qhi9MG3UhdIomaZWdrhPrKY" target="_blank" rel="noopener"
@@ -103,7 +310,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ helm repo add rh-ecosystem-edge https://rh-ecosystem-edge.github.io/console-plugin-nvidia-gpu
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ helm repo add rh-ecosystem-edge https://rh-ecosystem-edge.github.io/console-plugin-nvidia-gpu
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ol start="2">
@@ -114,7 +321,7 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ helm repo update
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">$ helm repo update
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ol start="3">

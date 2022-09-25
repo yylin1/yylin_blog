@@ -1,14 +1,14 @@
 <!doctype html><html lang=zh-tw dir=ltr>
 <head><meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="本篇介紹如何在安裝 NVIDIA GPU Operator 後啟用 console-plugin 於 OpenShift Console 顯示 GPU Utilization。"><title>OpenShift 啟用 GPU Operator Dashboard</title>
-<link rel=canonical href=https://blog.yylin.io/openshift/gpu-utilization/>
-<link rel=stylesheet href=/scss/style.min.5dfb59e7e9320a8eb7995abb74271d0b47aa7bd7423004549c2964fd78196c75.css><meta property="og:title" content="OpenShift 啟用 GPU Operator Dashboard">
-<meta property="og:description" content="本篇介紹如何在安裝 NVIDIA GPU Operator 後啟用 console-plugin 於 OpenShift Console 顯示 GPU Utilization。">
-<meta property="og:url" content="https://blog.yylin.io/openshift/gpu-utilization/">
+<meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="所謂的單節點 OpenShift，就是在單臺實體或虛擬伺服器部署 All-in-One 的 OpenShift 叢集功能，可用於OpenShift控制與執行使用者工作負載，但 SNO 部署適合哪些應用場景？是我們值得探討與規劃的。"><title>單節點 OpenShift 部署</title>
+<link rel=canonical href=https://blog.yylin.io/openshift/sno-installer/>
+<link rel=stylesheet href=/scss/style.min.5dfb59e7e9320a8eb7995abb74271d0b47aa7bd7423004549c2964fd78196c75.css><meta property="og:title" content="單節點 OpenShift 部署">
+<meta property="og:description" content="所謂的單節點 OpenShift，就是在單臺實體或虛擬伺服器部署 All-in-One 的 OpenShift 叢集功能，可用於OpenShift控制與執行使用者工作負載，但 SNO 部署適合哪些應用場景？是我們值得探討與規劃的。">
+<meta property="og:url" content="https://blog.yylin.io/openshift/sno-installer/">
 <meta property="og:site_name" content="Frank's Notes">
-<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="OpenShift"><meta property="article:tag" content="GPU"><meta property="article:published_time" content="2022-06-28T21:40:40+08:00"><meta property="article:modified_time" content="2022-06-28T21:40:40+08:00">
-<meta name=twitter:title content="OpenShift 啟用 GPU Operator Dashboard">
-<meta name=twitter:description content="本篇介紹如何在安裝 NVIDIA GPU Operator 後啟用 console-plugin 於 OpenShift Console 顯示 GPU Utilization。">
+<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="OpenShift"><meta property="article:published_time" content="2022-09-24T21:40:40+08:00"><meta property="article:modified_time" content="2022-09-24T21:40:40+08:00">
+<meta name=twitter:title content="單節點 OpenShift 部署">
+<meta name=twitter:description content="所謂的單節點 OpenShift，就是在單臺實體或虛擬伺服器部署 All-in-One 的 OpenShift 叢集功能，可用於OpenShift控制與執行使用者工作負載，但 SNO 部署適合哪些應用場景？是我們值得探討與規劃的。">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-60ZBHV66GB"></script>
 <script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-60ZBHV66GB',{anonymize_ip:!1})}</script>
 <style>h1{letter-spacing:6px}</style>
@@ -64,21 +64,21 @@
 <header class=article-header>
 <div class=article-details>
 <header class=article-category>
-<a href=/categories/gpu/>
-GPU
+<a href=/categories/openshift/>
+OpenShift
 </a>
 </header>
 <div class=article-title-wrapper>
 <h2 class=article-title>
-<a href=/openshift/gpu-utilization/>OpenShift 啟用 GPU Operator Dashboard</a>
+<a href=/openshift/sno-installer/>單節點 OpenShift 部署</a>
 </h2>
 <h3 class=article-subtitle>
-本篇介紹如何在安裝 NVIDIA GPU Operator 後啟用 console-plugin 於 OpenShift Console 顯示 GPU Utilization。
+所謂的單節點 OpenShift，就是在單臺實體或虛擬伺服器部署 All-in-One 的 OpenShift 叢集功能，可用於OpenShift控制與執行使用者工作負載，但 SNO 部署適合哪些應用場景？是我們值得探討與規劃的。
 </h3>
 </div>
 <footer class=article-time>
 <div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
-<time class=article-time--published>Jun 28, 2022</time>
+<time class=article-time--published>Sep 24, 2022</time>
 </div>
 <div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
 <time class=article-time--reading>
@@ -89,116 +89,163 @@ GPU
 </div>
 </header>
 <section class=article-content>
-<h2 id=先決條件>先決條件：</h2>
+<p>OpenShift 4.9 開始正式推出提供單節點部署（Single Node OpenShift，SNO），以支援小型、全功能的企業級Kubernetes叢集的應用，常見客戶 POC 應用需求如資料中心伺服器資源有限情況下，單節點 OpenShift 部署型態能夠更容易處理，可協助企業擴充既有應用程式開發與部署規模，以及管理相關工作流程，更支援邊緣資料資料中心的執行需求。</p>
+<p>單節點部署可以使用 RHACM 或者在線的安裝引導進行安装，此篇以安裝引導進行 SNO 部署說明：</p>
+<h2 id=1-準備好本地的安裝環境>1. 準備好本地的安裝環境：</h2>
 <ul>
-<li>Bastion 安裝 Helm</li>
-<li>當前 OpenShift 版本為 4.10+</li>
-<li>Nvidia GPU Operator 已經完成安裝</li>
+<li>本文章使用 <a class=link href=https://access.redhat.com/zh_CN/content/4218151 target=_blank rel=noopener>Red Hat Virtualization</a>虛擬化環境，部署 SNO 叢集的最低配置要求如 <code>Prerequisite</code> 下表資訊</li>
+<li>生成 SSH 密鑰(用於SSH登陸)</li>
+<li>配置部署的虛擬機 IP 或使用DHCP配置叢集網路及 DNS 伺服器解析</li>
 </ul>
-<h2 id=啟用-nvidia-gpu-operator-usage-資訊>啟用 NVIDIA GPU Operator Usage 資訊</h2>
-<ol>
-<li>添加 helm repo:</li>
-</ol>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>$ helm repo add rh-ecosystem-edge https://rh-ecosystem-edge.github.io/console-plugin-nvidia-gpu
-</code></pre></td></tr></table>
-</div>
-</div><ol start=2>
-<li>更新 repo:</li>
-</ol>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-sh data-lang=sh>$ helm repo update
-</code></pre></td></tr></table>
-</div>
-</div><ol start=3>
-<li>安裝 <code>helm chart</code> 於預設 NVIDIA GPU Operator namespace:</li>
-</ol>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span><span class=lnt>2
-</span><span class=lnt>3
-</span><span class=lnt>4
-</span><span class=lnt>5
-</span><span class=lnt>6
-</span><span class=lnt>7
-</span><span class=lnt>8
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>$ helm install -n nvidia-gpu-operator console-plugin-nvidia-gpu rh-ecosystem-edge/console-plugin-nvidia-gpu
-
-$ kubectl -n nvidia-gpu-operator get all -l app.kubernetes.io/name=console-plugin-nvidia-gpu
-
-
-# 啟用 plugin 執行以下 command: 
-
-$ kubectl patch consoles.operator.openshift.io cluster --patch &#39;[{&#34;op&#34;: &#34;add&#34;, &#34;path&#34;: &#34;/spec/plugins/-&#34;, &#34;value&#34;: &#34;console-plugin-nvidia-gpu&#34; }]&#39; --type=json
-</code></pre></td></tr></table>
-</div>
-</div><ol start=4>
-<li>查看部署的資源：</li>
-</ol>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>$ oc -n nvidia-gpu-operator get all -l app.kubernetes.io/name=console-plugin-nvidia-gpu
-</code></pre></td></tr></table>
-</div>
-</div><ol start=5>
-<li>驗證 plugins 是否已指定</li>
-</ol>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>$ oc get consoles.operator.openshift.io cluster --output=jsonpath=&#34;{.spec.plugins}&#34;
-</code></pre></td></tr></table>
-</div>
-</div><ul>
-<li>如果未指定，則運行以下 command 以啟用 plugin：</li>
+<h3 id=prerequisite>Prerequisite</h3>
+<p><strong>主機資源要求</strong></p>
+<div class=table-wrapper><table>
+<thead>
+<tr>
+<th>CPU</th>
+<th>Memory</th>
+<th>Disk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8vCPU</td>
+<td>16GB</td>
+<td>120GB</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>Requirements for installing OpenShift on a single node - <a class=link href=https://docs.openshift.com/container-platform/4.10/installing/installing_sno/install-sno-preparing-to-install-sno.html#install-sno-requirements-for-installing-on-a-single-node_install-sno-preparing target=_blank rel=noopener>minimum resource requirements</a></p>
+</blockquote>
+<h3 id=dns-設定><strong>DNS 設定</strong></h3>
+<div class=table-wrapper><table>
+<thead>
+<tr>
+<th>Usage</th>
+<th>FQDN</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kubernetes API</td>
+<td>api.&lt;cluster_name>.&lt;base_domain></td>
+</tr>
+<tr>
+<td>Internal API</td>
+<td>api-int.&lt;cluster_name>.&lt;base_domain></td>
+</tr>
+<tr>
+<td>Ingress route</td>
+<td>*.apps.&lt;cluster_name>.&lt;base_domain></td>
+</tr>
+</tbody>
+</table></div>
+<br>
+<h2 id=2-登入安裝-consoleredhatcomhttpsconsoleredhatcom-創建-openshift-單節點部署>2. 登入安裝 <a class=link href=https://console.redhat.com/ target=_blank rel=noopener>console.redhat.com</a>, 創建 OpenShift 單節點部署</h2>
+<h3 id=installation---assisted-install>Installation - Assisted Install</h3>
+<ul>
+<li>
+<p><strong>開啟 <a class=link href=https://console.redhat.com target=_blank rel=noopener>https://console.redhat.com</a>，選擇 OpenShift</strong>
+<img src=https://i.imgur.com/Qzz1mj4.png loading=lazy></p>
+</li>
+<li>
+<p><strong>點擊上方 Create Cluster</strong>
+<img src=https://i.imgur.com/mNKB6GQ.png loading=lazy></p>
+</li>
+<li>
+<p><strong>選擇 Datacenter 並點擊 Create Cluster</strong>
+<img src=https://i.imgur.com/tGSYnXs.png loading=lazy></p>
+</li>
+<li>
+<p><strong>輸入 Cluster 相關參數，勾選 Install single node OpenShift</strong>
+<img src=https://i.imgur.com/oPwZ5kx.png loading=lazy></p>
+</li>
+<li>
+<p><strong>Host network 部分選擇 Static network configuration</strong>
+<img src=https://i.imgur.com/wV0rcAv.png loading=lazy></p>
+</li>
+<li>
+<p><strong>輸入相關網路參數</strong></p>
+</li>
 </ul>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>$ oc patch consoles.operator.openshift.io cluster --patch &#39;{ &#34;spec&#34;: { &#34;plugins&#34;: [&#34;console-plugin-nvidia-gpu&#34;] } }&#39; --type=merge
-</code></pre></td></tr></table>
-</div>
-</div><ul>
-<li>如果指定，則運行以下 command 以啟用 plugin：</li>
+<blockquote>
+<p>此部分範例設置為 192.168.10.0/24 網段</p>
+</blockquote>
+<p><img src=https://i.imgur.com/SgPDkJ5.png loading=lazy>
+<img src=https://i.imgur.com/X9XE6Ev.png loading=lazy></p>
+<ul>
+<li>
+<p><strong>點選 Add host</strong>
+<img src=https://i.imgur.com/vhYpStz.png loading=lazy></p>
+</li>
+<li>
+<p><strong>選擇 Minimal image file，並輸入對應 ssh public key 內容</strong>
+<img src=https://i.imgur.com/zJwFOr9.png loading=lazy></p>
+</li>
+<li>
+<p><strong>下載 Discovery ISO</strong>
+<img src=https://i.imgur.com/1N1LkT7.png loading=lazy></p>
+</li>
+<li>
+<p><strong>啟動 VM 並掛載該 ISO，等待其自動安裝與設定，完成後應該看到 Host Inventory 顯示如下</strong>
+<img src=https://i.imgur.com/QngzQ70.png loading=lazy></p>
+</li>
+<li>
+<p><strong>針對錯誤部分進行修改，此處問題為 hostname 不能為 localhost</strong>
+<img src=https://i.imgur.com/vEYp79z.png loading=lazy>
+<img src=https://i.imgur.com/TI0hOOP.png loading=lazy></p>
+</li>
+<li>
+<p><strong>確認沒問題後即可進行下一步</strong>
+<img src=https://i.imgur.com/yzBx0w6.png loading=lazy></p>
+</li>
+<li>
+<p><strong>最後檢查一遍設定，確認無誤後點擊 Install cluster</strong>
+<img src=https://i.imgur.com/sxKA3O1.png loading=lazy></p>
+</li>
+<li>
+<p><strong>等待安裝完畢</strong></p>
+</li>
 </ul>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>$ oc patch consoles.operator.openshift.io cluster --patch &#39;[{&#34;op&#34;: &#34;add&#34;, &#34;path&#34;: &#34;/spec/plugins/-&#34;, &#34;value&#34;: &#34;console-plugin-nvidia-gpu&#34; }]&#39; --type=json
-</code></pre></td></tr></table>
+<blockquote>
+<p>單節點安裝時間大約 40 分鐘</p>
+</blockquote>
+<p><img src=https://i.imgur.com/rE8Ykdw.png loading=lazy></p>
+<ul>
+<li>
+<p><img src=https://i.imgur.com/5hl2Gqc.png loading=lazy></p>
+</li>
+<li>
+<p><strong>安裝完成後即可根據以下連線資訊使用 Single Node OCP</strong></p>
+</li>
+</ul>
+<p><img src=https://i.imgur.com/Bvn1ERs.png loading=lazy></p>
+<ul>
+<li><strong>最終登入 OCP 查看狀態</strong></li>
+</ul>
+<p><img src=https://i.imgur.com/tZG1QkE.png loading=lazy>
+<img src=https://i.imgur.com/BidpalP.jpg loading=lazy></p>
+<ul>
+<li>補充 Youtube 安裝參考：
+<div class=video-wrapper>
+<iframe loading=lazy src=https://www.youtube.com/embed/QFf0yVAHQKc allowfullscreen title="YouTube Video"></iframe>
 </div>
-</div><p>在 OCP Web Console 頁面中（Home > Overview）就可以查閱 GPU utilization:</p>
-<p><img src=https://docs.nvidia.com/datacenter/cloud-native/_images/gpu_overview_dashboard1.png loading=lazy></p>
-<hr>
+</li>
+</ul>
 <h2 id=reference>Reference</h2>
-<ul>
-<li><a class=link href=https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/enable-gpu-op-dashboard.html target=_blank rel=noopener>https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/enable-gpu-op-dashboard.html</a></li>
-</ul>
+<ol>
+<li><a class=link href="https://www.youtube.com/watch?v=QFf0yVAHQKc&ab_channel=OpenShift" target=_blank rel=noopener>Demo: How to try out single-node OpenShift from Red Hat</a></li>
+<li><a class=link href=https://docs.openshift.com/container-platform/4.10/installing/installing_sno/install-sno-preparing-to-install-sno.html target=_blank rel=noopener>Preparing to install on a single node</a></li>
+<li><a class=link href=https://docs.openshift.com/container-platform/4.10/installing/installing_sno/install-sno-installing-sno.html target=_blank rel=noopener>OpenShift 4.10 - Installing OpenShift on a single node</a></li>
+<li><a class=link href="https://www.youtube.com/watch?v=PE8W8OKJoXc&ab_channel=OpenShift" target=_blank rel=noopener>OpenShift Virtualization on a Single Node Cluster</a></li>
+<li><a class=link href=https://www.redhat.com/en/blog/meet-single-node-openshift-our-smallest-openshift-footprint-edge-architectures target=_blank rel=noopener>Meet single node OpenShift: Our newest small OpenShift footprint for edge architectures</a></li>
+<li><a class=link href=https://github.com/lees07/tech-docs/blob/master/e1-sno-by-assisted-installer.md target=_blank rel=noopener>https://github.com/lees07/tech-docs/blob/master/e1-sno-by-assisted-installer.md</a></li>
+</ol>
 </section>
 <footer class=article-footer>
 <section class=article-tags>
 <a href=/tags/openshift/>OpenShift</a>
-<a href=/tags/gpu/>GPU</a>
 </section>
 <section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
 <span>Licensed under CC BY-NC-SA 4.0</span>
@@ -213,6 +260,27 @@ $ kubectl patch consoles.operator.openshift.io cluster --patch &#39;[{&#34;op&#3
 <a href=/openshift/gpu-operator/>
 <div class=article-details>
 <h2 class=article-title>NVIDIA GPU Operator on OpenShift4</h2>
+</div>
+</a>
+</article>
+<article>
+<a href=/openshift/mirror-registry-for-ocp4-install/>
+<div class=article-details>
+<h2 class=article-title>Disconnected Environment - Introducing Mirror Registry for Red Hat OpenShift</h2>
+</div>
+</a>
+</article>
+<article>
+<a href=/openshift/install-troubleshooting/>
+<div class=article-details>
+<h2 class=article-title>OpenShift Intsall Troubleshooting Notes</h2>
+</div>
+</a>
+</article>
+<article>
+<a href=/openshift/ocp4-install/>
+<div class=article-details>
+<h2 class=article-title>OpenShift 4.8.x UPI install on Bare metal</h2>
 </div>
 </a>
 </article>
@@ -276,8 +344,17 @@ Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=
 <ul>
 <li>
 <ul>
-<li><a href=#先決條件>先決條件：</a></li>
-<li><a href=#啟用-nvidia-gpu-operator-usage-資訊>啟用 NVIDIA GPU Operator Usage 資訊</a></li>
+<li><a href=#1-準備好本地的安裝環境>1. 準備好本地的安裝環境：</a>
+<ul>
+<li><a href=#prerequisite>Prerequisite</a></li>
+<li><a href=#dns-設定><strong>DNS 設定</strong></a></li>
+</ul>
+</li>
+<li><a href=#2-登入安裝-consoleredhatcomhttpsconsoleredhatcom-創建-openshift-單節點部署>2. 登入安裝 <a href=https://console.redhat.com/>console.redhat.com</a>, 創建 OpenShift 單節點部署</a>
+<ul>
+<li><a href=#installation---assisted-install>Installation - Assisted Install</a></li>
+</ul>
+</li>
 <li><a href=#reference>Reference</a></li>
 </ul>
 </li>

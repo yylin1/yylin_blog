@@ -2,15 +2,16 @@
 <head><meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="本篇介紹 如何在每個託管叢集中連接 ArgoCD/OpenShift GitOps 部署，並在 ACM 單一管理平台中直接瀏覽、控制和管理所部署的 Argo Applications以及 ApplicationSets 配置實戰"><title>在 ACM 透過 OpenShift-GitOps/ArgoCD 管理應用程式</title>
 <link rel=canonical href=https://blog.yylin.io/openshift/argocd-and-acm/>
-<link rel=stylesheet href=/scss/style.min.928dafc209520427d84d431c729b0a24ba49909c88287821bd42fe1e43edb51d.css><meta property="og:title" content="在 ACM 透過 OpenShift-GitOps/ArgoCD 管理應用程式">
+<link rel=stylesheet href=/scss/style.min.5dfb59e7e9320a8eb7995abb74271d0b47aa7bd7423004549c2964fd78196c75.css><meta property="og:title" content="在 ACM 透過 OpenShift-GitOps/ArgoCD 管理應用程式">
 <meta property="og:description" content="本篇介紹 如何在每個託管叢集中連接 ArgoCD/OpenShift GitOps 部署，並在 ACM 單一管理平台中直接瀏覽、控制和管理所部署的 Argo Applications以及 ApplicationSets 配置實戰">
 <meta property="og:url" content="https://blog.yylin.io/openshift/argocd-and-acm/">
 <meta property="og:site_name" content="Frank's Notes">
-<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="OpenShift"><meta property="article:tag" content="CICD"><meta property="article:tag" content="ArgoCD"><meta property="article:tag" content="ACM"><meta property="article:published_time" content="2022-06-25T09:40:40+08:00"><meta property="article:modified_time" content="2022-09-24T09:36:44+00:00">
+<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="OpenShift"><meta property="article:tag" content="CICD"><meta property="article:tag" content="ArgoCD"><meta property="article:tag" content="ACM"><meta property="article:published_time" content="2022-06-25T09:40:40+08:00"><meta property="article:modified_time" content="2022-06-25T09:40:40+08:00">
 <meta name=twitter:title content="在 ACM 透過 OpenShift-GitOps/ArgoCD 管理應用程式">
 <meta name=twitter:description content="本篇介紹 如何在每個託管叢集中連接 ArgoCD/OpenShift GitOps 部署，並在 ACM 單一管理平台中直接瀏覽、控制和管理所部署的 Argo Applications以及 ApplicationSets 配置實戰">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-60ZBHV66GB"></script>
 <script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-60ZBHV66GB',{anonymize_ip:!1})}</script>
+<style>h1{letter-spacing:6px}</style>
 </head>
 <body class=article-page>
 <script>(function(){const a='StackColorScheme';localStorage.getItem(a)||localStorage.setItem(a,"auto")})()</script><script>(function(){const b='StackColorScheme',a=localStorage.getItem(b),c=window.matchMedia('(prefers-color-scheme: dark)').matches===!0;a=='dark'||a==='auto'&&c?document.documentElement.dataset.scheme='dark':document.documentElement.dataset.scheme='light'})()</script>
@@ -32,8 +33,8 @@
 </a>
 </li>
 <li>
-<a href=/%E9%97%9C%E6%96%BC%E6%88%91/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
-<span>關於我</span>
+<a href=/about/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>About</span>
 </a>
 </li>
 <li>
@@ -44,6 +45,11 @@
 <li>
 <a href=/search/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
 <span>Search</span>
+</a>
+</li>
+<li>
+<a href=/links/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Links</span>
 </a>
 </li>
 <div class=menu-bottom-section>
@@ -382,11 +388,7 @@ spec:
 <section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
 <span>Licensed under CC BY-NC-SA 4.0</span>
 </section>
-<section class=article-lastmod><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
-<span>
-最後更新 Sep 24, 2022 09:36 UTC
-</span>
-</section></footer>
+</footer>
 </article>
 <aside class=related-contents--wrapper>
 <h2 class=section-title>相關文章</h2>
@@ -402,14 +404,6 @@ spec:
 </div>
 </div>
 </aside>
-<div class=disqus-container>
-<div id=disqus_thread></div>
-<script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return}var b=document,a=b.createElement('script');a.async=!0,a.src='//hugo-theme-stack-v3.10.disqus.com/embed.js',a.setAttribute('data-timestamp',+new Date),(b.head||b.body).appendChild(a)})()</script>
-<noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript>
-<a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a>
-</div>
-<style>.disqus-container{background-color:var(--card-background);border-radius:var(--card-border-radius);box-shadow:var(--shadow-l1);padding:var(--card-padding)}</style>
-<script>window.addEventListener('onColorSchemeChange',a=>{DISQUS&&DISQUS.reset({reload:!0})})</script>
 <footer class=site-footer>
 <section class=copyright>
 &copy;
@@ -464,13 +458,17 @@ Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=
 <h2 class="widget-title section-title">目錄</h2>
 <div class=widget--toc>
 <nav id=TableOfContents>
-<ol>
+<ul>
+<li>
+<ul>
 <li><a href=#概述>概述</a></li>
 <li><a href=#環境配置-先決條件>環境配置-先決條件</a></li>
 <li><a href=#於-openshift-gitops--argocd-配置託管叢集>於 OpenShift GitOps / ArgoCD 配置託管叢集</a></li>
 <li><a href=#從-acm-hub-部署-argocdopenshift-gitops-applicationset>從 ACM Hub 部署 ArgoCD/OpenShift GitOps ApplicationSet</a></li>
 <li><a href=#reference>Reference</a></li>
-</ol>
+</ul>
+</li>
+</ul>
 </nav>
 </div>
 </section>
