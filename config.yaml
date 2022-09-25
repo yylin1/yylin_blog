@@ -54,7 +54,7 @@ params:
             default: Licensed under CC BY-NC-SA 4.0
 
     comments:
-        enabled: true
+        enabled: false
         provider: disqus
 
         disqusjs:
@@ -134,7 +134,6 @@ params:
     widgets:
         homepage:
             - type: search
-            - type: about
             - type: archives
               params:
                   limit: 5
@@ -179,7 +178,7 @@ params:
 ### To remove about, archive and search page menu item, remove `menu` field from their FrontMatter
 menu:
     main: []
-     
+
 related:
     includeNewer: true
     threshold: 60
@@ -195,11 +194,11 @@ markup:
     goldmark:
         renderer:
             ## Set to true if you have HTML content inside Markdown
-            unsafe: false
+            unsafe: true
     tableOfContents:
-        endLevel: 4
-        ordered: true
-        startLevel: 2
+        endLevel: 3
+        ordered: false
+        startLevel: 1
     highlight:
         noClasses: false
         codeFences: true
@@ -208,6 +207,5 @@ markup:
         lineNos: true
         lineNumbersInTable: true
         tabWidth: 4
-frontmatter:
-  lastmod: [":fileModTime", "lastmod"]
-
+#frontmatter:
+#  lastmod: [":fileModTime", "lastmod"]

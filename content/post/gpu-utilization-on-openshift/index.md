@@ -21,13 +21,13 @@ tags:
 
 1. 添加 helm repo:
 
-```
+```bash
 $ helm repo add rh-ecosystem-edge https://rh-ecosystem-edge.github.io/console-plugin-nvidia-gpu
 ```
 
 2. 更新 repo:
 
-```
+```sh
 $ helm repo update
 ```
 

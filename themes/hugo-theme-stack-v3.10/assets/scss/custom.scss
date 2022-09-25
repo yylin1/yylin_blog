@@ -1,1 +1,92 @@
 /* Place your custom SCSS in HUGO_SITE_FOLDER/assets/scss/custom.scss */
+// $hover: 0.2s ease-in-out;
+// back-to-top {
+//     bottom: -30px;
+//     right: 2px;
+//     display: none;
+//     position: absolute;  
+//     border: 0;
+//     transition: transform $hover;
+//     &:hover {
+//       transform: translateY(-10px);
+//     }
+// }
+// ::selection {
+//   color: #fff;
+//   background: #557697;
+// }
+
+
+// // ::selection {
+// //     background: #dae3ea;
+// //     color: #34495e;
+// // }
+
+// ::-moz-selection {
+//     background: #dae3ea;
+//     color: #34495e;
+// }
+  
+// ::-webkit-selection {
+//     background: #dae3ea;
+//     color: #34495e;
+// }
+
+// :root {
+//     --card-text-color-main: #34495e;
+// }
+
+// :root {
+//     --code-background-color: #f8f8f8;
+//     --code-text-color: #e96900;
+// }
+// kbd {
+//   margin: 0 .1em;
+//   padding: .1em .6em;
+//   font-size: .8em;
+//   color: #242729;
+//   background: #fff;
+//   border: 1px solid #adb3b9;
+//   border-radius: 3px;
+//   box-shadow: 0px 1px 0 rgba(12, 13, 14, 0.2), 0 0 0 2px #fff inset;
+//   white-space: nowrap;
+//   vertical-align: middle;
+//   font-family: monospace;
+// }
+
+// .container {
+//   margin-left: auto;
+//   margin-right: auto;
+
+//   &.extended {
+//       /* range: 768-1024 */
+//       @include respond(md) {
+//           max-width: 1024px;
+//           --left-sidebar-max-width: 25%;
+//           --right-sidebar-max-width: 30%;
+//       }
+
+//       /* range: 1024-1280 */
+//       @include respond(lg) {  // 修改主页的三个组件的显示比例
+//           max-width: 1280px;
+//           --left-sidebar-max-width: 25%;
+//           --right-sidebar-max-width: 22%;
+//       }
+//   }
+
+//   &.compact {
+//       @include respond(md) {
+//           --left-sidebar-max-width: 25%;
+//           max-width: 768px;
+//       }
+
+//       @include respond(lg) {
+//           max-width: 1024px;
+//           --left-sidebar-max-width: 20%;
+//       }
+
+//       @include respond(xl) {
+//           max-width: 1280px;
+//       }
+//   }
+// }
