@@ -3,7 +3,7 @@ title: "Ansible Tower 升級 AAP 2.X 需考量 "
 slug:  "Ansible"
 url: "ansible/ansible-tower-upgrade-to-aap2"
 date: 2022-09-26T00:01:30+08:00
-draft: true
+draft: "true"
 description: ""
 categories:
   - Ansible
