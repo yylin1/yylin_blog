@@ -2,7 +2,7 @@
 title: "Deep dive - OpenShift 叢集節點跨網段架構規劃"
 slug:  "openshift"
 url: "openshift/security-zones"
-date: 2022-09-27T:23:50+08:00
+date: 2022-09-287T02:52:50+08:00
 draft: false
 description: "本篇文章主要分享，提供在 OpenShift Container Platform 中透過 Route Sharding，以叢集角度為特定目的創建多個 Route，像是在不同的網段上公開不同的 Router，讓內部和外部署用者訪問不同的 Router，將限制使用者於DMZ區域，無法訪問或直接使用其他叢集區域中的資源，直接保護這些節點及組件來提高安全性。"
 categories:
