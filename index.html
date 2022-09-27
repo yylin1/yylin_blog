@@ -7,7 +7,7 @@
 <meta property="og:description" content>
 <meta property="og:url" content="https://blog.yylin.io/">
 <meta property="og:site_name" content="Frank's Notes">
-<meta property="og:type" content="website"><meta property="og:updated_time" content=" 2022-09-24T21:40:40+08:00 ">
+<meta property="og:type" content="website"><meta property="og:updated_time" content=" 2022-09-25T12:00:40+08:00 ">
 <meta name=twitter:title content>
 <meta name=twitter:description content><link rel=alternate type=application/rss+xml href=https://blog.yylin.io/index.xml>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-60ZBHV66GB"></script>
@@ -62,6 +62,35 @@
 </aside>
 <main class="main full-width">
 <section class=article-list>
+<article>
+<header class=article-header>
+<div class=article-details>
+<header class=article-category>
+<a href=/categories/ansible-automation-platform/>
+Ansible Automation Platform
+</a>
+</header>
+<div class=article-title-wrapper>
+<h2 class=article-title>
+<a href=/ansible/openscap/>實現 OpenSCAP 自動化邏輯檢查</a>
+</h2>
+<h3 class=article-subtitle>
+本篇主要介紹如何結合 Ansible Automtaion Platform 和 Red Hat Satellite 和 OpenSCAP 實現大規模系統自動檢查和合規性邏輯檢查。
+</h3>
+</div>
+<footer class=article-time>
+<div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Sep 25, 2022</time>
+</div>
+<div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>
+閱讀時間: 1 分鐘
+</time>
+</div>
+</footer>
+</div>
+</header>
+</article>
 <article>
 <header class=article-header>
 <div class=article-details>
@@ -178,35 +207,6 @@ cloud-service-provider
 </div>
 </header>
 </article>
-<article>
-<header class=article-header>
-<div class=article-details>
-<header class=article-category>
-<a href=/categories/ci/cd/>
-CI/CD
-</a>
-</header>
-<div class=article-title-wrapper>
-<h2 class=article-title>
-<a href=/openshift/pipelines/>CI/CD: Tekton Pipeline 實戰</a>
-</h2>
-<h3 class=article-subtitle>
-本篇介紹 Tekton 是一個基於 Kuberentes 原生的 CI/CD 工具，經常分別和常見工具 Jenkine, Jenkins X, Spinnaker做比較，這邊會針對Tekton介紹概念後，並如何在 OpenShift 中部署 OpenShift Pipeline，及做其他開源工具差異情境比較。
-</h3>
-</div>
-<footer class=article-time>
-<div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
-<time class=article-time--published>Jun 21, 2022</time>
-</div>
-<div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
-<time class=article-time--reading>
-閱讀時間: 3 分鐘
-</time>
-</div>
-</footer>
-</div>
-</header>
-</article>
 </section>
 <nav class=pagination>
 <span class="page-link current">1</span>
@@ -241,13 +241,19 @@ Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=
 <div class=archives-year>
 <a href=/archives/#2022>
 <span class=year>2022</span>
-<span class=count>8</span>
+<span class=count>9</span>
 </a>
 </div>
 <div class=archives-year>
 <a href=/archives/#2021>
 <span class=year>2021</span>
 <span class=count>4</span>
+</a>
+</div>
+<div class=archives-year>
+<a href=/archives/#0001>
+<span class=year>0001</span>
+<span class=count>1</span>
 </a>
 </div>
 </div>
@@ -262,6 +268,9 @@ OpenShift
 </a>
 <a href=/categories/cloud-service-provider/ class=font_size_3>
 cloud-service-provider
+</a>
+<a href=/categories/ansible-automation-platform/ class=font_size_1>
+Ansible Automation Platform
 </a>
 <a href=/categories/ci/cd/ class=font_size_1>
 CI/CD
@@ -294,6 +303,9 @@ GPU
 <a href=/tags/acm/ class=font_size_1>
 ACM
 </a>
+<a href=/tags/ansible-automation-platform/ class=font_size_1>
+Ansible Automation Platform
+</a>
 <a href=/tags/argocd/ class=font_size_1>
 ArgoCD
 </a>
@@ -308,9 +320,6 @@ Azure
 </a>
 <a href=/tags/coscup/ class=font_size_1>
 COSCUP
-</a>
-<a href=/tags/kcd/ class=font_size_1>
-KCD
 </a>
 </div>
 </section>

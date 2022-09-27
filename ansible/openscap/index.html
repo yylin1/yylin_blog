@@ -1,0 +1,217 @@
+<!doctype html><html lang=zh-tw dir=ltr>
+<head><meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="本篇主要介紹如何結合 Ansible Automtaion Platform 和 Red Hat Satellite 和 OpenSCAP 實現大規模系統自動檢查和合規性邏輯檢查。"><title>實現 OpenSCAP 自動化邏輯檢查</title>
+<link rel=canonical href=https://blog.yylin.io/ansible/openscap/>
+<link rel=stylesheet href=/scss/style.min.5dfb59e7e9320a8eb7995abb74271d0b47aa7bd7423004549c2964fd78196c75.css><meta property="og:title" content="實現 OpenSCAP 自動化邏輯檢查">
+<meta property="og:description" content="本篇主要介紹如何結合 Ansible Automtaion Platform 和 Red Hat Satellite 和 OpenSCAP 實現大規模系統自動檢查和合規性邏輯檢查。">
+<meta property="og:url" content="https://blog.yylin.io/ansible/openscap/">
+<meta property="og:site_name" content="Frank's Notes">
+<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="Ansible Automation Platform"><meta property="article:published_time" content="2022-09-25T12:00:40+08:00"><meta property="article:modified_time" content="2022-09-25T12:00:40+08:00">
+<meta name=twitter:title content="實現 OpenSCAP 自動化邏輯檢查">
+<meta name=twitter:description content="本篇主要介紹如何結合 Ansible Automtaion Platform 和 Red Hat Satellite 和 OpenSCAP 實現大規模系統自動檢查和合規性邏輯檢查。">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-60ZBHV66GB"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-60ZBHV66GB',{anonymize_ip:!1})}</script>
+<style>h1{letter-spacing:6px}</style>
+</head>
+<body class=article-page>
+<script>(function(){const a='StackColorScheme';localStorage.getItem(a)||localStorage.setItem(a,"auto")})()</script><script>(function(){const b='StackColorScheme',a=localStorage.getItem(b),c=window.matchMedia('(prefers-color-scheme: dark)').matches===!0;a=='dark'||a==='auto'&&c?document.documentElement.dataset.scheme='dark':document.documentElement.dataset.scheme='light'})()</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky">
+<button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label=切換選單>
+<span class=hamburger-box>
+<span class=hamburger-inner></span>
+</span>
+</button>
+<header>
+<div class=site-meta>
+<h1 class=site-name><a href=/>Frank's Notes</a></h1>
+<h2 class=site-description>拆解|筆記|復盤</h2>
+</div>
+</header><ol class=menu id=main-menu>
+<li>
+<a href=/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span>
+</a>
+</li>
+<li>
+<a href=/about/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>About</span>
+</a>
+</li>
+<li>
+<a href=/archives/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span>
+</a>
+</li>
+<li>
+<a href=/search/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span>
+</a>
+</li>
+<li>
+<a href=/links/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Links</span>
+</a>
+</li>
+<div class=menu-bottom-section>
+<li id=dark-mode-toggle><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>夜晚模式</span>
+</li>
+</div>
+</ol>
+</aside>
+<main class="main full-width">
+<article class=main-article>
+<header class=article-header>
+<div class=article-details>
+<header class=article-category>
+<a href=/categories/ansible-automation-platform/>
+Ansible Automation Platform
+</a>
+</header>
+<div class=article-title-wrapper>
+<h2 class=article-title>
+<a href=/ansible/openscap/>實現 OpenSCAP 自動化邏輯檢查</a>
+</h2>
+<h3 class=article-subtitle>
+本篇主要介紹如何結合 Ansible Automtaion Platform 和 Red Hat Satellite 和 OpenSCAP 實現大規模系統自動檢查和合規性邏輯檢查。
+</h3>
+</div>
+<footer class=article-time>
+<div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Sep 25, 2022</time>
+</div>
+<div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>
+閱讀時間: 1 分鐘
+</time>
+</div>
+</footer>
+</div>
+</header>
+<section class=article-content>
+<h2 id=概述>概述</h2>
+<p>SCAP (Security Content Automation Protocol)是一包資安標準的集合。實作 SCAP 的工具有好幾種，其中一個是 OpenSCAP 開源工具，運用 OpenSCAP 可做到全自動的檢查、script/ansible playbook的報告與修復。但「修復」這段不太可能全自動，需要人為判斷要不要修復會不會與公司定義的規則互相衝突，否則完全聽從某些嚴格的 SCAP Rules，派下去之後反而造成維運及開發團隊環境配置衝突，導致相關影響及不便性。</p>
+<h2 id=透過-openscap-和-satellite-實現系統合規檢查>透過 OpenSCAP 和 Satellite 實現系統合規檢查</h2>
+<p>在 Red Hat Satellite 中，包含可以配置 OpenSCAP 項目提供的工具用於實施安全合規性檢查。有關 OpenSCAP 的更多信息，可以參見Guide to the Secure <a class=link href=https://static.open-scap.org/ssg-guides/ssg-rhel7-guide-cui.html#! target=_blank rel=noopener>Configuration of Red Hat Enterprise Linux 7</a>
+和 <a class=link href=http://static.open-scap.org/ssg-guides/ssg-rhel8-guide-cui.html#! target=_blank rel=noopener>Guide to the Secure Configuration of Red Hat Enterprise Linux 8</a>。通過 Satellite Web UI，可以在 Red Hat Satellite 管理的所有主機上進行計劃的合規性檢查和直接查看對應報告。</p>
+<p>Red Hat Ansible Automation(簡稱 AAP) 可以協助維運團使 IT 環境和流程的各個方面實現自動化，而 AAP 則可以與其他服務整合。在以下實驗中我們透過影片方式，介紹如何透過 AAP 與 Satellite 來達成OpenSCAP的自動合規邏輯檢查：</p>
+<p>執行主要步驟包含：</p>
+<ol>
+<li>在 Red Hat Satellite 中定義 OpenSCAP 檢查策略</li>
+<li>使用 Red Hat Ansible Automation Platform 於系統主機上大量運行 OpenSCAP 邏輯檢查掃描</li>
+</ol>
+<blockquote>
+<p>可以參考實作詳細資訊步驟-參考： <a class=link href=https://github.com/ansible/workshops/tree/devel/exercises/ansible_smart_mgmt target=_blank rel=noopener>Automated Smart Management Workshop</a></p>
+</blockquote>
+<div class=video-wrapper>
+<iframe loading=lazy src=https://www.youtube.com/embed/QFf0yVAHQKc allowfullscreen title="YouTube Video"></iframe>
+</div>
+<h2 id=補充-openscap與資安合規生命週期>/補充/ OpenSCAP與資安合規生命週期</h2>
+<p>為什麼需要系統安全檢查強化工具，OpenSCAP 可以完美的參與整個資安合規的生命週期：</p>
+<ul>
+<li>評估當前系統不合規的地方</li>
+<li>將找到的問題，依重要性分類</li>
+<li>修復（需要與企業內部定義規則評估）</li>
+<li>產生報告</li>
+</ul>
+<blockquote>
+<p>重覆以上輪迴直到某主機的安全強度到一可接受的程度)</p>
+</blockquote>
+<p>更棒的是，這四階段可以通通 Ansible Automation Platform 自動化，用來解決下面的資安老問題：</p>
+<ul>
+<li>做資安檢測費時費工</li>
+<li>判斷問題、修復問題，容易出錯</li>
+<li>資安規則太多，很容易漏掉</li>
+<li>資安規則細如牛毛，要做好不容易</li>
+<li>人工檢測，即便做成 SOP，也不容易實踐</li>
+</ul>
+<h2 id=reference>Reference</h2>
+<ul>
+<li>OpenSCAP on Github: <a class=link href=https://github.com/OpenSCAP/openscap target=_blank rel=noopener>https://github.com/OpenSCAP/openscap</a></li>
+<li><a class=link href=https://www.open-scap.org/ target=_blank rel=noopener>https://www.open-scap.org/</a></li>
+<li><a class=link href=https://aap2.demoredhat.com/exercises/ansible_smart_mgmt/ target=_blank rel=noopener>https://aap2.demoredhat.com/exercises/ansible_smart_mgmt/</a></li>
+<li><a class=link href=https://blog.51cto.com/u_15127570/2712917 target=_blank rel=noopener>https://blog.51cto.com/u_15127570/2712917</a></li>
+</ul>
+</section>
+<footer class=article-footer>
+<section class=article-tags>
+<a href=/tags/ansible-automation-platform/>Ansible Automation Platform</a>
+</section>
+<section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span>
+</section>
+</footer>
+</article>
+<footer class=site-footer>
+<section class=copyright>
+&copy;
+2022 Frank's Notes
+</section>
+<section class=powerby>
+Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> <br>
+Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.10.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a>
+</section>
+</footer>
+<div class=pswp tabindex=-1 role=dialog aria-hidden=true>
+<div class=pswp__bg></div>
+<div class=pswp__scroll-wrap>
+<div class=pswp__container>
+<div class=pswp__item></div>
+<div class=pswp__item></div>
+<div class=pswp__item></div>
+</div>
+<div class="pswp__ui pswp__ui--hidden">
+<div class=pswp__top-bar>
+<div class=pswp__counter></div>
+<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+<div class=pswp__preloader>
+<div class=pswp__preloader__icn>
+<div class=pswp__preloader__cut>
+<div class=pswp__preloader__donut></div>
+</div>
+</div>
+</div>
+</div>
+<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+<div class=pswp__share-tooltip></div>
+</div>
+<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+</button>
+<div class=pswp__caption>
+<div class=pswp__caption__center></div>
+</div>
+</div>
+</div>
+</div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css integrity="sha256-c0uckgykQ9v5k+IqViZOZKc47Jn7KQil4/MP3ySA3F8=" crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE=" crossorigin=anonymous>
+</main>
+<aside class="sidebar right-sidebar sticky">
+<section class="widget archives">
+<div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg>
+</div>
+<h2 class="widget-title section-title">目錄</h2>
+<div class=widget--toc>
+<nav id=TableOfContents>
+<ul>
+<li>
+<ul>
+<li><a href=#概述>概述</a></li>
+<li><a href=#透過-openscap-和-satellite-實現系統合規檢查>透過 OpenSCAP 和 Satellite 實現系統合規檢查</a></li>
+<li><a href=#補充-openscap與資安合規生命週期>/補充/ OpenSCAP與資安合規生命週期</a></li>
+<li><a href=#reference>Reference</a></li>
+</ul>
+</li>
+</ul>
+</nav>
+</div>
+</section>
+</aside>
+</div>
+<script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script>
+<script>(function(){const a=document.createElement('link');a.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",a.type="text/css",a.rel="stylesheet",document.head.appendChild(a)})()</script>
+</body>
+</html>

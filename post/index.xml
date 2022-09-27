@@ -1,4 +1,58 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Frank's Notes</title><link>https://blog.yylin.io/post/</link><description>Recent content in Posts on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Sat, 24 Sep 2022 21:40:40 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/post/index.xml" rel="self" type="application/rss+xml"/><item><title>單節點 OpenShift 部署與應用探討</title><link>https://blog.yylin.io/openshift/sno-installer/</link><pubDate>Sat, 24 Sep 2022 21:40:40 +0800</pubDate><guid>https://blog.yylin.io/openshift/sno-installer/</guid><description>&lt;p>OpenShift 4.9 開始正式推出提供單節點部署（Single Node OpenShift，SNO），以支援小型、全功能的企業級Kubernetes叢集的應用，常見客戶 POC 應用需求如資料中心伺服器資源有限情況下，單節點 OpenShift 部署型態能夠更容易處理，可協助企業擴充既有應用程式開發與部署規模，以及管理相關工作流程，更支援邊緣資料資料中心的執行需求。&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Frank's Notes</title><link>https://blog.yylin.io/post/</link><description>Recent content in Posts on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Sun, 25 Sep 2022 12:00:40 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/post/index.xml" rel="self" type="application/rss+xml"/><item><title>實現 OpenSCAP 自動化邏輯檢查</title><link>https://blog.yylin.io/ansible/openscap/</link><pubDate>Sun, 25 Sep 2022 12:00:40 +0800</pubDate><guid>https://blog.yylin.io/ansible/openscap/</guid><description>&lt;h2 id="概述">概述&lt;/h2>
+&lt;p>SCAP (Security Content Automation Protocol)是一包資安標準的集合。實作 SCAP 的工具有好幾種，其中一個是 OpenSCAP 開源工具，運用 OpenSCAP 可做到全自動的檢查、script/ansible playbook的報告與修復。但「修復」這段不太可能全自動，需要人為判斷要不要修復會不會與公司定義的規則互相衝突，否則完全聽從某些嚴格的 SCAP Rules，派下去之後反而造成維運及開發團隊環境配置衝突，導致相關影響及不便性。&lt;/p>
+&lt;h2 id="透過-openscap-和-satellite-實現系統合規檢查">透過 OpenSCAP 和 Satellite 實現系統合規檢查&lt;/h2>
+&lt;p>在 Red Hat Satellite 中，包含可以配置 OpenSCAP 項目提供的工具用於實施安全合規性檢查。有關 OpenSCAP 的更多信息，可以參見Guide to the Secure &lt;a class="link" href="https://static.open-scap.org/ssg-guides/ssg-rhel7-guide-cui.html#!" target="_blank" rel="noopener"
+>Configuration of Red Hat Enterprise Linux 7&lt;/a>
+和 &lt;a class="link" href="http://static.open-scap.org/ssg-guides/ssg-rhel8-guide-cui.html#!" target="_blank" rel="noopener"
+>Guide to the Secure Configuration of Red Hat Enterprise Linux 8&lt;/a>。通過 Satellite Web UI，可以在 Red Hat Satellite 管理的所有主機上進行計劃的合規性檢查和直接查看對應報告。&lt;/p>
+&lt;p>Red Hat Ansible Automation(簡稱 AAP) 可以協助維運團使 IT 環境和流程的各個方面實現自動化，而 AAP 則可以與其他服務整合。在以下實驗中我們透過影片方式，介紹如何透過 AAP 與 Satellite 來達成OpenSCAP的自動合規邏輯檢查：&lt;/p>
+&lt;p>執行主要步驟包含：&lt;/p>
+&lt;ol>
+&lt;li>在 Red Hat Satellite 中定義 OpenSCAP 檢查策略&lt;/li>
+&lt;li>使用 Red Hat Ansible Automation Platform 於系統主機上大量運行 OpenSCAP 邏輯檢查掃描&lt;/li>
+&lt;/ol>
+&lt;blockquote>
+&lt;p>可以參考實作詳細資訊步驟-參考： &lt;a class="link" href="https://github.com/ansible/workshops/tree/devel/exercises/ansible_smart_mgmt" target="_blank" rel="noopener"
+>Automated Smart Management Workshop&lt;/a>&lt;/p>
+&lt;/blockquote>
+&lt;div class="video-wrapper">
+&lt;iframe loading="lazy"
+src="https://www.youtube.com/embed/QFf0yVAHQKc"
+allowfullscreen
+title="YouTube Video"
+>
+&lt;/iframe>
+&lt;/div>
+&lt;h2 id="補充-openscap與資安合規生命週期">/補充/ OpenSCAP與資安合規生命週期&lt;/h2>
+&lt;p>為什麼需要系統安全檢查強化工具，OpenSCAP 可以完美的參與整個資安合規的生命週期：&lt;/p>
+&lt;ul>
+&lt;li>評估當前系統不合規的地方&lt;/li>
+&lt;li>將找到的問題，依重要性分類&lt;/li>
+&lt;li>修復（需要與企業內部定義規則評估）&lt;/li>
+&lt;li>產生報告&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>重覆以上輪迴直到某主機的安全強度到一可接受的程度)&lt;/p>
+&lt;/blockquote>
+&lt;p>更棒的是，這四階段可以通通 Ansible Automation Platform 自動化，用來解決下面的資安老問題：&lt;/p>
+&lt;ul>
+&lt;li>做資安檢測費時費工&lt;/li>
+&lt;li>判斷問題、修復問題，容易出錯&lt;/li>
+&lt;li>資安規則太多，很容易漏掉&lt;/li>
+&lt;li>資安規則細如牛毛，要做好不容易&lt;/li>
+&lt;li>人工檢測，即便做成 SOP，也不容易實踐&lt;/li>
+&lt;/ul>
+&lt;h2 id="reference">Reference&lt;/h2>
+&lt;ul>
+&lt;li>OpenSCAP on Github: &lt;a class="link" href="https://github.com/OpenSCAP/openscap" target="_blank" rel="noopener"
+>https://github.com/OpenSCAP/openscap&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.open-scap.org/" target="_blank" rel="noopener"
+>https://www.open-scap.org/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://aap2.demoredhat.com/exercises/ansible_smart_mgmt/" target="_blank" rel="noopener"
+>https://aap2.demoredhat.com/exercises/ansible_smart_mgmt/&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://blog.51cto.com/u_15127570/2712917" target="_blank" rel="noopener"
+>https://blog.51cto.com/u_15127570/2712917&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>單節點 OpenShift 部署與應用探討</title><link>https://blog.yylin.io/openshift/sno-installer/</link><pubDate>Sat, 24 Sep 2022 21:40:40 +0800</pubDate><guid>https://blog.yylin.io/openshift/sno-installer/</guid><description>&lt;p>OpenShift 4.9 開始正式推出提供單節點部署（Single Node OpenShift，SNO），以支援小型、全功能的企業級Kubernetes叢集的應用，常見客戶 POC 應用需求如資料中心伺服器資源有限情況下，單節點 OpenShift 部署型態能夠更容易處理，可協助企業擴充既有應用程式開發與部署規模，以及管理相關工作流程，更支援邊緣資料資料中心的執行需求。&lt;/p>
 &lt;p>單節點部署可以使用 RHACM 或者在線的安裝引導進行安装，此篇以安裝引導進行 SNO 部署說明：&lt;/p>
 &lt;h2 id="1-準備好本地的安裝環境">1. 準備好本地的安裝環境：&lt;/h2>
 &lt;ul>
@@ -3914,4 +3968,4 @@ $ oc get no
 >Networking Guide - BIND (Berkeley Internet Name Domain)&lt;/a>&lt;/li>
 &lt;li>&lt;a class="link" href="https://docs.openshift.com/container-platform/4.8/installing/installing_bare_metal_ipi/ipi-install-prerequisites.html" target="_blank" rel="noopener"
 >參考 IPI Prerequisites&lt;/a>&lt;/li>
-&lt;/ul></description></item></channel></rss>
+&lt;/ul></description></item><item><title/><link>https://blog.yylin.io/post/ansible-tower-upgrade-to-ansible-automation-platform-2/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://blog.yylin.io/post/ansible-tower-upgrade-to-ansible-automation-platform-2/</guid><description/></item></channel></rss>
