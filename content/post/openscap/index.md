@@ -28,7 +28,7 @@ Red Hat Ansible Automation(簡稱 AAP) 可以協助維運團使 IT 環境和流�
 > 可以參考實作詳細資訊步驟-參考： [Automated Smart Management Workshop](https://github.com/ansible/workshops/tree/devel/exercises/ansible_smart_mgmt)
 
 
-{{< youtube QFf0yVAHQKc >}}
+{{< youtube UXs_XmyAqJE >}}
 
 ## /補充/ OpenSCAP與資安合規生命週期
 
@@ -46,7 +46,7 @@ Red Hat Ansible Automation(簡稱 AAP) 可以協助維運團使 IT 環境和流�
 - 做資安檢測費時費工
 - 判斷問題、修復問題，容易出錯
 - 資安規則太多，很容易漏掉
-- 資安規則細如牛毛，要做好不容易
+- 資安規則細節項目太多，要做好整合不容易
 - 人工檢測，即便做成 SOP，也不容易實踐
 
 
