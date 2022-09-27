@@ -428,7 +428,7 @@ loading="lazy"
 &lt;/blockquote>
 &lt;div class="video-wrapper">
 &lt;iframe loading="lazy"
-src="https://www.youtube.com/embed/QFf0yVAHQKc"
+src="https://www.youtube.com/embed/UXs_XmyAqJE"
 allowfullscreen
 title="YouTube Video"
 >
@@ -450,7 +450,7 @@ title="YouTube Video"
 &lt;li>做資安檢測費時費工&lt;/li>
 &lt;li>判斷問題、修復問題，容易出錯&lt;/li>
 &lt;li>資安規則太多，很容易漏掉&lt;/li>
-&lt;li>資安規則細如牛毛，要做好不容易&lt;/li>
+&lt;li>資安規則細節項目太多，要做好整合不容易&lt;/li>
 &lt;li>人工檢測，即便做成 SOP，也不容易實踐&lt;/li>
 &lt;/ul>
 &lt;h2 id="reference">Reference&lt;/h2>
