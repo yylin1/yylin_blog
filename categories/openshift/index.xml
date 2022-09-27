@@ -1,4 +1,415 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>OpenShift on Frank's Notes</title><link>https://blog.yylin.io/categories/openshift/</link><description>Recent content in OpenShift on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Sat, 24 Sep 2022 21:40:40 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/categories/openshift/index.xml" rel="self" type="application/rss+xml"/><item><title>單節點 OpenShift 部署與應用探討</title><link>https://blog.yylin.io/openshift/sno-installer/</link><pubDate>Sat, 24 Sep 2022 21:40:40 +0800</pubDate><guid>https://blog.yylin.io/openshift/sno-installer/</guid><description>&lt;p>OpenShift 4.9 開始正式推出提供單節點部署（Single Node OpenShift，SNO），以支援小型、全功能的企業級Kubernetes叢集的應用，常見客戶 POC 應用需求如資料中心伺服器資源有限情況下，單節點 OpenShift 部署型態能夠更容易處理，可協助企業擴充既有應用程式開發與部署規模，以及管理相關工作流程，更支援邊緣資料資料中心的執行需求。&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>OpenShift on Frank's Notes</title><link>https://blog.yylin.io/categories/openshift/</link><description>Recent content in OpenShift on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Tue, 27 Sep 2022 12:00:40 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/categories/openshift/index.xml" rel="self" type="application/rss+xml"/><item><title>Deep dive - OpenShift 叢集節點跨網段架構規劃</title><link>https://blog.yylin.io/openshift/security-zones/</link><pubDate>Tue, 27 Sep 2022 12:00:40 +0800</pubDate><guid>https://blog.yylin.io/openshift/security-zones/</guid><description>&lt;h2 id="概述-為什麼有這樣需求">/概述/ 為什麼有這樣需求？&lt;/h2>
+&lt;p>近期剛好接觸客戶需求，希望能透過「單一叢集OpenSihft 運作於跨網段區域」上架構需求，希望有基於能限制不同角色，訪問流量進入 OpenShift 叢集只允許使用特定功能，包含以下需求：&lt;/p>
+&lt;ol>
+&lt;li>能限制只有叢集管理人員/開發團隊，能直接存取操作 OpenShift 叢集於內部網路中，因此叢集對應的內部服務、API、儲存等，能獲得更多更安全性。&lt;/li>
+&lt;li>將提供外部應用程式/服務，隔離於對外 Security Zones 區域，並限制只允許特定的 Router 使用某些特定功能(例如：單純網站服務運行, APP 後端服務)等。&lt;/li>
+&lt;/ol>
+&lt;blockquote>
+&lt;p>主要目的：希望透過 Shard Route 負責，在不同 IP 地址，讓內部和外部使用者訪問不同的 Router 以達到 DMZ 與 OCP 訪問限制，來減少成本下能更加提升叢集運作安全性。&lt;/p>
+&lt;/blockquote>
+&lt;p>補充 - 更多場景情境，歡迎大家可以參考 Luis Javier Arizmendi Alonso 分享針對 OpenShift 於 Security Zones 系列文章 - &lt;a class="link" href="https://itnext.io/security-zones-in-openshift-worker-nodes-part-i-introduction-4f85762962d7" target="_blank" rel="noopener"
+>Security Zones in OpenShift worker nodes&lt;/a>&lt;/p>
+&lt;h2 id="探討--相關架構考量">/探討/ 相關架構考量&lt;/h2>
+&lt;p>先探討結論，為什麼不採用「針對 Security Zones 進行實體隔離」來達到企業內部制定相對安全標準和法規，例如直接在 DMZ 區域多部署一座 OpenShift 叢集提供對外服務，更直接保護叢集運行產品的應用及服務更能確保安全性，其實重點包含&lt;code>成本考量&lt;/code>還有 &lt;code>OpenShift維護成本&lt;/code>高，可能企業內部需要更多維運人員來管理不同 OpenShift 叢集上版流程、應用程式、API及相關服務配置管理等，都是總總問題。&lt;/p>
+&lt;p>所以或許另一種選擇，透過有一個大型的 OpenShift「&lt;code>單一叢集跨網段架構&lt;/code>」能使更容易維運管理及同時達到提高安全性架構，就是此次架構分享重點。&lt;/p>
+&lt;blockquote>
+&lt;p>這邊還是一個重點，取決於你對於當前環境規劃與架構設計需求而做選擇&lt;/p>
+&lt;/blockquote>
+&lt;p>以下針對架構圖做細部「單一叢集跨網段架構」探討：&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/PHuCv7u.png"
+loading="lazy"
+>&lt;/p>
+&lt;ul>
+&lt;li>每座 OpenShift 叢集都應被視為僅在內部管理，而不是暴露於外部 Internet&lt;/li>
+&lt;li>若劃分 Infra Nodes 創建在不同的 Zone 區域中，每個區域中提供使用者運行 Ingress 等應用及 Services 服務的 Pod&lt;/li>
+&lt;li>將限制使用者無法訪問或直接使用其他叢集區域中的資源，直接保護這些節點及組件。
+&lt;ul>
+&lt;li>例如：Master API, Logging, Metrics, Registry 等應該運行於內部 Internet&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>針對特定 Zone 區域運行應用，如果有特定服務需求，可以使用 node-selectors 將 Pod 實體隔離到特定 Worker 節點
+&lt;ul>
+&lt;li>例如：上圖 Pod 跑在特定「藍色節點」上，只能單獨在藍色區域節點運行 Pod&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="單一叢集-opensihft-運作於跨網段區域">單一叢集 OpenSihft 運作於跨網段區域&lt;/h2>
+&lt;p>下圖 - 為-驗證規劃 OpenShift 示意圖：&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/6GgowkZ.png"
+loading="lazy"
+>&lt;/p>
+&lt;h2 id="操作步驟">操作步驟&lt;/h2>
+&lt;ol>
+&lt;li>需創建對外服務的 Ingress Controller 要如何配置規範&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>Infra 節點依據網段區域定義標籤&lt;/li>
+&lt;li>DNS 配置對外 External Service 使用的 WildCard&lt;/li>
+&lt;li>創建 Ingress Controller 指派為外部應用使用&lt;/li>
+&lt;li>設置 route 透過標籤指派運行於對外區域的 infra 節點&lt;/li>
+&lt;/ul>
+&lt;ol start="2">
+&lt;li>服務與應用程式部署完成後，對外的 Router 要定義經過哪一個 Ingress 節點去提供服務&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>修改預設 Ingress Controller - default 配置不讓其他 Service 服務進入&lt;/li>
+&lt;li>新增對外服務的 Ingress Controller - service 如何配置&lt;/li>
+&lt;/ul>
+&lt;h3 id="1-dns-配置對外-external-service-使用的-wildcard">1. DNS 配置對外 External Service 使用的 WildCard&lt;/h3>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Usage&lt;/th>
+&lt;th>FQDN&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>Kubernetes API&lt;/td>
+&lt;td>api.&amp;lt;cluster_name&amp;gt;.&amp;lt;base_domain&amp;gt;&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Internal API&lt;/td>
+&lt;td>api-int.&amp;lt;cluster_name&amp;gt;.&amp;lt;base_domain&amp;gt;&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Ingress route&lt;/td>
+&lt;td>*.apps.&amp;lt;cluster_name&amp;gt;.&amp;lt;base_domain&amp;gt;&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Application, External Service&lt;/td>
+&lt;td>*.service.&amp;lt;cluster_name&amp;gt;.&amp;lt;base_domain&amp;gt;&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h3 id="2-將-router-固定到-infra-node">2. 將 Router 固定到 Infra Node&lt;/h3>
+&lt;ul>
+&lt;li>將 Infra Node 依據服務提供區 Zone 1, Zone 2，指定標籤 (範例配置, region=8, region=10)&lt;/li>
+&lt;li>在 IngressController 對象的 matchLabels 中指定 Label 設置為對應 Infra Node&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc label nodes &amp;lt;INFRA_NODE&amp;gt; region=8
+$ oc patch ingresscontroller/default -n openshift-ingress-operator --type=merge -p &amp;#39;{&amp;#34;spec&amp;#34;:{&amp;#34;nodePlacement&amp;#34;: {&amp;#34;nodeSelector&amp;#34;: {&amp;#34;matchLabels&amp;#34;: {&amp;#34;region&amp;#34;: &amp;#34;8&amp;#34;}}}}}&amp;#39;
+apiVersion: operator.openshift.io/v1
+kind: IngressController
+metadata:
+name: default
+namespace: openshift-ingress-operator
+spec:
+replicas: 3
+nodePlacement:
+nodeSelector:
+matchLabels:
+region: &amp;#34;8&amp;#34;
+$ oc label nodes &amp;lt;INFRA_NODE&amp;gt; region=10
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>檢查節點 label 狀態&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ oc get node -A --show-labels
+NAME STATUS ROLES AGE VERSION LABELS
+infra-1.ocp4.lab.example.com Ready worker 60d v1.23.5+3afdacb &lt;span class="nv">region&lt;/span>&lt;span class="o">=&lt;/span>8, beta.kubernetes.io/arch&lt;span class="o">=&lt;/span>amd64,...
+infra-2.ocp4.lab.example.com Ready worker 60d v1.23.5+3afdacb &lt;span class="nv">region&lt;/span>&lt;span class="o">=&lt;/span>8, beta.kubernetes.io/arch&lt;span class="o">=&lt;/span>amd64,...
+infra-3.ocp4.lab.example.com Ready worker 60d v1.23.5+3afdacb &lt;span class="nv">region&lt;/span>&lt;span class="o">=&lt;/span>8, beta.kubernetes.io/arch&lt;span class="o">=&lt;/span>amd64,...
+infra-4.ocp4.lab.example.com Ready worker 60d v1.23.5+3afdacb &lt;span class="nv">region&lt;/span>&lt;span class="o">=&lt;/span>10, beta.kubernetes.io/arch&lt;span class="o">=&lt;/span>amd64,...
+infra-5.ocp4.lab.example.com Ready worker 60d v1.23.5+3afdacb &lt;span class="nv">region&lt;/span>&lt;span class="o">=&lt;/span>10, beta.kubernetes.io/arch&lt;span class="o">=&lt;/span>amd64,...
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="3-創建-ingress-controller-指派為外部應用使用">3. 創建 Ingress Controller 指派為外部應用使用&lt;/h3>
+&lt;ul>
+&lt;li>創建命名為 “Service” 的 Ingress Controller(Router) 將允許從外部訪問的應用程式或服務，引流到對應的 Ingress&lt;/li>
+&lt;li>如下圖 (指定的 Label region: ‘10’ )為對外使用的網域&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ cat ingress-service.yaml
+apiVersion: operator.openshift.io/v1
+kind: IngressController
+metadata:
+name: service
+namespace: openshift-ingress-operator
+spec:
+replicas: 2
+domain: service.ocp4.lab.example.com
+nodePlacement:
+nodeSelector:
+matchLabels:
+region: &amp;#39;10&amp;#39;
+routeSelector:
+matchExpressions:
+- key: type
+operator: In
+values:
+- service
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
+&lt;p>這邊指定對外 External Service 使用的網域&lt;/p>
+&lt;/blockquote>
+&lt;ul>
+&lt;li>設置 ingress&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc apply -f ingress-service.yaml
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="4-限制對內對外服務-ingress-controller-配置">4. 限制對內對外服務 Ingress Controller 配置&lt;/h3>
+&lt;p>&lt;img src="https://i.imgur.com/rAARkR1.png"
+loading="lazy"
+>&lt;/p>
+&lt;ul>
+&lt;li>修改預設 Ingress Controller - default 配置不讓其他 Service 服務進入&lt;/li>
+&lt;li>新增對外服務的 Ingress Controller - service 如何配置&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>設定 Ingress Controller - service 指定 service 服務可以進入&lt;/p>
+&lt;/blockquote>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc edit ingresscontroller service -n openshift-ingress-operator
+apiVersion: operator.openshift.io/v1
+kind: IngressController
+metadata:
+name: service
+namespace: openshift-ingress-operator
+spec:
+replicas: 2
+domain: service.ocp4.lab.example.com
+nodePlacement:
+nodeSelector:
+matchLabels:
+region: &amp;#39;10&amp;#39;
+routeSelector:
+matchExpressions:
+- key: type
+operator: In
+values:
+- service
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
+&lt;p>檢查 Ingress Controller - default 限制不讓 service 服務進入&lt;/p>
+&lt;/blockquote>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc edit ingresscontroller default -n openshift-ingress-operator
+apiVersion: operator.openshift.io/v1
+kind: IngressController
+metadata:
+name: service
+namespace: openshift-ingress-operator
+spec:
+replicas: 3
+domain: apps.ocp4.lab.example.com
+nodePlacement:
+nodeSelector:
+matchLabels:
+region: &amp;#34;8&amp;#34;
+routeSelector:
+matchExpressions:
+- key: type
+operator: NotIn
+values:
+- service
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="5-部署應用生成-route-並指定其-hostname和-label-typeservice">5. 部署應用，生成 Route 並指定其 Hostname和 Label (type=service)&lt;/h3>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc new-project demo
+$ oc new-app rails-postgresql-example
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc get pod -o wide
+NAME READY STATUS RESTARTS AGE IP NODE
+postgresql-1-deploy 0/1 Completed 0 2d20h 10.129.6.16 worker-3.ocp4.lab.example.com
+postgresql-1-hjztg 1/1 Running 0 2d20h 10.129.4.98 worker-2.ocp4.lab.example.com
+rails-postgresql-example-1-build 0/1 Completed 0 2d20h 10.129.4.97 worker-2.ocp4.lab.example.com
+rails-postgresql-example-1-deploy 0/1 Completed 0 2d19h 10.129.8.9 infra-1.ocp4.lab.example.com
+rails-postgresql-example-1-f8w4l 1/1 Running 0 2d19h 10.129.3.18 worker-1.ocp4.lab.example.com
+rails-postgresql-example-1-hook-pre 0/1 Completed 0 2d19h 10.129.3.17 worker-1.ocp4.lab.example.com
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
+&lt;p>在創建 route 的時候需指定 hostname，不可使用預設名稱，此部分跳過說明，可以看到如以下 route domain 為 &lt;code>.service.ocp4.lab.example.com&lt;/code> 結尾。&lt;/p>
+&lt;/blockquote>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc get route
+NAME HOST/PORT PATH SERVICES PORT TERMINATION WILDCARD
+rails-postgresql-example rails-postgresql-example-demo.service.ocp4.lab.example.com rails-postgresql-example &amp;lt;all&amp;gt; None
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
+&lt;p>#指定 label 讓 rails-postgresql-example 的 route 地址與設置解析&lt;/p>
+&lt;/blockquote>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc label route rails-postgresql-example type=service
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="6-訪問-ap-的-route-地址確認狀態可以訪問">6. 訪問 AP 的 Route 地址，確認狀態可以訪問&lt;/h3>
+&lt;ul>
+&lt;li>預設應用及服務走 default 網頁會讀取不到&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc label route rails-postgresql-example type-
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;img src="https://i.imgur.com/2sld746.png"
+loading="lazy"
+>&lt;/p>
+&lt;ul>
+&lt;li>增加外部服務對應 label (如範例 type=service)&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc label route rails-postgresql-example type=service
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;img src="https://i.imgur.com/gDe472U.jpg"
+loading="lazy"
+>&lt;/p>
+&lt;h2 id="reference">Reference&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://rcarrata.com/openshift/ocp4_route_sharding/" target="_blank" rel="noopener"
+>Deep dive of Route Sharding in OpenShift 4&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://itnext.io/security-zones-in-openshift-worker-nodes-part-i-introduction-4f85762962d7" target="_blank" rel="noopener"
+>Security Zones in OpenShift worker nodes — Part I — Introduction&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://blog.csdn.net/weixin_43902588/article/details/103543191?spm=1001.2014.3001.5502" target="_blank" rel="noopener"
+>OpenShift 4 - Ingress、Route與Shard&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>單節點 OpenShift 部署與應用探討</title><link>https://blog.yylin.io/openshift/sno-installer/</link><pubDate>Sat, 24 Sep 2022 21:40:40 +0800</pubDate><guid>https://blog.yylin.io/openshift/sno-installer/</guid><description>&lt;p>OpenShift 4.9 開始正式推出提供單節點部署（Single Node OpenShift，SNO），以支援小型、全功能的企業級Kubernetes叢集的應用，常見客戶 POC 應用需求如資料中心伺服器資源有限情況下，單節點 OpenShift 部署型態能夠更容易處理，可協助企業擴充既有應用程式開發與部署規模，以及管理相關工作流程，更支援邊緣資料資料中心的執行需求。&lt;/p>
 &lt;p>單節點部署可以使用 RHACM 或者在線的安裝引導進行安装，此篇以安裝引導進行 SNO 部署說明：&lt;/p>
 &lt;h2 id="1-準備好本地的安裝環境">1. 準備好本地的安裝環境：&lt;/h2>
 &lt;ul>
@@ -2319,415 +2730,4 @@ $ oc get no
 >Networking Guide - BIND (Berkeley Internet Name Domain)&lt;/a>&lt;/li>
 &lt;li>&lt;a class="link" href="https://docs.openshift.com/container-platform/4.8/installing/installing_bare_metal_ipi/ipi-install-prerequisites.html" target="_blank" rel="noopener"
 >參考 IPI Prerequisites&lt;/a>&lt;/li>
-&lt;/ul></description></item><item><title>Deep dive - OpenShift 叢集節點跨網段架構規劃</title><link>https://blog.yylin.io/openshift/security-zones/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://blog.yylin.io/openshift/security-zones/</guid><description>&lt;h2 id="概述-為什麼有這樣需求">/概述/ 為什麼有這樣需求？&lt;/h2>
-&lt;p>近期剛好接觸客戶需求，希望能透過「單一叢集OpenSihft 運作於跨網段區域」上架構需求，希望有基於能限制不同角色，訪問流量進入 OpenShift 叢集只允許使用特定功能，包含以下需求：&lt;/p>
-&lt;ol>
-&lt;li>能限制只有叢集管理人員/開發團隊，能直接存取操作 OpenShift 叢集於內部網路中，因此叢集對應的內部服務、API、儲存等，能獲得更多更安全性。&lt;/li>
-&lt;li>將提供外部應用程式/服務，隔離於對外 Security Zones 區域，並限制只允許特定的 Router 使用某些特定功能(例如：單純網站服務運行, APP 後端服務)等。&lt;/li>
-&lt;/ol>
-&lt;blockquote>
-&lt;p>主要目的：希望透過 Shard Route 負責，在不同 IP 地址，讓內部和外部使用者訪問不同的 Router 以達到 DMZ 與 OCP 訪問限制，來減少成本下能更加提升叢集運作安全性。&lt;/p>
-&lt;/blockquote>
-&lt;p>補充 - 更多場景情境，歡迎大家可以參考 Luis Javier Arizmendi Alonso 分享針對 OpenShift 於 Security Zones 系列文章 - &lt;a class="link" href="https://itnext.io/security-zones-in-openshift-worker-nodes-part-i-introduction-4f85762962d7" target="_blank" rel="noopener"
->Security Zones in OpenShift worker nodes&lt;/a>&lt;/p>
-&lt;h2 id="探討--相關架構考量">/探討/ 相關架構考量&lt;/h2>
-&lt;p>先探討結論，為什麼不採用「針對 Security Zones 進行實體隔離」來達到企業內部制定相對安全標準和法規，例如直接在 DMZ 區域多部署一座 OpenShift 叢集提供對外服務，更直接保護叢集運行產品的應用及服務更能確保安全性，其實重點包含&lt;code>成本考量&lt;/code>還有 &lt;code>OpenShift維護成本&lt;/code>高，可能企業內部需要更多維運人員來管理不同 OpenShift 叢集上版流程、應用程式、API及相關服務配置管理等，都是總總問題。&lt;/p>
-&lt;p>所以或許另一種選擇，透過有一個大型的 OpenShift「&lt;code>單一叢集跨網段架構&lt;/code>」能使更容易維運管理及同時達到提高安全性架構，就是此次架構分享重點。&lt;/p>
-&lt;blockquote>
-&lt;p>這邊還是一個重點，取決於你對於當前環境規劃與架構設計需求而做選擇&lt;/p>
-&lt;/blockquote>
-&lt;p>以下針對架構圖做細部「單一叢集跨網段架構」探討：&lt;/p>
-&lt;p>&lt;img src="https://i.imgur.com/PHuCv7u.png"
-loading="lazy"
->&lt;/p>
-&lt;ul>
-&lt;li>每座 OpenShift 叢集都應被視為僅在內部管理，而不是暴露於外部 Internet&lt;/li>
-&lt;li>若劃分 Infra Nodes 創建在不同的 Zone 區域中，每個區域中提供使用者運行 Ingress 等應用及 Services 服務的 Pod&lt;/li>
-&lt;li>將限制使用者無法訪問或直接使用其他叢集區域中的資源，直接保護這些節點及組件。
-&lt;ul>
-&lt;li>例如：Master API, Logging, Metrics, Registry 等應該運行於內部 Internet&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>針對特定 Zone 區域運行應用，如果有特定服務需求，可以使用 node-selectors 將 Pod 實體隔離到特定 Worker 節點
-&lt;ul>
-&lt;li>例如：上圖 Pod 跑在特定「藍色節點」上，只能單獨在藍色區域節點運行 Pod&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;/ul>
-&lt;h2 id="單一叢集-opensihft-運作於跨網段區域">單一叢集 OpenSihft 運作於跨網段區域&lt;/h2>
-&lt;p>下圖 - 為-驗證規劃 OpenShift 示意圖：&lt;/p>
-&lt;p>&lt;img src="https://i.imgur.com/6GgowkZ.png"
-loading="lazy"
->&lt;/p>
-&lt;h2 id="操作步驟">操作步驟&lt;/h2>
-&lt;ol>
-&lt;li>需創建對外服務的 Ingress Controller 要如何配置規範&lt;/li>
-&lt;/ol>
-&lt;ul>
-&lt;li>Infra 節點依據網段區域定義標籤&lt;/li>
-&lt;li>DNS 配置對外 External Service 使用的 WildCard&lt;/li>
-&lt;li>創建 Ingress Controller 指派為外部應用使用&lt;/li>
-&lt;li>設置 route 透過標籤指派運行於對外區域的 infra 節點&lt;/li>
-&lt;/ul>
-&lt;ol start="2">
-&lt;li>服務與應用程式部署完成後，對外的 Router 要定義經過哪一個 Ingress 節點去提供服務&lt;/li>
-&lt;/ol>
-&lt;ul>
-&lt;li>修改預設 Ingress Controller - default 配置不讓其他 Service 服務進入&lt;/li>
-&lt;li>新增對外服務的 Ingress Controller - service 如何配置&lt;/li>
-&lt;/ul>
-&lt;h3 id="1-dns-配置對外-external-service-使用的-wildcard">1. DNS 配置對外 External Service 使用的 WildCard&lt;/h3>
-&lt;table>
-&lt;thead>
-&lt;tr>
-&lt;th>Usage&lt;/th>
-&lt;th>FQDN&lt;/th>
-&lt;/tr>
-&lt;/thead>
-&lt;tbody>
-&lt;tr>
-&lt;td>Kubernetes API&lt;/td>
-&lt;td>api.&amp;lt;cluster_name&amp;gt;.&amp;lt;base_domain&amp;gt;&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>Internal API&lt;/td>
-&lt;td>api-int.&amp;lt;cluster_name&amp;gt;.&amp;lt;base_domain&amp;gt;&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>Ingress route&lt;/td>
-&lt;td>*.apps.&amp;lt;cluster_name&amp;gt;.&amp;lt;base_domain&amp;gt;&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>Application, External Service&lt;/td>
-&lt;td>*.service.&amp;lt;cluster_name&amp;gt;.&amp;lt;base_domain&amp;gt;&lt;/td>
-&lt;/tr>
-&lt;/tbody>
-&lt;/table>
-&lt;h3 id="2-將-router-固定到-infra-node">2. 將 Router 固定到 Infra Node&lt;/h3>
-&lt;ul>
-&lt;li>將 Infra Node 依據服務提供區 Zone 1, Zone 2，指定標籤 (範例配置, region=8, region=10)&lt;/li>
-&lt;li>在 IngressController 對象的 matchLabels 中指定 Label 設置為對應 Infra Node&lt;/li>
-&lt;/ul>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc label nodes &amp;lt;INFRA_NODE&amp;gt; region=8
-$ oc patch ingresscontroller/default -n openshift-ingress-operator --type=merge -p &amp;#39;{&amp;#34;spec&amp;#34;:{&amp;#34;nodePlacement&amp;#34;: {&amp;#34;nodeSelector&amp;#34;: {&amp;#34;matchLabels&amp;#34;: {&amp;#34;region&amp;#34;: &amp;#34;8&amp;#34;}}}}}&amp;#39;
-apiVersion: operator.openshift.io/v1
-kind: IngressController
-metadata:
-name: default
-namespace: openshift-ingress-operator
-spec:
-replicas: 3
-nodePlacement:
-nodeSelector:
-matchLabels:
-region: &amp;#34;8&amp;#34;
-$ oc label nodes &amp;lt;INFRA_NODE&amp;gt; region=10
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;ul>
-&lt;li>檢查節點 label 狀態&lt;/li>
-&lt;/ul>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;span class="lnt">6
-&lt;/span>&lt;span class="lnt">7
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ oc get node -A --show-labels
-NAME STATUS ROLES AGE VERSION LABELS
-infra-1.ocp4.lab.example.com Ready worker 60d v1.23.5+3afdacb &lt;span class="nv">region&lt;/span>&lt;span class="o">=&lt;/span>8, beta.kubernetes.io/arch&lt;span class="o">=&lt;/span>amd64,...
-infra-2.ocp4.lab.example.com Ready worker 60d v1.23.5+3afdacb &lt;span class="nv">region&lt;/span>&lt;span class="o">=&lt;/span>8, beta.kubernetes.io/arch&lt;span class="o">=&lt;/span>amd64,...
-infra-3.ocp4.lab.example.com Ready worker 60d v1.23.5+3afdacb &lt;span class="nv">region&lt;/span>&lt;span class="o">=&lt;/span>8, beta.kubernetes.io/arch&lt;span class="o">=&lt;/span>amd64,...
-infra-4.ocp4.lab.example.com Ready worker 60d v1.23.5+3afdacb &lt;span class="nv">region&lt;/span>&lt;span class="o">=&lt;/span>10, beta.kubernetes.io/arch&lt;span class="o">=&lt;/span>amd64,...
-infra-5.ocp4.lab.example.com Ready worker 60d v1.23.5+3afdacb &lt;span class="nv">region&lt;/span>&lt;span class="o">=&lt;/span>10, beta.kubernetes.io/arch&lt;span class="o">=&lt;/span>amd64,...
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h3 id="3-創建-ingress-controller-指派為外部應用使用">3. 創建 Ingress Controller 指派為外部應用使用&lt;/h3>
-&lt;ul>
-&lt;li>創建命名為 “Service” 的 Ingress Controller(Router) 將允許從外部訪問的應用程式或服務，引流到對應的 Ingress&lt;/li>
-&lt;li>如下圖 (指定的 Label region: ‘10’ )為對外使用的網域&lt;/li>
-&lt;/ul>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ cat ingress-service.yaml
-apiVersion: operator.openshift.io/v1
-kind: IngressController
-metadata:
-name: service
-namespace: openshift-ingress-operator
-spec:
-replicas: 2
-domain: service.ocp4.lab.example.com
-nodePlacement:
-nodeSelector:
-matchLabels:
-region: &amp;#39;10&amp;#39;
-routeSelector:
-matchExpressions:
-- key: type
-operator: In
-values:
-- service
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;blockquote>
-&lt;p>這邊指定對外 External Service 使用的網域&lt;/p>
-&lt;/blockquote>
-&lt;ul>
-&lt;li>設置 ingress&lt;/li>
-&lt;/ul>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc apply -f ingress-service.yaml
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h3 id="4-限制對內對外服務-ingress-controller-配置">4. 限制對內對外服務 Ingress Controller 配置&lt;/h3>
-&lt;p>&lt;img src="https://i.imgur.com/rAARkR1.png"
-loading="lazy"
->&lt;/p>
-&lt;ul>
-&lt;li>修改預設 Ingress Controller - default 配置不讓其他 Service 服務進入&lt;/li>
-&lt;li>新增對外服務的 Ingress Controller - service 如何配置&lt;/li>
-&lt;/ul>
-&lt;blockquote>
-&lt;p>設定 Ingress Controller - service 指定 service 服務可以進入&lt;/p>
-&lt;/blockquote>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc edit ingresscontroller service -n openshift-ingress-operator
-apiVersion: operator.openshift.io/v1
-kind: IngressController
-metadata:
-name: service
-namespace: openshift-ingress-operator
-spec:
-replicas: 2
-domain: service.ocp4.lab.example.com
-nodePlacement:
-nodeSelector:
-matchLabels:
-region: &amp;#39;10&amp;#39;
-routeSelector:
-matchExpressions:
-- key: type
-operator: In
-values:
-- service
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;blockquote>
-&lt;p>檢查 Ingress Controller - default 限制不讓 service 服務進入&lt;/p>
-&lt;/blockquote>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc edit ingresscontroller default -n openshift-ingress-operator
-apiVersion: operator.openshift.io/v1
-kind: IngressController
-metadata:
-name: service
-namespace: openshift-ingress-operator
-spec:
-replicas: 3
-domain: apps.ocp4.lab.example.com
-nodePlacement:
-nodeSelector:
-matchLabels:
-region: &amp;#34;8&amp;#34;
-routeSelector:
-matchExpressions:
-- key: type
-operator: NotIn
-values:
-- service
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h3 id="5-部署應用生成-route-並指定其-hostname和-label-typeservice">5. 部署應用，生成 Route 並指定其 Hostname和 Label (type=service)&lt;/h3>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc new-project demo
-$ oc new-app rails-postgresql-example
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;span class="lnt">6
-&lt;/span>&lt;span class="lnt">7
-&lt;/span>&lt;span class="lnt">8
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc get pod -o wide
-NAME READY STATUS RESTARTS AGE IP NODE
-postgresql-1-deploy 0/1 Completed 0 2d20h 10.129.6.16 worker-3.ocp4.lab.example.com
-postgresql-1-hjztg 1/1 Running 0 2d20h 10.129.4.98 worker-2.ocp4.lab.example.com
-rails-postgresql-example-1-build 0/1 Completed 0 2d20h 10.129.4.97 worker-2.ocp4.lab.example.com
-rails-postgresql-example-1-deploy 0/1 Completed 0 2d19h 10.129.8.9 infra-1.ocp4.lab.example.com
-rails-postgresql-example-1-f8w4l 1/1 Running 0 2d19h 10.129.3.18 worker-1.ocp4.lab.example.com
-rails-postgresql-example-1-hook-pre 0/1 Completed 0 2d19h 10.129.3.17 worker-1.ocp4.lab.example.com
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;blockquote>
-&lt;p>在創建 route 的時候需指定 hostname，不可使用預設名稱，此部分跳過說明，可以看到如以下 route domain 為 &lt;code>.service.ocp4.lab.example.com&lt;/code> 結尾。&lt;/p>
-&lt;/blockquote>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc get route
-NAME HOST/PORT PATH SERVICES PORT TERMINATION WILDCARD
-rails-postgresql-example rails-postgresql-example-demo.service.ocp4.lab.example.com rails-postgresql-example &amp;lt;all&amp;gt; None
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;blockquote>
-&lt;p>#指定 label 讓 rails-postgresql-example 的 route 地址與設置解析&lt;/p>
-&lt;/blockquote>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc label route rails-postgresql-example type=service
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h3 id="6-訪問-ap-的-route-地址確認狀態可以訪問">6. 訪問 AP 的 Route 地址，確認狀態可以訪問&lt;/h3>
-&lt;ul>
-&lt;li>預設應用及服務走 default 網頁會讀取不到&lt;/li>
-&lt;/ul>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc label route rails-postgresql-example type-
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://i.imgur.com/2sld746.png"
-loading="lazy"
->&lt;/p>
-&lt;ul>
-&lt;li>增加外部服務對應 label (如範例 type=service)&lt;/li>
-&lt;/ul>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc label route rails-postgresql-example type=service
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://i.imgur.com/gDe472U.jpg"
-loading="lazy"
->&lt;/p>
-&lt;h2 id="reference">Reference&lt;/h2>
-&lt;ul>
-&lt;li>&lt;a class="link" href="https://rcarrata.com/openshift/ocp4_route_sharding/" target="_blank" rel="noopener"
->Deep dive of Route Sharding in OpenShift 4&lt;/a>&lt;/li>
-&lt;li>&lt;a class="link" href="https://itnext.io/security-zones-in-openshift-worker-nodes-part-i-introduction-4f85762962d7" target="_blank" rel="noopener"
->Security Zones in OpenShift worker nodes — Part I — Introduction&lt;/a>&lt;/li>
-&lt;li>&lt;a class="link" href="https://blog.csdn.net/weixin_43902588/article/details/103543191?spm=1001.2014.3001.5502" target="_blank" rel="noopener"
->OpenShift 4 - Ingress、Route與Shard&lt;/a>&lt;/li>
 &lt;/ul></description></item></channel></rss>
