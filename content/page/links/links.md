@@ -2,8 +2,8 @@
 title: Links
 links:
   - title: 我的GitHub Profile
-    description: DreamOneX ~
-    website: https://github.com
+    description: Frank Lin
+    website: https://github.com/yylin1
     image: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
 menu:
     main: 
@@ -14,4 +14,3 @@ menu:
 comments: false
 ---
 
-感谢我的朋友们和所有帮助过我的人，欢迎友链
