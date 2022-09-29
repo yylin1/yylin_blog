@@ -23,6 +23,8 @@ tags:
 Talk - 那些年我們在開源社群的日子 Cloud Native Taiwan[](#talk---那些年我們在開源社群的日子-cloud-native-taiwan)
 -------------------------------------------------------------------------------------
 
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/2436fceb0ba742deadd08d357c49131d" title="那些年我們在開源社群的日子 - Cloud Native Taiwan" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 560px; height: 420px;" data-ratio="1.3333333333333333"></iframe>
+
 今年很榮幸跟社群夥伴 [Po-Hsien](https://blog.phshih.com/) 一起投稿開源新手村，投稿題目是 **「那些年我們在開源社群的日子 - Cloud Native Taiwan」**，主要是以社群志工角度，介紹我們對於參與開源社群的一些想法，整理一些建議給想參與社群的會眾。
 
 ![](https://live.staticflickr.com/65535/52303613392_fb3654134a_6k.jpg)
