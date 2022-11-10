@@ -24,15 +24,25 @@ tags:
 
 ## /探討/  相關架構考量
 
-先探討結論，為什麼不採用「針對 Security Zones 進行實體隔離」來達到企業內部制定相對安全標準和法規，例如直接在 DMZ 區域多部署一座 OpenShift 叢集提供對外服務，更直接保護叢集運行產品的應用及服務更能確保安全性，其實重點包含`成本考量`還有 `OpenShift維護成本`高，可能企業內部需要更多維運人員來管理不同 OpenShift 叢集上版流程、應用程式、API及相關服務配置管理等，都是總總問題。
+先探討結論，為什麼不採用「針對 Security Zones 進行實體隔離」來達到企業內部制定相對安全標準和法規，例如直接在 DMZ 區域多部署一座 OpenShift 叢集提供對外服務(參考補充)，更直接保護叢集運行產品的應用及服務更能確保安全性，其實重點包含`成本考量`還有 `OpenShift維護成本`高，可能企業內部需要更多維運人員來管理不同 OpenShift 叢集上版流程、應用程式、API及相關服務配置管理等，都是總總問題。
 
-所以或許另一種選擇，透過有一個大型的 OpenShift「`單一叢集跨網段架構`」能使更容易維運管理及同時達到提高安全性架構，就是此次架構分享重點。
+### /補充 - 透過`實體隔離方案` /
+- 有助於證明 Data Center 符合安全標準和法規
+- 更保護叢集 API 和 DMZ 中，不會暴露給外部 Internet 
+- OpenShift 維護成本高
+
+![](img/01.png)
+
+
+所以或許另一種選擇，透過有一個大型的 OpenShift「單一叢集跨網段架構」能使更容易維運管理及同時達到提高安全性架構，就是此次架構分享重點。
 
 > 這邊還是一個重點，取決於你對於當前環境規劃與架構設計需求而做選擇
 
-以下針對架構圖做細部「單一叢集跨網段架構」探討：
 
-![](https://i.imgur.com/PHuCv7u.png)
+
+### 以下針對本文主要概述「 `單一叢集跨網段架構` 」架構圖做細部探討：
+
+![](img/02.png)
 
 - 每座 OpenShift 叢集都應被視為僅在內部管理，而不是暴露於外部 Internet
 - 若劃分 Infra Nodes 創建在不同的 Zone 區域中，每個區域中提供使用者運行 Ingress 等應用及 Services 服務的 Pod 
@@ -46,8 +56,7 @@ tags:
 
 下圖 - 為-驗證規劃 OpenShift 示意圖：
 
-![](https://i.imgur.com/6GgowkZ.png)
-
+![](img/03.png)
 
 ## 操作步驟
 
@@ -57,11 +66,17 @@ tags:
 - 創建 Ingress Controller 指派為外部應用使用
 - 設置  route 透過標籤指派運行於對外區域的 infra 節點
 
+  ![](img/05.png)
+
+- 指定配置 Hostname 並給外部Service 解析
+![](img/06.png)
+
 
 2. 服務與應用程式部署完成後，對外的 Router 要定義經過哪一個 Ingress 節點去提供服務
 - 修改預設 Ingress Controller - default 配置不讓其他 Service 服務進入
 - 新增對外服務的 Ingress Controller - service 如何配置
 
+  ![](img/07.png)
 
 ### 1. DNS 配置對外 External Service 使用的 WildCard
 
@@ -150,8 +165,7 @@ $ oc apply -f ingress-service.yaml
 
 ### 4. 限制對內對外服務 Ingress Controller 配置
 
-![](https://i.imgur.com/rAARkR1.png)
-
+![](img/04.png)
 
 
 - 修改預設 Ingress Controller - default 配置不讓其他 Service 服務進入
@@ -240,18 +254,32 @@ $ oc label route rails-postgresql-example type=service
 ```
 $ oc label route rails-postgresql-example type- 
 ```
-![](https://i.imgur.com/2sld746.png)
+
+![](img/08.png)
 
 - 增加外部服務對應 label (如範例 type=service)
 ```
 $ oc label route rails-postgresql-example type=service
 ```
 
+![](img/09.png)
 
-![](https://i.imgur.com/gDe472U.jpg)
+
+## 延伸討論
+
+- 本次無討論 Application, External Service 資源放置問題
+> 是否建議將屬於 DMZ 區的 Pod 放置於屬於 DMZ 上配置的  Worker Node 節點？
+
+- 因架構規劃，需多新增一個 Ingress 對外提供服務，就有憑證管理需求
+> 此部分要採用 OpenShift 本身簽署的部分還是客戶額外簽署的部分？
+
+- DNS 跨網段拆分問題
+> 若各網段有獨立DNS服務器架構情境？
+
 
 
 ## Reference
 - [Deep dive of Route Sharding in OpenShift 4](https://rcarrata.com/openshift/ocp4_route_sharding/)
 - [Security Zones in OpenShift worker nodes — Part I — Introduction](https://itnext.io/security-zones-in-openshift-worker-nodes-part-i-introduction-4f85762962d7)
 - [OpenShift 4 - Ingress、Route與Shard](https://blog.csdn.net/weixin_43902588/article/details/103543191?spm=1001.2014.3001.5502)
+- [OCP4.11 - Using Ingress Controllers and routes ](https://docs.openshift.com/container-platform/4.11/networking/configuring_ingress_cluster_traffic/configuring-ingress-cluster-traffic-ingress-controller.html#nw-using-ingress-and-routes_configuring-ingress-cluster-traffic-ingress-controller)
