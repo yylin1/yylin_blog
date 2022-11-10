@@ -100,13 +100,20 @@ OpenShift
 </blockquote>
 <p>補充 - 更多場景情境，歡迎大家可以參考 Luis Javier Arizmendi Alonso 分享針對 OpenShift 於 Security Zones 系列文章 - <a class=link href=https://itnext.io/security-zones-in-openshift-worker-nodes-part-i-introduction-4f85762962d7 target=_blank rel=noopener>Security Zones in OpenShift worker nodes</a></p>
 <h2 id=探討--相關架構考量>/探討/ 相關架構考量</h2>
-<p>先探討結論，為什麼不採用「針對 Security Zones 進行實體隔離」來達到企業內部制定相對安全標準和法規，例如直接在 DMZ 區域多部署一座 OpenShift 叢集提供對外服務，更直接保護叢集運行產品的應用及服務更能確保安全性，其實重點包含<code>成本考量</code>還有 <code>OpenShift維護成本</code>高，可能企業內部需要更多維運人員來管理不同 OpenShift 叢集上版流程、應用程式、API及相關服務配置管理等，都是總總問題。</p>
-<p>所以或許另一種選擇，透過有一個大型的 OpenShift「<code>單一叢集跨網段架構</code>」能使更容易維運管理及同時達到提高安全性架構，就是此次架構分享重點。</p>
+<p>先探討結論，為什麼不採用「針對 Security Zones 進行實體隔離」來達到企業內部制定相對安全標準和法規，例如直接在 DMZ 區域多部署一座 OpenShift 叢集提供對外服務(參考補充)，更直接保護叢集運行產品的應用及服務更能確保安全性，其實重點包含<code>成本考量</code>還有 <code>OpenShift維護成本</code>高，可能企業內部需要更多維運人員來管理不同 OpenShift 叢集上版流程、應用程式、API及相關服務配置管理等，都是總總問題。</p>
+<h3 id=補充---透過實體隔離方案->/補充 - 透過<code>實體隔離方案</code> /</h3>
+<ul>
+<li>有助於證明 Data Center 符合安全標準和法規</li>
+<li>更保護叢集 API 和 DMZ 中，不會暴露給外部 Internet</li>
+<li>OpenShift 維護成本高</li>
+</ul>
+<p><img src=/openshift/security-zones/img/01.png width=516 height=593 srcset="/openshift/security-zones/img/01_hud6af0256d637efc1e9fc480ef98eae1a_45911_480x0_resize_box_3.png 480w, /openshift/security-zones/img/01_hud6af0256d637efc1e9fc480ef98eae1a_45911_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=87 data-flex-basis=208px></p>
+<p>所以或許另一種選擇，透過有一個大型的 OpenShift「單一叢集跨網段架構」能使更容易維運管理及同時達到提高安全性架構，就是此次架構分享重點。</p>
 <blockquote>
 <p>這邊還是一個重點，取決於你對於當前環境規劃與架構設計需求而做選擇</p>
 </blockquote>
-<p>以下針對架構圖做細部「單一叢集跨網段架構」探討：</p>
-<p><img src=https://i.imgur.com/PHuCv7u.png loading=lazy></p>
+<h3 id=以下針對本文主要概述-單一叢集跨網段架構-架構圖做細部探討>以下針對本文主要概述「 <code>單一叢集跨網段架構</code> 」架構圖做細部探討：</h3>
+<p><img src=/openshift/security-zones/img/02.png width=517 height=496 srcset="/openshift/security-zones/img/02_hub4534f67c6d5a4f6e58796ce01e74a58_78220_480x0_resize_box_3.png 480w, /openshift/security-zones/img/02_hub4534f67c6d5a4f6e58796ce01e74a58_78220_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=104 data-flex-basis=250px></p>
 <ul>
 <li>每座 OpenShift 叢集都應被視為僅在內部管理，而不是暴露於外部 Internet</li>
 <li>若劃分 Infra Nodes 創建在不同的 Zone 區域中，每個區域中提供使用者運行 Ingress 等應用及 Services 服務的 Pod</li>
@@ -123,23 +130,41 @@ OpenShift
 </ul>
 <h2 id=單一叢集-opensihft-運作於跨網段區域>單一叢集 OpenSihft 運作於跨網段區域</h2>
 <p>下圖 - 為-驗證規劃 OpenShift 示意圖：</p>
-<p><img src=https://i.imgur.com/6GgowkZ.png loading=lazy></p>
+<p><img src=/openshift/security-zones/img/03.png width=905 height=764 srcset="/openshift/security-zones/img/03_hu4c832c4ecd980ff8588f2e4451d8a24c_86575_480x0_resize_box_3.png 480w, /openshift/security-zones/img/03_hu4c832c4ecd980ff8588f2e4451d8a24c_86575_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=118 data-flex-basis=284px></p>
 <h2 id=操作步驟>操作步驟</h2>
 <ol>
 <li>需創建對外服務的 Ingress Controller 要如何配置規範</li>
 </ol>
 <ul>
-<li>Infra 節點依據網段區域定義標籤</li>
-<li>DNS 配置對外 External Service 使用的 WildCard</li>
-<li>創建 Ingress Controller 指派為外部應用使用</li>
-<li>設置 route 透過標籤指派運行於對外區域的 infra 節點</li>
+<li>
+<p>Infra 節點依據網段區域定義標籤</p>
+</li>
+<li>
+<p>DNS 配置對外 External Service 使用的 WildCard</p>
+</li>
+<li>
+<p>創建 Ingress Controller 指派為外部應用使用</p>
+</li>
+<li>
+<p>設置 route 透過標籤指派運行於對外區域的 infra 節點</p>
+<p><img src=/openshift/security-zones/img/05.png width=1241 height=576 srcset="/openshift/security-zones/img/05_hu81aaa288d3453154f57d3f8367842c22_154219_480x0_resize_box_3.png 480w, /openshift/security-zones/img/05_hu81aaa288d3453154f57d3f8367842c22_154219_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=215 data-flex-basis=517px></p>
+</li>
+<li>
+<p>指定配置 Hostname 並給外部Service 解析
+<img src=/openshift/security-zones/img/06.png width=1115 height=513 srcset="/openshift/security-zones/img/06_hu9a0b08036f071fc3bfebf1085b32fc7b_99190_480x0_resize_box_3.png 480w, /openshift/security-zones/img/06_hu9a0b08036f071fc3bfebf1085b32fc7b_99190_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=217 data-flex-basis=521px></p>
+</li>
 </ul>
 <ol start=2>
 <li>服務與應用程式部署完成後，對外的 Router 要定義經過哪一個 Ingress 節點去提供服務</li>
 </ol>
 <ul>
-<li>修改預設 Ingress Controller - default 配置不讓其他 Service 服務進入</li>
-<li>新增對外服務的 Ingress Controller - service 如何配置</li>
+<li>
+<p>修改預設 Ingress Controller - default 配置不讓其他 Service 服務進入</p>
+</li>
+<li>
+<p>新增對外服務的 Ingress Controller - service 如何配置</p>
+<p><img src=/openshift/security-zones/img/07.png width=1229 height=508 srcset="/openshift/security-zones/img/07_huebd1e6a12edf16bac67160f0ad8bb7bc_114486_480x0_resize_box_3.png 480w, /openshift/security-zones/img/07_huebd1e6a12edf16bac67160f0ad8bb7bc_114486_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=241 data-flex-basis=580px></p>
+</li>
 </ul>
 <h3 id=1-dns-配置對外-external-service-使用的-wildcard>1. DNS 配置對外 External Service 使用的 WildCard</h3>
 <div class=table-wrapper><table>
@@ -302,7 +327,7 @@ spec:
 </code></pre></td></tr></table>
 </div>
 </div><h3 id=4-限制對內對外服務-ingress-controller-配置>4. 限制對內對外服務 Ingress Controller 配置</h3>
-<p><img src=https://i.imgur.com/rAARkR1.png loading=lazy></p>
+<p><img src=/openshift/security-zones/img/04.png width=341 height=459 srcset="/openshift/security-zones/img/04_hu4abab21e5dcbbf8538530220842f1a4c_43342_480x0_resize_box_3.png 480w, /openshift/security-zones/img/04_hu4abab21e5dcbbf8538530220842f1a4c_43342_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=74 data-flex-basis=178px></p>
 <ul>
 <li>修改預設 Ingress Controller - default 配置不讓其他 Service 服務進入</li>
 <li>新增對外服務的 Ingress Controller - service 如何配置</li>
@@ -472,7 +497,7 @@ rails-postgresql-example   rails-postgresql-example-demo.service.ocp4.lab.exampl
 <pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>$ oc label route rails-postgresql-example type- 
 </code></pre></td></tr></table>
 </div>
-</div><p><img src=https://i.imgur.com/2sld746.png loading=lazy></p>
+</div><p><img src=/openshift/security-zones/img/08.png width=1127 height=647 srcset="/openshift/security-zones/img/08_huda9aa56bc4effed2df008c35645ed447_142356_480x0_resize_box_3.png 480w, /openshift/security-zones/img/08_huda9aa56bc4effed2df008c35645ed447_142356_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=174 data-flex-basis=418px></p>
 <ul>
 <li>增加外部服務對應 label (如範例 type=service)</li>
 </ul>
@@ -484,12 +509,32 @@ rails-postgresql-example   rails-postgresql-example-demo.service.ocp4.lab.exampl
 <pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>$ oc label route rails-postgresql-example type=service
 </code></pre></td></tr></table>
 </div>
-</div><p><img src=https://i.imgur.com/gDe472U.jpg loading=lazy></p>
+</div><p><img src=/openshift/security-zones/img/09.png width=1187 height=683 srcset="/openshift/security-zones/img/09_hufbd81718645c2c061487964a68caad0a_251451_480x0_resize_box_3.png 480w, /openshift/security-zones/img/09_hufbd81718645c2c061487964a68caad0a_251451_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=173 data-flex-basis=417px></p>
+<h2 id=延伸討論>延伸討論</h2>
+<ul>
+<li>本次無討論 Application, External Service 資源放置問題</li>
+</ul>
+<blockquote>
+<p>是否建議將屬於 DMZ 區的 Pod 放置於屬於 DMZ 上配置的 Worker Node 節點？</p>
+</blockquote>
+<ul>
+<li>因架構規劃，需多新增一個 Ingress 對外提供服務，就有憑證管理需求</li>
+</ul>
+<blockquote>
+<p>此部分要採用 OpenShift 本身簽署的部分還是客戶額外簽署的部分？</p>
+</blockquote>
+<ul>
+<li>DNS 跨網段拆分問題</li>
+</ul>
+<blockquote>
+<p>若各網段有獨立DNS服務器架構情境？</p>
+</blockquote>
 <h2 id=reference>Reference</h2>
 <ul>
 <li><a class=link href=https://rcarrata.com/openshift/ocp4_route_sharding/ target=_blank rel=noopener>Deep dive of Route Sharding in OpenShift 4</a></li>
 <li><a class=link href=https://itnext.io/security-zones-in-openshift-worker-nodes-part-i-introduction-4f85762962d7 target=_blank rel=noopener>Security Zones in OpenShift worker nodes — Part I — Introduction</a></li>
 <li><a class=link href="https://blog.csdn.net/weixin_43902588/article/details/103543191?spm=1001.2014.3001.5502" target=_blank rel=noopener>OpenShift 4 - Ingress、Route與Shard</a></li>
+<li><a class=link href=https://docs.openshift.com/container-platform/4.11/networking/configuring_ingress_cluster_traffic/configuring-ingress-cluster-traffic-ingress-controller.html#nw-using-ingress-and-routes_configuring-ingress-cluster-traffic-ingress-controller target=_blank rel=noopener>OCP4.11 - Using Ingress Controllers and routes </a></li>
 </ul>
 </section>
 <footer class=article-footer>
@@ -601,7 +646,12 @@ Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=
 <li>
 <ul>
 <li><a href=#概述-為什麼有這樣需求>/概述/ 為什麼有這樣需求？</a></li>
-<li><a href=#探討--相關架構考量>/探討/ 相關架構考量</a></li>
+<li><a href=#探討--相關架構考量>/探討/ 相關架構考量</a>
+<ul>
+<li><a href=#補充---透過實體隔離方案->/補充 - 透過<code>實體隔離方案</code> /</a></li>
+<li><a href=#以下針對本文主要概述-單一叢集跨網段架構-架構圖做細部探討>以下針對本文主要概述「 <code>單一叢集跨網段架構</code> 」架構圖做細部探討：</a></li>
+</ul>
+</li>
 <li><a href=#單一叢集-opensihft-運作於跨網段區域>單一叢集 OpenSihft 運作於跨網段區域</a></li>
 <li><a href=#操作步驟>操作步驟</a>
 <ul>
@@ -613,6 +663,7 @@ Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=
 <li><a href=#6-訪問-ap-的-route-地址確認狀態可以訪問>6. 訪問 AP 的 Route 地址，確認狀態可以訪問</a></li>
 </ul>
 </li>
+<li><a href=#延伸討論>延伸討論</a></li>
 <li><a href=#reference>Reference</a></li>
 </ul>
 </li>

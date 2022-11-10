@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>KCD on Frank's Notes</title><link>https://blog.yylin.io/tags/kcd/</link><description>Recent content in KCD on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Sun, 28 Aug 2022 03:40:40 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/tags/kcd/index.xml" rel="self" type="application/rss+xml"/><item><title>COSCUP 2022 - 那些年我們在開源社群的日子 - Cloud Native Taiwan</title><link>https://blog.yylin.io/community/coscup2022/</link><pubDate>Sun, 28 Aug 2022 03:40:40 +0800</pubDate><guid>https://blog.yylin.io/community/coscup2022/</guid><description>&lt;p>&lt;a class="link" href="https://coscup.org/2022/zh-TW/" target="_blank" rel="noopener"
 >COSCUP x KCD Taiwan&lt;/a>，今年終於變回實體線下活動，能透過線下活動人與人交流到處尋覓老朋友、聊現況，真的是每年最熱鬧的一刻。&lt;/p>
+&lt;h2 id="完整議程-kcd-taiwan-2022-x-coscup--kubernetes-community-days-taiwan-2022">完整議程: KCD Taiwan 2022 x COSCUP | Kubernetes Community Days Taiwan 2022&lt;/h2>
+&lt;ul>
+&lt;li>COSCUP 2022 Agenda: &lt;a class="link" href="https://coscup.org/2022/zh-TW/session" target="_blank" rel="noopener"
+>https://coscup.org/2022/zh-TW/session&lt;/a>&lt;/li>
+&lt;li>KCD Taiwan 2022 Agenda: &lt;a class="link" href="https://community.cncf.io/kcd-taiwan/" target="_blank" rel="noopener"
+>https://community.cncf.io/kcd-taiwan/&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;div class="video-wrapper">
+&lt;iframe loading="lazy"
+src="https://www.youtube.com/embed/8rGhfmbhZqs"
+allowfullscreen
+title="YouTube Video"
+>
+&lt;/iframe>
+&lt;/div>
+&lt;blockquote>
+&lt;p>Kubernetes Community Days (KCD) 是由雲原生計算基金會 (CNCF) 支持與認證的官方社群組織活動，此會議集結來自開源和雲原生社區的使用者及技術人員，以進行教育、協作和分享。&lt;/p>
+&lt;/blockquote>
+&lt;blockquote>
+&lt;p>本次 Kubernetes Community Days Taiwan (KCD Taiwan) 是由台灣雲原生使用者社群 (Cloud Native Taiwan User Group, CNTUG) 所主辦的在地 KCD 的社群活動。其目的是透過本土社群的力量，讓更多人參與 Kubernetes 社群互相交流和學習，並以此持續發展和維持社群。&lt;/p>
+&lt;/blockquote>
 &lt;p>這次我們社群 &lt;a class="link" href="https://cloudnative.tw/" target="_blank" rel="noopener"
 >CNTUG&lt;/a> 申請主辦台灣地區的 &lt;a class="link" href="https://community.cncf.io/events/details/cncf-kcd-taiwan-presents-coscup-x-kcd-taiwan-2022/?fbclid=IwAR3ceTLw2_Lsd8JjbrMQkuxiBC3KQq2KhvC4qhi9MG3UhdIomaZWdrhPrKY" target="_blank" rel="noopener"
 >Kubernetes Community Day&lt;/a> (KCD)，KCD 為 CNCF 官方的活動，性質跟 KubeConf 有點不太一樣，KCD 主要是藉由各地區當地的社群來推廣 Cloud Native 以及 Kubernetes 文化的一個活動，所以會由各國家地區的社群來主持這個活動，而台灣地區的就是 KCD Taiwan。&lt;/p>

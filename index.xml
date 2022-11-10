@@ -10,14 +10,35 @@
 &lt;p>補充 - 更多場景情境，歡迎大家可以參考 Luis Javier Arizmendi Alonso 分享針對 OpenShift 於 Security Zones 系列文章 - &lt;a class="link" href="https://itnext.io/security-zones-in-openshift-worker-nodes-part-i-introduction-4f85762962d7" target="_blank" rel="noopener"
 >Security Zones in OpenShift worker nodes&lt;/a>&lt;/p>
 &lt;h2 id="探討--相關架構考量">/探討/ 相關架構考量&lt;/h2>
-&lt;p>先探討結論，為什麼不採用「針對 Security Zones 進行實體隔離」來達到企業內部制定相對安全標準和法規，例如直接在 DMZ 區域多部署一座 OpenShift 叢集提供對外服務，更直接保護叢集運行產品的應用及服務更能確保安全性，其實重點包含&lt;code>成本考量&lt;/code>還有 &lt;code>OpenShift維護成本&lt;/code>高，可能企業內部需要更多維運人員來管理不同 OpenShift 叢集上版流程、應用程式、API及相關服務配置管理等，都是總總問題。&lt;/p>
-&lt;p>所以或許另一種選擇，透過有一個大型的 OpenShift「&lt;code>單一叢集跨網段架構&lt;/code>」能使更容易維運管理及同時達到提高安全性架構，就是此次架構分享重點。&lt;/p>
+&lt;p>先探討結論，為什麼不採用「針對 Security Zones 進行實體隔離」來達到企業內部制定相對安全標準和法規，例如直接在 DMZ 區域多部署一座 OpenShift 叢集提供對外服務(參考補充)，更直接保護叢集運行產品的應用及服務更能確保安全性，其實重點包含&lt;code>成本考量&lt;/code>還有 &lt;code>OpenShift維護成本&lt;/code>高，可能企業內部需要更多維運人員來管理不同 OpenShift 叢集上版流程、應用程式、API及相關服務配置管理等，都是總總問題。&lt;/p>
+&lt;h3 id="補充---透過實體隔離方案-">/補充 - 透過&lt;code>實體隔離方案&lt;/code> /&lt;/h3>
+&lt;ul>
+&lt;li>有助於證明 Data Center 符合安全標準和法規&lt;/li>
+&lt;li>更保護叢集 API 和 DMZ 中，不會暴露給外部 Internet&lt;/li>
+&lt;li>OpenShift 維護成本高&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://blog.yylin.io/openshift/security-zones/img/01.png"
+width="516"
+height="593"
+srcset="https://blog.yylin.io/openshift/security-zones/img/01_hud6af0256d637efc1e9fc480ef98eae1a_45911_480x0_resize_box_3.png 480w, https://blog.yylin.io/openshift/security-zones/img/01_hud6af0256d637efc1e9fc480ef98eae1a_45911_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="87"
+data-flex-basis="208px"
+>&lt;/p>
+&lt;p>所以或許另一種選擇，透過有一個大型的 OpenShift「單一叢集跨網段架構」能使更容易維運管理及同時達到提高安全性架構，就是此次架構分享重點。&lt;/p>
 &lt;blockquote>
 &lt;p>這邊還是一個重點，取決於你對於當前環境規劃與架構設計需求而做選擇&lt;/p>
 &lt;/blockquote>
-&lt;p>以下針對架構圖做細部「單一叢集跨網段架構」探討：&lt;/p>
-&lt;p>&lt;img src="https://i.imgur.com/PHuCv7u.png"
+&lt;h3 id="以下針對本文主要概述-單一叢集跨網段架構-架構圖做細部探討">以下針對本文主要概述「 &lt;code>單一叢集跨網段架構&lt;/code> 」架構圖做細部探討：&lt;/h3>
+&lt;p>&lt;img src="https://blog.yylin.io/openshift/security-zones/img/02.png"
+width="517"
+height="496"
+srcset="https://blog.yylin.io/openshift/security-zones/img/02_hub4534f67c6d5a4f6e58796ce01e74a58_78220_480x0_resize_box_3.png 480w, https://blog.yylin.io/openshift/security-zones/img/02_hub4534f67c6d5a4f6e58796ce01e74a58_78220_1024x0_resize_box_3.png 1024w"
 loading="lazy"
+class="gallery-image"
+data-flex-grow="104"
+data-flex-basis="250px"
 >&lt;/p>
 &lt;ul>
 &lt;li>每座 OpenShift 叢集都應被視為僅在內部管理，而不是暴露於外部 Internet&lt;/li>
@@ -35,25 +56,73 @@ loading="lazy"
 &lt;/ul>
 &lt;h2 id="單一叢集-opensihft-運作於跨網段區域">單一叢集 OpenSihft 運作於跨網段區域&lt;/h2>
 &lt;p>下圖 - 為-驗證規劃 OpenShift 示意圖：&lt;/p>
-&lt;p>&lt;img src="https://i.imgur.com/6GgowkZ.png"
+&lt;p>&lt;img src="https://blog.yylin.io/openshift/security-zones/img/03.png"
+width="905"
+height="764"
+srcset="https://blog.yylin.io/openshift/security-zones/img/03_hu4c832c4ecd980ff8588f2e4451d8a24c_86575_480x0_resize_box_3.png 480w, https://blog.yylin.io/openshift/security-zones/img/03_hu4c832c4ecd980ff8588f2e4451d8a24c_86575_1024x0_resize_box_3.png 1024w"
 loading="lazy"
+class="gallery-image"
+data-flex-grow="118"
+data-flex-basis="284px"
 >&lt;/p>
 &lt;h2 id="操作步驟">操作步驟&lt;/h2>
 &lt;ol>
 &lt;li>需創建對外服務的 Ingress Controller 要如何配置規範&lt;/li>
 &lt;/ol>
 &lt;ul>
-&lt;li>Infra 節點依據網段區域定義標籤&lt;/li>
-&lt;li>DNS 配置對外 External Service 使用的 WildCard&lt;/li>
-&lt;li>創建 Ingress Controller 指派為外部應用使用&lt;/li>
-&lt;li>設置 route 透過標籤指派運行於對外區域的 infra 節點&lt;/li>
+&lt;li>
+&lt;p>Infra 節點依據網段區域定義標籤&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>DNS 配置對外 External Service 使用的 WildCard&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>創建 Ingress Controller 指派為外部應用使用&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>設置 route 透過標籤指派運行於對外區域的 infra 節點&lt;/p>
+&lt;p>&lt;img src="https://blog.yylin.io/openshift/security-zones/img/05.png"
+width="1241"
+height="576"
+srcset="https://blog.yylin.io/openshift/security-zones/img/05_hu81aaa288d3453154f57d3f8367842c22_154219_480x0_resize_box_3.png 480w, https://blog.yylin.io/openshift/security-zones/img/05_hu81aaa288d3453154f57d3f8367842c22_154219_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="215"
+data-flex-basis="517px"
+>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>指定配置 Hostname 並給外部Service 解析
+&lt;img src="https://blog.yylin.io/openshift/security-zones/img/06.png"
+width="1115"
+height="513"
+srcset="https://blog.yylin.io/openshift/security-zones/img/06_hu9a0b08036f071fc3bfebf1085b32fc7b_99190_480x0_resize_box_3.png 480w, https://blog.yylin.io/openshift/security-zones/img/06_hu9a0b08036f071fc3bfebf1085b32fc7b_99190_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="217"
+data-flex-basis="521px"
+>&lt;/p>
+&lt;/li>
 &lt;/ul>
 &lt;ol start="2">
 &lt;li>服務與應用程式部署完成後，對外的 Router 要定義經過哪一個 Ingress 節點去提供服務&lt;/li>
 &lt;/ol>
 &lt;ul>
-&lt;li>修改預設 Ingress Controller - default 配置不讓其他 Service 服務進入&lt;/li>
-&lt;li>新增對外服務的 Ingress Controller - service 如何配置&lt;/li>
+&lt;li>
+&lt;p>修改預設 Ingress Controller - default 配置不讓其他 Service 服務進入&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>新增對外服務的 Ingress Controller - service 如何配置&lt;/p>
+&lt;p>&lt;img src="https://blog.yylin.io/openshift/security-zones/img/07.png"
+width="1229"
+height="508"
+srcset="https://blog.yylin.io/openshift/security-zones/img/07_huebd1e6a12edf16bac67160f0ad8bb7bc_114486_480x0_resize_box_3.png 480w, https://blog.yylin.io/openshift/security-zones/img/07_huebd1e6a12edf16bac67160f0ad8bb7bc_114486_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="241"
+data-flex-basis="580px"
+>&lt;/p>
+&lt;/li>
 &lt;/ul>
 &lt;h3 id="1-dns-配置對外-external-service-使用的-wildcard">1. DNS 配置對外 External Service 使用的 WildCard&lt;/h3>
 &lt;table>
@@ -212,8 +281,14 @@ values:
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;h3 id="4-限制對內對外服務-ingress-controller-配置">4. 限制對內對外服務 Ingress Controller 配置&lt;/h3>
-&lt;p>&lt;img src="https://i.imgur.com/rAARkR1.png"
+&lt;p>&lt;img src="https://blog.yylin.io/openshift/security-zones/img/04.png"
+width="341"
+height="459"
+srcset="https://blog.yylin.io/openshift/security-zones/img/04_hu4abab21e5dcbbf8538530220842f1a4c_43342_480x0_resize_box_3.png 480w, https://blog.yylin.io/openshift/security-zones/img/04_hu4abab21e5dcbbf8538530220842f1a4c_43342_1024x0_resize_box_3.png 1024w"
 loading="lazy"
+class="gallery-image"
+data-flex-grow="74"
+data-flex-basis="178px"
 >&lt;/p>
 &lt;ul>
 &lt;li>修改預設 Ingress Controller - default 配置不讓其他 Service 服務進入&lt;/li>
@@ -384,8 +459,14 @@ rails-postgresql-example rails-postgresql-example-demo.service.ocp4.lab.example.
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc label route rails-postgresql-example type-
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://i.imgur.com/2sld746.png"
+&lt;/div>&lt;p>&lt;img src="https://blog.yylin.io/openshift/security-zones/img/08.png"
+width="1127"
+height="647"
+srcset="https://blog.yylin.io/openshift/security-zones/img/08_huda9aa56bc4effed2df008c35645ed447_142356_480x0_resize_box_3.png 480w, https://blog.yylin.io/openshift/security-zones/img/08_huda9aa56bc4effed2df008c35645ed447_142356_1024x0_resize_box_3.png 1024w"
 loading="lazy"
+class="gallery-image"
+data-flex-grow="174"
+data-flex-basis="418px"
 >&lt;/p>
 &lt;ul>
 &lt;li>增加外部服務對應 label (如範例 type=service)&lt;/li>
@@ -398,9 +479,34 @@ loading="lazy"
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc label route rails-postgresql-example type=service
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://i.imgur.com/gDe472U.jpg"
+&lt;/div>&lt;p>&lt;img src="https://blog.yylin.io/openshift/security-zones/img/09.png"
+width="1187"
+height="683"
+srcset="https://blog.yylin.io/openshift/security-zones/img/09_hufbd81718645c2c061487964a68caad0a_251451_480x0_resize_box_3.png 480w, https://blog.yylin.io/openshift/security-zones/img/09_hufbd81718645c2c061487964a68caad0a_251451_1024x0_resize_box_3.png 1024w"
 loading="lazy"
+class="gallery-image"
+data-flex-grow="173"
+data-flex-basis="417px"
 >&lt;/p>
+&lt;h2 id="延伸討論">延伸討論&lt;/h2>
+&lt;ul>
+&lt;li>本次無討論 Application, External Service 資源放置問題&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>是否建議將屬於 DMZ 區的 Pod 放置於屬於 DMZ 上配置的 Worker Node 節點？&lt;/p>
+&lt;/blockquote>
+&lt;ul>
+&lt;li>因架構規劃，需多新增一個 Ingress 對外提供服務，就有憑證管理需求&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>此部分要採用 OpenShift 本身簽署的部分還是客戶額外簽署的部分？&lt;/p>
+&lt;/blockquote>
+&lt;ul>
+&lt;li>DNS 跨網段拆分問題&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>若各網段有獨立DNS服務器架構情境？&lt;/p>
+&lt;/blockquote>
 &lt;h2 id="reference">Reference&lt;/h2>
 &lt;ul>
 &lt;li>&lt;a class="link" href="https://rcarrata.com/openshift/ocp4_route_sharding/" target="_blank" rel="noopener"
@@ -409,6 +515,8 @@ loading="lazy"
 >Security Zones in OpenShift worker nodes — Part I — Introduction&lt;/a>&lt;/li>
 &lt;li>&lt;a class="link" href="https://blog.csdn.net/weixin_43902588/article/details/103543191?spm=1001.2014.3001.5502" target="_blank" rel="noopener"
 >OpenShift 4 - Ingress、Route與Shard&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://docs.openshift.com/container-platform/4.11/networking/configuring_ingress_cluster_traffic/configuring-ingress-cluster-traffic-ingress-controller.html#nw-using-ingress-and-routes_configuring-ingress-cluster-traffic-ingress-controller" target="_blank" rel="noopener"
+>OCP4.11 - Using Ingress Controllers and routes &lt;/a>&lt;/li>
 &lt;/ul></description></item><item><title>實現 OpenSCAP 自動化邏輯檢查</title><link>https://blog.yylin.io/ansible/openscap/</link><pubDate>Sun, 25 Sep 2022 12:00:40 +0800</pubDate><guid>https://blog.yylin.io/ansible/openscap/</guid><description>&lt;h2 id="概述">概述&lt;/h2>
 &lt;p>SCAP (Security Content Automation Protocol)是一包資安標準的集合。實作 SCAP 的工具有好幾種，其中一個是 OpenSCAP 開源工具，運用 OpenSCAP 可做到全自動的檢查、script/ansible playbook的報告與修復。但「修復」這段不太可能全自動，需要人為判斷要不要修復會不會與公司定義的規則互相衝突，否則完全聽從某些嚴格的 SCAP Rules，派下去之後反而造成維運及開發團隊環境配置衝突，導致相關影響及不便性。&lt;/p>
 &lt;h2 id="透過-openscap-和-satellite-實現系統合規檢查">透過 OpenSCAP 和 Satellite 實現系統合規檢查&lt;/h2>
@@ -673,6 +781,27 @@ loading="lazy"
 >https://www.youtube.com/watch?v=leJa9HmvdI0&amp;ab_channel=RyanNix&lt;/a>&lt;/li>
 &lt;/ol></description></item><item><title>COSCUP 2022 - 那些年我們在開源社群的日子 - Cloud Native Taiwan</title><link>https://blog.yylin.io/community/coscup2022/</link><pubDate>Sun, 28 Aug 2022 03:40:40 +0800</pubDate><guid>https://blog.yylin.io/community/coscup2022/</guid><description>&lt;p>&lt;a class="link" href="https://coscup.org/2022/zh-TW/" target="_blank" rel="noopener"
 >COSCUP x KCD Taiwan&lt;/a>，今年終於變回實體線下活動，能透過線下活動人與人交流到處尋覓老朋友、聊現況，真的是每年最熱鬧的一刻。&lt;/p>
+&lt;h2 id="完整議程-kcd-taiwan-2022-x-coscup--kubernetes-community-days-taiwan-2022">完整議程: KCD Taiwan 2022 x COSCUP | Kubernetes Community Days Taiwan 2022&lt;/h2>
+&lt;ul>
+&lt;li>COSCUP 2022 Agenda: &lt;a class="link" href="https://coscup.org/2022/zh-TW/session" target="_blank" rel="noopener"
+>https://coscup.org/2022/zh-TW/session&lt;/a>&lt;/li>
+&lt;li>KCD Taiwan 2022 Agenda: &lt;a class="link" href="https://community.cncf.io/kcd-taiwan/" target="_blank" rel="noopener"
+>https://community.cncf.io/kcd-taiwan/&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;div class="video-wrapper">
+&lt;iframe loading="lazy"
+src="https://www.youtube.com/embed/8rGhfmbhZqs"
+allowfullscreen
+title="YouTube Video"
+>
+&lt;/iframe>
+&lt;/div>
+&lt;blockquote>
+&lt;p>Kubernetes Community Days (KCD) 是由雲原生計算基金會 (CNCF) 支持與認證的官方社群組織活動，此會議集結來自開源和雲原生社區的使用者及技術人員，以進行教育、協作和分享。&lt;/p>
+&lt;/blockquote>
+&lt;blockquote>
+&lt;p>本次 Kubernetes Community Days Taiwan (KCD Taiwan) 是由台灣雲原生使用者社群 (Cloud Native Taiwan User Group, CNTUG) 所主辦的在地 KCD 的社群活動。其目的是透過本土社群的力量，讓更多人參與 Kubernetes 社群互相交流和學習，並以此持續發展和維持社群。&lt;/p>
+&lt;/blockquote>
 &lt;p>這次我們社群 &lt;a class="link" href="https://cloudnative.tw/" target="_blank" rel="noopener"
 >CNTUG&lt;/a> 申請主辦台灣地區的 &lt;a class="link" href="https://community.cncf.io/events/details/cncf-kcd-taiwan-presents-coscup-x-kcd-taiwan-2022/?fbclid=IwAR3ceTLw2_Lsd8JjbrMQkuxiBC3KQq2KhvC4qhi9MG3UhdIomaZWdrhPrKY" target="_blank" rel="noopener"
 >Kubernetes Community Day&lt;/a> (KCD)，KCD 為 CNCF 官方的活動，性質跟 KubeConf 有點不太一樣，KCD 主要是藉由各地區當地的社群來推廣 Cloud Native 以及 Kubernetes 文化的一個活動，所以會由各國家地區的社群來主持這個活動，而台灣地區的就是 KCD Taiwan。&lt;/p>
