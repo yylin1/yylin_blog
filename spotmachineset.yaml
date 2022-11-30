@@ -1,0 +1,48 @@
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  name: aro-cluster-ll89q-rpt54-worker-eastus1
+  namespace: openshift-machine-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      machine.openshift.io/cluster-api-cluster: aro-cluster-ll89q-rpt54
+      machine.openshift.io/cluster-api-machineset: aro-cluster-ll89q-rpt54-worker-eastus1
+  template:
+    metadata:
+      labels:
+        machine.openshift.io/cluster-api-machineset: aro-cluster-ll89q-rpt54-worker-eastus1
+    spec:
+      providerSpec:
+        value:
+          apiVersion: machine.openshift.io/v1beta1
+          credentialsSecret:
+            name: azure-cloud-credentials
+            namespace: openshift-machine-api
+          image:
+            offer: aro4
+            publisher: azureopenshift
+            resourceID: ""
+            sku: aro_410
+            version: 410.84.20220125
+          kind: AzureMachineProviderSpec
+          location: eastus
+          metadata:
+            creationTimestamp: null
+          networkResourceGroup: openenv-ll89q
+          osDisk:
+            diskSettings: {}
+            diskSizeGB: 128
+            managedDisk:
+              storageAccountType: Premium_LRS
+            osType: Linux
+          publicIP: false
+          publicLoadBalancer: aro-cluster-ll89q-rpt54
+          resourceGroup: aro-ebaq9qkc
+          subnet: worker-subnet
+          userDataSecret:
+            name: worker-user-data
+          vmSize: Standard_D4s_v3
+          vnet: aro-vnet-ll89q
+          zone: "1"
