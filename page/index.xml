@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Pages on Frank's Notes</title><link>https://blog.yylin.io/page/</link><description>Recent content in Pages on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Sun, 13 Mar 2022 17:19:42 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/page/index.xml" rel="self" type="application/rss+xml"/><item><title>About</title><link>https://blog.yylin.io/about/</link><pubDate>Sun, 13 Mar 2022 17:19:42 +0800</pubDate><guid>https://blog.yylin.io/about/</guid><description>&lt;h2 id="profile">Profile&lt;/h2>
+&lt;h2 id="specialist-solutions-architect-at-red-hat">Specialist Solutions Architect at Red Hat&lt;/h2>
 &lt;p>Hello, 我是 Frank Lin&lt;/p>
 &lt;p>此 Blog 主要是用來「拆解」一些工作上接觸到或是開源專案，遇到技術疑問「復盤」思維脈絡。&lt;/p>
 &lt;p>並透過學習過程「筆記」文章，歡迎大家一起交流討論！&lt;/p>
 &lt;h2 id="contact">Contact&lt;/h2>
 &lt;ul>
-&lt;li>GitHub: &lt;a class="link" href="https://github.com/dwchiang" target="_blank" rel="noopener"
->https://github.com/dwchiang&lt;/a>&lt;/li>
+&lt;li>GitHub: &lt;a class="link" href="https://github.com/yylin1" target="_blank" rel="noopener"
+>https://github.com/yylin1&lt;/a>&lt;/li>
 &lt;li>Speaker Deck: &lt;a class="link" href="https://speakerdeck.com/yylin1" target="_blank" rel="noopener"
 >https://speakerdeck.com/yylin1&lt;/a>&lt;/li>
 &lt;/ul></description></item><item><title/><link>https://blog.yylin.io/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://blog.yylin.io/</guid><description/></item><item><title>Links</title><link>https://blog.yylin.io/links/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://blog.yylin.io/links/</guid><description/></item><item><title>Search</title><link>https://blog.yylin.io/search/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://blog.yylin.io/search/</guid><description/></item></channel></rss>

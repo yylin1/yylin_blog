@@ -2144,13 +2144,14 @@ aro-demo openenv-hdpnp eastus Succeeded 3 https://console-openshift-console.apps
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div></description></item><item><title>About</title><link>https://blog.yylin.io/about/</link><pubDate>Sun, 13 Mar 2022 17:19:42 +0800</pubDate><guid>https://blog.yylin.io/about/</guid><description>&lt;h2 id="profile">Profile&lt;/h2>
+&lt;h2 id="specialist-solutions-architect-at-red-hat">Specialist Solutions Architect at Red Hat&lt;/h2>
 &lt;p>Hello, 我是 Frank Lin&lt;/p>
 &lt;p>此 Blog 主要是用來「拆解」一些工作上接觸到或是開源專案，遇到技術疑問「復盤」思維脈絡。&lt;/p>
 &lt;p>並透過學習過程「筆記」文章，歡迎大家一起交流討論！&lt;/p>
 &lt;h2 id="contact">Contact&lt;/h2>
 &lt;ul>
-&lt;li>GitHub: &lt;a class="link" href="https://github.com/dwchiang" target="_blank" rel="noopener"
->https://github.com/dwchiang&lt;/a>&lt;/li>
+&lt;li>GitHub: &lt;a class="link" href="https://github.com/yylin1" target="_blank" rel="noopener"
+>https://github.com/yylin1&lt;/a>&lt;/li>
 &lt;li>Speaker Deck: &lt;a class="link" href="https://speakerdeck.com/yylin1" target="_blank" rel="noopener"
 >https://speakerdeck.com/yylin1&lt;/a>&lt;/li>
 &lt;/ul></description></item><item><title>Disconnected Environment - Introducing Mirror Registry for Red Hat OpenShift</title><link>https://blog.yylin.io/openshift/mirror-registry-for-ocp4-install/</link><pubDate>Mon, 07 Mar 2022 00:53:25 +0800</pubDate><guid>https://blog.yylin.io/openshift/mirror-registry-for-ocp4-install/</guid><description>&lt;p>本文件如何安裝 OpenShift 4.8 版本至虛擬機器上，這邊將以 RHEL 環境來進行測試。&lt;/p>
