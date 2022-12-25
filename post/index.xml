@@ -1,4 +1,17 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Frank's Notes</title><link>https://blog.yylin.io/post/</link><description>Recent content in Posts on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Sat, 19 Nov 2022 12:00:40 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/post/index.xml" rel="self" type="application/rss+xml"/><item><title>透過自動化進行 TWGCB 臺灣政府組態標準合規 - 邏輯檢查</title><link>https://blog.yylin.io/ansible/twgcb/</link><pubDate>Sat, 19 Nov 2022 12:00:40 +0800</pubDate><guid>https://blog.yylin.io/ansible/twgcb/</guid><description>&lt;h2 id="-概述-">/ 概述 /&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Frank's Notes</title><link>https://blog.yylin.io/post/</link><description>Recent content in Posts on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Mon, 19 Dec 2022 12:00:40 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/post/index.xml" rel="self" type="application/rss+xml"/><item><title>針對 Ansible Tower 升級 AAP 2 建議方案及執行確認</title><link>https://blog.yylin.io/ansible/ansible-tower-upgrade-to-ansible-automation-platform-2/</link><pubDate>Mon, 19 Dec 2022 12:00:40 +0800</pubDate><guid>https://blog.yylin.io/ansible/ansible-tower-upgrade-to-ansible-automation-platform-2/</guid><description>&lt;ul>
+&lt;li>參考 Migration from AAP 1.2 to Ansible Automation Platform 2: Side by side upgrade - Step 1 指南參考：&lt;/li>
+&lt;/ul>
+&lt;div class="video-wrapper">
+&lt;iframe loading="lazy"
+src="https://www.youtube.com/embed/EKf3u1QdpNo"
+allowfullscreen
+title="YouTube Video"
+>
+&lt;/iframe>
+&lt;/div>
+&lt;p>The first video in a five part series offering a step by step walkthrough of a side by side migration from Ansible Automation Platform 1.2 to Ansible Automation Platform 2.&lt;/p>
+&lt;p>Checklist | 5 ways to prepare for migration to Ansible Automation Platform 2: &lt;a class="link" href="https://www.redhat.com/en/resources/prepare-for-migration-ansible-automation-2-checklist" target="_blank" rel="noopener"
+>https://www.redhat.com/en/resources/prepare-for-migration-ansible-automation-2-checklist&lt;/a>&lt;/p></description></item><item><title>透過自動化進行 TWGCB 臺灣政府組態標準合規 - 邏輯檢查</title><link>https://blog.yylin.io/ansible/twgcb/</link><pubDate>Sat, 19 Nov 2022 12:00:40 +0800</pubDate><guid>https://blog.yylin.io/ansible/twgcb/</guid><description>&lt;h2 id="-概述-">/ 概述 /&lt;/h2>
 &lt;p>TWGCB 由行政院國家資通安全會報技術服務中心發佈，政府組態基準(Government Configuration Baseline，簡稱GCB)目的在於規範資通訊設備 (例如：個人電腦、伺服器主機及網通設備等) 的一致性安全設定 (例如：密碼長度、更新期限等)，以降低成為駭客入侵管道，進而引發資安事件之風險。(擷取資料: &lt;a class="link" href="https://www.nccst.nat.gov.tw/GCB" target="_blank" rel="noopener"
 >行政院國家資通安全會報技術服務中心&lt;/a>)。&lt;/p>
 &lt;h3 id="twgcb-發展與目的">TWGCB 發展與目的&lt;/h3>
@@ -123,7 +136,7 @@ data-flex-basis="491px"
 &lt;/blockquote>
 &lt;div class="video-wrapper">
 &lt;iframe loading="lazy"
-src="https://www.youtube.com/embed/qTY95XwzhzQ"
+src="https://www.youtube.com/embed/XPlo67IBtQw"
 allowfullscreen
 title="YouTube Video"
 >
