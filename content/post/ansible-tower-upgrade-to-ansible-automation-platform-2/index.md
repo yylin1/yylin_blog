@@ -12,7 +12,7 @@ tags:
   - Ansible Automation Platform
 ---
 
-- 參考 Migration from AAP 1.2 to Ansible Automation Platform 2: Side by side upgrade - Step 1 指南：
+- 參考 Migration from AAP 1.2 to Ansible Automation Platform 2: Side by side upgrade - Step 1 指南參考：
 
 {{< youtube EKf3u1QdpNo >}}
 
