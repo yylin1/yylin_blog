@@ -1,14 +1,14 @@
 ---
 title: "Ansible Tower 升級 AAP 2.X 需考量 "
 slug:  "Ansible"
-url: "ansible/ansible-tower-upgrade-to-aap2"
-date: 2022-09-26T00:01:30+08:00
-draft: "true"
+url: "ansible/ansible-tower-upgrade-to-ansible-automation-platform-2"
+date: 2022-12-26T00:01:30+08:00
+draft: "false"
 description: ""
 categories:
-  - Ansible
+  - Ansible Automation Platform 2
 tags:
-  - Ansible
+  - Ansible Automation Platform 2
 
 
 - 參考 Migration from AAP 1.2 to Ansible Automation Platform 2: Side by side upgrade - Step 1 指南：
