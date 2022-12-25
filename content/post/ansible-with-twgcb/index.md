@@ -94,7 +94,7 @@ Red Hat Ansible Automation(簡稱 AAP) 可以協助維運團使 IT 環境和流�
 
 > 實際展示影片 (請打開`字幕`)
 
-{{< youtube qTY95XwzhzQ >}}
+{{< youtube XPlo67IBtQw >}}
 
 
 ### 補充展示 - 運行修復 RHEL 主機設備規則並比對先前報表結果
