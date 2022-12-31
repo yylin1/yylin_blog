@@ -1,8 +1,53 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Frank's Notes</title><link>https://blog.yylin.io/post/</link><description>Recent content in Posts on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Mon, 19 Dec 2022 12:00:40 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/post/index.xml" rel="self" type="application/rss+xml"/><item><title>針對 Ansible Tower 升級 AAP 2 建議方案及執行確認</title><link>https://blog.yylin.io/ansible/ansible-tower-upgrade-to-ansible-automation-platform-2/</link><pubDate>Mon, 19 Dec 2022 12:00:40 +0800</pubDate><guid>https://blog.yylin.io/ansible/ansible-tower-upgrade-to-ansible-automation-platform-2/</guid><description>&lt;p>&lt;img src="https://i.imgur.com/dVmSATw.png"
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Frank's Notes</title><link>https://blog.yylin.io/post/</link><description>Recent content in Posts on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Sat, 31 Dec 2022 13:33:28 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/post/index.xml" rel="self" type="application/rss+xml"/><item><title>2022 年度回顧 / 2023 年展望</title><link>https://blog.yylin.io/year/2022-retrospect-and-prospect/</link><pubDate>Sat, 31 Dec 2022 13:33:28 +0800</pubDate><guid>https://blog.yylin.io/year/2022-retrospect-and-prospect/</guid><description>&lt;p>2022 年有非常多的時間進行選擇與尋找定位，雖然過程很不容易，但今年還是很充實的過完這一年，很多朋友開始在年底都會有復盤自己的習慣，想過好下一年，那麼知道今年你是怎麼過的？或許對自己會有很大的幫助。本篇是個人於 2022 年的記錄以及對於未來的展望。&lt;/p>
+&lt;p>&lt;img src="https://blog.yylin.io/year/2022-retrospect-and-prospect/images/01.png"
+width="1080"
+height="608"
+srcset="https://blog.yylin.io/year/2022-retrospect-and-prospect/images/01_hu4b94eabded4d0fc2abf8a6c6d57fe797_994522_480x0_resize_box_3.png 480w, https://blog.yylin.io/year/2022-retrospect-and-prospect/images/01_hu4b94eabded4d0fc2abf8a6c6d57fe797_994522_1024x0_resize_box_3.png 1024w"
 loading="lazy"
+class="gallery-image"
+data-flex-grow="177"
+data-flex-basis="426px"
 >&lt;/p>
-&lt;p>♖ Ansible Tower 的升級路線
-Ansible Tower 升級可以參考 Upgrading an Existing Tower Installation，並且分為以下兩種情況：&lt;/p>
+&lt;h5 id="2022-年回顧--2022-年回顧2022-年回顧">&lt;a class="link" href="#2022-%e5%b9%b4%e5%9b%9e%e9%a1%a7" title=" 2022 年回顧"
+>&lt;/a>2022 年回顧&lt;/h5>
+&lt;ul>
+&lt;li>轉職 &lt;code>SSA(Specialist Solution Architect/領域專家解決方案架構師)&lt;/code>滿一年多了，雖然花很多時間與團隊在對於角色定位與支援上安排，主要和 SA 關注在不同的面向，更重於在解決方案中針對某一領域的問題提出相對應的系統架構。舉例來說更重於思考實際客戶系統架構需求或系統設計面，並和售後團隊有更密切接觸。&lt;/li>
+&lt;li>疫情開放後，參與入職來首次公司舉辦的 &lt;code>Outing&lt;/code> 活動，讓售前/售後團隊，能有更進一步的團隊對話與技術互動。&lt;/li>
+&lt;li>嘗試考 &lt;code>AWS Solution Architect Associate (SAA-C03)&lt;/code>剛好報名前題庫改版，補好多不同的題目，閱讀考古題比較沒有新的題庫，可惜最終分數差 3題只好明年再來重考(很想拿到)，年底公司指標只好直接趕緊補考 &lt;code>AWS Certified Cloud Practitioner (CLF-C01)&lt;/code>裸考意外簡單很多。&lt;/li>
+&lt;li>開始維護公司 &lt;code>AAP POC&lt;/code> 專案重拾之前合作送 &lt;code>PR (Pull Request)&lt;/code>的狀態，希望能持續加更多 Demo 應用場景幫助團隊。&lt;/li>
+&lt;li>成為薩提爾教練模式 Satir Coaching Model 的『夥伴』，並針對同一個議題進行 2 次對話，透過練習過程，像是跟一面鏡子進行自我對話的方法，期待後續的主題，感謝 COSCUP 認識的夥伴邀約。&lt;/li>
+&lt;li>完成每季定期 3 篇 &lt;code>Blog&lt;/code> 希望能繼續保持，讓自己每個階段都有收斂與查閱資訊的地方。&lt;/li>
+&lt;li>疫情開放，和夥伴快速安排出國「首爾」攝影紀實之後在補充一篇文章。&lt;/li>
+&lt;li>記得 2022 年初趁著夥伴對於 &lt;code>中級山&lt;/code>、&lt;code>縱走山行&lt;/code>心情還溫熱，大夥討論來訂下 2022 年度指標清單挑戰之一「嘉明湖」，最後一起報名 &lt;code>台灣 368 商業團&lt;/code> 和夥伴們一起走過並多拿下兩座百岳，我的 ⛰5th #向陽山 3,603m, ⛰6th #三叉山 3,496m。&lt;/li>
+&lt;li>挑戰成功「&lt;a class="link" href="%28https://taipeigrandtrail.travel.taipei/%29" >臺北大縱走尋寶石任務&lt;/a>」七段任務，最終和兩位夥伴一起完成所有縱走，感謝從 2021-2022 一起假日遠離都市來健行的夥伴們!&lt;/li>
+&lt;li>個人興趣培養與成長，持續更精進自我攝影觀念與技巧，這次不拍山岳風景社攝影，來參加 &lt;a class="link" href="https://www.instagram.com/4samantha" target="_blank" rel="noopener"
+>@4samatha&lt;/a> 舉辦的&lt;code>人像工作坊&lt;/code>和與 &lt;a class="link" href="https://www.instagram.com/jerrythepopper/" target="_blank" rel="noopener"
+>@jerrythepopper&lt;/a> 兩位攝影師交流，從人像實戰體驗培養美感的方式，並記住自己要多嘗試一點減法攝影，期待明年有更多不一樣的作品。&lt;/li>
+&lt;/ul>
+&lt;h5 id="2023-年展望--2023-年展望-2023-年展望">&lt;a class="link" href="#2023-%e5%b9%b4%e5%b1%95%e6%9c%9b" title=" 2023 年展望 "
+>&lt;/a>2023 年展望&lt;/h5>
+&lt;ul>
+&lt;li>希望英文交流能變更好，疫情趨緩會有更多跨國年會與工作上同事交流，參加團隊聚會時希望能跟他們說一些日常交流。&lt;/li>
+&lt;li>安排每週固定去健身房，轉換職涯後都沒繼續&lt;/li>
+&lt;li>投稿&lt;strong>社群技術&lt;/strong>演講 2 場&lt;/li>
+&lt;li>完成先前未完成的 Red Hat 證照&lt;/li>
+&lt;li>攝影/紀實部落格能有效經營，建立好 IG 專頁，出國機會更多，需要工作流程讓照片穩定輸出&lt;/li>
+&lt;/ul>
+&lt;h3 id="related-posts">Related Posts&lt;/h3>
+&lt;ul>
+&lt;li>Photography Blog (&lt;a class="link" href="https://medium.com/yiyang-lins-life" target="_blank" rel="noopener"
+>https://medium.com/yiyang-lins-life&lt;/a>)&lt;/li>
+&lt;/ul></description></item><item><title>針對 Ansible Tower 升級 AAP 2 建議方案及執行確認</title><link>https://blog.yylin.io/ansible/ansible-tower-upgrade-to-ansible-automation-platform-2/</link><pubDate>Mon, 19 Dec 2022 12:00:40 +0800</pubDate><guid>https://blog.yylin.io/ansible/ansible-tower-upgrade-to-ansible-automation-platform-2/</guid><description>&lt;p>隨著 Ansible Automation Platform 2.0 於今年七月中釋出 Early Access 版本，我之後會寫一篇文章介紹與大家之前比較熟悉的 Ansible Tower 在特性上有什麼差別，有興趣的朋友可以先在新的環境玩玩看，先不要急著升級，因為之後會有更多新功能，也會在之後的文章一併介紹。&lt;/p>
+&lt;p>本篇主要是介紹升級 Ansible Tower 3.8.4 (Ansible Tower 的最後一版) 到 Ansible Automation Platform 2.0 的作法。&lt;/p>
+&lt;p>之所以會有這篇文章的出現，主要是因為 Ansible Automation Platform 2.0 以及之後的版本對於 RHEL 作業系統和 Ansible-core 的版本都會有一些限制，所以先寫篇文章記錄一下，之後有朋友想升級也可以當個參考 。&amp;quot;&lt;/p>
+&lt;h2 id="環境">/環境/&lt;/h2>
+&lt;p>RHEL 7.9
+RHEL 8.4
+Ansible Tower 3.8.4
+Ansible Automation Platform 2.0 Early Access
+(以下簡稱 AAP2.0)&lt;/p>
+&lt;h2 id="ansible-tower-的升級路線">/Ansible Tower 的升級路線/&lt;/h2>
+&lt;p>Ansible Tower 升級可以參考 Upgrading an Existing Tower Installation，並且分為以下兩種情況：&lt;/p>
 &lt;p>(1) 假設您的 Ansible Tower 版本在 3.7 以上基本上可以總結為以下三步驟：&lt;/p>
 &lt;p>使用官方下載連結下載目標版本 Ansible Tower 壓縮檔並解壓縮
 備份舊版本的 Ansible Tower 資料（包含 Templates, Projects 等設定），備份步驟可以參考 Backing Up and Restoring Tower
@@ -11,9 +56,34 @@ Ansible Tower 升級可以參考 Upgrading an Existing Tower Installation，並�
 還原備份檔案
 (2) 假設您的版本在 3.7 以下，則可以參考 Red Hat Ansible Tower Upgrade from 3.5 to 3.8 – when running setup.sh is not enough – or: I have made fire!&lt;/p>
 &lt;p>最保險的升級建議是升級到目前版本的最新小版本，再升級到下一個中版本，比方說目前版本是 3.7.2，就建議升級到 3.7.5 (3.7系列的最後一版) 再往上升到 3.8.4。&lt;/p>
-&lt;ul>
-&lt;li>參考 Migration from AAP 1.2 to Ansible Automation Platform 2: Side by side upgrade - Step 1 指南參考：&lt;/li>
-&lt;/ul>
+&lt;p>♖ Ansible Tower 到 Ansible Automation Platform 2.0 的升級路線
+老實說 Ansible Tower 本身升級過程沒什麼問題，就是 Ansible-core 的版本問題和 AAP2.0 對 RHEL 的版本限制花了點時間。&lt;/p>
+&lt;p>步驟 Ansible Tower / AAP 版本 作業系統版本 Ansible-core 版本
+1 Ansible Tower 3.8.4 RHEL7 Ansible core 2.9.X
+2 Ansible Tower 3.8.4 RHEL8 Ansible core 2.9.X
+3 Ansible Automation Platform 2.0 RHEL8 Ansible core 2.11.X&lt;/p>
+&lt;p>這邊如果有實驗精神的朋友想要跟我一樣試著退版從 RHEL7 試驗重裝，也可以參考 How to uninstall Ansible Tower，另外附帶一提，安裝 Ansible Tower 會需要用到兩個 package rhel-7-server-extras-rpms &amp;amp; rhel-server-rhscl-7-rpms，這兩個 package 都會需要安裝 epel-release，可參考以下指令：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">
+先講一下我的升級路徑：
+- 參考 Migration from AAP 1.2 to Ansible Automation Platform 2: Side by side upgrade - Step 1 指南參考：
 &lt;div class="video-wrapper">
 &lt;iframe loading="lazy"
 src="https://www.youtube.com/embed/EKf3u1QdpNo"
@@ -22,9 +92,14 @@ title="YouTube Video"
 >
 &lt;/iframe>
 &lt;/div>
-&lt;p>The first video in a five part series offering a step by step walkthrough of a side by side migration from Ansible Automation Platform 1.2 to Ansible Automation Platform 2.&lt;/p>
-&lt;p>Checklist | 5 ways to prepare for migration to Ansible Automation Platform 2: &lt;a class="link" href="https://www.redhat.com/en/resources/prepare-for-migration-ansible-automation-2-checklist" target="_blank" rel="noopener"
->https://www.redhat.com/en/resources/prepare-for-migration-ansible-automation-2-checklist&lt;/a>&lt;/p></description></item><item><title>透過自動化進行 TWGCB 臺灣政府組態標準合規 - 邏輯檢查</title><link>https://blog.yylin.io/ansible/twgcb/</link><pubDate>Sat, 19 Nov 2022 12:00:40 +0800</pubDate><guid>https://blog.yylin.io/ansible/twgcb/</guid><description>&lt;h2 id="-概述-">/ 概述 /&lt;/h2>
+## Reference
+- [Red Hat Ansible Tower Upgrade from 3.5 to 3.8 – when running setup.sh is not enough](https://www.martinberger.com/2020/12/red-hat-ansible-tower-upgrade-from-3-5-to-3-8-when-running-setup-sh-is-not-enough-or-i-have-made-fire/)
+- [How Can I Uninstall Ansible Tower?](https://access.redhat.com/solutions/3107181)
+- [Backing Up and Restoring Tower](https://docs.ansible.com/ansible-tower/latest/html/administration/backup_restore.html)
+- [Ansible Automation Platform 2 Installation Guide](https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/2.2/html/red_hat_ansible_automation_platform_operator_installation_guide/index)
+- [Ansible Tower 升級 Ansible Automation Platform 2.0 作法 by Hazel](https://hazel.style/2021/10/29/Ansible-Tower-upgrade-to-Ansible-Automation-Platform-2/#more)&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>透過自動化進行 TWGCB 臺灣政府組態標準合規 - 邏輯檢查</title><link>https://blog.yylin.io/ansible/twgcb/</link><pubDate>Sat, 19 Nov 2022 12:00:40 +0800</pubDate><guid>https://blog.yylin.io/ansible/twgcb/</guid><description>&lt;h2 id="-概述-">/ 概述 /&lt;/h2>
 &lt;p>TWGCB 由行政院國家資通安全會報技術服務中心發佈，政府組態基準(Government Configuration Baseline，簡稱GCB)目的在於規範資通訊設備 (例如：個人電腦、伺服器主機及網通設備等) 的一致性安全設定 (例如：密碼長度、更新期限等)，以降低成為駭客入侵管道，進而引發資安事件之風險。(擷取資料: &lt;a class="link" href="https://www.nccst.nat.gov.tw/GCB" target="_blank" rel="noopener"
 >行政院國家資通安全會報技術服務中心&lt;/a>)。&lt;/p>
 &lt;h3 id="twgcb-發展與目的">TWGCB 發展與目的&lt;/h3>
