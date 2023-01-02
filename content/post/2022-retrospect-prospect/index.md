@@ -38,6 +38,11 @@ tags:
 - 完成先前未完成的 Red Hat 證照
 - 攝影/紀實部落格能有效經營，建立好 IG 專頁，出國機會更多，需要工作流程讓照片穩定輸出
 
+
+### Photography | 2022 Recap
+
+{{< youtube di-M9AdRiwk >}}
+
 ### Related Posts
 
 - Photography Blog (https://medium.com/yiyang-lins-life)
