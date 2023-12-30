@@ -17,7 +17,7 @@ menu:
 
 ## Specialist Solutions Architect at Red Hat
 
-Hello, 我是 Frank Lin
+Hello, 我是 YI-YANG (Frank) Lin
 
 此 Blog 主要是用來「拆解」一些工作上接觸到或是開源專案，遇到技術疑問「復盤」思維脈絡。
 
