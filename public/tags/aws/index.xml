@@ -1,28 +1,453 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>AWS on Frank&#39;s Notes</title>
-    <link>https://blog.yylin.io/tags/aws/</link>
-    <description>Recent content in AWS on Frank&#39;s Notes</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-tw</language>
-    <lastBuildDate>Thu, 30 Sep 2021 14:54:40 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/tags/aws/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Red Hat OpenShift Platform on AWS (ROSA) 快速部署上手</title>
-      <link>https://blog.yylin.io/p/redhat-aws-rosa/</link>
-      <pubDate>Thu, 30 Sep 2021 14:54:40 +0800</pubDate>
-      
-      <guid>https://blog.yylin.io/p/redhat-aws-rosa/</guid>
-      <description>事前準備： 開始前，需要先準備以下資訊與要求。
-啟用 ROSA  開始配置 AWS 服務前，使用者必須以 IAM 身份(參考文件: Customer Requirements)
- 登入 AWS 管理控制台，確認當前使用者已啟用 Red Hat OpenShift服務  
-下載 AWS CLI 與 OpenShift CLI 工具: URL Dowload
-  選擇當前環境下載對應CLI ( Command-line interface (CLI) tools)
- 
-  or
-Command Dowload
- 下載 AWS/OpenShift CLI 工具，並解壓縮檔案到 /usr/local/bin/ 底下:  # CLI $ wget -c https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest/rosa-linux.tar.gz -O - | tar -xz $ mv rosa /usr/local/bin/ $ rosa version 1.</description>
-    </item>
-    
-  </channel>
+    <channel>
+        <title>AWS on Frank&#39;s Notes</title>
+        <link>https://blog.yylin.io/tags/aws/</link>
+        <description>Recent content in AWS on Frank&#39;s Notes</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-tw</language>
+        <lastBuildDate>Thu, 30 Sep 2021 14:54:40 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/tags/aws/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Red Hat OpenShift Platform on AWS (ROSA) 快速部署上手</title>
+        <link>https://blog.yylin.io/openshift/rosa/</link>
+        <pubDate>Thu, 30 Sep 2021 14:54:40 +0800</pubDate>
+        
+        <guid>https://blog.yylin.io/openshift/rosa/</guid>
+        <description>&lt;h2 id=&#34;事前準備&#34;&gt;事前準備：&lt;/h2&gt;
+&lt;p&gt;開始前，需要先準備以下資訊與要求。&lt;/p&gt;
+&lt;h3 id=&#34;啟用-rosa&#34;&gt;啟用 ROSA&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;開始配置 AWS 服務前，使用者必須以 &lt;a class=&#34;link&#34; href=&#34;https://docs.openshift.com/rosa/rosa_getting_started/rosa-aws-prereqs.html#rosa-policy-iam_prerequisites&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;IAM&lt;/a&gt; 身份(參考文件: &lt;a class=&#34;link&#34; href=&#34;https://docs.openshift.com/rosa/rosa_getting_started/rosa-aws-prereqs.html#rosa-customer-requirements_prerequisites&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Customer Requirements&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;登入 AWS 管理控制台，確認當前使用者&lt;code&gt;已啟用 Red Hat OpenShift&lt;/code&gt;服務
+&lt;img src=&#34;https://i.imgur.com/lbpYgG6.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;下載-aws-cli-與-openshift-cli-工具&#34;&gt;下載 AWS CLI 與 OpenShift CLI 工具:&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;URL Dowload&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;選擇當前環境下載對應&lt;code&gt;CLI&lt;/code&gt; ( &lt;a class=&#34;link&#34; href=&#34;https://console.redhat.com/openshift/downloads&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Command-line interface (CLI) tools&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/c64k4mB.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;or&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Command Dowload&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;下載 &lt;code&gt;AWS/OpenShift CLI&lt;/code&gt; 工具，並解壓縮檔案到 /usr/local/bin/ 底下:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# CLI&lt;/span&gt;
+$ wget -c https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest/rosa-linux.tar.gz -O - &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; tar -xz
+$ mv rosa /usr/local/bin/
+$ rosa version
+1.1.1
+
+$ wget -c https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest-4.8/openshift-client-linux.tar.gz -O - &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; tar -xz
+$ mv &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;oc,kubectl&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt; /usr/local/bin/
+$ oc version
+Client Version: 4.8.2
+$ oc version
+Client Version: 4.8.10
+Server Version: 4.8.12
+Kubernetes Version: v1.21.1+d8043e1
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;創建 Red Hat 帳號
+OpenShift 由 Red Hat SaaS 提供，因此您需要創建一個 Red Hat 帳戶。
+&lt;a class=&#34;link&#34; href=&#34;https://cloud.redhat.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://cloud.redhat.com/&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;透過-rosa-指令檢查憑證與資源配置&#34;&gt;透過 ROSA 指令檢查憑證與資源配置&lt;/h2&gt;
+&lt;p&gt;這邊以 Red Hat 部署 ROSA 文件部署為主 (&lt;a class=&#34;link&#34; href=&#34;https://docs.openshift.com/rosa/rosa_getting_started/rosa-creating-cluster.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Red Hat OpenShift Service on AWS - Creating a ROSA cluster&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;首先，使用 &lt;code&gt;ROSA CLI&lt;/code&gt; 檢查 AWS 憑證&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;$ rosa verify permissions
+I: Validating SCP policies...
+I: AWS SCP policies ok
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;第一次登錄時，你會需要一個 Token 來登入你的 Red Hat 帳號&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;需要創建一組 Red Hat 帳號&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;確認登入訊息：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;$ rosa login
+I: Logged in as &lt;span class=&#34;s1&#34;&gt;&amp;#39;xxxx@mail.com&amp;#39;&lt;/span&gt; on &lt;span class=&#34;s1&#34;&gt;&amp;#39;https://api.openshift.com&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;配置完成後可以透過 &lt;code&gt;rosa whoami&lt;/code&gt; 來檢查你目前所有登錄憑證與狀態&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Red Hat 帳號會附帶 OpenShift Cluster Manager (OCM) 資訊與你的 AWS 帳戶顯示。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;$ rosa whoami
+AWS Account ID:               xxxxxxxxxxxx
+AWS Default Region:           us-west-2
+AWS ARN:                      arn:aws:iam::xxxxxxxxxxxx:user/user
+OCM API:                      https://api.openshift.com
+OCM Account ID:               xxxxxxxxxxxxxxxxxxxxxx
+OCM Account Name:             xxxxxx
+OCM Account Username:         xxxxx@xxxxx.com
+OCM Account Email:            xxxxx@xxxxx.com
+OCM Organization ID:         xxxxxxxxxxxxxxxxxxxxxx
+OCM Organization Name:        Red Hat
+OCM Organization External ID: xxxxxxxx
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;以上檢查沒問題後，接下運行 &lt;code&gt;rosa init&lt;/code&gt; 運行指令來確保 ROSA 配置與相關資源狀態沒問題&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;$ rosa init
+I: Logged in as &amp;#39;xxxxxx@mail.com&amp;#39; on &amp;#39;https://api.openshift.com&amp;#39;
+I: Validating AWS credentials...
+I: AWS credentials are valid!
+I: Validating SCP policies...
+I: AWS SCP policies ok
+I: Validating AWS quota...
+I: AWS quota ok. If cluster installation fails, validate actual AWS resource usage against https://docs.openshift.com/rosa/rosa_getting_started/rosa-required-aws-service-quotas.html
+I: Ensuring cluster administrator user &amp;#39;osdCcsAdmin&amp;#39;...
+I: Admin user &amp;#39;osdCcsAdmin&amp;#39; already exists!
+I: Validating SCP policies for &amp;#39;osdCcsAdmin&amp;#39;...
+I: AWS SCP policies ok
+I: Validating cluster creation...
+I: Cluster creation valid
+I: Verifying whether OpenShift command-line tool is available...
+I: Current OpenShift Client Version: 4.8.10
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;需要驗證當前環境，是否已經登入 AWS並確認透過&lt;code&gt;rosa init&lt;/code&gt; 來確認 AWS 資源與配置是否能足夠創建 OpenShift&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;申請-aws-帳戶配額&#34;&gt;申請 AWS 帳戶配額&lt;/h3&gt;
+&lt;p&gt;在配置 ROSA 時作為預先檢查 &lt;code&gt;$ rosa verify quota --region=${cluster}&lt;/code&gt; 叢集名稱。如果您在剛剛部署但未執行任何操作的帳戶上運行它，您將收到錯誤訊息 EC2 &lt;code&gt;quota 配置不足&lt;/code&gt;。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;$ rosa verify quota --region&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;us-west-2
+I: Validating AWS quota...
+E: Insufficient AWS quotas
+E: Service quota is insufficient &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; the following service quota codes:
+- Service ec2 quota code L-1216C47A Running On-Demand Standard &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;A, C, D, H, I, M, R, T, Z&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; instances not valid, expected quota of at least 100, but got &lt;span class=&#34;m&#34;&gt;5&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;這邊需要額外申請 AWS EC2 限制增加配額
+&lt;img src=&#34;https://i.imgur.com/X2PtefK.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;需要提供申請需求與相關資訊，才能申請限制配額成功&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/fMprN3I.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;相關配額資訊參考&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;AWS service quotas&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://docs.openshift.com/rosa/rosa_getting_started/rosa-required-aws-service-quotas.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Required AWS service quotas&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/4K3BWLp.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;以上完成申請後，再次驗證&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;$ rosa verify quota --region&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;us-west-2
+I: Validating AWS quota...
+I: AWS quota ok. If cluster installation fails, validate actual AWS resource usage against https://docs.openshift.com/rosa/rosa_getting_started/rosa-required-aws-service-quotas.htm
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id=&#34;透過-rosa-指令快速創建-red-hat-openshift&#34;&gt;透過 ROSA 指令快速創建 Red Hat OpenShift&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;透過 &lt;code&gt;rosa create cluster&lt;/code&gt; 開始部署 OpenShift Cluster (部署Cluster 大約需要30-40分鐘)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;$ rosa create cluster --cluster-name&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;rosacluster
+I: Creating cluster &lt;span class=&#34;s1&#34;&gt;&amp;#39;rosacluster&amp;#39;&lt;/span&gt;
+I: To view a list of clusters and their status, run &lt;span class=&#34;s1&#34;&gt;&amp;#39;rosa list clusters&amp;#39;&lt;/span&gt;
+I: Cluster &lt;span class=&#34;s1&#34;&gt;&amp;#39;rosacluster&amp;#39;&lt;/span&gt; has been created.
+I: Once the cluster is installed you will need to add an Identity Provider before you can login into the cluster. See &lt;span class=&#34;s1&#34;&gt;&amp;#39;rosa create idp --help&amp;#39;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; more information.
+I: To determine when your cluster is Ready, run &lt;span class=&#34;s1&#34;&gt;&amp;#39;rosa describe cluster -c newsblogcluster&amp;#39;&lt;/span&gt;.
+I: To watch your cluster installation logs, run &lt;span class=&#34;s1&#34;&gt;&amp;#39;rosa logs install -c newsblogcluster --watch&amp;#39;&lt;/span&gt;.
+Name:                       newsblogcluster
+ID:                         XXXXXXXXXXXXXXXXXXXX
+External ID:                
+OpenShift Version:          
+Channel Group:              stable
+DNS:                        newsblogcluster.phnh.p1.openshiftapps.com
+AWS Account:                &lt;span class=&#34;m&#34;&gt;123456789012&lt;/span&gt;
+API URL:                    
+Console URL:                
+Region:                     xxxxxxxxxxx
+Multi-AZ:                   &lt;span class=&#34;nb&#34;&gt;false&lt;/span&gt;
+Nodes:
+ - Master:                  &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt;
+ - Infra:                   &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;
+ - Compute:                 &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;m5.xlarge&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+Network:
+ - Service CIDR:            172.30.0.0/16
+ - Machine CIDR:            10.0.0.0/16
+ - Pod CIDR:                10.128.0.0/14
+ - Host Prefix:             /23
+State:                      pending &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;Preparing account&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+Private:                    No
+Created:                    xxxxxxxxxxxxxxxx
+Details Page:               https://cloud.redhat.com/openshift/details/XXXXXXXXXXXXXXXXXXXX
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;執行命令後，您可以透過 &lt;code&gt;rosa describe cluster&lt;/code&gt; 或 &lt;code&gt;rosa logs install&lt;/code&gt; 指令檢查 OpenShift Cluster 狀態。您還可以從 URL 訪問 OpenShift Console 進行確認。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/DvBaXFH.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;
+&lt;img src=&#34;https://i.imgur.com/KkZJ3zn.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/LUfY9n9.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;$ rosa create admin -c rosacluster
+W: It is recommended to add an identity provider to login to this cluster. See &amp;#39;rosa create idp --help&amp;#39; for more information.
+I: Admin account has been added to cluster &amp;#39;rosacluster&amp;#39;.
+I: Please securely store this generated password. If you lose this password you can delete and recreate the cluster admin user.
+I: To login, run the following command:
+
+   oc login https://api.rosacluster.hffh.p1.openshiftapps.com:6443 --username cluster-admin --password fTwWy-rYJJU-wUua7-W3G6Z
+
+I: It may take up to a minute for the account to become active.
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;$ oc login https://api.rosacluster.hffh.p1.openshiftapps.com:6443 --username cluster-admin --password fTwWy-rYJJU-wUua7-W3G6Z
+Login successful.
+
+You have access to &lt;span class=&#34;m&#34;&gt;87&lt;/span&gt; projects, the list has been suppressed. You can list all projects with &lt;span class=&#34;s1&#34;&gt;&amp;#39;oc projects&amp;#39;&lt;/span&gt;
+
+Using project &lt;span class=&#34;s2&#34;&gt;&amp;#34;default&amp;#34;&lt;/span&gt;.
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;$ oc get no
+NAME                                         STATUS   ROLES          AGE   VERSION
+ip-10-0-153-95.us-west-2.compute.internal    Ready    worker         42m   v1.21.1+d8043e1
+ip-10-0-171-119.us-west-2.compute.internal   Ready    infra,worker   17m   v1.21.1+d8043e1
+ip-10-0-175-165.us-west-2.compute.internal   Ready    infra,worker   18m   v1.21.1+d8043e1
+ip-10-0-202-234.us-west-2.compute.internal   Ready    master         49m   v1.21.1+d8043e1
+ip-10-0-239-231.us-west-2.compute.internal   Ready    master         49m   v1.21.1+d8043e1
+ip-10-0-242-134.us-west-2.compute.internal   Ready    master         49m   v1.21.1+d8043e1
+ip-10-0-252-208.us-west-2.compute.internal   Ready    worker         42m   v1.21.1+d8043e1
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;刪除-cluster&#34;&gt;刪除 Cluster&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;rosa delete cluster&lt;/code&gt; 可以使用指令刪除使用 ROSA 創建的cluster。順便說一下，集群的刪除在大約 10 分鐘內完成。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;$ rosa delete cluster --cluster&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;rosacluster
+? Are you sure you want to delete cluster rosacluster? Yes
+I: Cluster &lt;span class=&#34;s1&#34;&gt;&amp;#39;rosacluster&amp;#39;&lt;/span&gt; will start uninstalling now
+I: To watch your cluster uninstallation logs, run &lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;rosa logs uninstall -c rosacluster --watch
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;reference&#34;&gt;Reference&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;rosaworkshop.io&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        
+    </channel>
 </rss>

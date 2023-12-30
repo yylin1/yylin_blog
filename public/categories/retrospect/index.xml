@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Retrospect on Frank&#39;s Notes</title>
+        <link>https://blog.yylin.io/categories/retrospect/</link>
+        <description>Recent content in Retrospect on Frank&#39;s Notes</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-tw</language>
+        <lastBuildDate>Sat, 31 Dec 2022 13:33:28 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/categories/retrospect/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>2022 年度回顧 / 2023 年展望</title>
+        <link>https://blog.yylin.io/year/2022-retrospect-and-prospect/</link>
+        <pubDate>Sat, 31 Dec 2022 13:33:28 +0800</pubDate>
+        
+        <guid>https://blog.yylin.io/year/2022-retrospect-and-prospect/</guid>
+        <description>&lt;p&gt;2022 年有非常多的時間進行選擇與尋找定位，雖然過程很不容易，但今年還是很充實的過完這一年，很多朋友開始在年底都會有復盤自己的習慣，想過好下一年，那麼知道今年你是怎麼過的？或許對自己會有很大的幫助。本篇是個人於 2022 年的記錄以及對於未來的展望。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.yylin.io/year/2022-retrospect-and-prospect/images/01.png&#34;
+	width=&#34;1080&#34;
+	height=&#34;608&#34;
+	srcset=&#34;https://blog.yylin.io/year/2022-retrospect-and-prospect/images/01_hu4b94eabded4d0fc2abf8a6c6d57fe797_994522_480x0_resize_box_3.png 480w, https://blog.yylin.io/year/2022-retrospect-and-prospect/images/01_hu4b94eabded4d0fc2abf8a6c6d57fe797_994522_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;177&#34;
+		data-flex-basis=&#34;426px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h5 id=&#34;2022-年回顧--2022-年回顧2022-年回顧&#34;&gt;&lt;a class=&#34;link&#34; href=&#34;#2022-%e5%b9%b4%e5%9b%9e%e9%a1%a7&#34;  title=&#34; 2022 年回顧&#34;
+    &gt;&lt;/a&gt;2022 年回顧&lt;/h5&gt;
+&lt;ul&gt;
+&lt;li&gt;轉職 &lt;code&gt;SSA(Specialist Solution Architect/領域專家解決方案架構師)&lt;/code&gt;滿一年多了，雖然花很多時間與團隊在對於角色定位與支援上安排，主要和 SA 關注在不同的面向，更重於在解決方案中針對某一領域的問題提出相對應的系統架構。舉例來說更重於思考實際客戶系統架構需求或系統設計面，並和售後團隊有更密切接觸。&lt;/li&gt;
+&lt;li&gt;疫情開放後，參與入職來首次公司舉辦的 &lt;code&gt;Outing&lt;/code&gt; 活動，讓售前/售後團隊，能有更進一步的團隊對話與技術互動。&lt;/li&gt;
+&lt;li&gt;嘗試考 &lt;code&gt;AWS Solution Architect Associate (SAA-C03)&lt;/code&gt;剛好報名前題庫改版，補好多不同的題目，閱讀考古題比較沒有新的題庫，可惜最終分數差 3題只好明年再來重考(很想拿到)，年底公司指標只好直接趕緊補考 &lt;code&gt;AWS Certified Cloud Practitioner (CLF-C01)&lt;/code&gt;裸考意外簡單很多。&lt;/li&gt;
+&lt;li&gt;開始維護公司 &lt;code&gt;AAP POC&lt;/code&gt; 專案重拾之前合作送 &lt;code&gt;PR (Pull Request)&lt;/code&gt;的狀態，希望能持續加更多 Demo 應用場景幫助團隊。&lt;/li&gt;
+&lt;li&gt;成為薩提爾教練模式 Satir Coaching Model 的『夥伴』，並針對同一個議題進行 2 次對話，透過練習過程，像是跟一面鏡子進行自我對話的方法，期待後續的主題，感謝 COSCUP 認識的夥伴邀約。&lt;/li&gt;
+&lt;li&gt;完成每季定期 3 篇 &lt;code&gt;Blog&lt;/code&gt; 希望能繼續保持，讓自己每個階段都有收斂與查閱資訊的地方。&lt;/li&gt;
+&lt;li&gt;疫情開放，和夥伴快速安排出國「首爾」攝影紀實之後在補充一篇文章。&lt;/li&gt;
+&lt;li&gt;記得 2022 年初趁著夥伴對於 &lt;code&gt;中級山&lt;/code&gt;、&lt;code&gt;縱走山行&lt;/code&gt;心情還溫熱，大夥討論來訂下 2022 年度指標清單挑戰之一「嘉明湖」，最後一起報名 &lt;code&gt;台灣 368 商業團&lt;/code&gt; 和夥伴們一起走過並多拿下兩座百岳，我的 ⛰5th #向陽山 3,603m, ⛰6th #三叉山 3,496m。&lt;/li&gt;
+&lt;li&gt;挑戰成功「&lt;a class=&#34;link&#34; href=&#34;%28https://taipeigrandtrail.travel.taipei/%29&#34; &gt;臺北大縱走尋寶石任務&lt;/a&gt;」七段任務，最終和兩位夥伴一起完成所有縱走，感謝從 2021-2022 一起假日遠離都市來健行的夥伴們!&lt;/li&gt;
+&lt;li&gt;個人興趣培養與成長，持續更精進自我攝影觀念與技巧，這次不拍山岳風景社攝影，來參加 &lt;a class=&#34;link&#34; href=&#34;https://www.instagram.com/4samantha&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;@4samatha&lt;/a&gt; 舉辦的&lt;code&gt;人像工作坊&lt;/code&gt;和與 &lt;a class=&#34;link&#34; href=&#34;https://www.instagram.com/jerrythepopper/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;@jerrythepopper&lt;/a&gt; 兩位攝影師交流，從人像實戰體驗培養美感的方式，並記住自己要多嘗試一點減法攝影，期待明年有更多不一樣的作品。&lt;/li&gt;
+&lt;li&gt;自我盤整之外，嘗試今年做了一部攝影 72 張照片回顧，透過鏡頭記錄自己的每一刻，感謝夥伴&lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/channel/UCI2WLm8J8y_Upm0dVdGZFQg/videos&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;紙片模型&lt;/a&gt;一同協助。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h5 id=&#34;2023-年展望--2023-年展望-2023-年展望&#34;&gt;&lt;a class=&#34;link&#34; href=&#34;#2023-%e5%b9%b4%e5%b1%95%e6%9c%9b&#34;  title=&#34; 2023 年展望 &#34;
+    &gt;&lt;/a&gt;2023 年展望&lt;/h5&gt;
+&lt;ul&gt;
+&lt;li&gt;希望英文交流能變更好，疫情趨緩會有更多跨國年會與工作上同事交流，參加團隊聚會時希望能跟他們說一些日常交流&lt;/li&gt;
+&lt;li&gt;安排每週固定去健身房，轉換職涯後都沒繼續&lt;/li&gt;
+&lt;li&gt;投稿&lt;strong&gt;社群技術&lt;/strong&gt;演講 2 場&lt;/li&gt;
+&lt;li&gt;完成先前未完成的 Red Hat 證照&lt;/li&gt;
+&lt;li&gt;攝影/紀實部落格能有效經營，建立好 IG 專頁，出國機會更多，需要工作流程讓照片穩定輸出&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;photography--2022-recap&#34;&gt;Photography | 2022 Recap&lt;/h3&gt;
+&lt;div class=&#34;video-wrapper&#34;&gt;
+    &lt;iframe loading=&#34;lazy&#34; 
+            src=&#34;https://www.youtube.com/embed/di-M9AdRiwk&#34; 
+            allowfullscreen 
+            title=&#34;YouTube Video&#34;
+    &gt;
+    &lt;/iframe&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&#34;related-posts&#34;&gt;Related Posts&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Photography Blog (&lt;a class=&#34;link&#34; href=&#34;https://medium.com/yiyang-lins-life&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://medium.com/yiyang-lins-life&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>2021 年度回顧</title>
+        <link>https://blog.yylin.io/year/2021-retrospect-and-prospect/</link>
+        <pubDate>Fri, 31 Dec 2021 13:33:28 +0800</pubDate>
+        
+        <guid>https://blog.yylin.io/year/2021-retrospect-and-prospect/</guid>
+        <description>&lt;p&gt;2021 年有非常多的轉變與抉擇，是讓自己很深刻的一年，雖然年初有一些個人因素，影響後續許多計畫與安排，但之後從個人職涯選擇以及決定，為自己嘗試更多各種不同的挑戰，雖然過程很不容易，但能能充實的過完這一年。&lt;/p&gt;
+&lt;h2 id=&#34;2021-回顧&#34;&gt;2021 回顧&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;協助前公司部分產品 Containerized 建置與Kuberentes - IT 初期工作流程基礎規劃，學習很多寶貴的維運經驗。&lt;/li&gt;
+&lt;li&gt;下半年決定為自己職涯嘗試新的挑戰，轉換職務，雖然過程花很多時間為認知與技能做轉換，過程參與事件活動非常多，但忙得有意義，非常充實。&lt;/li&gt;
+&lt;li&gt;在 &lt;a class=&#34;link&#34; href=&#34;https://coscup.org/2021/zh-TW/session/9X7UAG&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;COSCUP 2021&lt;/a&gt; 協助 CNTUG 社群議程軌-開源運河上的雲原生號擔任主持人：首次 COSCUP 線上虛擬舉行，體會主持人如何引導議程進行時，與講者會眾互動 Q&amp;amp;A ，並完成整個整個議程軌活動，難得且充實的年會體驗。&lt;/li&gt;
+&lt;li&gt;擔任 &lt;a class=&#34;link&#34; href=&#34;https://www.garaotus.com/HPC2021/vod/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;HPC Summit 2021&lt;/a&gt; 講者：有機會分享抽空研究DeepOps 的專案，如何對於 AI/ML Infra 建置的部署工具與企業場景實際應用分析(&lt;a class=&#34;link&#34; href=&#34;https://speakerdeck.com/yylin1/deepops-an-efficient-way-to-deploy-gpu-cluster-for-computing&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;簡報連結&lt;/a&gt;)。&lt;/li&gt;
+&lt;li&gt;擔任 &lt;a class=&#34;link&#34; href=&#34;https://k8s.ithome.com.tw/lab-page/553&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Kuberentes Summit 2021 - WorkShop&lt;/a&gt; 講者: 學習如何用會眾角度規劃整個工作坊設計。&lt;/li&gt;
+&lt;li&gt;回歸山岳攝影-登山健行: 持續撰寫&lt;a class=&#34;link&#34; href=&#34;https://medium.com/yiyang-lins-life&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;登山系列文章&lt;/a&gt;，跟一群好友組了登山興趣小組，開始嘗試(台灣中級山系列、台北大縱走路線完成4/7段[持續進行中])，脫離城市的大自然體驗。&lt;/li&gt;
+&lt;li&gt;自己動手做一顆手工肥皂，感謝 &lt;a class=&#34;link&#34; href=&#34;https://www.instagram.com/suvida_tw/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;SU VIDA x 私 生活&lt;/a&gt; 開設的工作坊&lt;/li&gt;
+&lt;li&gt;攀岩(抱石) 維持 LV2 等級都順利完攀，持續往下一級前進。&lt;/li&gt;
+&lt;li&gt;終於換了新一台相機 Sony A7 IV&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;2022-展望&#34;&gt;2022 展望&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;增強專業能力部分，提升各方面不足點&lt;/li&gt;
+&lt;li&gt;花更多時間在技術文章撰寫&lt;/li&gt;
+&lt;li&gt;完成先前未完成的證照&lt;/li&gt;
+&lt;li&gt;回歸開源專案貢獻，積極參與 Conference / Meetup 分享&lt;/li&gt;
+&lt;li&gt;持續健身運動維持飲食控制，為百岳做後續準備&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;related-posts&#34;&gt;Related Posts&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.yylin.io/2020/12/31/2020-retrospect-prospect/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;2020-年度回顧 (舊 Blog 搬家中)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;2022 繼續爬山
+&lt;img src=&#34;https://blog.yylin.io/year/2021-retrospect-and-prospect/01.jpg&#34;
+	width=&#34;1620&#34;
+	height=&#34;1080&#34;
+	srcset=&#34;https://blog.yylin.io/year/2021-retrospect-and-prospect/01_hucbf4df3e07792eaecaff75330300fcc5_1642419_480x0_resize_q75_box.jpg 480w, https://blog.yylin.io/year/2021-retrospect-and-prospect/01_hucbf4df3e07792eaecaff75330300fcc5_1642419_1024x0_resize_q75_box.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;150&#34;
+		data-flex-basis=&#34;360px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;Photography Blog (&lt;a class=&#34;link&#34; href=&#34;https://medium.com/yiyang-lins-life&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://medium.com/yiyang-lins-life&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

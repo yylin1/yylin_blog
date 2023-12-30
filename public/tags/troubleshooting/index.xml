@@ -1,22 +1,126 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Troubleshooting on Frank&#39;s Notes</title>
-    <link>https://blog.yylin.io/tags/troubleshooting/</link>
-    <description>Recent content in Troubleshooting on Frank&#39;s Notes</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-tw</language>
-    <lastBuildDate>Wed, 29 Sep 2021 00:53:25 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/tags/troubleshooting/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>OpenShift Intsall Troubleshooting Notes</title>
-      <link>https://blog.yylin.io/p/openshift-intsall-troubleshooting-notes/</link>
-      <pubDate>Wed, 29 Sep 2021 00:53:25 +0800</pubDate>
-      
-      <guid>https://blog.yylin.io/p/openshift-intsall-troubleshooting-notes/</guid>
-      <description>延伸上一篇 OCP UPI 部署(OpenShift 4.8.x UPI install on Bare metal)過程遇到問題彙整。
- 備註: 由於資源有限情況下，透過單一伺服器(主機)透過 VM 模擬實際節點硬體資源環境，這邊主要透過檢測與除錯，來確保 OpenShift 部署成功。
- 部署常見問題整理 (持續更新) 超時等待 bootstrap 節點啟動  發現特定 Pod 持續RunningNotReady 狀態  W0830 11:16:37.087497 35214 reflector.go:436] k8s.io/client-go/tools/watch/informerwatcher.go:146: watch of *v1.ConfigMap ended with: very short watch: k8s.io/client-go/tools/watch/informerwatcher.go:146: Unexpected watch close - watch lasted less than a second and no items received apiserver - &amp;gt; RunningNotReady Aug 30 03:42:37 bootstrap.lab.yiylin.internal bootkube.sh[644199]: Pod Status:openshift-kube-apiserver/kube-apiserver RunningNotReady  此情境請透過收集bootstrap 節點日誌，來確認環境問題</description>
-    </item>
-    
-  </channel>
+    <channel>
+        <title>Troubleshooting on Frank&#39;s Notes</title>
+        <link>https://blog.yylin.io/tags/troubleshooting/</link>
+        <description>Recent content in Troubleshooting on Frank&#39;s Notes</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-tw</language>
+        <lastBuildDate>Wed, 29 Sep 2021 00:53:25 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/tags/troubleshooting/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>OpenShift Intsall Troubleshooting Notes</title>
+        <link>https://blog.yylin.io/openshift/install-troubleshooting/</link>
+        <pubDate>Wed, 29 Sep 2021 00:53:25 +0800</pubDate>
+        
+        <guid>https://blog.yylin.io/openshift/install-troubleshooting/</guid>
+        <description>&lt;p&gt;延伸上一篇 OCP UPI 部署(&lt;a class=&#34;link&#34; href=&#34;https://blog.yylin.io/p/openshift-4.8.x-upi-install-on-bare-metal&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;OpenShift 4.8.x UPI install on Bare metal&lt;/a&gt;)過程遇到問題彙整。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;備註: 由於資源有限情況下，透過單一伺服器(主機)透過 VM 模擬實際節點硬體資源環境，這邊主要透過檢測與除錯，來確保 OpenShift 部署成功。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;部署常見問題整理-持續更新&#34;&gt;部署常見問題整理 (持續更新)&lt;/h2&gt;
+&lt;h3 id=&#34;超時等待-bootstrap-節點啟動&#34;&gt;超時等待 &lt;code&gt;bootstrap&lt;/code&gt; 節點啟動&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;發現特定 Pod 持續&lt;code&gt;RunningNotReady&lt;/code&gt; 狀態&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;W0830 11:16:37.087497   35214 reflector.go:436] k8s.io/client-go/tools/watch/informerwatcher.go:146: watch of *v1.ConfigMap ended with: very short watch: k8s.io/client-go/tools/watch/informerwatcher.go:146: Unexpected watch close - watch lasted less than a second and no items received
+apiserver - &amp;gt; RunningNotReady
+Aug 30 03:42:37 bootstrap.lab.yiylin.internal bootkube.sh[644199]:         Pod Status:openshift-kube-apiserver/kube-apiserver        RunningNotReady
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;此情境請透過收集&lt;code&gt;bootstrap&lt;/code&gt; 節點日誌，來確認環境問題&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;$ ./openshift-install gather bootstrap --dir&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&amp;lt;installation_directory&amp;gt; 
+...
+INFO Pulling debug logs from the bootstrap machine
+INFO Bootstrap gather logs captured here &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;lt;installation_directory&amp;gt;/log-bundle-&amp;lt;timestamp&amp;gt;.tar.gz&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;蒐集包含 bootstrap process / bootstrap 上所有 Pod/Container 的 log&lt;/li&gt;
+&lt;li&gt;下載完後解壓縮 &lt;code&gt;.tar.gz&lt;/code&gt; 檔案，針對可能部署或未啟動的&lt;code&gt;Pod&lt;/code&gt;檢查log錯誤狀態，來找到對應的錯誤資訊&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;補充說明 bootstrap 主要分成兩個動作&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;安裝自己跟建立自己的 cluster(Pod)&lt;/li&gt;
+&lt;li&gt;引導安裝 master x 3&lt;/li&gt;
+&lt;li&gt;master bootstrap 全部安裝完，然後下 wait for complete 確認最終才可移除 bootstrap node&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;reference&#34;&gt;Reference:&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://docs.openshift.com/container-platform/4.8/installing/installing-troubleshooting.html#installation-bootstrap-gather_installing-troubleshooting&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Gathering logs from a failed installation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://docs.openshift.com/container-platform/4.8/installing/installing_bare_metal/installing-bare-metal.html#installation-installing-bare-metal_installing-bare-metal&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Waiting for the bootstrap process to complete&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;master-node-部署不起來檢查並驗證-etcd-運行之硬碟是否正常運作-&#34;&gt;Master Node 部署不起來，檢查並驗證 etcd 運行之硬碟是否正常運作 ?&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;大部分 master 無法建置情境，通常可能會有原因是硬碟速度問題(硬碟壞軌)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;造成叢集有時候部署成功有時候會失敗的情況&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;透過簡單運行 &lt;code&gt;fio&lt;/code&gt; 來測試 etcd benchamrk performance 檢測&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;$ oc debug node/&amp;lt;master_node&amp;gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;...&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+sh-4.4# chroot /host bash
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;root@&amp;lt;master_node&amp;gt; /&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# podman run --volume /var/lib/etcd:/var/lib/etcd:Z quay.io/openshift-scale/etcd-perf&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id=&#34;reference-1&#34;&gt;Reference:&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://access.redhat.com/solutions/4885641&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;How to Use &amp;lsquo;fio&amp;rsquo; to Check Etcd Disk Performance in OCP
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=6qjsh9J3ndM&amp;amp;ab_channel=PingChunHuang&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;[參考影片說明] OpenShift 4 如何使用 fio 驗證 etcd 運行之硬碟是否可以正常運作 / Use &amp;lsquo;fio&amp;rsquo; to Check Etcd Disk Performance&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.ibm.com/docs/en/cloud-private/3.2.x?topic=requirements-hardware-recommendations&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Hardware requirements and recommendations&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;補充檢查---除錯流程&#34;&gt;補充|檢查 - 除錯流程&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;部署過程都透過 bootkube 確認部署狀態資訊，log 會不斷顯示錯誤然後 loop 確認環節，嘗試能不能從他錯誤訊息找出規則(也就是他跳錯誤的地方，通常是在 log restart之前)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;嘗試 SSH 到 Master Node，透過 &lt;code&gt;netstat -plnt&lt;/code&gt; 檢查三個服務，這三個通常只要好，這台 Master 就沒問題 (6443| 22623|2379|2380)，分別是 OpenShift API/Kubernetes API/ETCD/Machine Config Operator&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;如果以上幾個 Pod 有問題，透過 &lt;code&gt;crictl ps&lt;/code&gt; 跟 &lt;code&gt;crictl log&lt;/code&gt; 去查看 Container Log，問題有可能是連續的錯誤，所以可能是 API 有問題，可能是 Controller/Scheduler 引起，細節需要透過上面提到方式，下載節點所有 Log 日誌來比對檢查，找到正確的錯誤資訊來排除錯誤&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;reference-2&#34;&gt;Reference:&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://connect.redhat.com/en/blog/openshift-troubleshooting-resources&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;OpenShift Troubleshooting Resources&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        
+    </channel>
 </rss>

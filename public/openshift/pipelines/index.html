@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="zh-tw" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='本篇介紹 Tekton 是一個基於 Kuberentes 原生的 CI/CD 工具，經常分別和常見工具 Jenkine, Jenkins X, Spinnaker做比較，這邊會針對Tekton介紹概念後，並如何在 OpenShift 中部署 OpenShift Pipeline，及做其他開源工具差異情境比較。'><title>CI/CD: Tekton Pipeline 實戰</title>
+
+<link rel='canonical' href='https://blog.yylin.io/openshift/pipelines/'>
+
+<link rel="stylesheet" href="/scss/style.min.5dfb59e7e9320a8eb7995abb74271d0b47aa7bd7423004549c2964fd78196c75.css"><meta property='og:title' content='CI/CD: Tekton Pipeline 實戰'>
+<meta property='og:description' content='本篇介紹 Tekton 是一個基於 Kuberentes 原生的 CI/CD 工具，經常分別和常見工具 Jenkine, Jenkins X, Spinnaker做比較，這邊會針對Tekton介紹概念後，並如何在 OpenShift 中部署 OpenShift Pipeline，及做其他開源工具差異情境比較。'>
+<meta property='og:url' content='https://blog.yylin.io/openshift/pipelines/'>
+<meta property='og:site_name' content='Frank&#39;s Notes'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='OpenShift' /><meta property='article:tag' content='CICD' /><meta property='article:tag' content='Tekton' /><meta property='article:published_time' content='2022-06-21T21:40:40&#43;08:00'/><meta property='article:modified_time' content='2022-06-21T21:40:40&#43;08:00'/>
+<meta name="twitter:title" content="CI/CD: Tekton Pipeline 實戰">
+<meta name="twitter:description" content="本篇介紹 Tekton 是一個基於 Kuberentes 原生的 CI/CD 工具，經常分別和常見工具 Jenkine, Jenkins X, Spinnaker做比較，這邊會針對Tekton介紹概念後，並如何在 OpenShift 中部署 OpenShift Pipeline，及做其他開源工具差異情境比較。">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-60ZBHV66GB"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-60ZBHV66GB', { 'anonymize_ip': false });
+}
+</script>
+<style>
+	h1 {
+		letter-spacing: 6px;
+	}
+</style>
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切換選單">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Frank&#39;s Notes</a></h1>
+            <h2 class="site-description">拆解|筆記|復盤</h2>
+        </div>
+    </header><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>夜晚模式</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/ci/cd/" >
+                CI/CD
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/openshift/pipelines/">CI/CD: Tekton Pipeline 實戰</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            本篇介紹 Tekton 是一個基於 Kuberentes 原生的 CI/CD 工具，經常分別和常見工具 Jenkine, Jenkins X, Spinnaker做比較，這邊會針對Tekton介紹概念後，並如何在 OpenShift 中部署 OpenShift Pipeline，及做其他開源工具差異情境比較。
+        </h3>
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jun 21, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    閱讀時間: 3 分鐘
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>OpenShift Pipelines 是一個基於 Kubernetes 資源的雲塊的持續和持續交付（持續集成和持續交付，簡稱 CI/CD）的解決方案。它通過執行執行的細節，使用 Tekton 進行跨平台的自動部署。Tekton 引入了多種標準的自定義資源定義 (CRD)，定義可跨 Kubernetes 分佈用於 CI/CD 管道。</p>
+<p><img src="https://www.redhat.com/cms/managed-files/container-platforms-pipelines.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h2 id="主要特性">主要特性</h2>
+<ul>
+<li>OpenShift Pipelines 是一個無服務器的 CI/CD 系統，它在獨立的容器中運行 Pipelines，以及所有需要的依賴組件。</li>
+<li>OpenShift Pipelines 是為開發微服務架構的非中心化團隊設計的。</li>
+<li>OpenShift Pipelines 使用標準 CI（pipeline）定義，這些與現有的 Kubernetes 工具集成擴展可擴展和擴展，可讓您定義和擴展 Kubernetes。</li>
+<li>您可以通過 OpenShift Pipelines 使用 Kubernetes （如 Source-to-Image (S2I)、Buildah、Buildpacks 和 Kaniko）構建鏡像，這些工具可以移植到任何 Kubernetes 平台。</li>
+<li>您可以使用 OpenShift Container Platform 開發運行（Developer Console）來創建 Tekton 資源，查看 Pipeline 的日誌，並管理 OpenShift Container Platform 設計空間中的管道。</li>
+</ul>
+<p>在 Tekton pipeline 中有以下幾個主要的組成要素，分別是：</p>
+<ul>
+<li>PipelineResource</li>
+<li>Task &amp; ClusterTask</li>
+<li>TaskRun</li>
+<li>Pipeline</li>
+<li>PipelineRun</li>
+</ul>
+<h2 id="pipelineresource">PipelineResource</h2>
+<p>PipelineResource 簡單來說可以作為 task 的 input or output，而每個 task 可以有多個 input &amp; output。</p>
+<h2 id="syntax">Syntax</h2>
+<p>PipelineResource 的定義中會有以下必要資訊：</p>
+<ul>
+<li>
+<p>apiVersion：目前固定是 tekton.dev/v1alpha1</p>
+</li>
+<li>
+<p>kind：因為這是 CRD，所以是 PipelineResource</p>
+</li>
+<li>
+<p>metadata：用來辨識此 TaskRun 用的資訊，例如 name</p>
+</li>
+<li>
+<p>sepc：使用 resource 的詳細資訊(例如：路徑、位址)</p>
+</li>
+<li>
+<p>type：用來指定 resource type，目前支援 git, pullRequest, image, cluster, storage, cloudevent … 等等</p>
+</li>
+</ul>
+<p>其他選填項目：</p>
+<ul>
+<li>params：不同的 resource type 可能會有的不同額外參數資訊</li>
+</ul>
+<h2 id="resource-type">Resource Type</h2>
+<p>有了以上概念後，接著要知道的是 PipelineResources 共有以下幾種類型：</p>
+<ul>
+<li>Git Resource</li>
+<li>Pull Request Resource</li>
+<li>Image Resource</li>
+<li>Cluster Resource</li>
+<li>Storage Resource</li>
+<li>Cloud Event Resource</li>
+</ul>
+<p>以下就針對比較常用的 Git &amp; Image resource 說明，其他的部份可以參考官網的詳細文件。</p>
+<h3 id="git-resource">Git Resource</h3>
+<p>一般的 git repository，作為 task input 時，Tekton 執行 task 前會將程式碼 clone 回來，因此這邊就必須注意 git repository 存取的權限問題，若是 private repository 就要額外提供 credential 資訊才可以正常運作</p>
+<p>以下是一個標準的 Git PipelineResource 的定義：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: wizzbang-git
+  namespace: default
+spec:
+  type: git
+  params:
+    - name: url
+      value: https://github.com/wizzbangcorp/wizzbang.git
+    # 可用 branch, tag, commit SHA or ref
+    # 沒指定就會拉 master branch
+    - name: revision
+      value: master
+      # value: some_awesome_feature
+      # value: refs/pull/52525/head
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="task--clustertask">Task &amp; ClusterTask</h2>
+<p><code>Task</code>(&amp; <code>ClusterTask</code>) 中包含了一連串的 step，通常是使用者要用來執行 CI flow，而這些工作會在單一個 pod 中以多個 container 的形式逐一完成。</p>
+<p>Task &amp; ClusterTask 兩者的不同在於 Task 是屬於 namespace level，而 ClusterTask 是屬於 cluster level</p>
+<p>而在 Task 的定義中，最重要的部份有以下三個項目：</p>
+<ul>
+<li>Input</li>
+<li>Output</li>
+<li>Steps</li>
+</ul>
+<p>以下是一個 task 的標準定義內容：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  name: deploy-using-kubectl
+spec:
+  inputs:
+    resources:
+      - name: source
+        type: git
+      - name: image
+        type: image
+    params:
+      - name: path
+        type: string
+        description: Path to the manifest to apply
+      - name: yamlPathToImage
+        type: string
+        description:
+          The path to the image to replace in the yaml manifest (arg to yq)
+  steps:
+    # step 中可以定義多個執行工作，會依照順序執行
+    - name: replace-image
+      image: mikefarah/yq
+      command: [&#34;yq&#34;]
+      args:
+        - &#34;w&#34;
+        - &#34;-i&#34;
+        - &#34;$(inputs.params.path)&#34;
+        - &#34;$(inputs.params.yamlPathToImage)&#34;
+        - &#34;$(inputs.resources.image.url)&#34;
+    - name: run-kubectl
+      image: lachlanevenson/k8s-kubectl
+      command: [&#34;kubectl&#34;]
+      args:
+        - &#34;apply&#34;
+        - &#34;-f&#34;
+        - &#34;$(inputs.params.path)&#34;
+  # 此 volume 在 task 中沒有用到，只是一個範例而已
+  # 用以表示可以在 task 中定義 volume 並使用
+  volumes:
+    - name: example-volume
+      emptyDir: {}
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="taskrun">TaskRun</h2>
+<p>定義了 task 之後，Tekton 並不會主動執行任何 task，這時候就必須要搭配 TaskRun 才可以讓 task 真正的執行指定工作。</p>
+<p>以下是一個標準的 TaskRun 定義：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"># 以下幾個(apiVersion, kind, metadata, spec)是必要資訊
+apiVersion: tekton.dev/v1alpha1
+kind: TaskRun
+metadata:
+  name: build-docker-image-from-git-source-task-run
+spec:
+  serviceAccount: robot-docker-basic
+  # 指定到已經預先定義好的 Task
+  taskRef:
+    name: build-docker-image-from-git-source
+  inputs:
+    resources:
+      - name: docker-source
+        # 指定到已經預先定義好的 PipelineResource
+        resourceRef:
+          name: git-tekton-test
+    params:
+      - name: pathToDockerFile
+        value: Dockerfile
+      - name: pathToContext
+        value: /workspace/docker-source/examples/microservices/leeroy-web
+  outputs:
+    resources:
+      - name: builtImage
+        resourceRef:
+          name: image-tekton-test
+
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="pipeline">Pipeline</h2>
+<p>Pipeline 其實可以把它簡單思考為前面 Task 的集合，有順序性的排列，並透過之後介紹的 PipelineRun 來運作。</p>
+<p>成功運行 Pipeline 結果:</p>
+<p><img src="https://www.redhat.com/architect/sites/default/files/styles/embed_large/public/2022-06/4-pipeline.png?itok=Eex7RxG9"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>失敗運行 Pipeline 結果：</p>
+<p><img src="https://www.redhat.com/architect/sites/default/files/styles/embed_large/public/2022-06/5-ci-dev-pipeline-failed.png?itok=dzFYWfKl"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h2 id="結語">結語</h2>
+<p>以上內容(PipelineResource, Task, TaskRun, Pipeline, PipelineRun) 是 Tekton 中執行工作的必要元素，實際上執行的 CI/CD 工作都會與這幾個部份有關。</p>
+<p>Tekton 將所有的基本元素拆分成一個一個的 k8s CRD(Custom Resource Definition)，如果是稍微複雜一點的 CI/CD 工作，可能就會需要定義不少個 CRD 才能完成，而且在設計上相對於其他的 CI server(例如：GitLab CI, Drone CI)可能不是這麼直覺；但這樣的設計提供了以下優點：</p>
+<ul>
+<li>
+<p>原生的 k8s 使用經驗，不需要額外學習其他語法</p>
+</li>
+<li>
+<p>定義好的 CRD(PipelineResource, Task, Pipeline) 可以被重複利用</p>
+</li>
+<li>
+<p>原生整合 k8s</p>
+</li>
+</ul>
+<p>若是未來有考慮 workload 都跑在 k8s 上的使用者，在選擇 CI/CD 的工具時或許可以將 Tekton 考慮進行。</p>
+<p>接著可能會面臨到的問題可能是，如果希望作到 GitOps，光是以上項目好像不夠還有相關元件支援性。</p>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a class="link" href="https://github.com/tektoncd/pipeline/tree/main/examples"  target="_blank" rel="noopener"
+    >pipeline/examples</a></li>
+<li><a class="link" href="https://github.com/tektoncd/pipeline/blob/main/docs/resources.md"  target="_blank" rel="noopener"
+    >PipelineResources</a></li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/openshift/">OpenShift</a>
+        
+            <a href="/tags/cicd/">CICD</a>
+        
+            <a href="/tags/tekton/">Tekton</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-contents--wrapper">
+    <h2 class="section-title">相關文章</h2>
+    <div class="related-contents">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/openshift/argocd-and-acm/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">在 ACM 透過 OpenShift-GitOps/ArgoCD 管理應用程式</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2022 - 
+        
+        2023 Frank&#39;s Notes
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.10.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目錄</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#主要特性">主要特性</a></li>
+        <li><a href="#pipelineresource">PipelineResource</a></li>
+        <li><a href="#syntax">Syntax</a></li>
+        <li><a href="#resource-type">Resource Type</a>
+          <ul>
+            <li><a href="#git-resource">Git Resource</a></li>
+          </ul>
+        </li>
+        <li><a href="#task--clustertask">Task &amp; ClusterTask</a></li>
+        <li><a href="#taskrun">TaskRun</a></li>
+        <li><a href="#pipeline">Pipeline</a></li>
+        <li><a href="#結語">結語</a></li>
+        <li><a href="#reference">Reference</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
