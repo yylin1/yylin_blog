@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Categories on Frank&#39;s Notes</title>
+        <link>https://blog.yylin.io/categories/</link>
+        <description>Recent content in Categories on Frank&#39;s Notes</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-tw</language>
+        <lastBuildDate>Sat, 30 Dec 2023 13:33:28 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Retrospect</title>
+        <link>https://blog.yylin.io/categories/retrospect/</link>
+        <pubDate>Sat, 30 Dec 2023 13:33:28 +0800</pubDate>
+        
+        <guid>https://blog.yylin.io/categories/retrospect/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Ansible Automation Platform</title>
+        <link>https://blog.yylin.io/categories/ansible-automation-platform/</link>
+        <pubDate>Sat, 19 Nov 2022 12:00:40 +0800</pubDate>
+        
+        <guid>https://blog.yylin.io/categories/ansible-automation-platform/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>OpenShift</title>
+        <link>https://blog.yylin.io/categories/openshift/</link>
+        <pubDate>Tue, 27 Sep 2022 12:00:40 +0800</pubDate>
+        
+        <guid>https://blog.yylin.io/categories/openshift/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>community</title>
+        <link>https://blog.yylin.io/categories/community/</link>
+        <pubDate>Sun, 28 Aug 2022 03:40:40 +0800</pubDate>
+        
+        <guid>https://blog.yylin.io/categories/community/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>GPU</title>
+        <link>https://blog.yylin.io/categories/gpu/</link>
+        <pubDate>Tue, 28 Jun 2022 21:40:40 +0800</pubDate>
+        
+        <guid>https://blog.yylin.io/categories/gpu/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>cloud-service-provider</title>
+        <link>https://blog.yylin.io/categories/cloud-service-provider/</link>
+        <pubDate>Sat, 25 Jun 2022 09:40:40 +0800</pubDate>
+        
+        <guid>https://blog.yylin.io/categories/cloud-service-provider/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>CI/CD</title>
+        <link>https://blog.yylin.io/categories/ci/cd/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://blog.yylin.io/categories/ci/cd/</guid>
+        <description></description>
+        </item>
+        
+    </channel>
+</rss>

@@ -3,31 +3,37 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://blog.yylin.io/</loc>
-    <lastmod>2022-12-31T13:33:28+08:00</lastmod>
+    <lastmod>2023-12-30T13:33:28+08:00</lastmod>
+  </url><url>
+    <loc>https://blog.yylin.io/year/2023-retrospect-and-prospect/</loc>
+    <lastmod>2023-12-30T13:33:28+08:00</lastmod>
+  </url><url>
+    <loc>https://blog.yylin.io/categories/</loc>
+    <lastmod>2023-12-30T13:33:28+08:00</lastmod>
+  </url><url>
+    <loc>https://blog.yylin.io/post/</loc>
+    <lastmod>2023-12-30T13:33:28+08:00</lastmod>
+  </url><url>
+    <loc>https://blog.yylin.io/tags/retrospect/</loc>
+    <lastmod>2023-12-30T13:33:28+08:00</lastmod>
+  </url><url>
+    <loc>https://blog.yylin.io/categories/retrospect/</loc>
+    <lastmod>2023-12-30T13:33:28+08:00</lastmod>
+  </url><url>
+    <loc>https://blog.yylin.io/tags/</loc>
+    <lastmod>2023-12-30T13:33:28+08:00</lastmod>
   </url><url>
     <loc>https://blog.yylin.io/year/2022-retrospect-and-prospect/</loc>
     <lastmod>2022-12-31T13:33:28+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/categories/</loc>
-    <lastmod>2022-12-31T13:33:28+08:00</lastmod>
-  </url><url>
-    <loc>https://blog.yylin.io/post/</loc>
-    <lastmod>2022-12-31T13:33:28+08:00</lastmod>
-  </url><url>
-    <loc>https://blog.yylin.io/tags/retrospect/</loc>
-    <lastmod>2022-12-31T13:33:28+08:00</lastmod>
-  </url><url>
-    <loc>https://blog.yylin.io/categories/retrospect/</loc>
-    <lastmod>2022-12-31T13:33:28+08:00</lastmod>
-  </url><url>
-    <loc>https://blog.yylin.io/tags/</loc>
-    <lastmod>2022-12-31T13:33:28+08:00</lastmod>
-  </url><url>
     <loc>https://blog.yylin.io/tags/ansible-automation-platform/</loc>
-    <lastmod>2022-11-19T12:00:40+08:00</lastmod>
+    <lastmod>2022-12-19T12:00:40+08:00</lastmod>
   </url><url>
     <loc>https://blog.yylin.io/categories/ansible-automation-platform/</loc>
-    <lastmod>2022-11-19T12:00:40+08:00</lastmod>
+    <lastmod>2022-12-19T12:00:40+08:00</lastmod>
+  </url><url>
+    <loc>https://blog.yylin.io/ansible/ansible-tower-upgrade-to-ansible-automation-platform-2/</loc>
+    <lastmod>2022-12-19T12:00:40+08:00</lastmod>
   </url><url>
     <loc>https://blog.yylin.io/ansible/twgcb/</loc>
     <lastmod>2022-11-19T12:00:40+08:00</lastmod>
