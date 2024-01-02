@@ -180,7 +180,7 @@ title="YouTube Video"
 &lt;ul>
 &lt;li>&lt;a class="link" href="https://www.mss.com.tw/gcb.html" target="_blank" rel="noopener"
 >https://www.mss.com.tw/gcb.html&lt;/a>&lt;/li>
-&lt;/ul></description></item><item><title>實現 OpenSCAP 自動化邏輯檢查</title><link>https://blog.yylin.io/ansible/openscap/</link><pubDate>Sun, 25 Sep 2022 12:00:40 +0800</pubDate><guid>https://blog.yylin.io/ansible/openscap/</guid><description>&lt;h2 id="概述">概述&lt;/h2>
+&lt;/ul></description></item><item><title>透過自動化進行 TWGCB 臺灣政府組態標準合規 - 邏輯檢查</title><link>https://blog.yylin.io/ansible/twgcb/</link><pubDate>Sat, 19 Nov 2022 12:00:40 +0800</pubDate><guid>https://blog.yylin.io/ansible/twgcb/</guid><description/></item><item><title>實現 OpenSCAP 自動化邏輯檢查</title><link>https://blog.yylin.io/ansible/openscap/</link><pubDate>Sun, 25 Sep 2022 12:00:40 +0800</pubDate><guid>https://blog.yylin.io/ansible/openscap/</guid><description>&lt;h2 id="概述">概述&lt;/h2>
 &lt;p>SCAP (Security Content Automation Protocol)是一包資安標準的集合。實作 SCAP 的工具有好幾種，其中一個是 OpenSCAP 開源工具，運用 OpenSCAP 可做到全自動的檢查、script/ansible playbook的報告與修復。但「修復」這段不太可能全自動，需要人為判斷要不要修復會不會與公司定義的規則互相衝突，否則完全聽從某些嚴格的 SCAP Rules，派下去之後反而造成維運及開發團隊環境配置衝突，導致相關影響及不便性。&lt;/p>
 &lt;h2 id="透過-openscap-和-satellite-實現系統合規檢查">透過 OpenSCAP 和 Satellite 實現系統合規檢查&lt;/h2>
 &lt;p>在 Red Hat Satellite 中，包含可以配置 OpenSCAP 項目提供的工具用於實施安全合規性檢查。有關 OpenSCAP 的更多信息，可以參見Guide to the Secure &lt;a class="link" href="https://static.open-scap.org/ssg-guides/ssg-rhel7-guide-cui.html#!" target="_blank" rel="noopener"
