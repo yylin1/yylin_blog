@@ -17,11 +17,11 @@ jobs:
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
-          hugo-version: '0.92.2' # hugo 版本
-          # extended: true  # 如果是使用extended版本的務必取消註解。
+          hugo-version: '0.91.2' # hugo 版本
+          extended: true  # 如果是使用extended版本的務必取消註解。
 
       - name: Build
-        run: hugo --gc --minify --cleanDestinationDir
+        run: hugo --gc --minify 
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
