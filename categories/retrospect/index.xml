@@ -1,54 +1,60 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Retrospect on Frank's Notes</title><link>https://blog.yylin.io/categories/retrospect/</link><description>Recent content in Retrospect on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Sat, 30 Dec 2023 13:33:28 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/categories/retrospect/index.xml" rel="self" type="application/rss+xml"/><item><title>2023 年度回顧 / 2024 年展望</title><link>https://blog.yylin.io/year/2023-retrospect-and-prospect/</link><pubDate>Sat, 30 Dec 2023 13:33:28 +0800</pubDate><guid>https://blog.yylin.io/year/2023-retrospect-and-prospect/</guid><description>&lt;p>2022 年有非常多的時間進行選擇與尋找定位，雖然過程很不容易，但今年還是很充實的過完這一年，很多朋友開始在年底都會有復盤自己的習慣，想過好下一年，那麼知道今年你是怎麼過的？或許對自己會有很大的幫助。本篇是個人於 2022 年的記錄以及對於未來的展望。&lt;/p>
-&lt;p>&lt;img src="https://blog.yylin.io/year/2023-retrospect-and-prospect/images/01.png"
-width="1080"
-height="608"
-srcset="https://blog.yylin.io/year/2023-retrospect-and-prospect/images/01_hu4b94eabded4d0fc2abf8a6c6d57fe797_994522_480x0_resize_box_3.png 480w, https://blog.yylin.io/year/2023-retrospect-and-prospect/images/01_hu4b94eabded4d0fc2abf8a6c6d57fe797_994522_1024x0_resize_box_3.png 1024w"
-loading="lazy"
-class="gallery-image"
-data-flex-grow="177"
-data-flex-basis="426px"
->&lt;/p>
-&lt;h5 id="2022-年回顧--2022-年回顧2022-年回顧">&lt;a class="link" href="#2022-%e5%b9%b4%e5%9b%9e%e9%a1%a7" title=" 2022 年回顧"
->&lt;/a>2022 年回顧&lt;/h5>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Retrospect on Frank's Notes</title><link>https://blog.yylin.io/categories/retrospect/</link><description>Recent content in Retrospect on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Sun, 31 Dec 2023 13:33:28 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/categories/retrospect/index.xml" rel="self" type="application/rss+xml"/><item><title>2023 年度回顧 / 2024 年展望</title><link>https://blog.yylin.io/year/2023-retrospect-and-prospect/</link><pubDate>Sun, 31 Dec 2023 13:33:28 +0800</pubDate><guid>https://blog.yylin.io/year/2023-retrospect-and-prospect/</guid><description>&lt;p>| 本篇是個人於 2023 年的紀錄以及對於未來的展望&lt;/p>
+&lt;p>2023 充滿變化和轉折的一年，在職場和生活的各個方面都嘗試了許多新事物，並積極改變以往的習慣、心態和生活方式，這些努力逐步調整過程，同時在人生的道路上慢慢找到了自己的定位，做任何事都有了明確意義。&lt;/p>
+&lt;h5 id="2023-年回顧--2022-年回顧2023-年回顧">&lt;a class="link" href="#2023-%e5%b9%b4%e5%9b%9e%e9%a1%a7" title=" 2022 年回顧"
+>&lt;/a>2023 年回顧&lt;/h5>
+&lt;h2 id="-工作"># 工作&lt;/h2>
+&lt;ol>
+&lt;li>內部職位調整 &lt;code>Specialist SA 轉回 Account SA&lt;/code> ，更聚焦深入理解客戶的業務需求和面臨的挑戰，設計出切合實際的技術解決方案、規劃系統架構，以及確定實施方案的步驟和專案時程，確保成功交付客戶所需解決方案。關於專案進行與合作夥伴定目標這個部分，我有額外進修專案管理課程，覺得最實用就是課程內容提供 BIG TABLE 表格，真實上完課隔日就能馬上在專案上使用，推薦大家上&lt;a class="link" href="https://shop.darencademy.com/product/view/id/1" target="_blank" rel="noopener"
+>大人學 - 101專案管理一日特訓班(7PDU)｜專案管理課程&lt;/a>。&lt;/li>
+&lt;li>公司策略走向，有機會想拓展 Taiwan AI 市場與容器平台機會，再次接觸到好多之前合作過的 AI 平台公司，還有 OEM 廠商還記得我之前有合作過，就這樣踏上 AI 浪潮時間，慢慢將市場與需求拼圖慢慢拼湊出來。&lt;/li>
+&lt;li>後疫情時代首次能出國出差的時刻，有機會參加在公司舉辦在新加坡 Singapore 的 &lt;code>Tech Exchange 2023&lt;/code>，真的很難得有機會和 APAC 區域的不同國家的同事交流經驗與技術，還有見沒有見過的網友同事，意外很充實的技術年會收穫，額外最驚艷應該是有機會在 GalaParty 看到印度舞蹈的魅力與群體氛圍。&lt;/li>
+&lt;li>在 Intel Vision APJ 2023 活動上，有機會與首席架構師 Andreas Spanner 共同合作，特別展示了 MLOps 和 RHODS 與 Intel OpenVINO Toolkit 結合應用場景，還有機會與來自不同國家的 Red Hat Global Team 同事進行深入交流，更榮幸與 Intel 的 CEO - Pat Gelsinger 合影留念，真的是非常難得的機會。&lt;/li>
+&lt;/ol>
+&lt;h2 id="生活">生活&lt;/h2>
+&lt;ol>
+&lt;li>和夥伴約定 3 年前的滑雪計畫，終於這次疫情後出團成功，我的第一個雪季來到&lt;code>新潟-妙高高原滑雪&lt;/code>，真的很不一樣的體驗。雖然出發前有大夥去小叮噹雪場上過教練課-行前訓練，但在真正雪場需要克服的狀況很不同，最難還是上下纜車不同地形還是很有挑戰，還有遇到搭纜車時下雪時刻超美。很感謝夥伴信任，讓我用帶相機上纜車捕捉到一些難忘的雪景，更多雪景可以看 &lt;a class="link" href="https://yiyanglin.tw/myoko-kogen" target="_blank" rel="noopener"
+>Myoko Kogen, Niigata | 新潟 妙高高原&lt;/a>。&lt;/li>
+&lt;li>自主揪山最大一團的經驗，霞可羅古道(養老步道至白石駐在所往返, 24K)，工程師遠離電腦桌前，也要親身體會才能感受山裡帶給我們的平靜，因為有更多夥伴來爬山，每一次爬山都有更多不一樣的滋味。&lt;/li>
+&lt;li>參加了英文口說班跟社交班，每個禮拜都花很多時間在準備作業非常不容易，但感覺英文程度跟以前比起來有進步一些，目標是希望之後和國外同事交流過程，可以好好閒聊更多自己日常 Small Talk。&lt;/li>
+&lt;li>把實體書慢慢轉換至 KOBO 電子書平台，&lt;code>建立閱讀習慣&lt;/code>，喜歡閱讀的開始是因為想多看書中作者是怎麼研究、思考問題，當他們面對人生相似的困境時，這個過程如何看待問題、如何解決問題來學會不同的觀點，然後把這些觀點內化成自己的思考，當生活中遇到的各種難題上，思維也會變得更開闊。&lt;/li>
+&lt;li>終於有機會現場聽到告五人演唱會，最初在 #街聲Streetvoice 上聽他們的 Demo 發表，從那時起，目睹告五人一步步成長，如今他們已經開始了世界巡迴，這次在巨蛋的表演讓我第一次體會到他們的魅力，舞台佈置和光線效果驚人，感謝告五人為我們的生活帶來更多美好，期待下次的相遇。&lt;/li>
+&lt;li>自我盤整之外，今年也還是做了一部攝影 60 張照片回顧，透過鏡頭記錄自己的每一刻，希望每年都有不同的精彩。&lt;/li>
+&lt;/ol>
+&lt;h2 id="值得閱讀的書">值得閱讀的書&lt;/h2>
+&lt;p>對讀者而言，閱讀像是進入作者的生命，讓我們用很短的時間(幾個小時比起幾年)，高效率地從作者的視角中活過一次這段人生。每讀一本書，就像多活過一些作者歷練，在自己的生命旅程中添加一分色彩與理解。&lt;/p>
+&lt;ol>
+&lt;li>《薩提爾的自我覺察練習》 - 讓我看見自己內心深層的想法看法，意識到自己在意/不在乎或重要與否的判斷拿捏，我會「聚焦在現在與未來，詢問過去是了解行為模式、成功/失敗經驗」。&lt;/li>
+&lt;li>《一流的人如何駕馭自我》 - 是一本激發我想持續向一流人學習管理熱情，引述書中有一個章節標題，我真的非常喜歡的說法：「從挖掘熱情到實踐熱情：需要的是按部就班到全力以赴」，破除熱情的迷失，給出實際的指引，更多成功的關鍵還是操之在自己。&lt;/li>
+&lt;li>《我決定，生活只留下對的人》 - 會推薦這本書中有談到，人是變動的，不同階段有不同的渴望，更重要的不是對方是誰，而是你需要什麼，和我看過大人學一篇文章剛好很貼近這本書主體&lt;a class="link" href="https://www.darencademy.com/article/view/id/16754" target="_blank" rel="noopener"
+>「人生穩當的交友策略，不外乎就是親近「螞蟻」但遠離「蚱蜢」&lt;/a>，談的概念很相近：「每個人的人生成就，除了跟能力和認知邊界有關，也跟「周圍都是什麼樣的人」息息相關」，實際思考過後真的影響我很大。&lt;/li>
+&lt;li>《大人學選擇：成熟大人的獨立思考術》 - 人生有很多課題需要「選擇」真的是一件很難的事，介紹很多人生、職場、人際關係等之間的各種選擇，若可以常把人生後續的機會最大化，有更多餘裕牌局會越來越好，也會有更多的選擇不會只有單選題。&lt;/li>
+&lt;li>《贏在邏輯思考力：玩一場擴張邊界的遊戲》- 我常常輸給自己的過去觀點和死板的印象，透過這本書知道可以更深度有邏輯，讓自己更願意試著擴張邊界，用邏輯思考他人冰山以下的部分，去理解不理解的，用更寬廣的角度去看，不一樣不是唱反調，不一樣只是不一樣，但我們要如何應對與處理人和各種情境。&lt;/li>
+&lt;/ol>
+&lt;h2 id="值得感謝的人">值得感謝的人&lt;/h2>
+&lt;p>2023 對我來說是一個特別的一年，花非常多時間在梳理思緒，
+思考去年底接受到前輩給我的一個人生思維課題：「在人生列車上，社會化過程中的轉換心態，對於下一步的選擇都會仔細評估考量，暫時無下下一步。&lt;/p>
+&lt;p>除了下一步之外很清楚知道自己要做什麼，但目前無法回答現下對未來的想像」。就這個議題徘徊在我腦海盤旋，讓我很想好好探索好自己對於，所謂「認知邊界」的廣度，這邊指的是我們根據過去人生經驗而對世界所描繪出的規則與界限[1]能看見多少？ 決定要好好探索，雖然這段路崎嶇需要足夠時間，但能好好想想「找到自己人生定位」，我有沒有更多對於想要嘗試的下下一步和中長期對自己的想像？此時此刻回頭思考這段慢慢建構的過程，大概是這一整年最棒的事。&lt;/p>
 &lt;ul>
-&lt;li>轉職 &lt;code>SSA(Specialist Solution Architect/領域專家解決方案架構師)&lt;/code>滿一年多了，雖然花很多時間與團隊在對於角色定位與支援上安排，主要和 SA 關注在不同的面向，更重於在解決方案中針對某一領域的問題提出相對應的系統架構。舉例來說更重於思考實際客戶系統架構需求或系統設計面，並和售後團隊有更密切接觸。&lt;/li>
-&lt;li>疫情開放後，參與入職來首次公司舉辦的 &lt;code>Outing&lt;/code> 活動，讓售前/售後團隊，能有更進一步的團隊對話與技術互動。&lt;/li>
-&lt;li>嘗試考 &lt;code>AWS Solution Architect Associate (SAA-C03)&lt;/code>剛好報名前題庫改版，補好多不同的題目，閱讀考古題比較沒有新的題庫，可惜最終分數差 3題只好明年再來重考(很想拿到)，年底公司指標只好直接趕緊補考 &lt;code>AWS Certified Cloud Practitioner (CLF-C01)&lt;/code>裸考意外簡單很多。&lt;/li>
-&lt;li>開始維護公司 &lt;code>AAP POC&lt;/code> 專案重拾之前合作送 &lt;code>PR (Pull Request)&lt;/code>的狀態，希望能持續加更多 Demo 應用場景幫助團隊。&lt;/li>
-&lt;li>成為薩提爾教練模式 Satir Coaching Model 的『夥伴』，並針對同一個議題進行 2 次對話，透過練習過程，像是跟一面鏡子進行自我對話的方法，期待後續的主題，感謝 COSCUP 認識的夥伴邀約。&lt;/li>
-&lt;li>完成每季定期 3 篇 &lt;code>Blog&lt;/code> 希望能繼續保持，讓自己每個階段都有收斂與查閱資訊的地方。&lt;/li>
-&lt;li>疫情開放，和夥伴快速安排出國「首爾」攝影紀實之後在補充一篇文章。&lt;/li>
-&lt;li>記得 2022 年初趁著夥伴對於 &lt;code>中級山&lt;/code>、&lt;code>縱走山行&lt;/code>心情還溫熱，大夥討論來訂下 2022 年度指標清單挑戰之一「嘉明湖」，最後一起報名 &lt;code>台灣 368 商業團&lt;/code> 和夥伴們一起走過並多拿下兩座百岳，我的 ⛰5th #向陽山 3,603m, ⛰6th #三叉山 3,496m。&lt;/li>
-&lt;li>挑戰成功「&lt;a class="link" href="%28https://taipeigrandtrail.travel.taipei/%29" >臺北大縱走尋寶石任務&lt;/a>」七段任務，最終和兩位夥伴一起完成所有縱走，感謝從 2021-2022 一起假日遠離都市來健行的夥伴們!&lt;/li>
-&lt;li>個人興趣培養與成長，持續更精進自我攝影觀念與技巧，這次不拍山岳風景社攝影，來參加 &lt;a class="link" href="https://www.instagram.com/4samantha" target="_blank" rel="noopener"
->@4samatha&lt;/a> 舉辦的&lt;code>人像工作坊&lt;/code>和與 &lt;a class="link" href="https://www.instagram.com/jerrythepopper/" target="_blank" rel="noopener"
->@jerrythepopper&lt;/a> 兩位攝影師交流，從人像實戰體驗培養美感的方式，並記住自己要多嘗試一點減法攝影，期待明年有更多不一樣的作品。&lt;/li>
-&lt;li>自我盤整之外，嘗試今年做了一部攝影 72 張照片回顧，透過鏡頭記錄自己的每一刻，感謝夥伴&lt;a class="link" href="https://www.youtube.com/channel/UCI2WLm8J8y_Upm0dVdGZFQg/videos" target="_blank" rel="noopener"
->紙片模型&lt;/a>一同協助。&lt;/li>
+&lt;li>摘錄[1] ：&lt;a class="link" href="https://www.darencademy.com/article/view/id/16525" target="_blank" rel="noopener"
+>大人學 - 你的人際關係多成功，取決於認知邊界的廣度&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://womany.net/read/article/11211" target="_blank" rel="noopener"
+>給28歲自己的一封信：找到自己的人生定位&lt;/a>&lt;/li>
 &lt;/ul>
-&lt;h5 id="2023-年展望--2023-年展望-2023-年展望">&lt;a class="link" href="#2023-%e5%b9%b4%e5%b1%95%e6%9c%9b" title=" 2023 年展望 "
->&lt;/a>2023 年展望&lt;/h5>
-&lt;ul>
-&lt;li>希望英文交流能變更好，疫情趨緩會有更多跨國年會與工作上同事交流，參加團隊聚會時希望能跟他們說一些日常交流&lt;/li>
-&lt;li>安排每週固定去健身房，轉換職涯後都沒繼續&lt;/li>
-&lt;li>投稿&lt;strong>社群技術&lt;/strong>演講 2 場&lt;/li>
-&lt;li>完成先前未完成的 Red Hat 證照&lt;/li>
-&lt;li>攝影/紀實部落格能有效經營，建立好 IG 專頁，出國機會更多，需要工作流程讓照片穩定輸出&lt;/li>
-&lt;/ul>
-&lt;h3 id="photography--2022-recap">Photography | 2022 Recap&lt;/h3>
-&lt;div class="video-wrapper">
-&lt;iframe loading="lazy"
-src="https://www.youtube.com/embed/di-M9AdRiwk"
-allowfullscreen
-title="YouTube Video"
->
-&lt;/iframe>
-&lt;/div>
-&lt;h3 id="related-posts">Related Posts&lt;/h3>
-&lt;ul>
-&lt;li>Photography Blog (&lt;a class="link" href="https://medium.com/yiyang-lins-life" target="_blank" rel="noopener"
->https://medium.com/yiyang-lins-life&lt;/a>)&lt;/li>
-&lt;/ul></description></item><item><title>2022 年度回顧 / 2023 年展望</title><link>https://blog.yylin.io/year/2022-retrospect-and-prospect/</link><pubDate>Sat, 31 Dec 2022 13:33:28 +0800</pubDate><guid>https://blog.yylin.io/year/2022-retrospect-and-prospect/</guid><description>&lt;p>2022 年有非常多的時間進行選擇與尋找定位，雖然過程很不容易，但今年還是很充實的過完這一年，很多朋友開始在年底都會有復盤自己的習慣，想過好下一年，那麼知道今年你是怎麼過的？或許對自己會有很大的幫助。本篇是個人於 2022 年的記錄以及對於未來的展望。&lt;/p>
+&lt;p>年初開始做了探索，其實真的太喜歡大人學的文章與 Podcast，更深度好好聆聽多次的一堂課很推薦，&lt;a class="link" href="https://shop.darencademy.com/product/view/id/116" target="_blank" rel="noopener"
+>用經營公司的思維經營你的人生&lt;/a>，這堂課幫助我釐清現況，督促自己做出合宜選擇。其中我覺得最核心的是 - 最後一堂課，談到的「增長」若自己希望將來有一天，是真的可以「優雅」地做你想做的事情，開始有了人生願景，那增長將讓你得以一路穩當的往那邊邁進，增長還能幫我們帶來另一個東西，這跟情緒穩定很有關係，那就是「餘裕」。&lt;/p>
+&lt;p>因緣際會，剛好因為蝦蝦有考證照目標，邀請我擔任薩提爾教練1對1的夥伴，藉這個機會認識了「薩提爾教練模式（Satir Coaching Model）」是一種結合了『教練方法』+『薩提爾冰山理論』，深具溫度和專業度的對話方式，覺察夥伴深層的自我。就想藉由這個機會想幫助自己、透過「復盤」不同的人生課題體驗過程，去探索、搞懂自己是誰、自己想要的人生劇本是什麼，及「以終為始」的終點在哪裡？ 透過我自己整年下來體驗人生的不同課題的答案，透過深度談話覺察自己的復盤過程中，更了解「自己的增長」與勾勒出更清晰明確「屬於自己此刻的答案」！&lt;/p>
+&lt;p>追逐完美過程，我知道了我「在做每一件事情之前，前置作業時間很長，思考清楚為何而做並且計畫以後，就會盡全力做到自己認為的最好。」
+在 2024 開始的長期計劃的事情與正在「前進」的方向，都有了意義！&lt;/p>
+&lt;h2 id="2024-展望">2024 展望&lt;/h2>
+&lt;ol>
+&lt;li>持續加強英文能力，達到溝通及寫作上都能夠流暢的程度。&lt;/li>
+&lt;li>更新停擺已久的部落格，強迫自己多撰寫文章及補齊之前技術研究的心得分享。&lt;/li>
+&lt;li>完成先前未完成的專業認證。&lt;/li>
+&lt;li>經營攝影回顧展，2024是籌備年，並建立好策展規劃與通路, Photography Blog (&lt;a class="link" href="https://yiyanglin.tw/" target="_blank" rel="noopener"
+>https://yiyanglin.tw/&lt;/a>)&lt;/li>
+&lt;li>維持 Work-life Balance，加強時間管理跟分配，留給更多的時間做自己想做的事以及休閒。&lt;/li>
+&lt;li>和夥伴製作 Podcast 節目。&lt;/li>
+&lt;/ol></description></item><item><title>2022 年度回顧 / 2023 年展望</title><link>https://blog.yylin.io/year/2022-retrospect-and-prospect/</link><pubDate>Sat, 31 Dec 2022 13:33:28 +0800</pubDate><guid>https://blog.yylin.io/year/2022-retrospect-and-prospect/</guid><description>&lt;p>2022 年有非常多的時間進行選擇與尋找定位，雖然過程很不容易，但今年還是很充實的過完這一年，很多朋友開始在年底都會有復盤自己的習慣，想過好下一年，那麼知道今年你是怎麼過的？或許對自己會有很大的幫助。本篇是個人於 2022 年的記錄以及對於未來的展望。&lt;/p>
 &lt;p>&lt;img src="https://blog.yylin.io/year/2022-retrospect-and-prospect/images/01.png"
 width="1080"
 height="608"
