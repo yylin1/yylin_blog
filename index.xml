@@ -11,7 +11,7 @@ data-flex-basis="360px"
 >&lt;/p>
 &lt;h2 id="工作">工作&lt;/h2>
 &lt;ol>
-&lt;li>內部職位調整 &lt;code>Specialist SA&lt;/code> 轉回 &lt;code>Account SA&lt;/code> ，更聚焦深入理解客戶的業務需求和面臨的挑戰，設計出切合實際的技術解決方案、規劃系統架構，以及確定實施方案的步驟和專案時程，確保成功交付客戶所需解決方案。&lt;/li>
+&lt;li>內部職位調整 Specialist SA 轉回 Account SA ，更聚焦深入理解客戶的業務需求和面臨的挑戰，設計出切合實際的技術解決方案、規劃系統架構，以及確定實施方案的步驟和專案時程，確保成功交付客戶所需解決方案。&lt;/li>
 &lt;/ol>
 &lt;ul>
 &lt;li>關於專案進行，我有額外進修專案管理課程，很實用就是課程內容提供 BIG TABLE 表格與真實情境演練，上完課隔日就能馬上在專案上使用，推薦大家上&lt;a class="link" href="https://shop.darencademy.com/product/view/id/1" target="_blank" rel="noopener"
@@ -20,7 +20,7 @@ data-flex-basis="360px"
 &lt;ol start="2">
 &lt;li>公司策略走向，有機會想拓展 Taiwan AI 市場與容器平台機會，再次接觸到好多之前合作過的 AI 平台公司，還有 OEM 廠商還記得我之前有合作過，就這樣再次踏上 AI 浪潮時間，慢慢將市場與需求拼圖慢慢拼湊出來。&lt;/li>
 &lt;li>後疫情時代首次能出國出差的時刻，有機會參加在公司舉辦在新加坡 Singapore 的 &lt;code>Tech Exchange 2023&lt;/code>年會，真的很難得有機會和 APAC 區域的不同國家的同事交流經驗與技術，還有見沒有見過的網友同事，意外很充實的技術年會收穫，額外最驚艷應該是有機會在 GalaParty 看到印度舞蹈的魅力與群體氛圍。&lt;/li>
-&lt;li>在 Intel Vision APJ 2023 活動上，有機會與首席架構師 Andreas Spanner 共同合作，特別展示 MLOps 和 RHODS 與 Intel OpenVINO Toolkit 結合應用場景，還有機會與來自不同國家的 Red Hat Global Team 同事進行深入交流，更榮幸與 Intel 的 CEO - Pat Gelsinger 合影留念，真的是我非常難得的機會。&lt;/li>
+&lt;li>在 Intel Vision APJ 2023 活動上，有機會與首席架構師 Andreas Spanner 共同合作，特別展示 MLOps 和 RHODS 與 Intel OpenVINO Toolkit 結合應用場景，還有機會與來自不同國家的 Red Hat Global Team 同事進行深入交流，更榮幸與 &lt;code>Intel 的 CEO - Pat Gelsinger&lt;/code> 合影留念，真的是我非常難得的機會。&lt;/li>
 &lt;/ol>
 &lt;h2 id="生活">生活&lt;/h2>
 &lt;ol>
@@ -36,7 +36,6 @@ data-flex-basis="360px"
 loading="lazy"
 >&lt;/p>
 &lt;h2 id="值得閱讀的書">值得閱讀的書&lt;/h2>
-&lt;p>對讀者而言，閱讀像是進入作者的生命，讓我們用很短的時間(幾個小時比起幾年)，高效率地從作者的視角中活過一次這段人生。每讀一本書，就像多活過一些作者歷練，在自己的生命旅程中添加一分色彩與理解。&lt;/p>
 &lt;ol>
 &lt;li>&lt;a class="link" href="https://www.kobo.com/tw/zh/ebook/ciEj3oHWiz6lqsEMxBVjQw" target="_blank" rel="noopener"
 >《薩提爾的自我覺察練習》&lt;/a> - 讓我看見自己內心深層的想法看法，意識到自己在意/不在乎或重要與否的判斷拿捏，我會更「聚焦在現在與未來，詢問過去是了解行為模式、成功/失敗經驗」。&lt;/li>
@@ -50,6 +49,8 @@ loading="lazy"
 &lt;li>&lt;a class="link" href="https://www.kobo.com/tw/zh/ebook/CvoePbm2wjesiaHTXe6EBg" target="_blank" rel="noopener"
 >《贏在邏輯思考力：玩一場擴張邊界的遊戲》&lt;/a>- 我常常輸給自己的過去觀點和死板的印象，透過這本書知道可以更深度有邏輯，讓自己更願意試著擴張邊界，用邏輯思考他人冰山以下的部分，去理解不理解的，用更寬廣的角度去看，不一樣不是唱反調，不一樣只是不一樣，但我們要如何應對與處理人和各種情境。&lt;/li>
 &lt;/ol>
+&lt;p>培養閱讀習慣過程，很喜歡「&lt;a class="link" href="https://readingoutpost.com/about/" target="_blank" rel="noopener"
+>閱讀前哨站．站長瓦基&lt;/a>」提言的一段話：對讀者而言，閱讀像是進入作者的生命，讓我們用很短的時間(幾個小時比起幾年)，高效率地從作者的視角中活過一次這段人生。每讀一本書，就像多活過一些作者歷練，在自己的生命旅程中添加一分色彩與理解。最後這些思維見解內化成自己樣子真的會有更多不一樣的收穫。&lt;/p>
 &lt;h2 id="值得感謝的人">值得感謝的人&lt;/h2>
 &lt;p>2023 對我來說是一個很特別的一年，花非常多時間在梳理思緒成熟的開始，去年底接受到前輩給我的一個人生思維課題：「在人生列車上，社會化過程中的轉換心態，對於下一步的選擇都會仔細評估考量，何不多想想下下一步的自己？」&lt;/p>
 &lt;p>就這個議題徘徊在我腦海盤旋，讓我很想好好探索好自己對於，所謂「認知邊界」的廣度，這邊指的是我們根據過去人生經驗而對世界所描繪出的規則與界限[1]能看見多少？ 決定要好好探索，雖然這段路崎嶇需要足夠時間，但能好好想想「找到自己人生定位」[2]，我有沒有更多對於想要嘗試的下下一步和中長期對自己的想像？此時此刻回頭思考這段慢慢建構的過程，大概是這一整年最棒的事。&lt;/p>
