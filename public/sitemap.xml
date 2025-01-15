@@ -3,30 +3,30 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://localhost:1313/</loc>
-    <lastmod>2025-01-16T01:23:08+08:00</lastmod>
+    <lastmod>2024-12-31T13:33:28+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/post/my-first-post/</loc>
-    <lastmod>2025-01-16T01:23:08+08:00</lastmod>
+    <loc>http://localhost:1313/year/2023-retrospect-and-prospect/</loc>
+    <lastmod>2024-12-31T13:33:28+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/</loc>
+    <lastmod>2024-12-31T13:33:28+08:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/post/</loc>
-    <lastmod>2025-01-16T01:23:08+08:00</lastmod>
+    <lastmod>2024-12-31T13:33:28+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/retrospect/</loc>
+    <lastmod>2024-12-31T13:33:28+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/retrospect/</loc>
+    <lastmod>2024-12-31T13:33:28+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2024-12-31T13:33:28+08:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/post/hello/</loc>
     <lastmod>2024-01-02T12:13:14+08:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/year/2023-retrospect-and-prospect/</loc>
-    <lastmod>2023-12-31T13:33:28+08:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2023-12-31T13:33:28+08:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/retrospect/</loc>
-    <lastmod>2023-12-31T13:33:28+08:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/categories/retrospect/</loc>
-    <lastmod>2023-12-31T13:33:28+08:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/</loc>
     <lastmod>2023-12-31T13:33:28+08:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/year/2022-retrospect-and-prospect/</loc>
