@@ -11,8 +11,8 @@
 &lt;p>&lt;img src="https://i.imgur.com/49Qc3LU.png"
 loading="lazy"
 >&lt;/p>
-&lt;h2 id="情境與使用目標">情境與使用目標&lt;/h2>
-&lt;p>OpenShift 通常是在受控制離線網路的情況下運行 Production Cluster。而客戶要使用 Red Hat Quay 在 OpenShift 上運行優勢包含，有更多擴充性與部署元件配置整合性。要在離線環境安裝 OpenShift 前提條件，需要一個存放的安裝所需的相關鏡像的鏡像倉庫 (e.g., Quay, Harbor, Docker registry)，這邊就會有雞生蛋蛋生雞問題。&lt;/p>
+&lt;h2 id="情境與使用目標">情境與使用目標
+&lt;/h2>&lt;p>OpenShift 通常是在受控制離線網路的情況下運行 Production Cluster。而客戶要使用 Red Hat Quay 在 OpenShift 上運行優勢包含，有更多擴充性與部署元件配置整合性。要在離線環境安裝 OpenShift 前提條件，需要一個存放的安裝所需的相關鏡像的鏡像倉庫 (e.g., Quay, Harbor, Docker registry)，這邊就會有雞生蛋蛋生雞問題。&lt;/p>
 &lt;p>解決方案/目標：&lt;/p>
 &lt;p>Red Hat 提供一個 “mirror registry”工具，只針對 OpenShift 部署的引導(Bootstrap)鏡像倉庫，透過自動化腳本安裝程序，提供在 RHEL 8 (or Fedora) 的系統環境，快速部署一個精簡版的 Quay ，提供保存下載特定版本 OpenShift、OpenShiftHub 鏡像檔。mirror registry 提供針對離線環境或只是單純 PoC OpenShift 情境使用的 Registry，可以透過自動化腳本，快速部署設置安裝單節點(all-in-one)的 Quay ，所需要的相關手動繁瑣設定，例如：完整網域名稱 FQDN、使用者自定義 SSL/TLS 憑證、訪問權權限 SSH key 及運行的環境選擇。&lt;/p>
 &lt;p>情境: 離線環境，安裝 OpenShift 運行流程:&lt;/p>
@@ -22,14 +22,14 @@ loading="lazy"
 &lt;li>透過 Air-gapped Mirror 部署 OpenShift Production/Infra Cluster&lt;/li>
 &lt;li>OpenShift 安裝 Quay Operator 提供內部服務及應用所需的鏡像存放&lt;/li>
 &lt;/ol>
-&lt;h2 id="事前準備">事前準備&lt;/h2>
-&lt;ul>
+&lt;h2 id="事前準備">事前準備
+&lt;/h2>&lt;ul>
 &lt;li>從 &lt;a class="link" href="https://console.redhat.com/openshift/downloads#tool-mirror-registry" target="_blank" rel="noopener"
 >OpenShift console Downloads&lt;/a> 下載最新版本的 &lt;code>mirror-registry.tar.gz&lt;/code>&lt;/li>
 &lt;li>準備 pull-secret.json 檔案&lt;/li>
 &lt;/ul>
-&lt;h2 id="安裝">安裝&lt;/h2>
-&lt;ul>
+&lt;h2 id="安裝">安裝
+&lt;/h2>&lt;ul>
 &lt;li>在當前環境安裝 mirror registry&lt;/li>
 &lt;/ul>
 &lt;div class="highlight">&lt;div class="chroma">
@@ -44,13 +44,15 @@ loading="lazy"
 &lt;/span>&lt;span class="lnt">8
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ vim /etc/hosts
-127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4
-::1 localhost localhost.localdomain localhost6 localhost6.localdomain6
-127.0.0.1 registry.yylin.demolab
-$ export HOSTNAME=&amp;#34;registry.yylin.demolab&amp;#34;
-$ ./mirror-registry install --quayHostname ${HOSTNAME} --ssh-key &amp;lt;~/.ssh/my_id_rsa&amp;gt;
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="o">$&lt;/span> &lt;span class="n">vim&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">etc&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">hosts&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">127.0&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mf">0.1&lt;/span> &lt;span class="n">localhost&lt;/span> &lt;span class="n">localhost&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">localdomain&lt;/span> &lt;span class="n">localhost4&lt;/span> &lt;span class="n">localhost4&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">localdomain4&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">::&lt;/span>&lt;span class="mi">1&lt;/span> &lt;span class="n">localhost&lt;/span> &lt;span class="n">localhost&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">localdomain&lt;/span> &lt;span class="n">localhost6&lt;/span> &lt;span class="n">localhost6&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">localdomain6&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">127.0&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mf">0.1&lt;/span> &lt;span class="n">registry&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">yylin&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">demolab&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">$&lt;/span> &lt;span class="k">export&lt;/span> &lt;span class="n">HOSTNAME&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;registry.yylin.demolab&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">$&lt;/span> &lt;span class="o">./&lt;/span>&lt;span class="n">mirror&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">registry&lt;/span> &lt;span class="n">install&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">quayHostname&lt;/span> &lt;span class="o">$&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="n">HOSTNAME&lt;/span>&lt;span class="p">}&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">ssh&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">key&lt;/span> &lt;span class="o">&amp;lt;~/.&lt;/span>&lt;span class="n">ssh&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">my_id_rsa&lt;/span>&lt;span class="o">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>最後輸出顯示 registry host 與登入資訊&lt;/li>
@@ -61,9 +63,9 @@ $ ./mirror-registry install --quayHostname ${HOSTNAME} --ssh-key &amp;lt;~/.ssh/
 &lt;/span>&lt;span class="lnt">2
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">INFO[2022-03-01 00:52:38] Quay installed successfully, permanent data are stored in /etc/quay-install
-INFO[2022-03-01 00:52:38] Quay is available at https://registry.yylin.demolab:8443 with credentials (init, xxxxxxxxxxxxxxxxxxxxxx)
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">INFO[2022-03-01 00:52:38] Quay installed successfully, permanent data are stored in /etc/quay-install
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">INFO[2022-03-01 00:52:38] Quay is available at https://registry.yylin.demolab:8443 with credentials (init, xxxxxxxxxxxxxxxxxxxxxx)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>產生 Registry Basic Auth 之認證資訊&lt;/li>
@@ -74,9 +76,9 @@ INFO[2022-03-01 00:52:38] Quay is available at https://registry.yylin.demolab:84
 &lt;/span>&lt;span class="lnt">2
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback"># (init, xxxxxxxxxxxxxxxxxxxxxx)
-echo -n &amp;#39;&amp;lt;username&amp;gt;:&amp;lt;password&amp;gt;&amp;#39; | base64 -w0
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"># (init, xxxxxxxxxxxxxxxxxxxxxx)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">echo -n &amp;#39;&amp;lt;username&amp;gt;:&amp;lt;password&amp;gt;&amp;#39; | base64 -w0
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>在 pull-secret 加入本地 Registry 認證資訊&lt;/li>
@@ -88,10 +90,10 @@ echo -n &amp;#39;&amp;lt;username&amp;gt;:&amp;lt;password&amp;gt;&amp;#39; | ba
 &lt;/span>&lt;span class="lnt">3
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback"> &amp;#34;registry.yylin.demolab:8443&amp;#34;: {
-&amp;#34;auth&amp;#34;: &amp;#34;aW5pdDo3TzlNV1hBMDhQcTJKZGh0M0M2elZJNU5EMWlsYkJ3NA==&amp;#34;
-}
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"> &amp;#34;registry.yylin.demolab:8443&amp;#34;: {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#34;auth&amp;#34;: &amp;#34;aW5pdDo3TzlNV1hBMDhQcTJKZGh0M0M2elZJNU5EMWlsYkJ3NA==&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> }
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>驗證登入registry&lt;/li>
@@ -102,9 +104,9 @@ echo -n &amp;#39;&amp;lt;username&amp;gt;:&amp;lt;password&amp;gt;&amp;#39; | ba
 &lt;/span>&lt;span class="lnt">2
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ podman login -u init --authfile pull-secret.json registry.yylin.demolab:8443
-Error: authenticating creds for &amp;#34;registry.yylin.demolab:8443&amp;#34;: pinging container registry registry.yylin.demolab:8443: Get &amp;#34;https://registry.yylin.demolab:8443/v2/&amp;#34;: x509: certificate signed by unknown authority (possibly because of &amp;#34;crypto/rsa: verification error&amp;#34; while trying to verify candidate authority certificate &amp;#34;bastion.redhat.kubedev.org&amp;#34;)
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">$ podman login -u init --authfile pull-secret.json registry.yylin.demolab:8443
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Error: authenticating creds for &amp;#34;registry.yylin.demolab:8443&amp;#34;: pinging container registry registry.yylin.demolab:8443: Get &amp;#34;https://registry.yylin.demolab:8443/v2/&amp;#34;: x509: certificate signed by unknown authority (possibly because of &amp;#34;crypto/rsa: verification error&amp;#34; while trying to verify candidate authority certificate &amp;#34;bastion.redhat.kubedev.org&amp;#34;)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>安裝更新 quay 憑證&lt;/li>
@@ -117,8 +119,8 @@ Error: authenticating creds for &amp;#34;registry.yylin.demolab:8443&amp;#34;: p
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ cp /etc/quay-install/quay-rootCA/rootCA.pem /usr/share/pki/ca-trust-source/anchors/rootCA.cert
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">$ cp /etc/quay-install/quay-rootCA/rootCA.pem /usr/share/pki/ca-trust-source/anchors/rootCA.cert
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
 &lt;p>更新系統範圍的信任儲存配置，請使用 update-ca-trust 命令：&lt;/p>
@@ -128,8 +130,8 @@ Error: authenticating creds for &amp;#34;registry.yylin.demolab:8443&amp;#34;: p
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ update-ca-trust
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">$ update-ca-trust
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>再次登入mirror registry - Quay 確認憑證狀態是不是已經更新&lt;/li>
@@ -141,13 +143,13 @@ Error: authenticating creds for &amp;#34;registry.yylin.demolab:8443&amp;#34;: p
 &lt;/span>&lt;span class="lnt">3
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ podman login -u init --authfile pull-secret.json bastion.redhat.kubedev.org:8443
-Password:
-Login Succeeded!
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">$ podman login -u init --authfile pull-secret.json bastion.redhat.kubedev.org:8443
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Password:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Login Succeeded!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;h2 id="開始備份-openshift-images">開始備份 OpenShift images&lt;/h2>
-&lt;ol>
+&lt;/div>&lt;h2 id="開始備份-openshift-images">開始備份 OpenShift images
+&lt;/h2>&lt;ol>
 &lt;li>建立備份路徑&lt;/li>
 &lt;/ol>
 &lt;div class="highlight">&lt;div class="chroma">
@@ -155,8 +157,8 @@ Login Succeeded!
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ mkdir -p $HOME/openshift4/registry/images
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">$ mkdir -p $HOME/openshift4/registry/images
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ol start="2">
 &lt;li>匯入環境變數&lt;/li>
@@ -182,20 +184,24 @@ Login Succeeded!
 &lt;/span>&lt;span class="lnt">17
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback"># vim upgrade-env
-export OCP_RELEASE=$(oc version -o json --client | jq -r &amp;#39;.releaseClientVersion&amp;#39;)
-export LOCAL_REGISTRY=&amp;#34;registry.yylin.demolab:8443&amp;#34;
-export LOCAL_REPOSITORY=&amp;#34;ocp4/openshift4&amp;#34;
-export PRODUCT_REPO=&amp;#34;openshift-release-dev&amp;#34;
-# /註記/ 請確認 pull-secret.json 裡面有包含 mirror rigistry 資訊
-export LOCAL_SECRET_JSON=$HOME/mirror-registry/pull-secret.json
-export RELEASE_NAME=&amp;#34;ocp-release&amp;#34;
-export ARCHITECTURE=x86_64
-# 指定 images 存放路徑
-export REMOVABLE_MEDIA_PATH=&amp;#34;$HOME/openshift4/registry/images&amp;#34;
-# 匯入環境變數
-source upgrade-env
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># vim upgrade-env&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">OCP_RELEASE&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">oc&lt;/span> &lt;span class="n">version&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">o&lt;/span> &lt;span class="n">json&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">client&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="n">jq&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">r&lt;/span> &lt;span class="s1">&amp;#39;.releaseClientVersion&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">LOCAL_REGISTRY&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;registry.yylin.demolab:8443&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">LOCAL_REPOSITORY&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;ocp4/openshift4&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">PRODUCT_REPO&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;openshift-release-dev&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># /註記/ 請確認 pull-secret.json 裡面有包含 mirror rigistry 資訊&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">LOCAL_SECRET_JSON&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="n">HOME&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">mirror&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">registry&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">pull&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">secret&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">json&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">RELEASE_NAME&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;ocp-release&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">ARCHITECTURE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">x86_64&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 指定 images 存放路徑&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">REMOVABLE_MEDIA_PATH&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;$HOME/openshift4/registry/images&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 匯入環境變數&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">source&lt;/span> &lt;span class="n">upgrade&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">env&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ol start="3">
 &lt;li>備份 Image&lt;/li>
@@ -208,8 +214,8 @@ source upgrade-env
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc adm release mirror -a ${LOCAL_SECRET_JSON} --from=quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE} --to=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY} --to-release-image=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY}:${OCP_RELEASE}-${ARCHITECTURE} --dry-run
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">$ oc adm release mirror -a ${LOCAL_SECRET_JSON} --from=quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE} --to=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY} --to-release-image=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY}:${OCP_RELEASE}-${ARCHITECTURE} --dry-run
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -222,14 +228,14 @@ source upgrade-env
 &lt;/span>&lt;span class="lnt">7
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">imageContentSources:
-- mirrors:
-- registry.yylin.demolab:8443/ocp4/openshift4
-source: quay.io/openshift-release-dev/ocp-release
-- mirrors:
-- registry.yylin.demolab:8443/ocp4/openshift4
-source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">imageContentSources:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- mirrors:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - registry.yylin.demolab:8443/ocp4/openshift4
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> source: quay.io/openshift-release-dev/ocp-release
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- mirrors:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - registry.yylin.demolab:8443/ocp4/openshift4
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>/#2/ Mirror the images to a directory on the removable media:&lt;/li>
@@ -239,8 +245,8 @@ source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc adm release mirror -a ${LOCAL_SECRET_JSON} --to-dir=${REMOVABLE_MEDIA_PATH}/mirror quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE}
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">$ oc adm release mirror -a ${LOCAL_SECRET_JSON} --to-dir=${REMOVABLE_MEDIA_PATH}/mirror quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -256,13 +262,17 @@ source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
 &lt;/span>&lt;span class="lnt">10
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">info: Mirroring completed in 3m6.3s (66.22MB/s)
-Success
-Update image: openshift/release:4.10.0-rc.3-x86_64
-To upload local images to a registry, run:
-oc image mirror --from-dir=/root/openshift4/registry/images/mirror &amp;#39;file://openshift/release:4.10.0-rc.3-x86_64*&amp;#39; REGISTRY/REPOSITORY
-Configmap signature file /root/openshift4/registry/images/mirror/config/signature-sha256-3d4ada825f4aa4d2.yaml created
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="n">info&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Mirroring&lt;/span> &lt;span class="n">completed&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="mi">3&lt;/span>&lt;span class="n">m6&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="n">s&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="mf">66.22&lt;/span>&lt;span class="n">MB&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">s&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Success&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Update&lt;/span> &lt;span class="n">image&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">openshift&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">release&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mf">4.10&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">rc&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">x86_64&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">To&lt;/span> &lt;span class="n">upload&lt;/span> &lt;span class="n">local&lt;/span> &lt;span class="n">images&lt;/span> &lt;span class="n">to&lt;/span> &lt;span class="n">a&lt;/span> &lt;span class="n">registry&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">run&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">oc&lt;/span> &lt;span class="n">image&lt;/span> &lt;span class="n">mirror&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">from&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">dir&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">root&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">openshift4&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">registry&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">images&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">mirror&lt;/span> &lt;span class="s1">&amp;#39;file://openshift/release:4.10.0-rc.3-x86_64*&amp;#39;&lt;/span> &lt;span class="n">REGISTRY&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">REPOSITORY&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Configmap&lt;/span> &lt;span class="n">signature&lt;/span> &lt;span class="n">file&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">root&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">openshift4&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">registry&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">images&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">mirror&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">config&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">signature&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">sha256&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="n">d4ada825f4aa4d2&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">yaml&lt;/span> &lt;span class="n">created&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>/#3/ Take the media to the restricted network environment and upload the images to the local container registry:&lt;/li>
@@ -272,8 +282,8 @@ Configmap signature file /root/openshift4/registry/images/mirror/config/signatur
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc image mirror -a ${LOCAL_SECRET_JSON} --from-dir=${REMOVABLE_MEDIA_PATH}/mirror &amp;#34;file://openshift/release:${OCP_RELEASE}*&amp;#34; ${LOCAL_REGISTRY}/${LOCAL_REPOSITORY}
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">$ oc image mirror -a ${LOCAL_SECRET_JSON} --from-dir=${REMOVABLE_MEDIA_PATH}/mirror &amp;#34;file://openshift/release:${OCP_RELEASE}*&amp;#34; ${LOCAL_REGISTRY}/${LOCAL_REPOSITORY}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -294,21 +304,22 @@ Configmap signature file /root/openshift4/registry/images/mirror/config/signatur
 &lt;/span>&lt;span class="lnt">15
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">phase 0:
-registry.redhat.demolab:8443 ocp4/openshift4 blobs=334 mounts=0 manifests=163 shared=0
-info: Planning completed in 2.12s
-uploading: registry.redhat.demolab:8443/ocp4/openshift4 sha256:7253c5d7bf339222334565e0ec7ac88dd017dc9b9ec01654d26e8dda07408548 81.38MiB
-uploading: registry.redhat.demolab:8443/ocp4/openshift4 sha256:8e549eaeb17902a2a516d03776112ad7a9bfd10cd2d1c298fe31b1c15d3b4166 154.4MiB
-uploading: registry.redhat.demolab:8443/ocp4/openshift4 sha256:11456a2e94a652afe44f2645d83a051160119fd953b2459167cc88232adbf9ed 31.45MiB
-uploading: registry.redhat.demolab:8443/ocp4/openshift4 sha256:4ceffbad995c4d6e76142c6b46e7f2e06fcd2ddb6eb2c3624cc0244ae018356f 106.9MiB
-...
-...
-sha256:2d80cc5beffc10607a53eb6c013e87d03e267cdf0b8fc678b40acf5432957714 registry.redhat.demolab:8443/ocp4/openshift4:4.10.0-rc.3-x86_64-multus-networkpolicy
-sha256:df3b0ec40395ea460fbf2728ca7adff79dbaebddcffce003e88b3fb9cb2c9759 registry.redhat.demolab:8443/ocp4/openshift4:4.10.0-rc.3-x86_64-must-gather
-sha256:a340ea3d86560de8cf9ee2c1afe42ad24e5eefc9903a0073abe9dc54815bf710 registry.redhat.demolab:8443/ocp4/openshift4:4.10.0-rc.3-x86_64-console-operator
-sha256:f532e7f50cadfc757a6d277ab5476a31a4f24aac0afc615da6ff9f7ce5e2b538 registry.redhat.demolab:8443/ocp4/openshift4:4.10.0-rc.3-x86_64-cluster-image-registry-operator
-info: Mirroring completed in 1m17.77s (5.572MB/s)
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="n">phase&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">registry&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">redhat&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">demolab&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">8443&lt;/span> &lt;span class="n">ocp4&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">openshift4&lt;/span> &lt;span class="n">blobs&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">334&lt;/span> &lt;span class="n">mounts&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">0&lt;/span> &lt;span class="n">manifests&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">163&lt;/span> &lt;span class="n">shared&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">info&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Planning&lt;/span> &lt;span class="n">completed&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="mf">2.12&lt;/span>&lt;span class="n">s&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">uploading&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">registry&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">redhat&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">demolab&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">8443&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">ocp4&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">openshift4&lt;/span> &lt;span class="n">sha256&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">7253&lt;/span>&lt;span class="n">c5d7bf339222334565e0ec7ac88dd017dc9b9ec01654d26e8dda07408548&lt;/span> &lt;span class="mf">81.38&lt;/span>&lt;span class="n">MiB&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">uploading&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">registry&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">redhat&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">demolab&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">8443&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">ocp4&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">openshift4&lt;/span> &lt;span class="n">sha256&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mf">8e549&lt;/span>&lt;span class="n">eaeb17902a2a516d03776112ad7a9bfd10cd2d1c298fe31b1c15d3b4166&lt;/span> &lt;span class="mf">154.4&lt;/span>&lt;span class="n">MiB&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">uploading&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">registry&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">redhat&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">demolab&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">8443&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">ocp4&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">openshift4&lt;/span> &lt;span class="n">sha256&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">11456&lt;/span>&lt;span class="n">a2e94a652afe44f2645d83a051160119fd953b2459167cc88232adbf9ed&lt;/span> &lt;span class="mf">31.45&lt;/span>&lt;span class="n">MiB&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">uploading&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">registry&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">redhat&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">demolab&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">8443&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">ocp4&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">openshift4&lt;/span> &lt;span class="n">sha256&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">4&lt;/span>&lt;span class="n">ceffbad995c4d6e76142c6b46e7f2e06fcd2ddb6eb2c3624cc0244ae018356f&lt;/span> &lt;span class="mf">106.9&lt;/span>&lt;span class="n">MiB&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">...&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">...&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">sha256&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="n">d80cc5beffc10607a53eb6c013e87d03e267cdf0b8fc678b40acf5432957714&lt;/span> &lt;span class="n">registry&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">redhat&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">demolab&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">8443&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">ocp4&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">openshift4&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mf">4.10&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">rc&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">x86_64&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">multus&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">networkpolicy&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">sha256&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">df3b0ec40395ea460fbf2728ca7adff79dbaebddcffce003e88b3fb9cb2c9759&lt;/span> &lt;span class="n">registry&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">redhat&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">demolab&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">8443&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">ocp4&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">openshift4&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mf">4.10&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">rc&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">x86_64&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">must&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">gather&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">sha256&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">a340ea3d86560de8cf9ee2c1afe42ad24e5eefc9903a0073abe9dc54815bf710&lt;/span> &lt;span class="n">registry&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">redhat&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">demolab&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">8443&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">ocp4&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">openshift4&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mf">4.10&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">rc&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">x86_64&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">console&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">operator&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">sha256&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">f532e7f50cadfc757a6d277ab5476a31a4f24aac0afc615da6ff9f7ce5e2b538&lt;/span> &lt;span class="n">registry&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">redhat&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">demolab&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">8443&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">ocp4&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">openshift4&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mf">4.10&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">rc&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">x86_64&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">cluster&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">registry&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">operator&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">info&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Mirroring&lt;/span> &lt;span class="n">completed&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="n">m17&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">77&lt;/span>&lt;span class="n">s&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="mf">5.572&lt;/span>&lt;span class="n">MB&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">s&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>/#4/ Directly push the release images to the local registry by using following command:&lt;/li>
@@ -318,20 +329,20 @@ info: Mirroring completed in 1m17.77s (5.572MB/s)
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ oc adm release mirror -a ${LOCAL_SECRET_JSON} --from=quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE} --to=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY} --apply-release-image-signature
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">$ oc adm release mirror -a ${LOCAL_SECRET_JSON} --from=quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE} --to=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY} --apply-release-image-signature
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
 &lt;p>&lt;a class="link" href="https://docs.openshift.com/container-platform/4.10/openshift_images/samples-operator-alt-registry.html" target="_blank" rel="noopener"
 >更多配置請參考 Mirroring the OpenShift Container Platform image repository&lt;/a>&lt;/p>
 &lt;/blockquote>
-&lt;h2 id="mirror-後結果">mirror 後結果&lt;/h2>
-&lt;p>&lt;img src="https://i.imgur.com/APzRuyc.png"
+&lt;h2 id="mirror-後結果">mirror 後結果
+&lt;/h2>&lt;p>&lt;img src="https://i.imgur.com/APzRuyc.png"
 loading="lazy"
 >&lt;/p>
 &lt;hr>
-&lt;h2 id="reference">Reference&lt;/h2>
-&lt;ul>
+&lt;h2 id="reference">Reference
+&lt;/h2>&lt;ul>
 &lt;li>&lt;a class="link" href="https://docs.openshift.com/container-platform/4.10/installing/disconnected_install/installing-mirroring-creating-registry.html#mirror-registry-localhost_installing-mirroring-creating-registry" target="_blank" rel="noopener"
 >Mirroring on a local host with mirror registry for Red Hat OpenShift&lt;/a>&lt;/li>
 &lt;li>&lt;a class="link" href="https://cloud.redhat.com/blog/introducing-mirror-registry-for-red-hat-openshift" target="_blank" rel="noopener"

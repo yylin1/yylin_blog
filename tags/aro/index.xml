@@ -12,14 +12,14 @@ loading="lazy"
 >ARO 圖詳細信息 - 官方文檔&lt;/a>&lt;/li>
 &lt;/ul>
 &lt;p>讓我們安裝我們的第一個 ARO4 集群！&lt;/p>
-&lt;h2 id="azure-帳戶先決條件">Azure 帳戶先決條件&lt;/h2>
-&lt;p>首先，我們需要在 Azure 帳戶中設置幾項內容，例如生成 ServicePrincipals、增加限制以及定義要使用的區域。&lt;/p>
+&lt;h2 id="azure-帳戶先決條件">Azure 帳戶先決條件
+&lt;/h2>&lt;p>首先，我們需要在 Azure 帳戶中設置幾項內容，例如生成 ServicePrincipals、增加限制以及定義要使用的區域。&lt;/p>
 &lt;ul>
 &lt;li>按照&lt;a class="link" href="https://docs.openshift.com/container-platform/latest/installing/installing_azure/installing-azure-account.html" target="_blank" rel="noopener"
 >配置 Azure 帳戶先決條件&lt;/a>來定義和分配適當的 RBAC 權限並增加對 Azure 帳戶的限制。&lt;/li>
 &lt;/ul>
-&lt;h2 id="為-aro-安裝配置-azure-基礎結構先決條件">為 ARO 安裝配置 Azure 基礎結構先決條件&lt;/h2>
-&lt;p>當我們準備好上一步後，就可以在 Azure 中為我們的 ARO4 集群生成基礎資源先決條件了：&lt;/p>
+&lt;h2 id="為-aro-安裝配置-azure-基礎結構先決條件">為 ARO 安裝配置 Azure 基礎結構先決條件
+&lt;/h2>&lt;p>當我們準備好上一步後，就可以在 Azure 中為我們的 ARO4 集群生成基礎資源先決條件了：&lt;/p>
 &lt;ul>
 &lt;li>定義 ARO4 安裝的基本參數：&lt;/li>
 &lt;/ul>
@@ -33,13 +33,13 @@ loading="lazy"
 &lt;/span>&lt;span class="lnt">6
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">export LOCATION=eastus
-export RESOURCEGROUP=aro-rg
-export CLUSTER=rcarrata
-export VNET_CIDR=&amp;#34;10.0.0.0/22&amp;#34;
-export MASTER_SUBNET_CIDR=&amp;#34;10.0.0.0/23&amp;#34;
-export WORKER_SUBNET_CIDR=&amp;#34;10.0.2.0/23&amp;#34;
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">LOCATION&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">eastus&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">RESOURCEGROUP&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">aro&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">rg&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">CLUSTER&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">rcarrata&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">VNET_CIDR&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;10.0.0.0/22&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">MASTER_SUBNET_CIDR&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;10.0.0.0/23&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">WORKER_SUBNET_CIDR&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;10.0.2.0/23&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>使用 az cli 登錄到 Azure：&lt;/li>
@@ -49,8 +49,8 @@ export WORKER_SUBNET_CIDR=&amp;#34;10.0.2.0/23&amp;#34;
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">az login
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">az login
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>注意：當登錄彈出時，您需要在 Azure Dashboard 中使用您的憑據進行身份驗證。&lt;/p>
 &lt;ul>
@@ -63,14 +63,14 @@ export WORKER_SUBNET_CIDR=&amp;#34;10.0.2.0/23&amp;#34;
 &lt;/span>&lt;span class="lnt">3
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">az provider register -n Microsoft.RedHatOpenShift --wait
-az provider register -n Microsoft.Compute --wait
-az provider register -n Microsoft.Storage --wait
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">az provider register -n Microsoft.RedHatOpenShift --wait
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">az provider register -n Microsoft.Compute --wait
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">az provider register -n Microsoft.Storage --wait
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;h1 id="建立-azure-red-hat-openshift-4-叢集">建立 Azure Red Hat OpenShift 4 叢集&lt;/h1>
-&lt;h2 id="開始之前">開始之前&lt;/h2>
-&lt;p>Azure Red Hat OpenShift 至少需要 40 個核心，才能建立和執行 OpenShift 叢集。 新 Azure 訂用帳戶的預設 Azure 資源配額不符合這項需求。 若要要求增加資源限制，請參閱標準配額：&lt;a class="link" href="https://docs.microsoft.com/zh-tw/azure/azure-portal/supportability/per-vm-quota-requests" target="_blank" rel="noopener"
+&lt;/div>&lt;h1 id="建立-azure-red-hat-openshift-4-叢集">建立 Azure Red Hat OpenShift 4 叢集
+&lt;/h1>&lt;h2 id="開始之前">開始之前
+&lt;/h2>&lt;p>Azure Red Hat OpenShift 至少需要 40 個核心，才能建立和執行 OpenShift 叢集。 新 Azure 訂用帳戶的預設 Azure 資源配額不符合這項需求。 若要要求增加資源限制，請參閱標準配額：&lt;a class="link" href="https://docs.microsoft.com/zh-tw/azure/azure-portal/supportability/per-vm-quota-requests" target="_blank" rel="noopener"
 >VM 系列的增加限制&lt;/a>。&lt;/p>
 &lt;ul>
 &lt;li>例如，若要檢查最小支援的虛擬機器系列 SKU 「標準 DSv3」的目前訂用帳戶配額：&lt;/li>
@@ -83,11 +83,11 @@ az provider register -n Microsoft.Storage --wait
 &lt;/span>&lt;span class="lnt">4
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">LOCATION=eastus
-az vm list-usage -l $LOCATION \
---query &amp;#34;[?contains(name.value, &amp;#39;standardDSv3Family&amp;#39;)]&amp;#34; \
--o table
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">LOCATION=eastus
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">az vm list-usage -l $LOCATION \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">--query &amp;#34;[?contains(name.value, &amp;#39;standardDSv3Family&amp;#39;)]&amp;#34; \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-o table
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -96,13 +96,13 @@ az vm list-usage -l $LOCATION \
 &lt;/span>&lt;span class="lnt">3
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">CurrentValue Limit LocalName
--------------- ------- --------------------------
-40 1000 Standard DSv3 Family vCPUs
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">CurrentValue Limit LocalName
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-------------- ------- --------------------------
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">40 1000 Standard DSv3 Family vCPUs
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;h2 id="驗證權限">驗證權限&lt;/h2>
-&lt;div class="highlight">&lt;div class="chroma">
+&lt;/div>&lt;h2 id="驗證權限">驗證權限
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
 &lt;/span>&lt;span class="lnt"> 2
@@ -137,36 +137,38 @@ az vm list-usage -l $LOCATION \
 &lt;/span>&lt;span class="lnt">31
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">Azure CLI quickstart:
-export GUID=hzdnk
-export CLIENT_ID=bdf5480a-c661-451f-a2ce-81e448ce0ba8
-export PASSWORD=Zz842xzC.7GWZS_xVZ3oQvg1~7PtoIcKVA
-export TENANT=1ce7852f-dcf3-42bc-afe6-3bf81ab984fb
-export SUBSCRIPTION=ede7f891-835c-4128-af5b-0e53848e54e7
-export RESOURCEGROUP=openenv-hzdnk
-curl -L https://aka.ms/InstallAzureCli | bash
-az login --service-principal -u $CLIENT_ID -p $PASSWORD --tenant $TENANT
-[
-{
-&amp;#34;cloudName&amp;#34;: &amp;#34;AzureCloud&amp;#34;,
-&amp;#34;homeTenantId&amp;#34;: &amp;#34;1ce7852f-dcf3-42bc-afe6-3bf81ab984fb&amp;#34;,
-&amp;#34;id&amp;#34;: &amp;#34;ede7f891-835c-4128-af5b-0e53848e54e7&amp;#34;,
-&amp;#34;isDefault&amp;#34;: true,
-&amp;#34;managedByTenants&amp;#34;: [
-{
-&amp;#34;tenantId&amp;#34;: &amp;#34;b5ce0030-ec42-4a62-bc94-3025993e790c&amp;#34;
-}
-],
-&amp;#34;name&amp;#34;: &amp;#34;RHPDS Subscription - OpenTLC Tenant&amp;#34;,
-&amp;#34;state&amp;#34;: &amp;#34;Enabled&amp;#34;,
-&amp;#34;tenantId&amp;#34;: &amp;#34;1ce7852f-dcf3-42bc-afe6-3bf81ab984fb&amp;#34;,
-&amp;#34;user&amp;#34;: {
-&amp;#34;name&amp;#34;: &amp;#34;bdf5480a-c661-451f-a2ce-81e448ce0ba8&amp;#34;,
-&amp;#34;type&amp;#34;: &amp;#34;servicePrincipal&amp;#34;
-}
-}
-]
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="n">Azure&lt;/span> &lt;span class="n">CLI&lt;/span> &lt;span class="n">quickstart&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">GUID&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">hzdnk&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">CLIENT_ID&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">bdf5480a&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">c661&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">451&lt;/span>&lt;span class="n">f&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">a2ce&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mf">81e448&lt;/span>&lt;span class="n">ce0ba8&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">PASSWORD&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">Zz842xzC&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">7&lt;/span>&lt;span class="n">GWZS_xVZ3oQvg1&lt;/span>&lt;span class="o">~&lt;/span>&lt;span class="mi">7&lt;/span>&lt;span class="n">PtoIcKVA&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">TENANT&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="n">ce7852f&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">dcf3&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">42&lt;/span>&lt;span class="n">bc&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">afe6&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="n">bf81ab984fb&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">SUBSCRIPTION&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">ede7f891&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">835&lt;/span>&lt;span class="n">c&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">4128&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">af5b&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mf">0e53848&lt;/span>&lt;span class="n">e54e7&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">RESOURCEGROUP&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">openenv&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">hzdnk&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">curl&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">L&lt;/span> &lt;span class="n">https&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">//&lt;/span>&lt;span class="n">aka&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">ms&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">InstallAzureCli&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="n">bash&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">az&lt;/span> &lt;span class="n">login&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">service&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">principal&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">u&lt;/span> &lt;span class="o">$&lt;/span>&lt;span class="n">CLIENT_ID&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">p&lt;/span> &lt;span class="o">$&lt;/span>&lt;span class="n">PASSWORD&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">tenant&lt;/span> &lt;span class="o">$&lt;/span>&lt;span class="n">TENANT&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;cloudName&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;AzureCloud&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;homeTenantId&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;1ce7852f-dcf3-42bc-afe6-3bf81ab984fb&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;id&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;ede7f891-835c-4128-af5b-0e53848e54e7&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;isDefault&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="bp">true&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;managedByTenants&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;tenantId&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;b5ce0030-ec42-4a62-bc94-3025993e790c&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;name&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;RHPDS Subscription - OpenTLC Tenant&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;state&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;Enabled&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;tenantId&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;1ce7852f-dcf3-42bc-afe6-3bf81ab984fb&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;user&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;name&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;bdf5480a-c661-451f-a2ce-81e448ce0ba8&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;type&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;servicePrincipal&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>創建資源組為 ARO4 對象（如 vnet 和子網，以及自己的 ARO4 對象）分配資源：&lt;/li>
@@ -176,8 +178,8 @@ az login --service-principal -u $CLIENT_ID -p $PASSWORD --tenant $TENANT
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">az group create --name $RESOURCEGROUP --location $LOCATION
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">az group create --name $RESOURCEGROUP --location $LOCATION
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>創建虛擬網絡：&lt;/li>
@@ -188,9 +190,9 @@ az login --service-principal -u $CLIENT_ID -p $PASSWORD --tenant $TENANT
 &lt;/span>&lt;span class="lnt">2
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">az network vnet create --resource-group $RESOURCEGROUP \
---name aro-vnet --address-prefixes $VNET_CIDR
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">az network vnet create --resource-group $RESOURCEGROUP \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --name aro-vnet --address-prefixes $VNET_CIDR
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>為主節點添加一個空子網：&lt;/li>
@@ -205,13 +207,13 @@ az login --service-principal -u $CLIENT_ID -p $PASSWORD --tenant $TENANT
 &lt;/span>&lt;span class="lnt">6
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">az network vnet subnet create \
---resource-group $RESOURCEGROUP \
---vnet-name aro-vnet \
---name master-subnet \
---address-prefixes $MASTER_SUBNET_CIDR \
---service-endpoints Microsoft.ContainerRegistry
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">az network vnet subnet create \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --resource-group $RESOURCEGROUP \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --vnet-name aro-vnet \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --name master-subnet \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --address-prefixes $MASTER_SUBNET_CIDR \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --service-endpoints Microsoft.ContainerRegistry
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>為工作節點添加一個空子網：&lt;/li>
@@ -226,13 +228,13 @@ az login --service-principal -u $CLIENT_ID -p $PASSWORD --tenant $TENANT
 &lt;/span>&lt;span class="lnt">6
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">az network vnet subnet create \
---resource-group $RESOURCEGROUP \
---vnet-name aro-vnet \
---name worker-subnet \
---address-prefixes $WORKER_SUBNET_CIDR \
---service-endpoints Microsoft.ContainerRegistry
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">az network vnet subnet create \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --resource-group $RESOURCEGROUP \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --vnet-name aro-vnet \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --name worker-subnet \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --address-prefixes $WORKER_SUBNET_CIDR \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --service-endpoints Microsoft.ContainerRegistry
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>在主子網上禁用子網專用終結點策略：&lt;/li>
@@ -246,15 +248,15 @@ az login --service-principal -u $CLIENT_ID -p $PASSWORD --tenant $TENANT
 &lt;/span>&lt;span class="lnt">5
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">az network vnet subnet update \
---name master-subnet \
---resource-group $RESOURCEGROUP \
---vnet-name aro-vnet \
---disable-private-link-service-network-policies true
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">az network vnet subnet update \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --name master-subnet \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --resource-group $RESOURCEGROUP \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --vnet-name aro-vnet \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --disable-private-link-service-network-policies true
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;h2 id="安裝-aro4">安裝 ARO4&lt;/h2>
-&lt;ul>
+&lt;/div>&lt;h2 id="安裝-aro4">安裝 ARO4
+&lt;/h2>&lt;ul>
 &lt;li>使用 azure cli 創建 ARO 集群：&lt;/li>
 &lt;/ul>
 &lt;div class="highlight">&lt;div class="chroma">
@@ -267,13 +269,13 @@ az login --service-principal -u $CLIENT_ID -p $PASSWORD --tenant $TENANT
 &lt;/span>&lt;span class="lnt">6
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">echo &amp;#34;Creating ARO Cluster... Please wait 40mins&amp;#34;
-az aro create --resource-group $RESOURCEGROUP \
---name $CLUSTER --vnet aro-vnet \
---master-subnet master-subnet \
---worker-subnet worker-subnet \
---pull-secret @pull-secret.txt
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">echo &amp;#34;Creating ARO Cluster... Please wait 40mins&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">az aro create --resource-group $RESOURCEGROUP \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --name $CLUSTER --vnet aro-vnet \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --master-subnet master-subnet \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --worker-subnet worker-subnet \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --pull-secret @pull-secret.txt
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>注意：安裝需要一個有效的 pull-secret。請訪問您的&lt;a class="link" href="https://rcarrata.com/openshift/aro4/cloud.redhat.com/openshift/" target="_blank" rel="noopener"
 >Cloud OpenShift Doshboard&lt;/a>並獲取您的 pull-secret 令牌。&lt;/p>
@@ -295,8 +297,8 @@ loading="lazy"
 &lt;p>&lt;img src="https://rcarrata.com/images/aro4_3.png"
 loading="lazy"
 >&lt;/p>
-&lt;h2 id="訪問-api-和控制台">訪問 API 和控制台&lt;/h2>
-&lt;ul>
+&lt;h2 id="訪問-api-和控制台">訪問 API 和控制台
+&lt;/h2>&lt;ul>
 &lt;li>大約 40 分鐘後。我們將使用控制台和 API 準備好 ARO4 集群：&lt;/li>
 &lt;/ul>
 &lt;p>&lt;a class="link" href="https://rcarrata.com/images/aro4_4.png" target="_blank" rel="noopener"
@@ -313,12 +315,12 @@ loading="lazy"
 &lt;/span>&lt;span class="lnt">5
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">echo &amp;#34;List credentials for ARO Cluster&amp;#34;
-az aro list-credentials \
---name $CLUSTER \
---resource-group $RESOURCEGROUP
-echo &amp;#34;&amp;#34;
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">echo &amp;#34;List credentials for ARO Cluster&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">az aro list-credentials \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --name $CLUSTER \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --resource-group $RESOURCEGROUP
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">echo &amp;#34;&amp;#34;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>要顯示 ARO4 控制台：&lt;/li>
@@ -332,12 +334,12 @@ echo &amp;#34;&amp;#34;
 &lt;/span>&lt;span class="lnt">5
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">echo &amp;#34;List console for ARO cluster&amp;#34;
-az aro show \
---name $CLUSTER \
---resource-group $RESOURCEGROUP \
---query &amp;#34;consoleProfile.url&amp;#34; -o tsv
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">echo &amp;#34;List console for ARO cluster&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">az aro show \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --name $CLUSTER \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --resource-group $RESOURCEGROUP \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --query &amp;#34;consoleProfile.url&amp;#34; -o tsv
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>檢查 ARO4 API：&lt;/li>
@@ -348,9 +350,9 @@ az aro show \
 &lt;/span>&lt;span class="lnt">2
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">apiServer=$(az aro show -g $RESOURCEGROUP -n $CLUSTER --query apiserverProfile.url -o tsv)
-echo &amp;#34;This is the API for your cluster: $apiServer&amp;#34;
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">apiServer=$(az aro show -g $RESOURCEGROUP -n $CLUSTER --query apiserverProfile.url -o tsv)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">echo &amp;#34;This is the API for your cluster: $apiServer&amp;#34;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>查詢 ARO Cluster 狀態&lt;/li>
@@ -363,10 +365,10 @@ echo &amp;#34;This is the API for your cluster: $apiServer&amp;#34;
 &lt;/span>&lt;span class="lnt">4
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">[root@bastion ~]# az aro list -o table
-Name ResourceGroup Location ProvisioningState WorkerCount URL
---------- --------------- ---------- ------------------- ------------- -----------------------------------------------------------------
-aro-demo openenv-hdpnp eastus Succeeded 3 https://console-openshift-console.apps.yylin.io/
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">[root@bastion ~]# az aro list -o table
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Name ResourceGroup Location ProvisioningState WorkerCount URL
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">--------- --------------- ---------- ------------------- ------------- -----------------------------------------------------------------
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">aro-demo openenv-hdpnp eastus Succeeded 3 https://console-openshift-console.apps.yylin.io/
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div></description></item></channel></rss>

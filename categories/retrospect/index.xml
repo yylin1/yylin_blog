@@ -3,14 +3,14 @@
 &lt;p>&lt;img src="https://blog.yylin.io/year/2023-retrospect-and-prospect/images/2023-reospect-prospect.png"
 width="1620"
 height="1080"
-srcset="https://blog.yylin.io/year/2023-retrospect-and-prospect/images/2023-reospect-prospect_huca3b4ab34d006b28a7472e6d6d1a75cc_2652010_480x0_resize_box_3.png 480w, https://blog.yylin.io/year/2023-retrospect-and-prospect/images/2023-reospect-prospect_huca3b4ab34d006b28a7472e6d6d1a75cc_2652010_1024x0_resize_box_3.png 1024w"
+srcset="https://blog.yylin.io/year/2023-retrospect-and-prospect/images/2023-reospect-prospect_hu13958742183397019135.png 480w, https://blog.yylin.io/year/2023-retrospect-and-prospect/images/2023-reospect-prospect_hu10409049518535817637.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="150"
 data-flex-basis="360px"
 >&lt;/p>
-&lt;h2 id="工作">工作&lt;/h2>
-&lt;ol>
+&lt;h2 id="工作">工作
+&lt;/h2>&lt;ol>
 &lt;li>內部職位調整 Specialist SA 轉回 Account SA ，更聚焦深入理解客戶的業務需求和面臨的挑戰，設計出切合實際的技術解決方案、規劃系統架構，以及確定實施方案的步驟和專案時程，確保成功交付客戶所需解決方案。&lt;/li>
 &lt;/ol>
 &lt;ul>
@@ -22,8 +22,8 @@ data-flex-basis="360px"
 &lt;li>後疫情時代首次能出國出差的時刻，有機會參加在公司舉辦在新加坡 Singapore 的 &lt;code>Tech Exchange 2023&lt;/code>年會，真的很難得有機會和 APAC 區域的不同國家的同事交流經驗與技術，還有見沒有見過的網友同事，意外很充實的技術年會收穫，額外最驚艷應該是有機會在 GalaParty 看到印度舞蹈的魅力與群體氛圍。&lt;/li>
 &lt;li>在 Intel Vision APJ 2023 活動上，有機會與首席架構師 Andreas Spanner 共同合作，特別展示 MLOps 和 RHODS 與 Intel OpenVINO Toolkit 結合應用場景，還有機會與來自不同國家的 Red Hat Global Team 同事進行深入交流，更榮幸與 &lt;code>Intel 的 CEO - Pat Gelsinger&lt;/code> 合影留念，真的是我非常難得的機會。&lt;/li>
 &lt;/ol>
-&lt;h2 id="生活">生活&lt;/h2>
-&lt;ol>
+&lt;h2 id="生活">生活
+&lt;/h2>&lt;ol>
 &lt;li>和夥伴約定 3 年前的滑雪計畫，終於這次疫情後出團成功，我的第一個雪季來到&lt;code>新潟-妙高高原滑雪&lt;/code>，真的很不一樣的體驗。雖然出發前有大夥去小叮噹雪場上過教練課-行前訓練，但在真正雪場需要克服的狀況很不同，最難還是上下纜車不同地形還是很有挑戰，還有遇到搭纜車時下雪時刻超美。很感謝夥伴信任，讓我用帶相機上纜車捕捉到一些難忘的雪景，更多雪景可以看我的攝影網站 &lt;a class="link" href="https://yiyanglin.tw/myoko-kogen" target="_blank" rel="noopener"
 >Myoko Kogen, Niigata | 新潟 妙高高原&lt;/a>。&lt;/li>
 &lt;li>自主揪山最大一團的經驗，霞可羅古道(養老步道至白石駐在所往返, 24K)，工程師遠離電腦桌前，也要親身體會才能感受山裡帶給我們的平靜，因為有更多夥伴來爬山，每一次爬山都有更多不一樣的滋味。&lt;/li>
@@ -35,8 +35,8 @@ data-flex-basis="360px"
 &lt;p>&lt;img src="https://lh3.googleusercontent.com/pw/ABLVV8437oxFfJxVTn0hWIP7nBHfFD5zLR4CNGvlW1OmZFRIfuJ9e6W9W7TJXdXJHcJtRrmmxJhSQJpF9KydzLF2pGDclQ5ASGrMMeyDl4QLrcOxKZ7WYFXSsMJaYTveG2Ilwi5zV5WqTh_TvzxCV3xyvjDwlA=w1620-h1080-s-no-gm?authuser=0"
 loading="lazy"
 >&lt;/p>
-&lt;h2 id="值得閱讀的書">值得閱讀的書&lt;/h2>
-&lt;ol>
+&lt;h2 id="值得閱讀的書">值得閱讀的書
+&lt;/h2>&lt;ol>
 &lt;li>&lt;a class="link" href="https://www.kobo.com/tw/zh/ebook/ciEj3oHWiz6lqsEMxBVjQw" target="_blank" rel="noopener"
 >《薩提爾的自我覺察練習》&lt;/a> - 讓我看見自己內心深層的想法看法，意識到自己在意/不在乎或重要與否的判斷拿捏，我會更「聚焦在現在與未來，詢問過去是了解行為模式、成功/失敗經驗」。&lt;/li>
 &lt;li>&lt;a class="link" href="https://www.kobo.com/tw/zh/ebook/5RiVxFucFjSJtK2j553IXg" target="_blank" rel="noopener"
@@ -51,8 +51,8 @@ loading="lazy"
 &lt;/ol>
 &lt;p>培養閱讀習慣過程，很喜歡「&lt;a class="link" href="https://readingoutpost.com/about/" target="_blank" rel="noopener"
 >閱讀前哨站．站長瓦基&lt;/a>」提言的一段話：對讀者而言，閱讀像是進入作者的生命，讓我們用很短的時間(幾個小時比起幾年)，高效率地從作者的視角中活過一次這段人生。每讀一本書，就像多活過一些作者歷練，在自己的生命旅程中添加一分色彩與理解。最後這些思維見解內化成自己樣子真的會有更多不一樣的收穫。&lt;/p>
-&lt;h2 id="值得感謝的人">值得感謝的人&lt;/h2>
-&lt;p>2023 對我來說是一個很特別的一年，花非常多時間在梳理思緒成熟的開始，去年底接受到前輩給我的一個人生思維課題：「在人生列車上，社會化過程中的轉換心態，對於下一步的選擇都會仔細評估考量，何不多想想下下一步的自己？」&lt;/p>
+&lt;h2 id="值得感謝的人">值得感謝的人
+&lt;/h2>&lt;p>2023 對我來說是一個很特別的一年，花非常多時間在梳理思緒成熟的開始，去年底接受到前輩給我的一個人生思維課題：「在人生列車上，社會化過程中的轉換心態，對於下一步的選擇都會仔細評估考量，何不多想想下下一步的自己？」&lt;/p>
 &lt;p>就這個議題徘徊在我腦海盤旋，讓我很想好好探索好自己對於，所謂「認知邊界」的廣度，這邊指的是我們根據過去人生經驗而對世界所描繪出的規則與界限[1]能看見多少？ 決定要好好探索，雖然這段路崎嶇需要足夠時間，但能好好想想「找到自己人生定位」[2]，我有沒有更多對於想要嘗試的下下一步和中長期對自己的想像？此時此刻回頭思考這段慢慢建構的過程，大概是這一整年最棒的事。&lt;/p>
 &lt;ul>
 &lt;li>[1] &lt;a class="link" href="https://www.darencademy.com/article/view/id/16525" target="_blank" rel="noopener"
@@ -67,8 +67,8 @@ loading="lazy"
 &lt;p>就想藉由這個機會想幫助自己、透過「復盤」不同的人生課題體驗過程，去探索、搞懂自己是誰、自己想要的人生劇本是什麼，及「以終為始」的終點在哪裡？ 透過我自己整年下來體驗人生的不同課題的答案，透過深度談話覺察自己的復盤過程中，更了解「自己的增長」與勾勒出更清晰明確「屬於自己此刻的答案」！ (若你想探索內心深層的想法，及心中的道路/選擇，私心推薦和蝦蝦預約：&lt;a class="link" href="https://shiashia.pro/" target="_blank" rel="noopener"
 >https://shiashia.pro/&lt;/a>）&lt;/p>
 &lt;p>追逐完美過程，我更知道了我「在做每一件事情之前，前置作業時間很長，思考清楚為何而做並且計畫以後，就會盡全力做到自己認為的最好」，在 2024 開始的長期計劃的事情與正在「前進」的方向，都更有了意義！&lt;/p>
-&lt;h2 id="2024-展望">2024 展望&lt;/h2>
-&lt;ol>
+&lt;h2 id="2024-展望">2024 展望
+&lt;/h2>&lt;ol>
 &lt;li>持續加強英文能力，達到溝通及書寫上都能夠流暢的程度。&lt;/li>
 &lt;li>建立晨間習慣，開始建立閱讀習慣後，發現自己能用瑣碎的時間讀書，累積下來的閱讀時間非常可觀，但是更嘗試過早上閱讀效果比任何時刻好，我希望新的一年每 1-2 週讀一本的目標。&lt;/li>
 &lt;li>每日寫好筆記日誌，追蹤個人專案成長紀錄以及擴建第二大腦的累積。&lt;/li>
@@ -83,15 +83,15 @@ loading="lazy"
 &lt;p>&lt;img src="https://blog.yylin.io/year/2022-retrospect-and-prospect/images/01.png"
 width="1080"
 height="608"
-srcset="https://blog.yylin.io/year/2022-retrospect-and-prospect/images/01_hu4b94eabded4d0fc2abf8a6c6d57fe797_994522_480x0_resize_box_3.png 480w, https://blog.yylin.io/year/2022-retrospect-and-prospect/images/01_hu4b94eabded4d0fc2abf8a6c6d57fe797_994522_1024x0_resize_box_3.png 1024w"
+srcset="https://blog.yylin.io/year/2022-retrospect-and-prospect/images/01_hu1519204652489942696.png 480w, https://blog.yylin.io/year/2022-retrospect-and-prospect/images/01_hu6523904223813049591.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="177"
 data-flex-basis="426px"
 >&lt;/p>
 &lt;h5 id="2022-年回顧--2022-年回顧2022-年回顧">&lt;a class="link" href="#2022-%e5%b9%b4%e5%9b%9e%e9%a1%a7" title=" 2022 年回顧"
->&lt;/a>2022 年回顧&lt;/h5>
-&lt;ul>
+>&lt;/a>2022 年回顧
+&lt;/h5>&lt;ul>
 &lt;li>轉職 &lt;code>SSA(Specialist Solution Architect/領域專家解決方案架構師)&lt;/code>滿一年多了，雖然花很多時間與團隊在對於角色定位與支援上安排，主要和 SA 關注在不同的面向，更重於在解決方案中針對某一領域的問題提出相對應的系統架構。舉例來說更重於思考實際客戶系統架構需求或系統設計面，並和售後團隊有更密切接觸。&lt;/li>
 &lt;li>疫情開放後，參與入職來首次公司舉辦的 &lt;code>Outing&lt;/code> 活動，讓售前/售後團隊，能有更進一步的團隊對話與技術互動。&lt;/li>
 &lt;li>嘗試考 &lt;code>AWS Solution Architect Associate (SAA-C03)&lt;/code>剛好報名前題庫改版，補好多不同的題目，閱讀考古題比較沒有新的題庫，可惜最終分數差 3題只好明年再來重考(很想拿到)，年底公司指標只好直接趕緊補考 &lt;code>AWS Certified Cloud Practitioner (CLF-C01)&lt;/code>裸考意外簡單很多。&lt;/li>
@@ -108,16 +108,16 @@ data-flex-basis="426px"
 >紙片模型&lt;/a>一同協助。&lt;/li>
 &lt;/ul>
 &lt;h5 id="2023-年展望--2023-年展望-2023-年展望">&lt;a class="link" href="#2023-%e5%b9%b4%e5%b1%95%e6%9c%9b" title=" 2023 年展望 "
->&lt;/a>2023 年展望&lt;/h5>
-&lt;ul>
+>&lt;/a>2023 年展望
+&lt;/h5>&lt;ul>
 &lt;li>希望英文交流能變更好，疫情趨緩會有更多跨國年會與工作上同事交流，參加團隊聚會時希望能跟他們說一些日常交流&lt;/li>
 &lt;li>安排每週固定去健身房，轉換職涯後都沒繼續&lt;/li>
 &lt;li>投稿&lt;strong>社群技術&lt;/strong>演講 2 場&lt;/li>
 &lt;li>完成先前未完成的 Red Hat 證照&lt;/li>
 &lt;li>攝影/紀實部落格能有效經營，建立好 IG 專頁，出國機會更多，需要工作流程讓照片穩定輸出&lt;/li>
 &lt;/ul>
-&lt;h3 id="photography--2022-recap">Photography | 2022 Recap&lt;/h3>
-&lt;div class="video-wrapper">
+&lt;h3 id="photography--2022-recap">Photography | 2022 Recap
+&lt;/h3>&lt;div class="video-wrapper">
 &lt;iframe loading="lazy"
 src="https://www.youtube.com/embed/di-M9AdRiwk"
 allowfullscreen
@@ -125,13 +125,13 @@ title="YouTube Video"
 >
 &lt;/iframe>
 &lt;/div>
-&lt;h3 id="related-posts">Related Posts&lt;/h3>
-&lt;ul>
+&lt;h3 id="related-posts">Related Posts
+&lt;/h3>&lt;ul>
 &lt;li>Photography Blog (&lt;a class="link" href="https://medium.com/yiyang-lins-life" target="_blank" rel="noopener"
 >https://medium.com/yiyang-lins-life&lt;/a>)&lt;/li>
 &lt;/ul></description></item><item><title>2021 年度回顧</title><link>https://blog.yylin.io/year/2021-retrospect-and-prospect/</link><pubDate>Fri, 31 Dec 2021 13:33:28 +0800</pubDate><guid>https://blog.yylin.io/year/2021-retrospect-and-prospect/</guid><description>&lt;p>2021 年有非常多的轉變與抉擇，是讓自己很深刻的一年，雖然年初有一些個人因素，影響後續許多計畫與安排，但之後從個人職涯選擇以及決定，為自己嘗試更多各種不同的挑戰，雖然過程很不容易，但能能充實的過完這一年。&lt;/p>
-&lt;h2 id="2021-回顧">2021 回顧&lt;/h2>
-&lt;ul>
+&lt;h2 id="2021-回顧">2021 回顧
+&lt;/h2>&lt;ul>
 &lt;li>協助前公司部分產品 Containerized 建置與Kuberentes - IT 初期工作流程基礎規劃，學習很多寶貴的維運經驗。&lt;/li>
 &lt;li>下半年決定為自己職涯嘗試新的挑戰，轉換職務，雖然過程花很多時間為認知與技能做轉換，過程參與事件活動非常多，但忙得有意義，非常充實。&lt;/li>
 &lt;li>在 &lt;a class="link" href="https://coscup.org/2021/zh-TW/session/9X7UAG" target="_blank" rel="noopener"
@@ -148,16 +148,16 @@ title="YouTube Video"
 &lt;li>攀岩(抱石) 維持 LV2 等級都順利完攀，持續往下一級前進。&lt;/li>
 &lt;li>終於換了新一台相機 Sony A7 IV&lt;/li>
 &lt;/ul>
-&lt;h2 id="2022-展望">2022 展望&lt;/h2>
-&lt;ul>
+&lt;h2 id="2022-展望">2022 展望
+&lt;/h2>&lt;ul>
 &lt;li>增強專業能力部分，提升各方面不足點&lt;/li>
 &lt;li>花更多時間在技術文章撰寫&lt;/li>
 &lt;li>完成先前未完成的證照&lt;/li>
 &lt;li>回歸開源專案貢獻，積極參與 Conference / Meetup 分享&lt;/li>
 &lt;li>持續健身運動維持飲食控制，為百岳做後續準備&lt;/li>
 &lt;/ul>
-&lt;h3 id="related-posts">Related Posts&lt;/h3>
-&lt;ul>
+&lt;h3 id="related-posts">Related Posts
+&lt;/h3>&lt;ul>
 &lt;li>&lt;a class="link" href="https://www.yylin.io/2020/12/31/2020-retrospect-prospect/" target="_blank" rel="noopener"
 >2020-年度回顧 (舊 Blog 搬家中)&lt;/a>&lt;/li>
 &lt;/ul>
@@ -166,7 +166,7 @@ title="YouTube Video"
 &lt;img src="https://blog.yylin.io/year/2021-retrospect-and-prospect/01.jpg"
 width="1620"
 height="1080"
-srcset="https://blog.yylin.io/year/2021-retrospect-and-prospect/01_hucbf4df3e07792eaecaff75330300fcc5_1642419_480x0_resize_q75_box.jpg 480w, https://blog.yylin.io/year/2021-retrospect-and-prospect/01_hucbf4df3e07792eaecaff75330300fcc5_1642419_1024x0_resize_q75_box.jpg 1024w"
+srcset="https://blog.yylin.io/year/2021-retrospect-and-prospect/01_hu2421972844503474358.jpg 480w, https://blog.yylin.io/year/2021-retrospect-and-prospect/01_hu11134819302390734675.jpg 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="150"

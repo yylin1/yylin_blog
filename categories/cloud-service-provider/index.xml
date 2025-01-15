@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>cloud-service-provider on Frank's Notes</title><link>https://blog.yylin.io/categories/cloud-service-provider/</link><description>Recent content in cloud-service-provider on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Sat, 25 Jun 2022 09:40:40 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/categories/cloud-service-provider/index.xml" rel="self" type="application/rss+xml"/><item><title>在 ACM 透過 OpenShift-GitOps/ArgoCD 管理應用程式</title><link>https://blog.yylin.io/openshift/argocd-and-acm/</link><pubDate>Sat, 25 Jun 2022 09:40:40 +0800</pubDate><guid>https://blog.yylin.io/openshift/argocd-and-acm/</guid><description>&lt;h2 id="概述">概述&lt;/h2>
-&lt;p>從 ACM 2.5 版開始正式 GA 功能，您可以透過 ApplicationSets 來配置 ArgoCD / OpenShift-GitOps ，通過單一管理平台以可擴展的方式管理您的所有 GitOps Applications。&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Cloud Service Provider on Frank's Notes</title><link>https://blog.yylin.io/categories/cloud-service-provider/</link><description>Recent content in Cloud Service Provider on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Sat, 25 Jun 2022 09:40:40 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/categories/cloud-service-provider/index.xml" rel="self" type="application/rss+xml"/><item><title>在 ACM 透過 OpenShift-GitOps/ArgoCD 管理應用程式</title><link>https://blog.yylin.io/openshift/argocd-and-acm/</link><pubDate>Sat, 25 Jun 2022 09:40:40 +0800</pubDate><guid>https://blog.yylin.io/openshift/argocd-and-acm/</guid><description>&lt;h2 id="概述">概述
+&lt;/h2>&lt;p>從 ACM 2.5 版開始正式 GA 功能，您可以透過 ApplicationSets 來配置 ArgoCD / OpenShift-GitOps ，通過單一管理平台以可擴展的方式管理您的所有 GitOps Applications。&lt;/p>
 &lt;p>ApplicationSet Controller 是一個 Kubernetes Controller，它增加對 ApplicationSet CustomResourceDefinition (CRD) 的支持。&lt;/p>
 &lt;p>ApplicationSet Controller 在與 Argo CD 一起安裝時，通過添加額外的功能來支持以叢集管理員為中心的場景來補充它。&lt;/p>
 &lt;p>ApplicationSet Ccontroller 提供：&lt;/p>
@@ -13,8 +13,8 @@
 &lt;/li>
 &lt;/ul>
 &lt;p>我們將介紹如何將 ACM 與 OpenShift GitOps 的 ApplicationSets 連接起來，以便在託管 Cluster 中配置和部署 OpenShift GitOps Application 和 ApplicationSet。&lt;/p>
-&lt;h2 id="環境配置-先決條件">環境配置-先決條件&lt;/h2>
-&lt;ul>
+&lt;h2 id="環境配置-先決條件">環境配置-先決條件
+&lt;/h2>&lt;ul>
 &lt;li>我們需要使用 Operator Hub 在 ACM Hub 那座 OpenShift Cluster 中安裝 OpenShift GitOps：&lt;/li>
 &lt;/ul>
 &lt;div class="highlight">&lt;div class="chroma">
@@ -22,8 +22,8 @@
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ until oc apply -k https://github.com/RedHat-EMEA-SSA-Team/ns-gitops/tree/bootstrap/bootstrap ; do sleep 2; done
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">$ until oc apply -k https://github.com/RedHat-EMEA-SSA-Team/ns-gitops/tree/bootstrap/bootstrap ; do sleep 2; done
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>
@@ -34,8 +34,8 @@
 &lt;p>另一方面，我們需要配置管理不同的 Cluster (e.g. Public Cloud)。在我的例子中，我使用我環境中部署 2 座 OCP Cluster 叢集，並將在這篇文章中用於部署我的 Application。&lt;/p>
 &lt;/li>
 &lt;/ul>
-&lt;h2 id="於-openshift-gitops--argocd-配置託管叢集">於 OpenShift GitOps / ArgoCD 配置託管叢集&lt;/h2>
-&lt;p>要在 ACM 中配置和鏈接 OpenShift GitOps，我們可以將一組一個或多個託管 Cluster 註冊到 Argo CD 或 OpenShift GitOps Operator 的實例。&lt;/p>
+&lt;h2 id="於-openshift-gitops--argocd-配置託管叢集">於 OpenShift GitOps / ArgoCD 配置託管叢集
+&lt;/h2>&lt;p>要在 ACM 中配置和鏈接 OpenShift GitOps，我們可以將一組一個或多個託管 Cluster 註冊到 Argo CD 或 OpenShift GitOps Operator 的實例。&lt;/p>
 &lt;p>註冊後，我們可以使用從 ACM Hub Application Controller 的 Application 和 ApplicationSets 將我們需要部署的應用程式部署到這些叢集。然後，我們可以設置一個連續的 GitOps 環境，以在開發、暫存和生產環境中跨叢集自動化配置 Application 的一致性。&lt;/p>
 &lt;ul>
 &lt;li>首先，我們需要創建 cluster sets 並將託管 clusters 添加到這些 cluster sets：&lt;/li>
@@ -51,13 +51,14 @@
 &lt;/span>&lt;span class="lnt">7
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ cat acmgitops/managedclusterset.yaml
-apiVersion: cluster.open-cluster-management.io/v1alpha1
-kind: ManagedClusterSet
-metadata:
-name: all-openshift-clusters
-spec: {}
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">$ cat acmgitops/managedclusterset.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">apiVersion: cluster.open-cluster-management.io/v1alpha1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kind: ManagedClusterSet
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">metadata:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: all-openshift-clusters
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> spec: {}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>
@@ -84,16 +85,18 @@ spec: {}
 &lt;/span>&lt;span class="lnt">11
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ cat managedclustersetbinding.yaml
-apiVersion: cluster.open-cluster-management.io/v1alpha1
-kind: ManagedClusterSetBinding
-metadata:
-name: all-openshift-clusters
-namespace: openshift-gitops
-spec:
-clusterSet: all-openshift-clusters
-$ oc apply -f managedclustersetbinding.yaml
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">$ cat managedclustersetbinding.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">apiVersion: cluster.open-cluster-management.io/v1alpha1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kind: ManagedClusterSetBinding
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">metadata:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: all-openshift-clusters
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> namespace: openshift-gitops
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">spec:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> clusterSet: all-openshift-clusters
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ oc apply -f managedclustersetbinding.yaml
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>在託管叢集綁定中使用的 namespace 中，創建放置自定義資源以選擇一組託管叢集以註冊到 ArgoCD 或 OpenShift GitOps Operator instance：&lt;/li>
@@ -116,21 +119,21 @@ $ oc apply -f managedclustersetbinding.yaml
 &lt;/span>&lt;span class="lnt">14
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">apiVersion: cluster.open-cluster-management.io/v1alpha1
-kind: Placement
-metadata:
-name: all-openshift-clusters
-namespace: openshift-gitops
-spec:
-predicates:
-- requiredClusterSelector:
-labelSelector:
-matchExpressions:
-- key: vendor
-operator: &amp;#34;In&amp;#34;
-values:
-- OpenShift
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">apiVersion: cluster.open-cluster-management.io/v1alpha1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kind: Placement
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">metadata:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: all-openshift-clusters
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> namespace: openshift-gitops
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">spec:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> predicates:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - requiredClusterSelector:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> labelSelector:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> matchExpressions:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - key: vendor
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> operator: &amp;#34;In&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> values:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - OpenShift
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
 &lt;p>注意：只有 OpenShift 叢集註冊到 Argo CD 或 GitOps Operator instance，而不是其他 Kubernetes 叢集。&lt;/p>
@@ -156,21 +159,21 @@ values:
 &lt;/span>&lt;span class="lnt">14
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">apiVersion: apps.open-cluster-management.io/v1alpha1
-kind: GitOpsCluster
-metadata:
-name: argo-acm-clusters
-namespace: openshift-gitops
-spec:
-argoServer:
-cluster: local-cluster
-argoNamespace: openshift-gitops
-placementRef:
-kind: Placement
-apiVersion: cluster.open-cluster-management.io/v1alpha1
-name: all-openshift-clusters
-namespace: openshift-gitops
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">apiVersion: apps.open-cluster-management.io/v1alpha1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kind: GitOpsCluster
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">metadata:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: argo-acm-clusters
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> namespace: openshift-gitops
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">spec:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> argoServer:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> cluster: local-cluster
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> argoNamespace: openshift-gitops
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> placementRef:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> kind: Placement
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> apiVersion: cluster.open-cluster-management.io/v1alpha1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: all-openshift-clusters
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> namespace: openshift-gitops
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>這使 Argo CD instance 能夠將 Application 部署到任何 ACM Hub 託管叢集中。&lt;/p>
 &lt;p>正如我們從前面的示例中看到的，placementRef.name 被定義為 &lt;code>all-openshift-clusters&lt;/code>，並被指定為安裝在 argoNamespace：openshift-gitops 中的 GitOps 實例的目標叢集。&lt;/p>
@@ -178,8 +181,8 @@ namespace: openshift-gitops
 &lt;ul>
 &lt;li>幾分鐘後，我們在 ACM Hub 中生成了 GitOps Cluster CRD，我們將能夠直接從 Application 部分的 ACM Hub 控制台定義 Application 和ApplicationSet。&lt;/li>
 &lt;/ul>
-&lt;h2 id="從-acm-hub-部署-argocdopenshift-gitops-applicationset">從 ACM Hub 部署 ArgoCD/OpenShift GitOps ApplicationSet&lt;/h2>
-&lt;p>一旦我們通過 ACM Hub 中的 GitOps Cluster CRD 啟用了 OpenShift GitOps 和 ACM 之間的整合，我們就可以直接在 ACM Hub 中部署 ApplicationSet，在一個單一的頁面中管理所有 ArgoCD Application。&lt;/p>
+&lt;h2 id="從-acm-hub-部署-argocdopenshift-gitops-applicationset">從 ACM Hub 部署 ArgoCD/OpenShift GitOps ApplicationSet
+&lt;/h2>&lt;p>一旦我們通過 ACM Hub 中的 GitOps Cluster CRD 啟用了 OpenShift GitOps 和 ACM 之間的整合，我們就可以直接在 ACM Hub 中部署 ApplicationSet，在一個單一的頁面中管理所有 ArgoCD Application。&lt;/p>
 &lt;p>另一方面，我們還將受益於&lt;a class="link" href="https://argocd-applicationset.readthedocs.io/en/stable/Generators/" target="_blank" rel="noopener"
 >ArgoCD ApplicationSets 的不同生成器的特性&lt;/a>。&lt;/p>
 &lt;p>使用這些生成方式，我們可以從不同叢集中的單個 Repository 部署多個 Application，利用 ApplicationSet 為每個託管的 Cluster 的從Repository 中的配置不同對象及要部署的 Application。&lt;/p>
@@ -223,36 +226,36 @@ loading="lazy"
 &lt;/span>&lt;span class="lnt">29
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">apiVersion: argoproj.io/v1alpha1
-kind: ApplicationSet
-metadata:
-name: acm-appsets
-namespace: openshift-gitops
-spec:
-generators:
-- clusterDecisionResource:
-configMapRef: acm-placement
-labelSelector:
-matchLabels:
-cluster.open-cluster-management.io/placement: acm-appsets-placement
-requeueAfterSeconds: 180
-template:
-metadata:
-name: &amp;#39;acm-appsets-&amp;#39;
-spec:
-destination:
-namespace: bgdk
-server: &amp;#39;&amp;#39;
-project: default
-source:
-path: apps/bgd/overlays/bgdk
-repoURL: &amp;#39;https://github.com/yylin1/ns-apps/&amp;#39;
-targetRevision: single-app
-syncPolicy:
-automated:
-prune: true
-selfHeal: true
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">apiVersion: argoproj.io/v1alpha1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kind: ApplicationSet
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">metadata:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: acm-appsets
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> namespace: openshift-gitops
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">spec:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> generators:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - clusterDecisionResource:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> configMapRef: acm-placement
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> labelSelector:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> matchLabels:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> cluster.open-cluster-management.io/placement: acm-appsets-placement
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> requeueAfterSeconds: 180
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> template:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> metadata:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: &amp;#39;acm-appsets-&amp;#39;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> spec:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> destination:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> namespace: bgdk
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> server: &amp;#39;&amp;#39;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> project: default
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> source:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> path: apps/bgd/overlays/bgdk
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> repoURL: &amp;#39;https://github.com/yylin1/ns-apps/&amp;#39;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> targetRevision: single-app
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> syncPolicy:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> automated:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> prune: true
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> selfHeal: true
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>注意：目標 namespace 可以是 openshift-gitops。BGDK 可能會更改，但它會以這種方式離開，因為我們需要放置一個目標 namespace，即ApplicationSet 本身不需要它（Applicatio bgdk 也不需要）&lt;/p>
 &lt;ul>
@@ -297,8 +300,8 @@ loading="lazy"
 loading="lazy"
 >&lt;/p>
 &lt;p>這些是由 ACM Hub 中生成的 GitOps CRD 自動生成和管理的，它與託管 Cluster 對應。&lt;/p>
-&lt;h2 id="reference">Reference&lt;/h2>
-&lt;ul>
+&lt;h2 id="reference">Reference
+&lt;/h2>&lt;ul>
 &lt;li>&lt;a class="link" href="https://github.com/RedHat-EMEA-SSA-Team/ns-gitops/" target="_blank" rel="noopener"
 >https://github.com/RedHat-EMEA-SSA-Team/ns-gitops/&lt;/a>&lt;/li>
 &lt;li>&lt;a class="link" href="https://rcarrata.com/openshift/argo-and-acm/" target="_blank" rel="noopener"
@@ -317,14 +320,14 @@ loading="lazy"
 >ARO 圖詳細信息 - 官方文檔&lt;/a>&lt;/li>
 &lt;/ul>
 &lt;p>讓我們安裝我們的第一個 ARO4 集群！&lt;/p>
-&lt;h2 id="azure-帳戶先決條件">Azure 帳戶先決條件&lt;/h2>
-&lt;p>首先，我們需要在 Azure 帳戶中設置幾項內容，例如生成 ServicePrincipals、增加限制以及定義要使用的區域。&lt;/p>
+&lt;h2 id="azure-帳戶先決條件">Azure 帳戶先決條件
+&lt;/h2>&lt;p>首先，我們需要在 Azure 帳戶中設置幾項內容，例如生成 ServicePrincipals、增加限制以及定義要使用的區域。&lt;/p>
 &lt;ul>
 &lt;li>按照&lt;a class="link" href="https://docs.openshift.com/container-platform/latest/installing/installing_azure/installing-azure-account.html" target="_blank" rel="noopener"
 >配置 Azure 帳戶先決條件&lt;/a>來定義和分配適當的 RBAC 權限並增加對 Azure 帳戶的限制。&lt;/li>
 &lt;/ul>
-&lt;h2 id="為-aro-安裝配置-azure-基礎結構先決條件">為 ARO 安裝配置 Azure 基礎結構先決條件&lt;/h2>
-&lt;p>當我們準備好上一步後，就可以在 Azure 中為我們的 ARO4 集群生成基礎資源先決條件了：&lt;/p>
+&lt;h2 id="為-aro-安裝配置-azure-基礎結構先決條件">為 ARO 安裝配置 Azure 基礎結構先決條件
+&lt;/h2>&lt;p>當我們準備好上一步後，就可以在 Azure 中為我們的 ARO4 集群生成基礎資源先決條件了：&lt;/p>
 &lt;ul>
 &lt;li>定義 ARO4 安裝的基本參數：&lt;/li>
 &lt;/ul>
@@ -338,13 +341,13 @@ loading="lazy"
 &lt;/span>&lt;span class="lnt">6
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">export LOCATION=eastus
-export RESOURCEGROUP=aro-rg
-export CLUSTER=rcarrata
-export VNET_CIDR=&amp;#34;10.0.0.0/22&amp;#34;
-export MASTER_SUBNET_CIDR=&amp;#34;10.0.0.0/23&amp;#34;
-export WORKER_SUBNET_CIDR=&amp;#34;10.0.2.0/23&amp;#34;
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">LOCATION&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">eastus&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">RESOURCEGROUP&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">aro&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">rg&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">CLUSTER&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">rcarrata&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">VNET_CIDR&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;10.0.0.0/22&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">MASTER_SUBNET_CIDR&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;10.0.0.0/23&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">WORKER_SUBNET_CIDR&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;10.0.2.0/23&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>使用 az cli 登錄到 Azure：&lt;/li>
@@ -354,8 +357,8 @@ export WORKER_SUBNET_CIDR=&amp;#34;10.0.2.0/23&amp;#34;
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">az login
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">az login
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>注意：當登錄彈出時，您需要在 Azure Dashboard 中使用您的憑據進行身份驗證。&lt;/p>
 &lt;ul>
@@ -368,14 +371,14 @@ export WORKER_SUBNET_CIDR=&amp;#34;10.0.2.0/23&amp;#34;
 &lt;/span>&lt;span class="lnt">3
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">az provider register -n Microsoft.RedHatOpenShift --wait
-az provider register -n Microsoft.Compute --wait
-az provider register -n Microsoft.Storage --wait
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">az provider register -n Microsoft.RedHatOpenShift --wait
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">az provider register -n Microsoft.Compute --wait
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">az provider register -n Microsoft.Storage --wait
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;h1 id="建立-azure-red-hat-openshift-4-叢集">建立 Azure Red Hat OpenShift 4 叢集&lt;/h1>
-&lt;h2 id="開始之前">開始之前&lt;/h2>
-&lt;p>Azure Red Hat OpenShift 至少需要 40 個核心，才能建立和執行 OpenShift 叢集。 新 Azure 訂用帳戶的預設 Azure 資源配額不符合這項需求。 若要要求增加資源限制，請參閱標準配額：&lt;a class="link" href="https://docs.microsoft.com/zh-tw/azure/azure-portal/supportability/per-vm-quota-requests" target="_blank" rel="noopener"
+&lt;/div>&lt;h1 id="建立-azure-red-hat-openshift-4-叢集">建立 Azure Red Hat OpenShift 4 叢集
+&lt;/h1>&lt;h2 id="開始之前">開始之前
+&lt;/h2>&lt;p>Azure Red Hat OpenShift 至少需要 40 個核心，才能建立和執行 OpenShift 叢集。 新 Azure 訂用帳戶的預設 Azure 資源配額不符合這項需求。 若要要求增加資源限制，請參閱標準配額：&lt;a class="link" href="https://docs.microsoft.com/zh-tw/azure/azure-portal/supportability/per-vm-quota-requests" target="_blank" rel="noopener"
 >VM 系列的增加限制&lt;/a>。&lt;/p>
 &lt;ul>
 &lt;li>例如，若要檢查最小支援的虛擬機器系列 SKU 「標準 DSv3」的目前訂用帳戶配額：&lt;/li>
@@ -388,11 +391,11 @@ az provider register -n Microsoft.Storage --wait
 &lt;/span>&lt;span class="lnt">4
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">LOCATION=eastus
-az vm list-usage -l $LOCATION \
---query &amp;#34;[?contains(name.value, &amp;#39;standardDSv3Family&amp;#39;)]&amp;#34; \
--o table
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">LOCATION=eastus
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">az vm list-usage -l $LOCATION \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">--query &amp;#34;[?contains(name.value, &amp;#39;standardDSv3Family&amp;#39;)]&amp;#34; \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-o table
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -401,13 +404,13 @@ az vm list-usage -l $LOCATION \
 &lt;/span>&lt;span class="lnt">3
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">CurrentValue Limit LocalName
--------------- ------- --------------------------
-40 1000 Standard DSv3 Family vCPUs
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">CurrentValue Limit LocalName
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-------------- ------- --------------------------
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">40 1000 Standard DSv3 Family vCPUs
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;h2 id="驗證權限">驗證權限&lt;/h2>
-&lt;div class="highlight">&lt;div class="chroma">
+&lt;/div>&lt;h2 id="驗證權限">驗證權限
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
 &lt;/span>&lt;span class="lnt"> 2
@@ -442,36 +445,38 @@ az vm list-usage -l $LOCATION \
 &lt;/span>&lt;span class="lnt">31
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">Azure CLI quickstart:
-export GUID=hzdnk
-export CLIENT_ID=bdf5480a-c661-451f-a2ce-81e448ce0ba8
-export PASSWORD=Zz842xzC.7GWZS_xVZ3oQvg1~7PtoIcKVA
-export TENANT=1ce7852f-dcf3-42bc-afe6-3bf81ab984fb
-export SUBSCRIPTION=ede7f891-835c-4128-af5b-0e53848e54e7
-export RESOURCEGROUP=openenv-hzdnk
-curl -L https://aka.ms/InstallAzureCli | bash
-az login --service-principal -u $CLIENT_ID -p $PASSWORD --tenant $TENANT
-[
-{
-&amp;#34;cloudName&amp;#34;: &amp;#34;AzureCloud&amp;#34;,
-&amp;#34;homeTenantId&amp;#34;: &amp;#34;1ce7852f-dcf3-42bc-afe6-3bf81ab984fb&amp;#34;,
-&amp;#34;id&amp;#34;: &amp;#34;ede7f891-835c-4128-af5b-0e53848e54e7&amp;#34;,
-&amp;#34;isDefault&amp;#34;: true,
-&amp;#34;managedByTenants&amp;#34;: [
-{
-&amp;#34;tenantId&amp;#34;: &amp;#34;b5ce0030-ec42-4a62-bc94-3025993e790c&amp;#34;
-}
-],
-&amp;#34;name&amp;#34;: &amp;#34;RHPDS Subscription - OpenTLC Tenant&amp;#34;,
-&amp;#34;state&amp;#34;: &amp;#34;Enabled&amp;#34;,
-&amp;#34;tenantId&amp;#34;: &amp;#34;1ce7852f-dcf3-42bc-afe6-3bf81ab984fb&amp;#34;,
-&amp;#34;user&amp;#34;: {
-&amp;#34;name&amp;#34;: &amp;#34;bdf5480a-c661-451f-a2ce-81e448ce0ba8&amp;#34;,
-&amp;#34;type&amp;#34;: &amp;#34;servicePrincipal&amp;#34;
-}
-}
-]
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="n">Azure&lt;/span> &lt;span class="n">CLI&lt;/span> &lt;span class="n">quickstart&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">GUID&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">hzdnk&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">CLIENT_ID&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">bdf5480a&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">c661&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">451&lt;/span>&lt;span class="n">f&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">a2ce&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mf">81e448&lt;/span>&lt;span class="n">ce0ba8&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">PASSWORD&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">Zz842xzC&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">7&lt;/span>&lt;span class="n">GWZS_xVZ3oQvg1&lt;/span>&lt;span class="o">~&lt;/span>&lt;span class="mi">7&lt;/span>&lt;span class="n">PtoIcKVA&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">TENANT&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="n">ce7852f&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">dcf3&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">42&lt;/span>&lt;span class="n">bc&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">afe6&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="n">bf81ab984fb&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">SUBSCRIPTION&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">ede7f891&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">835&lt;/span>&lt;span class="n">c&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">4128&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">af5b&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mf">0e53848&lt;/span>&lt;span class="n">e54e7&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">export&lt;/span> &lt;span class="n">RESOURCEGROUP&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">openenv&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">hzdnk&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">curl&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">L&lt;/span> &lt;span class="n">https&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">//&lt;/span>&lt;span class="n">aka&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">ms&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">InstallAzureCli&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="n">bash&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">az&lt;/span> &lt;span class="n">login&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">service&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">principal&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">u&lt;/span> &lt;span class="o">$&lt;/span>&lt;span class="n">CLIENT_ID&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">p&lt;/span> &lt;span class="o">$&lt;/span>&lt;span class="n">PASSWORD&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">tenant&lt;/span> &lt;span class="o">$&lt;/span>&lt;span class="n">TENANT&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;cloudName&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;AzureCloud&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;homeTenantId&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;1ce7852f-dcf3-42bc-afe6-3bf81ab984fb&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;id&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;ede7f891-835c-4128-af5b-0e53848e54e7&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;isDefault&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="bp">true&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;managedByTenants&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;tenantId&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;b5ce0030-ec42-4a62-bc94-3025993e790c&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;name&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;RHPDS Subscription - OpenTLC Tenant&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;state&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;Enabled&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;tenantId&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;1ce7852f-dcf3-42bc-afe6-3bf81ab984fb&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;user&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;name&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;bdf5480a-c661-451f-a2ce-81e448ce0ba8&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;type&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;servicePrincipal&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>創建資源組為 ARO4 對象（如 vnet 和子網，以及自己的 ARO4 對象）分配資源：&lt;/li>
@@ -481,8 +486,8 @@ az login --service-principal -u $CLIENT_ID -p $PASSWORD --tenant $TENANT
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">az group create --name $RESOURCEGROUP --location $LOCATION
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">az group create --name $RESOURCEGROUP --location $LOCATION
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>創建虛擬網絡：&lt;/li>
@@ -493,9 +498,9 @@ az login --service-principal -u $CLIENT_ID -p $PASSWORD --tenant $TENANT
 &lt;/span>&lt;span class="lnt">2
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">az network vnet create --resource-group $RESOURCEGROUP \
---name aro-vnet --address-prefixes $VNET_CIDR
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">az network vnet create --resource-group $RESOURCEGROUP \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --name aro-vnet --address-prefixes $VNET_CIDR
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>為主節點添加一個空子網：&lt;/li>
@@ -510,13 +515,13 @@ az login --service-principal -u $CLIENT_ID -p $PASSWORD --tenant $TENANT
 &lt;/span>&lt;span class="lnt">6
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">az network vnet subnet create \
---resource-group $RESOURCEGROUP \
---vnet-name aro-vnet \
---name master-subnet \
---address-prefixes $MASTER_SUBNET_CIDR \
---service-endpoints Microsoft.ContainerRegistry
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">az network vnet subnet create \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --resource-group $RESOURCEGROUP \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --vnet-name aro-vnet \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --name master-subnet \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --address-prefixes $MASTER_SUBNET_CIDR \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --service-endpoints Microsoft.ContainerRegistry
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>為工作節點添加一個空子網：&lt;/li>
@@ -531,13 +536,13 @@ az login --service-principal -u $CLIENT_ID -p $PASSWORD --tenant $TENANT
 &lt;/span>&lt;span class="lnt">6
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">az network vnet subnet create \
---resource-group $RESOURCEGROUP \
---vnet-name aro-vnet \
---name worker-subnet \
---address-prefixes $WORKER_SUBNET_CIDR \
---service-endpoints Microsoft.ContainerRegistry
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">az network vnet subnet create \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --resource-group $RESOURCEGROUP \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --vnet-name aro-vnet \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --name worker-subnet \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --address-prefixes $WORKER_SUBNET_CIDR \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --service-endpoints Microsoft.ContainerRegistry
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>在主子網上禁用子網專用終結點策略：&lt;/li>
@@ -551,15 +556,15 @@ az login --service-principal -u $CLIENT_ID -p $PASSWORD --tenant $TENANT
 &lt;/span>&lt;span class="lnt">5
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">az network vnet subnet update \
---name master-subnet \
---resource-group $RESOURCEGROUP \
---vnet-name aro-vnet \
---disable-private-link-service-network-policies true
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">az network vnet subnet update \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --name master-subnet \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --resource-group $RESOURCEGROUP \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --vnet-name aro-vnet \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --disable-private-link-service-network-policies true
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;h2 id="安裝-aro4">安裝 ARO4&lt;/h2>
-&lt;ul>
+&lt;/div>&lt;h2 id="安裝-aro4">安裝 ARO4
+&lt;/h2>&lt;ul>
 &lt;li>使用 azure cli 創建 ARO 集群：&lt;/li>
 &lt;/ul>
 &lt;div class="highlight">&lt;div class="chroma">
@@ -572,13 +577,13 @@ az login --service-principal -u $CLIENT_ID -p $PASSWORD --tenant $TENANT
 &lt;/span>&lt;span class="lnt">6
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">echo &amp;#34;Creating ARO Cluster... Please wait 40mins&amp;#34;
-az aro create --resource-group $RESOURCEGROUP \
---name $CLUSTER --vnet aro-vnet \
---master-subnet master-subnet \
---worker-subnet worker-subnet \
---pull-secret @pull-secret.txt
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">echo &amp;#34;Creating ARO Cluster... Please wait 40mins&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">az aro create --resource-group $RESOURCEGROUP \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --name $CLUSTER --vnet aro-vnet \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --master-subnet master-subnet \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --worker-subnet worker-subnet \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --pull-secret @pull-secret.txt
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>注意：安裝需要一個有效的 pull-secret。請訪問您的&lt;a class="link" href="https://rcarrata.com/openshift/aro4/cloud.redhat.com/openshift/" target="_blank" rel="noopener"
 >Cloud OpenShift Doshboard&lt;/a>並獲取您的 pull-secret 令牌。&lt;/p>
@@ -600,8 +605,8 @@ loading="lazy"
 &lt;p>&lt;img src="https://rcarrata.com/images/aro4_3.png"
 loading="lazy"
 >&lt;/p>
-&lt;h2 id="訪問-api-和控制台">訪問 API 和控制台&lt;/h2>
-&lt;ul>
+&lt;h2 id="訪問-api-和控制台">訪問 API 和控制台
+&lt;/h2>&lt;ul>
 &lt;li>大約 40 分鐘後。我們將使用控制台和 API 準備好 ARO4 集群：&lt;/li>
 &lt;/ul>
 &lt;p>&lt;a class="link" href="https://rcarrata.com/images/aro4_4.png" target="_blank" rel="noopener"
@@ -618,12 +623,12 @@ loading="lazy"
 &lt;/span>&lt;span class="lnt">5
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">echo &amp;#34;List credentials for ARO Cluster&amp;#34;
-az aro list-credentials \
---name $CLUSTER \
---resource-group $RESOURCEGROUP
-echo &amp;#34;&amp;#34;
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">echo &amp;#34;List credentials for ARO Cluster&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">az aro list-credentials \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --name $CLUSTER \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --resource-group $RESOURCEGROUP
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">echo &amp;#34;&amp;#34;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>要顯示 ARO4 控制台：&lt;/li>
@@ -637,12 +642,12 @@ echo &amp;#34;&amp;#34;
 &lt;/span>&lt;span class="lnt">5
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">echo &amp;#34;List console for ARO cluster&amp;#34;
-az aro show \
---name $CLUSTER \
---resource-group $RESOURCEGROUP \
---query &amp;#34;consoleProfile.url&amp;#34; -o tsv
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">echo &amp;#34;List console for ARO cluster&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">az aro show \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --name $CLUSTER \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --resource-group $RESOURCEGROUP \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --query &amp;#34;consoleProfile.url&amp;#34; -o tsv
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>檢查 ARO4 API：&lt;/li>
@@ -653,9 +658,9 @@ az aro show \
 &lt;/span>&lt;span class="lnt">2
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">apiServer=$(az aro show -g $RESOURCEGROUP -n $CLUSTER --query apiserverProfile.url -o tsv)
-echo &amp;#34;This is the API for your cluster: $apiServer&amp;#34;
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">apiServer=$(az aro show -g $RESOURCEGROUP -n $CLUSTER --query apiserverProfile.url -o tsv)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">echo &amp;#34;This is the API for your cluster: $apiServer&amp;#34;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>查詢 ARO Cluster 狀態&lt;/li>
@@ -668,16 +673,16 @@ echo &amp;#34;This is the API for your cluster: $apiServer&amp;#34;
 &lt;/span>&lt;span class="lnt">4
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">[root@bastion ~]# az aro list -o table
-Name ResourceGroup Location ProvisioningState WorkerCount URL
---------- --------------- ---------- ------------------- ------------- -----------------------------------------------------------------
-aro-demo openenv-hdpnp eastus Succeeded 3 https://console-openshift-console.apps.yylin.io/
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">[root@bastion ~]# az aro list -o table
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Name ResourceGroup Location ProvisioningState WorkerCount URL
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">--------- --------------- ---------- ------------------- ------------- -----------------------------------------------------------------
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">aro-demo openenv-hdpnp eastus Succeeded 3 https://console-openshift-console.apps.yylin.io/
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item><item><title>Red Hat OpenShift Platform on AWS (ROSA) 快速部署上手</title><link>https://blog.yylin.io/openshift/rosa/</link><pubDate>Thu, 30 Sep 2021 14:54:40 +0800</pubDate><guid>https://blog.yylin.io/openshift/rosa/</guid><description>&lt;h2 id="事前準備">事前準備：&lt;/h2>
-&lt;p>開始前，需要先準備以下資訊與要求。&lt;/p>
-&lt;h3 id="啟用-rosa">啟用 ROSA&lt;/h3>
-&lt;blockquote>
+&lt;/div></description></item><item><title>Red Hat OpenShift Platform on AWS (ROSA) 快速部署上手</title><link>https://blog.yylin.io/openshift/rosa/</link><pubDate>Thu, 30 Sep 2021 14:54:40 +0800</pubDate><guid>https://blog.yylin.io/openshift/rosa/</guid><description>&lt;h2 id="事前準備">事前準備：
+&lt;/h2>&lt;p>開始前，需要先準備以下資訊與要求。&lt;/p>
+&lt;h3 id="啟用-rosa">啟用 ROSA
+&lt;/h3>&lt;blockquote>
 &lt;p>開始配置 AWS 服務前，使用者必須以 &lt;a class="link" href="https://docs.openshift.com/rosa/rosa_getting_started/rosa-aws-prereqs.html#rosa-policy-iam_prerequisites" target="_blank" rel="noopener"
 >IAM&lt;/a> 身份(參考文件: &lt;a class="link" href="https://docs.openshift.com/rosa/rosa_getting_started/rosa-aws-prereqs.html#rosa-customer-requirements_prerequisites" target="_blank" rel="noopener"
 >Customer Requirements&lt;/a>)&lt;/p>
@@ -686,8 +691,8 @@ aro-demo openenv-hdpnp eastus Succeeded 3 https://console-openshift-console.apps
 &lt;img src="https://i.imgur.com/lbpYgG6.png"
 loading="lazy"
 >&lt;/p>
-&lt;h3 id="下載-aws-cli-與-openshift-cli-工具">下載 AWS CLI 與 OpenShift CLI 工具:&lt;/h3>
-&lt;p>&lt;strong>URL Dowload&lt;/strong>&lt;/p>
+&lt;h3 id="下載-aws-cli-與-openshift-cli-工具">下載 AWS CLI 與 OpenShift CLI 工具:
+&lt;/h3>&lt;p>&lt;strong>URL Dowload&lt;/strong>&lt;/p>
 &lt;ul>
 &lt;li>
 &lt;p>選擇當前環境下載對應&lt;code>CLI&lt;/code> ( &lt;a class="link" href="https://console.redhat.com/openshift/downloads" target="_blank" rel="noopener"
@@ -720,20 +725,21 @@ loading="lazy"
 &lt;/span>&lt;span class="lnt">14
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="c1"># CLI&lt;/span>
-$ wget -c https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest/rosa-linux.tar.gz -O - &lt;span class="p">|&lt;/span> tar -xz
-$ mv rosa /usr/local/bin/
-$ rosa version
-1.1.1
-$ wget -c https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest-4.8/openshift-client-linux.tar.gz -O - &lt;span class="p">|&lt;/span> tar -xz
-$ mv &lt;span class="o">{&lt;/span>oc,kubectl&lt;span class="o">}&lt;/span> /usr/local/bin/
-$ oc version
-Client Version: 4.8.2
-$ oc version
-Client Version: 4.8.10
-Server Version: 4.8.12
-Kubernetes Version: v1.21.1+d8043e1
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># CLI&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ wget -c https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest/rosa-linux.tar.gz -O - &lt;span class="p">|&lt;/span> tar -xz
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ mv rosa /usr/local/bin/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ rosa version
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1.1.1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ wget -c https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest-4.8/openshift-client-linux.tar.gz -O - &lt;span class="p">|&lt;/span> tar -xz
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ mv &lt;span class="o">{&lt;/span>oc,kubectl&lt;span class="o">}&lt;/span> /usr/local/bin/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ oc version
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Client Version: 4.8.2
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ oc version
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Client Version: 4.8.10
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Server Version: 4.8.12
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Kubernetes Version: v1.21.1+d8043e1
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
 &lt;p>創建 Red Hat 帳號
@@ -742,8 +748,8 @@ OpenShift 由 Red Hat SaaS 提供，因此您需要創建一個 Red Hat 帳戶�
 >https://cloud.redhat.com/&lt;/a>&lt;/p>
 &lt;/blockquote>
 &lt;hr>
-&lt;h2 id="透過-rosa-指令檢查憑證與資源配置">透過 ROSA 指令檢查憑證與資源配置&lt;/h2>
-&lt;p>這邊以 Red Hat 部署 ROSA 文件部署為主 (&lt;a class="link" href="https://docs.openshift.com/rosa/rosa_getting_started/rosa-creating-cluster.html" target="_blank" rel="noopener"
+&lt;h2 id="透過-rosa-指令檢查憑證與資源配置">透過 ROSA 指令檢查憑證與資源配置
+&lt;/h2>&lt;p>這邊以 Red Hat 部署 ROSA 文件部署為主 (&lt;a class="link" href="https://docs.openshift.com/rosa/rosa_getting_started/rosa-creating-cluster.html" target="_blank" rel="noopener"
 >Red Hat OpenShift Service on AWS - Creating a ROSA cluster&lt;/a>)&lt;/p>
 &lt;p>首先，使用 &lt;code>ROSA CLI&lt;/code> 檢查 AWS 憑證&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
@@ -753,10 +759,10 @@ OpenShift 由 Red Hat SaaS 提供，因此您需要創建一個 Red Hat 帳戶�
 &lt;/span>&lt;span class="lnt">3
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ rosa verify permissions
-I: Validating SCP policies...
-I: AWS SCP policies ok
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ rosa verify permissions
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">I: Validating SCP policies...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">I: AWS SCP policies ok
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>第一次登錄時，你會需要一個 Token 來登入你的 Red Hat 帳號&lt;/p>
 &lt;blockquote>
@@ -769,9 +775,9 @@ I: AWS SCP policies ok
 &lt;/span>&lt;span class="lnt">2
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ rosa login
-I: Logged in as &lt;span class="s1">&amp;#39;xxxx@mail.com&amp;#39;&lt;/span> on &lt;span class="s1">&amp;#39;https://api.openshift.com&amp;#39;&lt;/span>
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ rosa login
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">I: Logged in as &lt;span class="s1">&amp;#39;xxxx@mail.com&amp;#39;&lt;/span> on &lt;span class="s1">&amp;#39;https://api.openshift.com&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>配置完成後可以透過 &lt;code>rosa whoami&lt;/code> 來檢查你目前所有登錄憑證與狀態&lt;/p>
 &lt;blockquote>
@@ -793,19 +799,19 @@ I: Logged in as &lt;span class="s1">&amp;#39;xxxx@mail.com&amp;#39;&lt;/span> on
 &lt;/span>&lt;span class="lnt">12
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ rosa whoami
-AWS Account ID: xxxxxxxxxxxx
-AWS Default Region: us-west-2
-AWS ARN: arn:aws:iam::xxxxxxxxxxxx:user/user
-OCM API: https://api.openshift.com
-OCM Account ID: xxxxxxxxxxxxxxxxxxxxxx
-OCM Account Name: xxxxxx
-OCM Account Username: xxxxx@xxxxx.com
-OCM Account Email: xxxxx@xxxxx.com
-OCM Organization ID: xxxxxxxxxxxxxxxxxxxxxx
-OCM Organization Name: Red Hat
-OCM Organization External ID: xxxxxxxx
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">$ rosa whoami
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">AWS Account ID: xxxxxxxxxxxx
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">AWS Default Region: us-west-2
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">AWS ARN: arn:aws:iam::xxxxxxxxxxxx:user/user
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">OCM API: https://api.openshift.com
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">OCM Account ID: xxxxxxxxxxxxxxxxxxxxxx
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">OCM Account Name: xxxxxx
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">OCM Account Username: xxxxx@xxxxx.com
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">OCM Account Email: xxxxx@xxxxx.com
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">OCM Organization ID: xxxxxxxxxxxxxxxxxxxxxx
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">OCM Organization Name: Red Hat
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">OCM Organization External ID: xxxxxxxx
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>以上檢查沒問題後，接下運行 &lt;code>rosa init&lt;/code> 運行指令來確保 ROSA 配置與相關資源狀態沒問題&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
@@ -828,29 +834,29 @@ OCM Organization External ID: xxxxxxxx
 &lt;/span>&lt;span class="lnt">16
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ rosa init
-I: Logged in as &amp;#39;xxxxxx@mail.com&amp;#39; on &amp;#39;https://api.openshift.com&amp;#39;
-I: Validating AWS credentials...
-I: AWS credentials are valid!
-I: Validating SCP policies...
-I: AWS SCP policies ok
-I: Validating AWS quota...
-I: AWS quota ok. If cluster installation fails, validate actual AWS resource usage against https://docs.openshift.com/rosa/rosa_getting_started/rosa-required-aws-service-quotas.html
-I: Ensuring cluster administrator user &amp;#39;osdCcsAdmin&amp;#39;...
-I: Admin user &amp;#39;osdCcsAdmin&amp;#39; already exists!
-I: Validating SCP policies for &amp;#39;osdCcsAdmin&amp;#39;...
-I: AWS SCP policies ok
-I: Validating cluster creation...
-I: Cluster creation valid
-I: Verifying whether OpenShift command-line tool is available...
-I: Current OpenShift Client Version: 4.8.10
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="o">$&lt;/span> &lt;span class="n">rosa&lt;/span> &lt;span class="n">init&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">I&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Logged&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">as&lt;/span> &lt;span class="s1">&amp;#39;xxxxxx@mail.com&amp;#39;&lt;/span> &lt;span class="n">on&lt;/span> &lt;span class="s1">&amp;#39;https://api.openshift.com&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">I&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Validating&lt;/span> &lt;span class="n">AWS&lt;/span> &lt;span class="n">credentials&lt;/span>&lt;span class="o">...&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">I&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">AWS&lt;/span> &lt;span class="n">credentials&lt;/span> &lt;span class="n">are&lt;/span> &lt;span class="n">valid&lt;/span>&lt;span class="o">!&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">I&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Validating&lt;/span> &lt;span class="n">SCP&lt;/span> &lt;span class="n">policies&lt;/span>&lt;span class="o">...&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">I&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">AWS&lt;/span> &lt;span class="n">SCP&lt;/span> &lt;span class="n">policies&lt;/span> &lt;span class="n">ok&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">I&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Validating&lt;/span> &lt;span class="n">AWS&lt;/span> &lt;span class="n">quota&lt;/span>&lt;span class="o">...&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">I&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">AWS&lt;/span> &lt;span class="n">quota&lt;/span> &lt;span class="n">ok&lt;/span>&lt;span class="o">.&lt;/span> &lt;span class="n">If&lt;/span> &lt;span class="n">cluster&lt;/span> &lt;span class="n">installation&lt;/span> &lt;span class="n">fails&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">validate&lt;/span> &lt;span class="n">actual&lt;/span> &lt;span class="n">AWS&lt;/span> &lt;span class="n">resource&lt;/span> &lt;span class="n">usage&lt;/span> &lt;span class="n">against&lt;/span> &lt;span class="n">https&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">//&lt;/span>&lt;span class="n">docs&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">openshift&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">com&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">rosa&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">rosa_getting_started&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">rosa&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">required&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">aws&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">service&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">quotas&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">html&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">I&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Ensuring&lt;/span> &lt;span class="n">cluster&lt;/span> &lt;span class="n">administrator&lt;/span> &lt;span class="n">user&lt;/span> &lt;span class="s1">&amp;#39;osdCcsAdmin&amp;#39;&lt;/span>&lt;span class="o">...&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">I&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Admin&lt;/span> &lt;span class="n">user&lt;/span> &lt;span class="s1">&amp;#39;osdCcsAdmin&amp;#39;&lt;/span> &lt;span class="n">already&lt;/span> &lt;span class="n">exists&lt;/span>&lt;span class="o">!&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">I&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Validating&lt;/span> &lt;span class="n">SCP&lt;/span> &lt;span class="n">policies&lt;/span> &lt;span class="k">for&lt;/span> &lt;span class="s1">&amp;#39;osdCcsAdmin&amp;#39;&lt;/span>&lt;span class="o">...&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">I&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">AWS&lt;/span> &lt;span class="n">SCP&lt;/span> &lt;span class="n">policies&lt;/span> &lt;span class="n">ok&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">I&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Validating&lt;/span> &lt;span class="n">cluster&lt;/span> &lt;span class="n">creation&lt;/span>&lt;span class="o">...&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">I&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Cluster&lt;/span> &lt;span class="n">creation&lt;/span> &lt;span class="n">valid&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">I&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Verifying&lt;/span> &lt;span class="n">whether&lt;/span> &lt;span class="n">OpenShift&lt;/span> &lt;span class="n">command&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">line&lt;/span> &lt;span class="k">tool&lt;/span> &lt;span class="n">is&lt;/span> &lt;span class="n">available&lt;/span>&lt;span class="o">...&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">I&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Current&lt;/span> &lt;span class="n">OpenShift&lt;/span> &lt;span class="n">Client&lt;/span> &lt;span class="n">Version&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mf">4.8&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">10&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
 &lt;p>需要驗證當前環境，是否已經登入 AWS並確認透過&lt;code>rosa init&lt;/code> 來確認 AWS 資源與配置是否能足夠創建 OpenShift&lt;/p>
 &lt;/blockquote>
-&lt;h3 id="申請-aws-帳戶配額">申請 AWS 帳戶配額&lt;/h3>
-&lt;p>在配置 ROSA 時作為預先檢查 &lt;code>$ rosa verify quota --region=${cluster}&lt;/code> 叢集名稱。如果您在剛剛部署但未執行任何操作的帳戶上運行它，您將收到錯誤訊息 EC2 &lt;code>quota 配置不足&lt;/code>。&lt;/p>
+&lt;h3 id="申請-aws-帳戶配額">申請 AWS 帳戶配額
+&lt;/h3>&lt;p>在配置 ROSA 時作為預先檢查 &lt;code>$ rosa verify quota --region=${cluster}&lt;/code> 叢集名稱。如果您在剛剛部署但未執行任何操作的帳戶上運行它，您將收到錯誤訊息 EC2 &lt;code>quota 配置不足&lt;/code>。&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
@@ -860,12 +866,12 @@ I: Current OpenShift Client Version: 4.8.10
 &lt;/span>&lt;span class="lnt">5
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ rosa verify quota --region&lt;span class="o">=&lt;/span>us-west-2
-I: Validating AWS quota...
-E: Insufficient AWS quotas
-E: Service quota is insufficient &lt;span class="k">for&lt;/span> the following service quota codes:
-- Service ec2 quota code L-1216C47A Running On-Demand Standard &lt;span class="o">(&lt;/span>A, C, D, H, I, M, R, T, Z&lt;span class="o">)&lt;/span> instances not valid, expected quota of at least 100, but got &lt;span class="m">5&lt;/span>
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ rosa verify quota --region&lt;span class="o">=&lt;/span>us-west-2
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">I: Validating AWS quota...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">E: Insufficient AWS quotas
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">E: Service quota is insufficient &lt;span class="k">for&lt;/span> the following service quota codes:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- Service ec2 quota code L-1216C47A Running On-Demand Standard &lt;span class="o">(&lt;/span>A, C, D, H, I, M, R, T, Z&lt;span class="o">)&lt;/span> instances not valid, expected quota of at least 100, but got &lt;span class="m">5&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>這邊需要額外申請 AWS EC2 限制增加配額
 &lt;img src="https://i.imgur.com/X2PtefK.png"
@@ -893,14 +899,14 @@ loading="lazy"
 &lt;/span>&lt;span class="lnt">3
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ rosa verify quota --region&lt;span class="o">=&lt;/span>us-west-2
-I: Validating AWS quota...
-I: AWS quota ok. If cluster installation fails, validate actual AWS resource usage against https://docs.openshift.com/rosa/rosa_getting_started/rosa-required-aws-service-quotas.htm
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ rosa verify quota --region&lt;span class="o">=&lt;/span>us-west-2
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">I: Validating AWS quota...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">I: AWS quota ok. If cluster installation fails, validate actual AWS resource usage against https://docs.openshift.com/rosa/rosa_getting_started/rosa-required-aws-service-quotas.htm
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;hr>
-&lt;h2 id="透過-rosa-指令快速創建-red-hat-openshift">透過 ROSA 指令快速創建 Red Hat OpenShift&lt;/h2>
-&lt;ul>
+&lt;h2 id="透過-rosa-指令快速創建-red-hat-openshift">透過 ROSA 指令快速創建 Red Hat OpenShift
+&lt;/h2>&lt;ul>
 &lt;li>透過 &lt;code>rosa create cluster&lt;/code> 開始部署 OpenShift Cluster (部署Cluster 大約需要30-40分鐘)&lt;/li>
 &lt;/ul>
 &lt;div class="highlight">&lt;div class="chroma">
@@ -938,38 +944,38 @@ I: AWS quota ok. If cluster installation fails, validate actual AWS resource usa
 &lt;/span>&lt;span class="lnt">31
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ rosa create cluster --cluster-name&lt;span class="o">=&lt;/span>rosacluster
-I: Creating cluster &lt;span class="s1">&amp;#39;rosacluster&amp;#39;&lt;/span>
-I: To view a list of clusters and their status, run &lt;span class="s1">&amp;#39;rosa list clusters&amp;#39;&lt;/span>
-I: Cluster &lt;span class="s1">&amp;#39;rosacluster&amp;#39;&lt;/span> has been created.
-I: Once the cluster is installed you will need to add an Identity Provider before you can login into the cluster. See &lt;span class="s1">&amp;#39;rosa create idp --help&amp;#39;&lt;/span> &lt;span class="k">for&lt;/span> more information.
-I: To determine when your cluster is Ready, run &lt;span class="s1">&amp;#39;rosa describe cluster -c newsblogcluster&amp;#39;&lt;/span>.
-I: To watch your cluster installation logs, run &lt;span class="s1">&amp;#39;rosa logs install -c newsblogcluster --watch&amp;#39;&lt;/span>.
-Name: newsblogcluster
-ID: XXXXXXXXXXXXXXXXXXXX
-External ID:
-OpenShift Version:
-Channel Group: stable
-DNS: newsblogcluster.phnh.p1.openshiftapps.com
-AWS Account: &lt;span class="m">123456789012&lt;/span>
-API URL:
-Console URL:
-Region: xxxxxxxxxxx
-Multi-AZ: &lt;span class="nb">false&lt;/span>
-Nodes:
-- Master: &lt;span class="m">3&lt;/span>
-- Infra: &lt;span class="m">2&lt;/span>
-- Compute: &lt;span class="m">2&lt;/span> &lt;span class="o">(&lt;/span>m5.xlarge&lt;span class="o">)&lt;/span>
-Network:
-- Service CIDR: 172.30.0.0/16
-- Machine CIDR: 10.0.0.0/16
-- Pod CIDR: 10.128.0.0/14
-- Host Prefix: /23
-State: pending &lt;span class="o">(&lt;/span>Preparing account&lt;span class="o">)&lt;/span>
-Private: No
-Created: xxxxxxxxxxxxxxxx
-Details Page: https://cloud.redhat.com/openshift/details/XXXXXXXXXXXXXXXXXXXX
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ rosa create cluster --cluster-name&lt;span class="o">=&lt;/span>rosacluster
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">I: Creating cluster &lt;span class="s1">&amp;#39;rosacluster&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">I: To view a list of clusters and their status, run &lt;span class="s1">&amp;#39;rosa list clusters&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">I: Cluster &lt;span class="s1">&amp;#39;rosacluster&amp;#39;&lt;/span> has been created.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">I: Once the cluster is installed you will need to add an Identity Provider before you can login into the cluster. See &lt;span class="s1">&amp;#39;rosa create idp --help&amp;#39;&lt;/span> &lt;span class="k">for&lt;/span> more information.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">I: To determine when your cluster is Ready, run &lt;span class="s1">&amp;#39;rosa describe cluster -c newsblogcluster&amp;#39;&lt;/span>.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">I: To watch your cluster installation logs, run &lt;span class="s1">&amp;#39;rosa logs install -c newsblogcluster --watch&amp;#39;&lt;/span>.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Name: newsblogcluster
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ID: XXXXXXXXXXXXXXXXXXXX
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">External ID:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">OpenShift Version:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Channel Group: stable
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">DNS: newsblogcluster.phnh.p1.openshiftapps.com
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">AWS Account: &lt;span class="m">123456789012&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">API URL:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Console URL:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Region: xxxxxxxxxxx
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Multi-AZ: &lt;span class="nb">false&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Nodes:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - Master: &lt;span class="m">3&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - Infra: &lt;span class="m">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - Compute: &lt;span class="m">2&lt;/span> &lt;span class="o">(&lt;/span>m5.xlarge&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Network:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - Service CIDR: 172.30.0.0/16
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - Machine CIDR: 10.0.0.0/16
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - Pod CIDR: 10.128.0.0/14
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - Host Prefix: /23
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">State: pending &lt;span class="o">(&lt;/span>Preparing account&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Private: No
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Created: xxxxxxxxxxxxxxxx
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Details Page: https://cloud.redhat.com/openshift/details/XXXXXXXXXXXXXXXXXXXX
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>執行命令後，您可以透過 &lt;code>rosa describe cluster&lt;/code> 或 &lt;code>rosa logs install&lt;/code> 指令檢查 OpenShift Cluster 狀態。您還可以從 URL 訪問 OpenShift Console 進行確認。&lt;/p>
 &lt;p>&lt;img src="https://i.imgur.com/DvBaXFH.png"
@@ -994,14 +1000,16 @@ loading="lazy"
 &lt;/span>&lt;span class="lnt">9
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ rosa create admin -c rosacluster
-W: It is recommended to add an identity provider to login to this cluster. See &amp;#39;rosa create idp --help&amp;#39; for more information.
-I: Admin account has been added to cluster &amp;#39;rosacluster&amp;#39;.
-I: Please securely store this generated password. If you lose this password you can delete and recreate the cluster admin user.
-I: To login, run the following command:
-oc login https://api.rosacluster.hffh.p1.openshiftapps.com:6443 --username cluster-admin --password fTwWy-rYJJU-wUua7-W3G6Z
-I: It may take up to a minute for the account to become active.
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">$ rosa create admin -c rosacluster
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">W: It is recommended to add an identity provider to login to this cluster. See &amp;#39;rosa create idp --help&amp;#39; for more information.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">I: Admin account has been added to cluster &amp;#39;rosacluster&amp;#39;.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">I: Please securely store this generated password. If you lose this password you can delete and recreate the cluster admin user.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">I: To login, run the following command:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> oc login https://api.rosacluster.hffh.p1.openshiftapps.com:6443 --username cluster-admin --password fTwWy-rYJJU-wUua7-W3G6Z
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">I: It may take up to a minute for the account to become active.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -1013,11 +1021,13 @@ I: It may take up to a minute for the account to become active.
 &lt;/span>&lt;span class="lnt">6
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ oc login https://api.rosacluster.hffh.p1.openshiftapps.com:6443 --username cluster-admin --password fTwWy-rYJJU-wUua7-W3G6Z
-Login successful.
-You have access to &lt;span class="m">87&lt;/span> projects, the list has been suppressed. You can list all projects with &lt;span class="s1">&amp;#39;oc projects&amp;#39;&lt;/span>
-Using project &lt;span class="s2">&amp;#34;default&amp;#34;&lt;/span>.
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ oc login https://api.rosacluster.hffh.p1.openshiftapps.com:6443 --username cluster-admin --password fTwWy-rYJJU-wUua7-W3G6Z
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Login successful.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">You have access to &lt;span class="m">87&lt;/span> projects, the list has been suppressed. You can list all projects with &lt;span class="s1">&amp;#39;oc projects&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Using project &lt;span class="s2">&amp;#34;default&amp;#34;&lt;/span>.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -1032,19 +1042,19 @@ Using project &lt;span class="s2">&amp;#34;default&amp;#34;&lt;/span>.
 &lt;/span>&lt;span class="lnt">9
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ oc get no
-NAME STATUS ROLES AGE VERSION
-ip-10-0-153-95.us-west-2.compute.internal Ready worker 42m v1.21.1+d8043e1
-ip-10-0-171-119.us-west-2.compute.internal Ready infra,worker 17m v1.21.1+d8043e1
-ip-10-0-175-165.us-west-2.compute.internal Ready infra,worker 18m v1.21.1+d8043e1
-ip-10-0-202-234.us-west-2.compute.internal Ready master 49m v1.21.1+d8043e1
-ip-10-0-239-231.us-west-2.compute.internal Ready master 49m v1.21.1+d8043e1
-ip-10-0-242-134.us-west-2.compute.internal Ready master 49m v1.21.1+d8043e1
-ip-10-0-252-208.us-west-2.compute.internal Ready worker 42m v1.21.1+d8043e1
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ oc get no
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NAME STATUS ROLES AGE VERSION
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ip-10-0-153-95.us-west-2.compute.internal Ready worker 42m v1.21.1+d8043e1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ip-10-0-171-119.us-west-2.compute.internal Ready infra,worker 17m v1.21.1+d8043e1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ip-10-0-175-165.us-west-2.compute.internal Ready infra,worker 18m v1.21.1+d8043e1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ip-10-0-202-234.us-west-2.compute.internal Ready master 49m v1.21.1+d8043e1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ip-10-0-239-231.us-west-2.compute.internal Ready master 49m v1.21.1+d8043e1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ip-10-0-242-134.us-west-2.compute.internal Ready master 49m v1.21.1+d8043e1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ip-10-0-252-208.us-west-2.compute.internal Ready worker 42m v1.21.1+d8043e1
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;h2 id="刪除-cluster">刪除 Cluster&lt;/h2>
-&lt;p>&lt;code>rosa delete cluster&lt;/code> 可以使用指令刪除使用 ROSA 創建的cluster。順便說一下，集群的刪除在大約 10 分鐘內完成。&lt;/p>
+&lt;/div>&lt;h2 id="刪除-cluster">刪除 Cluster
+&lt;/h2>&lt;p>&lt;code>rosa delete cluster&lt;/code> 可以使用指令刪除使用 ROSA 創建的cluster。順便說一下，集群的刪除在大約 10 分鐘內完成。&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
@@ -1053,13 +1063,13 @@ ip-10-0-252-208.us-west-2.compute.internal Ready worker 42m v1.21.1+d8043e1
 &lt;/span>&lt;span class="lnt">4
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ rosa delete cluster --cluster&lt;span class="o">=&lt;/span>rosacluster
-? Are you sure you want to delete cluster rosacluster? Yes
-I: Cluster &lt;span class="s1">&amp;#39;rosacluster&amp;#39;&lt;/span> will start uninstalling now
-I: To watch your cluster uninstallation logs, run &lt;span class="err">&amp;#39;&lt;/span>rosa logs uninstall -c rosacluster --watch
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ rosa delete cluster --cluster&lt;span class="o">=&lt;/span>rosacluster
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">? Are you sure you want to delete cluster rosacluster? Yes
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">I: Cluster &lt;span class="s1">&amp;#39;rosacluster&amp;#39;&lt;/span> will start uninstalling now
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">I: To watch your cluster uninstallation logs, run &lt;span class="err">&amp;#39;&lt;/span>rosa logs uninstall -c rosacluster --watch
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;h2 id="reference">Reference&lt;/h2>
-&lt;ul>
+&lt;/div>&lt;h2 id="reference">Reference
+&lt;/h2>&lt;ul>
 &lt;li>rosaworkshop.io&lt;/li>
 &lt;/ul></description></item></channel></rss>

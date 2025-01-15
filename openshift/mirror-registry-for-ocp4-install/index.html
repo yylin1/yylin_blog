@@ -1,128 +1,15 @@
-<!doctype html><html lang=zh-tw dir=ltr>
-<head><meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="本篇文章介紹，如何透過 `mirror regristry` 一座輕量精簡的容器鏡像倉庫(Regristry)，為使用者提供了在沒有 Regristry 的離線環境中，提供託管 OpenShift 4 安裝所需的相關容器鏡像。"><title>Disconnected Environment - Introducing Mirror Registry for Red Hat OpenShift</title>
-<link rel=canonical href=https://blog.yylin.io/openshift/mirror-registry-for-ocp4-install/>
-<link rel=stylesheet href=/scss/style.min.5dfb59e7e9320a8eb7995abb74271d0b47aa7bd7423004549c2964fd78196c75.css><meta property="og:title" content="Disconnected Environment - Introducing Mirror Registry for Red Hat OpenShift">
-<meta property="og:description" content="本篇文章介紹，如何透過 `mirror regristry` 一座輕量精簡的容器鏡像倉庫(Regristry)，為使用者提供了在沒有 Regristry 的離線環境中，提供託管 OpenShift 4 安裝所需的相關容器鏡像。">
-<meta property="og:url" content="https://blog.yylin.io/openshift/mirror-registry-for-ocp4-install/">
-<meta property="og:site_name" content="Frank's Notes">
-<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="Registry"><meta property="article:published_time" content="2022-03-07T00:53:25+08:00"><meta property="article:modified_time" content="2022-03-07T00:53:25+08:00">
-<meta name=twitter:title content="Disconnected Environment - Introducing Mirror Registry for Red Hat OpenShift">
-<meta name=twitter:description content="本篇文章介紹，如何透過 `mirror regristry` 一座輕量精簡的容器鏡像倉庫(Regristry)，為使用者提供了在沒有 Regristry 的離線環境中，提供託管 OpenShift 4 安裝所需的相關容器鏡像。">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-60ZBHV66GB"></script>
-<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-60ZBHV66GB',{anonymize_ip:!1})}</script>
-<style>h1{letter-spacing:6px}</style>
-</head>
-<body class=article-page>
-<script>(function(){const a='StackColorScheme';localStorage.getItem(a)||localStorage.setItem(a,"auto")})()</script><script>(function(){const b='StackColorScheme',a=localStorage.getItem(b),c=window.matchMedia('(prefers-color-scheme: dark)').matches===!0;a=='dark'||a==='auto'&&c?document.documentElement.dataset.scheme='dark':document.documentElement.dataset.scheme='light'})()</script>
-<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky">
-<button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label=切換選單>
-<span class=hamburger-box>
-<span class=hamburger-inner></span>
-</span>
-</button>
-<header>
-<div class=site-meta>
-<h1 class=site-name><a href=/>Frank's Notes</a></h1>
-<h2 class=site-description>拆解|筆記|復盤</h2>
-</div>
-</header><ol class=menu id=main-menu>
-<li>
-<a href=/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
-<span>Home</span>
-</a>
-</li>
-<li>
-<a href=/about/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
-<span>About</span>
-</a>
-</li>
-<li>
-<a href=/archives/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
-<span>Archives</span>
-</a>
-</li>
-<li>
-<a href=/search/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
-<span>Search</span>
-</a>
-</li>
-<li>
-<a href=/links/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
-<span>Links</span>
-</a>
-</li>
-<div class=menu-bottom-section>
-<li id=dark-mode-toggle><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
-<span>夜晚模式</span>
-</li>
-</div>
-</ol>
-</aside>
-<main class="main full-width">
-<article class=main-article>
-<header class=article-header>
-<div class=article-details>
-<header class=article-category>
-<a href=/categories/openshift/>
-OpenShift
-</a>
-</header>
-<div class=article-title-wrapper>
-<h2 class=article-title>
-<a href=/openshift/mirror-registry-for-ocp4-install/>Disconnected Environment - Introducing Mirror Registry for Red Hat OpenShift</a>
-</h2>
-<h3 class=article-subtitle>
-本篇文章介紹，如何透過 `mirror regristry` 一座輕量精簡的容器鏡像倉庫(Regristry)，為使用者提供了在沒有 Regristry 的離線環境中，提供託管 OpenShift 4 安裝所需的相關容器鏡像。
-</h3>
-</div>
-<footer class=article-time>
-<div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
-<time class=article-time--published>Mar 07, 2022</time>
-</div>
-<div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
-<time class=article-time--reading>
-閱讀時間: 4 分鐘
-</time>
-</div>
-</footer>
-</div>
-</header>
-<section class=article-content>
-<p>本文件如何安裝 OpenShift 4.8 版本至虛擬機器上，這邊將以 RHEL 環境來進行測試。</p>
-<ul>
-<li>RHEL 8 or Fedora machine with podman v3.3 installed</li>
-<li>Fully qualified domain name for the Quay service (must resolve via DNS, or at least /etc/hosts)</li>
-<li>Passwordless sudo access on the target host (rootless install tbd)</li>
-<li>Key-based SSH connectivity on the target host (will be set up automatically for local installs, in case of remote hosts see here)</li>
-<li>make (only if compiling your own installer)</li>
-</ul>
-<p>當我們的基礎設施處於離線環境時，需要創建容器鏡像倉庫(Registry)來託管安裝 OpenShift Container Platform 所需的相關鏡像檔，來正常部署 OpenShift 叢集。</p>
-<p>這是有關 mirror registry for Red Hat OpenShift OpenShift 4 的官方流程圖（可在 Red Hat Blog 頁面中找到）：</p>
-<p><img src=https://i.imgur.com/49Qc3LU.png loading=lazy></p>
-<h2 id=情境與使用目標>情境與使用目標</h2>
-<p>OpenShift 通常是在受控制離線網路的情況下運行 Production Cluster。而客戶要使用 Red Hat Quay 在 OpenShift 上運行優勢包含，有更多擴充性與部署元件配置整合性。要在離線環境安裝 OpenShift 前提條件，需要一個存放的安裝所需的相關鏡像的鏡像倉庫 (e.g., Quay, Harbor, Docker registry)，這邊就會有雞生蛋蛋生雞問題。</p>
-<p>解決方案/目標：</p>
-<p>Red Hat 提供一個 “mirror registry”工具，只針對 OpenShift 部署的引導(Bootstrap)鏡像倉庫，透過自動化腳本安裝程序，提供在 RHEL 8 (or Fedora) 的系統環境，快速部署一個精簡版的 Quay ，提供保存下載特定版本 OpenShift、OpenShiftHub 鏡像檔。mirror registry 提供針對離線環境或只是單純 PoC OpenShift 情境使用的 Registry，可以透過自動化腳本，快速部署設置安裝單節點(all-in-one)的 Quay ，所需要的相關手動繁瑣設定，例如：完整網域名稱 FQDN、使用者自定義 SSL/TLS 憑證、訪問權權限 SSH key 及運行的環境選擇。</p>
-<p>情境: 離線環境，安裝 OpenShift 運行流程:</p>
-<ol>
-<li>在可連線外部網路環境中，透過 mirror registry 部署第一座容器鏡像倉庫(Online Mirror) 進行 OpenShift、OpenShiftHub 必要鏡像檔存放。</li>
-<li>同樣在離線環境中，透過 mirror registry 部署第二座容器鏡像倉庫(Air-gapped Mirror)，從 Online Mirror 拷貝並要的映像檔存放於 Air-gapped Mirror</li>
-<li>透過 Air-gapped Mirror 部署 OpenShift Production/Infra Cluster</li>
-<li>OpenShift 安裝 Quay Operator 提供內部服務及應用所需的鏡像存放</li>
-</ol>
-<h2 id=事前準備>事前準備</h2>
-<ul>
-<li>從 <a class=link href=https://console.redhat.com/openshift/downloads#tool-mirror-registry target=_blank rel=noopener>OpenShift console Downloads</a> 下載最新版本的 <code>mirror-registry.tar.gz</code></li>
-<li>準備 pull-secret.json 檔案</li>
-</ul>
-<h2 id=安裝>安裝</h2>
-<ul>
-<li>在當前環境安裝 mirror registry</li>
-</ul>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+<!doctype html><html lang=zh-tw dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="本篇文章介紹，如何透過 `mirror regristry` 一座輕量精簡的容器鏡像倉庫(Regristry)，為使用者提供了在沒有 Regristry 的離線環境中，提供託管 OpenShift 4 安裝所需的相關容器鏡像。"><title>Disconnected Environment - Introducing Mirror Registry for Red Hat OpenShift</title>
+<link rel=canonical href=https://blog.yylin.io/openshift/mirror-registry-for-ocp4-install/><link rel=stylesheet href=/scss/style.min.5dfb59e7e9320a8eb7995abb74271d0b47aa7bd7423004549c2964fd78196c75.css><meta property='og:title' content="Disconnected Environment - Introducing Mirror Registry for Red Hat OpenShift"><meta property='og:description' content="本篇文章介紹，如何透過 `mirror regristry` 一座輕量精簡的容器鏡像倉庫(Regristry)，為使用者提供了在沒有 Regristry 的離線環境中，提供託管 OpenShift 4 安裝所需的相關容器鏡像。"><meta property='og:url' content='https://blog.yylin.io/openshift/mirror-registry-for-ocp4-install/'><meta property='og:site_name' content="Frank's Notes"><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='Registry'><meta property='article:published_time' content='2022-03-07T00:53:25+08:00'><meta property='article:modified_time' content='2022-03-07T00:53:25+08:00'><meta name=twitter:title content="Disconnected Environment - Introducing Mirror Registry for Red Hat OpenShift"><meta name=twitter:description content="本篇文章介紹，如何透過 `mirror regristry` 一座輕量精簡的容器鏡像倉庫(Regristry)，為使用者提供了在沒有 Regristry 的離線環境中，提供託管 OpenShift 4 安裝所需的相關容器鏡像。"><script async src="https://www.googletagmanager.com/gtag/js?id=G-60ZBHV66GB"></script><script>var dnt,doNotTrack=!1;if(!1&&(dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes"),!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-60ZBHV66GB")}</script></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label=切換選單>
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><div class=site-meta><h1 class=site-name><a href=/>Frank's Notes</a></h1><h2 class=site-description>拆解|筆記|復盤</h2></div></header><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/about/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>About</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li><a href=/links/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Links</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>夜晚模式</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">目錄</h2><div class=widget--toc><nav id=TableOfContents><ul><li><ul><li><a href=#情境與使用目標>情境與使用目標</a></li><li><a href=#事前準備>事前準備</a></li><li><a href=#安裝>安裝</a></li><li><a href=#開始備份-openshift-images>開始備份 OpenShift images</a></li><li><a href=#mirror-後結果>mirror 後結果</a></li><li><a href=#reference>Reference</a></li></ul></li></ul></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/openshift/>OpenShift</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/openshift/mirror-registry-for-ocp4-install/>Disconnected Environment - Introducing Mirror Registry for Red Hat OpenShift</a></h2><h3 class=article-subtitle>本篇文章介紹，如何透過 `mirror regristry` 一座輕量精簡的容器鏡像倉庫(Regristry)，為使用者提供了在沒有 Regristry 的離線環境中，提供託管 OpenShift 4 安裝所需的相關容器鏡像。</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Mar 07, 2022</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>閱讀時間: 4 分鐘</time></div></footer></div></header><section class=article-content><p>本文件如何安裝 OpenShift 4.8 版本至虛擬機器上，這邊將以 RHEL 環境來進行測試。</p><ul><li>RHEL 8 or Fedora machine with podman v3.3 installed</li><li>Fully qualified domain name for the Quay service (must resolve via DNS, or at least /etc/hosts)</li><li>Passwordless sudo access on the target host (rootless install tbd)</li><li>Key-based SSH connectivity on the target host (will be set up automatically for local installs, in case of remote hosts see here)</li><li>make (only if compiling your own installer)</li></ul><p>當我們的基礎設施處於離線環境時，需要創建容器鏡像倉庫(Registry)來託管安裝 OpenShift Container Platform 所需的相關鏡像檔，來正常部署 OpenShift 叢集。</p><p>這是有關 mirror registry for Red Hat OpenShift OpenShift 4 的官方流程圖（可在 Red Hat Blog 頁面中找到）：</p><p><img src=https://i.imgur.com/49Qc3LU.png loading=lazy></p><h2 id=情境與使用目標>情境與使用目標</h2><p>OpenShift 通常是在受控制離線網路的情況下運行 Production Cluster。而客戶要使用 Red Hat Quay 在 OpenShift 上運行優勢包含，有更多擴充性與部署元件配置整合性。要在離線環境安裝 OpenShift 前提條件，需要一個存放的安裝所需的相關鏡像的鏡像倉庫 (e.g., Quay, Harbor, Docker registry)，這邊就會有雞生蛋蛋生雞問題。</p><p>解決方案/目標：</p><p>Red Hat 提供一個 “mirror registry”工具，只針對 OpenShift 部署的引導(Bootstrap)鏡像倉庫，透過自動化腳本安裝程序，提供在 RHEL 8 (or Fedora) 的系統環境，快速部署一個精簡版的 Quay ，提供保存下載特定版本 OpenShift、OpenShiftHub 鏡像檔。mirror registry 提供針對離線環境或只是單純 PoC OpenShift 情境使用的 Registry，可以透過自動化腳本，快速部署設置安裝單節點(all-in-one)的 Quay ，所需要的相關手動繁瑣設定，例如：完整網域名稱 FQDN、使用者自定義 SSL/TLS 憑證、訪問權權限 SSH key 及運行的環境選擇。</p><p>情境: 離線環境，安裝 OpenShift 運行流程:</p><ol><li>在可連線外部網路環境中，透過 mirror registry 部署第一座容器鏡像倉庫(Online Mirror) 進行 OpenShift、OpenShiftHub 必要鏡像檔存放。</li><li>同樣在離線環境中，透過 mirror registry 部署第二座容器鏡像倉庫(Air-gapped Mirror)，從 Online Mirror 拷貝並要的映像檔存放於 Air-gapped Mirror</li><li>透過 Air-gapped Mirror 部署 OpenShift Production/Infra Cluster</li><li>OpenShift 安裝 Quay Operator 提供內部服務及應用所需的鏡像存放</li></ol><h2 id=事前準備>事前準備</h2><ul><li>從 <a class=link href=https://console.redhat.com/openshift/downloads#tool-mirror-registry target=_blank rel=noopener>OpenShift console Downloads</a> 下載最新版本的 <code>mirror-registry.tar.gz</code></li><li>準備 pull-secret.json 檔案</li></ul><h2 id=安裝>安裝</h2><ul><li>在當前環境安裝 mirror registry</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
@@ -130,130 +17,45 @@ OpenShift
 </span><span class=lnt>6
 </span><span class=lnt>7
 </span><span class=lnt>8
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>$ vim /etc/hosts
-127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
-::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
-
-127.0.0.1 registry.yylin.demolab
-
-$ export HOSTNAME=&#34;registry.yylin.demolab&#34;
-$ ./mirror-registry install --quayHostname ${HOSTNAME} --ssh-key &lt;~/.ssh/my_id_rsa&gt;
-</code></pre></td></tr></table>
-</div>
-</div><ul>
-<li>最後輸出顯示 registry host 與登入資訊</li>
-</ul>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=o>$</span> <span class=n>vim</span> <span class=o>/</span><span class=n>etc</span><span class=o>/</span><span class=n>hosts</span>
+</span></span><span class=line><span class=cl><span class=mf>127.0</span><span class=o>.</span><span class=mf>0.1</span>   <span class=n>localhost</span> <span class=n>localhost</span><span class=o>.</span><span class=n>localdomain</span> <span class=n>localhost4</span> <span class=n>localhost4</span><span class=o>.</span><span class=n>localdomain4</span>
+</span></span><span class=line><span class=cl><span class=p>::</span><span class=mi>1</span>         <span class=n>localhost</span> <span class=n>localhost</span><span class=o>.</span><span class=n>localdomain</span> <span class=n>localhost6</span> <span class=n>localhost6</span><span class=o>.</span><span class=n>localdomain6</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=mf>127.0</span><span class=o>.</span><span class=mf>0.1</span> <span class=n>registry</span><span class=o>.</span><span class=n>yylin</span><span class=o>.</span><span class=n>demolab</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>$</span> <span class=k>export</span> <span class=n>HOSTNAME</span><span class=o>=</span><span class=s2>&#34;registry.yylin.demolab&#34;</span>
+</span></span><span class=line><span class=cl><span class=o>$</span> <span class=o>./</span><span class=n>mirror</span><span class=o>-</span><span class=n>registry</span> <span class=n>install</span> <span class=o>--</span><span class=n>quayHostname</span> <span class=o>$</span><span class=p>{</span><span class=n>HOSTNAME</span><span class=p>}</span> <span class=o>--</span><span class=n>ssh</span><span class=o>-</span><span class=n>key</span> <span class=o>&lt;~/.</span><span class=n>ssh</span><span class=o>/</span><span class=n>my_id_rsa</span><span class=o>&gt;</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>最後輸出顯示 registry host 與登入資訊</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>INFO[2022-03-01 00:52:38] Quay installed successfully, permanent data are stored in /etc/quay-install
-INFO[2022-03-01 00:52:38] Quay is available at https://registry.yylin.demolab:8443 with credentials (init, xxxxxxxxxxxxxxxxxxxxxx)
-</code></pre></td></tr></table>
-</div>
-</div><ul>
-<li>產生 Registry Basic Auth 之認證資訊</li>
-</ul>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>INFO[2022-03-01 00:52:38] Quay installed successfully, permanent data are stored in /etc/quay-install
+</span></span><span class=line><span class=cl>INFO[2022-03-01 00:52:38] Quay is available at https://registry.yylin.demolab:8443 with credentials (init, xxxxxxxxxxxxxxxxxxxxxx)
+</span></span></code></pre></td></tr></table></div></div><ul><li>產生 Registry Basic Auth 之認證資訊</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback># (init, xxxxxxxxxxxxxxxxxxxxxx)
-echo -n &#39;&lt;username&gt;:&lt;password&gt;&#39; | base64 -w0 
-</code></pre></td></tr></table>
-</div>
-</div><ul>
-<li>在 pull-secret 加入本地 Registry 認證資訊</li>
-</ul>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl># (init, xxxxxxxxxxxxxxxxxxxxxx)
+</span></span><span class=line><span class=cl>echo -n &#39;&lt;username&gt;:&lt;password&gt;&#39; | base64 -w0 
+</span></span></code></pre></td></tr></table></div></div><ul><li>在 pull-secret 加入本地 Registry 認證資訊</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>    &#34;registry.yylin.demolab:8443&#34;: {
-       &#34;auth&#34;: &#34;aW5pdDo3TzlNV1hBMDhQcTJKZGh0M0M2elZJNU5EMWlsYkJ3NA==&#34;
-    }
-</code></pre></td></tr></table>
-</div>
-</div><ul>
-<li>驗證登入registry</li>
-</ul>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>    &#34;registry.yylin.demolab:8443&#34;: {
+</span></span><span class=line><span class=cl>       &#34;auth&#34;: &#34;aW5pdDo3TzlNV1hBMDhQcTJKZGh0M0M2elZJNU5EMWlsYkJ3NA==&#34;
+</span></span><span class=line><span class=cl>    }
+</span></span></code></pre></td></tr></table></div></div><ul><li>驗證登入registry</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>$ podman login -u init --authfile pull-secret.json registry.yylin.demolab:8443
-Error: authenticating creds for &#34;registry.yylin.demolab:8443&#34;: pinging container registry registry.yylin.demolab:8443: Get &#34;https://registry.yylin.demolab:8443/v2/&#34;: x509: certificate signed by unknown authority (possibly because of &#34;crypto/rsa: verification error&#34; while trying to verify candidate authority certificate &#34;bastion.redhat.kubedev.org&#34;)
-</code></pre></td></tr></table>
-</div>
-</div><ul>
-<li>安裝更新 quay 憑證</li>
-</ul>
-<blockquote>
-<p>mirror registry 預設會配置好 CA 憑證，請將 PEM 文件格式添加憑證到系統中信任的 CA 列表中，這邊複製到 /usr/share/pki/ca-trust-source/anchors/ 目錄中</p>
-</blockquote>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>$ cp /etc/quay-install/quay-rootCA/rootCA.pem /usr/share/pki/ca-trust-source/anchors/rootCA.cert
-</code></pre></td></tr></table>
-</div>
-</div><blockquote>
-<p>更新系統範圍的信任儲存配置，請使用 update-ca-trust 命令：</p>
-</blockquote>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>$ update-ca-trust
-</code></pre></td></tr></table>
-</div>
-</div><ul>
-<li>再次登入mirror registry - Quay 確認憑證狀態是不是已經更新</li>
-</ul>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>$ podman login -u init --authfile pull-secret.json registry.yylin.demolab:8443
+</span></span><span class=line><span class=cl>Error: authenticating creds for &#34;registry.yylin.demolab:8443&#34;: pinging container registry registry.yylin.demolab:8443: Get &#34;https://registry.yylin.demolab:8443/v2/&#34;: x509: certificate signed by unknown authority (possibly because of &#34;crypto/rsa: verification error&#34; while trying to verify candidate authority certificate &#34;bastion.redhat.kubedev.org&#34;)
+</span></span></code></pre></td></tr></table></div></div><ul><li>安裝更新 quay 憑證</li></ul><blockquote><p>mirror registry 預設會配置好 CA 憑證，請將 PEM 文件格式添加憑證到系統中信任的 CA 列表中，這邊複製到 /usr/share/pki/ca-trust-source/anchors/ 目錄中</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>$ cp /etc/quay-install/quay-rootCA/rootCA.pem /usr/share/pki/ca-trust-source/anchors/rootCA.cert
+</span></span></code></pre></td></tr></table></div></div><blockquote><p>更新系統範圍的信任儲存配置，請使用 update-ca-trust 命令：</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>$ update-ca-trust
+</span></span></code></pre></td></tr></table></div></div><ul><li>再次登入mirror registry - Quay 確認憑證狀態是不是已經更新</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>$ podman login -u init --authfile pull-secret.json bastion.redhat.kubedev.org:8443
-Password:
-Login Succeeded!
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=開始備份-openshift-images>開始備份 OpenShift images</h2>
-<ol>
-<li>建立備份路徑</li>
-</ol>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>$ mkdir -p $HOME/openshift4/registry/images
-</code></pre></td></tr></table>
-</div>
-</div><ol start=2>
-<li>匯入環境變數</li>
-</ol>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>$ podman login -u init --authfile pull-secret.json bastion.redhat.kubedev.org:8443
+</span></span><span class=line><span class=cl>Password:
+</span></span><span class=line><span class=cl>Login Succeeded!
+</span></span></code></pre></td></tr></table></div></div><h2 id=開始備份-openshift-images>開始備份 OpenShift images</h2><ol><li>建立備份路徑</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>$ mkdir -p $HOME/openshift4/registry/images
+</span></span></code></pre></td></tr></table></div></div><ol start=2><li>匯入環境變數</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -270,75 +72,42 @@ Login Succeeded!
 </span><span class=lnt>15
 </span><span class=lnt>16
 </span><span class=lnt>17
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback># vim upgrade-env
-export OCP_RELEASE=$(oc version -o json  --client | jq -r &#39;.releaseClientVersion&#39;) 
-export LOCAL_REGISTRY=&#34;registry.yylin.demolab:8443&#34;
-export LOCAL_REPOSITORY=&#34;ocp4/openshift4&#34;
-export PRODUCT_REPO=&#34;openshift-release-dev&#34;
-
-# /註記/ 請確認 pull-secret.json 裡面有包含 mirror rigistry 資訊
-export LOCAL_SECRET_JSON=$HOME/mirror-registry/pull-secret.json  
-
-export RELEASE_NAME=&#34;ocp-release&#34;
-export ARCHITECTURE=x86_64
-
-# 指定 images 存放路徑
-export REMOVABLE_MEDIA_PATH=&#34;$HOME/openshift4/registry/images&#34;
-
-# 匯入環境變數
-source upgrade-env
-</code></pre></td></tr></table>
-</div>
-</div><ol start=3>
-<li>備份 Image</li>
-</ol>
-<ul>
-<li>/#1/ Review the images and configuration manifests to mirror:</li>
-</ul>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>$ oc adm release mirror -a ${LOCAL_SECRET_JSON}       --from=quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE}      --to=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY}      --to-release-image=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY}:${OCP_RELEASE}-${ARCHITECTURE} --dry-run
-</code></pre></td></tr></table>
-</div>
-</div><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=c1># vim upgrade-env</span>
+</span></span><span class=line><span class=cl><span class=k>export</span> <span class=n>OCP_RELEASE</span><span class=o>=$</span><span class=p>(</span><span class=n>oc</span> <span class=n>version</span> <span class=o>-</span><span class=n>o</span> <span class=n>json</span>  <span class=o>--</span><span class=n>client</span> <span class=o>|</span> <span class=n>jq</span> <span class=o>-</span><span class=n>r</span> <span class=s1>&#39;.releaseClientVersion&#39;</span><span class=p>)</span> 
+</span></span><span class=line><span class=cl><span class=k>export</span> <span class=n>LOCAL_REGISTRY</span><span class=o>=</span><span class=s2>&#34;registry.yylin.demolab:8443&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>export</span> <span class=n>LOCAL_REPOSITORY</span><span class=o>=</span><span class=s2>&#34;ocp4/openshift4&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>export</span> <span class=n>PRODUCT_REPO</span><span class=o>=</span><span class=s2>&#34;openshift-release-dev&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># /註記/ 請確認 pull-secret.json 裡面有包含 mirror rigistry 資訊</span>
+</span></span><span class=line><span class=cl><span class=k>export</span> <span class=n>LOCAL_SECRET_JSON</span><span class=o>=$</span><span class=n>HOME</span><span class=o>/</span><span class=n>mirror</span><span class=o>-</span><span class=n>registry</span><span class=o>/</span><span class=n>pull</span><span class=o>-</span><span class=n>secret</span><span class=o>.</span><span class=n>json</span>  
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>export</span> <span class=n>RELEASE_NAME</span><span class=o>=</span><span class=s2>&#34;ocp-release&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>export</span> <span class=n>ARCHITECTURE</span><span class=o>=</span><span class=n>x86_64</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 指定 images 存放路徑</span>
+</span></span><span class=line><span class=cl><span class=k>export</span> <span class=n>REMOVABLE_MEDIA_PATH</span><span class=o>=</span><span class=s2>&#34;$HOME/openshift4/registry/images&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 匯入環境變數</span>
+</span></span><span class=line><span class=cl><span class=n>source</span> <span class=n>upgrade</span><span class=o>-</span><span class=n>env</span>
+</span></span></code></pre></td></tr></table></div></div><ol start=3><li>備份 Image</li></ol><ul><li>/#1/ Review the images and configuration manifests to mirror:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>$ oc adm release mirror -a ${LOCAL_SECRET_JSON}       --from=quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE}      --to=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY}      --to-release-image=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY}:${OCP_RELEASE}-${ARCHITECTURE} --dry-run
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
 </span><span class=lnt>5
 </span><span class=lnt>6
 </span><span class=lnt>7
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>imageContentSources:
-- mirrors:
-  - registry.yylin.demolab:8443/ocp4/openshift4
-  source: quay.io/openshift-release-dev/ocp-release
-- mirrors:
-  - registry.yylin.demolab:8443/ocp4/openshift4
-  source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
-</code></pre></td></tr></table>
-</div>
-</div><ul>
-<li>/#2/ Mirror the images to a directory on the removable media:</li>
-</ul>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>$ oc adm release mirror -a ${LOCAL_SECRET_JSON} --to-dir=${REMOVABLE_MEDIA_PATH}/mirror quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE}
-</code></pre></td></tr></table>
-</div>
-</div><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>imageContentSources:
+</span></span><span class=line><span class=cl>- mirrors:
+</span></span><span class=line><span class=cl>  - registry.yylin.demolab:8443/ocp4/openshift4
+</span></span><span class=line><span class=cl>  source: quay.io/openshift-release-dev/ocp-release
+</span></span><span class=line><span class=cl>- mirrors:
+</span></span><span class=line><span class=cl>  - registry.yylin.demolab:8443/ocp4/openshift4
+</span></span><span class=line><span class=cl>  source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
+</span></span></code></pre></td></tr></table></div></div><ul><li>/#2/ Mirror the images to a directory on the removable media:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>$ oc adm release mirror -a ${LOCAL_SECRET_JSON} --to-dir=${REMOVABLE_MEDIA_PATH}/mirror quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE}
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -348,34 +117,19 @@ source upgrade-env
 </span><span class=lnt> 8
 </span><span class=lnt> 9
 </span><span class=lnt>10
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>info: Mirroring completed in 3m6.3s (66.22MB/s)
-
-Success
-Update image:  openshift/release:4.10.0-rc.3-x86_64
-
-To upload local images to a registry, run:
-
-    oc image mirror --from-dir=/root/openshift4/registry/images/mirror &#39;file://openshift/release:4.10.0-rc.3-x86_64*&#39; REGISTRY/REPOSITORY
-
-Configmap signature file /root/openshift4/registry/images/mirror/config/signature-sha256-3d4ada825f4aa4d2.yaml created
-</code></pre></td></tr></table>
-</div>
-</div><ul>
-<li>/#3/ Take the media to the restricted network environment and upload the images to the local container registry:</li>
-</ul>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>$ oc image mirror -a ${LOCAL_SECRET_JSON} --from-dir=${REMOVABLE_MEDIA_PATH}/mirror &#34;file://openshift/release:${OCP_RELEASE}*&#34; ${LOCAL_REGISTRY}/${LOCAL_REPOSITORY} 
-</code></pre></td></tr></table>
-</div>
-</div><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=n>info</span><span class=p>:</span> <span class=n>Mirroring</span> <span class=n>completed</span> <span class=ow>in</span> <span class=mi>3</span><span class=n>m6</span><span class=o>.</span><span class=mi>3</span><span class=n>s</span> <span class=p>(</span><span class=mf>66.22</span><span class=n>MB</span><span class=o>/</span><span class=n>s</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>Success</span>
+</span></span><span class=line><span class=cl><span class=n>Update</span> <span class=n>image</span><span class=p>:</span>  <span class=n>openshift</span><span class=o>/</span><span class=n>release</span><span class=p>:</span><span class=mf>4.10</span><span class=o>.</span><span class=mi>0</span><span class=o>-</span><span class=n>rc</span><span class=o>.</span><span class=mi>3</span><span class=o>-</span><span class=n>x86_64</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>To</span> <span class=n>upload</span> <span class=n>local</span> <span class=n>images</span> <span class=n>to</span> <span class=n>a</span> <span class=n>registry</span><span class=p>,</span> <span class=n>run</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>oc</span> <span class=n>image</span> <span class=n>mirror</span> <span class=o>--</span><span class=n>from</span><span class=o>-</span><span class=n>dir</span><span class=o>=/</span><span class=n>root</span><span class=o>/</span><span class=n>openshift4</span><span class=o>/</span><span class=n>registry</span><span class=o>/</span><span class=n>images</span><span class=o>/</span><span class=n>mirror</span> <span class=s1>&#39;file://openshift/release:4.10.0-rc.3-x86_64*&#39;</span> <span class=n>REGISTRY</span><span class=o>/</span><span class=n>REPOSITORY</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>Configmap</span> <span class=n>signature</span> <span class=n>file</span> <span class=o>/</span><span class=n>root</span><span class=o>/</span><span class=n>openshift4</span><span class=o>/</span><span class=n>registry</span><span class=o>/</span><span class=n>images</span><span class=o>/</span><span class=n>mirror</span><span class=o>/</span><span class=n>config</span><span class=o>/</span><span class=n>signature</span><span class=o>-</span><span class=n>sha256</span><span class=o>-</span><span class=mi>3</span><span class=n>d4ada825f4aa4d2</span><span class=o>.</span><span class=n>yaml</span> <span class=n>created</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>/#3/ Take the media to the restricted network environment and upload the images to the local container registry:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>$ oc image mirror -a ${LOCAL_SECRET_JSON} --from-dir=${REMOVABLE_MEDIA_PATH}/mirror &#34;file://openshift/release:${OCP_RELEASE}*&#34; ${LOCAL_REGISTRY}/${LOCAL_REPOSITORY} 
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -390,174 +144,29 @@ Configmap signature file /root/openshift4/registry/images/mirror/config/signatur
 </span><span class=lnt>13
 </span><span class=lnt>14
 </span><span class=lnt>15
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>phase 0:
-  registry.redhat.demolab:8443 ocp4/openshift4 blobs=334 mounts=0 manifests=163 shared=0
-
-info: Planning completed in 2.12s
-uploading: registry.redhat.demolab:8443/ocp4/openshift4 sha256:7253c5d7bf339222334565e0ec7ac88dd017dc9b9ec01654d26e8dda07408548 81.38MiB
-uploading: registry.redhat.demolab:8443/ocp4/openshift4 sha256:8e549eaeb17902a2a516d03776112ad7a9bfd10cd2d1c298fe31b1c15d3b4166 154.4MiB
-uploading: registry.redhat.demolab:8443/ocp4/openshift4 sha256:11456a2e94a652afe44f2645d83a051160119fd953b2459167cc88232adbf9ed 31.45MiB
-uploading: registry.redhat.demolab:8443/ocp4/openshift4 sha256:4ceffbad995c4d6e76142c6b46e7f2e06fcd2ddb6eb2c3624cc0244ae018356f 106.9MiB
-...
-...
-sha256:2d80cc5beffc10607a53eb6c013e87d03e267cdf0b8fc678b40acf5432957714 registry.redhat.demolab:8443/ocp4/openshift4:4.10.0-rc.3-x86_64-multus-networkpolicy
-sha256:df3b0ec40395ea460fbf2728ca7adff79dbaebddcffce003e88b3fb9cb2c9759 registry.redhat.demolab:8443/ocp4/openshift4:4.10.0-rc.3-x86_64-must-gather
-sha256:a340ea3d86560de8cf9ee2c1afe42ad24e5eefc9903a0073abe9dc54815bf710 registry.redhat.demolab:8443/ocp4/openshift4:4.10.0-rc.3-x86_64-console-operator
-sha256:f532e7f50cadfc757a6d277ab5476a31a4f24aac0afc615da6ff9f7ce5e2b538 registry.redhat.demolab:8443/ocp4/openshift4:4.10.0-rc.3-x86_64-cluster-image-registry-operator
-info: Mirroring completed in 1m17.77s (5.572MB/s)
-</code></pre></td></tr></table>
-</div>
-</div><ul>
-<li>/#4/ Directly push the release images to the local registry by using following command:</li>
-</ul>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>$ oc adm release mirror -a ${LOCAL_SECRET_JSON} --from=quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE} --to=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY} --apply-release-image-signature
-</code></pre></td></tr></table>
-</div>
-</div><blockquote>
-<p><a class=link href=https://docs.openshift.com/container-platform/4.10/openshift_images/samples-operator-alt-registry.html target=_blank rel=noopener>更多配置請參考 Mirroring the OpenShift Container Platform image repository</a></p>
-</blockquote>
-<h2 id=mirror-後結果>mirror 後結果</h2>
-<p><img src=https://i.imgur.com/APzRuyc.png loading=lazy></p>
-<hr>
-<h2 id=reference>Reference</h2>
-<ul>
-<li><a class=link href=https://docs.openshift.com/container-platform/4.10/installing/disconnected_install/installing-mirroring-creating-registry.html#mirror-registry-localhost_installing-mirroring-creating-registry target=_blank rel=noopener>Mirroring on a local host with mirror registry for Red Hat OpenShift</a></li>
-<li><a class=link href=https://cloud.redhat.com/blog/introducing-mirror-registry-for-red-hat-openshift target=_blank rel=noopener>https://cloud.redhat.com/blog/introducing-mirror-registry-for-red-hat-openshift</a></li>
-<li><a class=link href=https://access.redhat.com/support/policy/updates/openshift#omr target=_blank rel=noopener>https://access.redhat.com/support/policy/updates/openshift#omr</a></li>
-<li><a class=link href="https://www.youtube.com/watch?v=j5e4OT71N0A" target=_blank rel=noopener>https://www.youtube.com/watch?v=j5e4OT71N0A</a></li>
-</ul>
-</section>
-<footer class=article-footer>
-<section class=article-tags>
-<a href=/tags/registry/>Registry</a>
-</section>
-<section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
-<span>Licensed under CC BY-NC-SA 4.0</span>
-</section>
-</footer>
-</article>
-<aside class=related-contents--wrapper>
-<h2 class=section-title>相關文章</h2>
-<div class=related-contents>
-<div class="flex article-list--tile">
-<article>
-<a href=/openshift/security-zones/>
-<div class=article-details>
-<h2 class=article-title>Deep dive - OpenShift 叢集節點跨網段架構規劃</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/openshift/sno-installer/>
-<div class=article-details>
-<h2 class=article-title>單節點 OpenShift 部署與應用探討</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/openshift/gpu-operator/>
-<div class=article-details>
-<h2 class=article-title>NVIDIA GPU Operator on OpenShift4</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/openshift/install-troubleshooting/>
-<div class=article-details>
-<h2 class=article-title>OpenShift Intsall Troubleshooting Notes</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/openshift/ocp4-install/>
-<div class=article-details>
-<h2 class=article-title>OpenShift 4.8.x UPI install on Bare metal</h2>
-</div>
-</a>
-</article>
-</div>
-</div>
-</aside>
-<footer class=site-footer>
-<section class=copyright>
-&copy;
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=n>phase</span> <span class=mi>0</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>  <span class=n>registry</span><span class=o>.</span><span class=n>redhat</span><span class=o>.</span><span class=n>demolab</span><span class=p>:</span><span class=mi>8443</span> <span class=n>ocp4</span><span class=o>/</span><span class=n>openshift4</span> <span class=n>blobs</span><span class=o>=</span><span class=mi>334</span> <span class=n>mounts</span><span class=o>=</span><span class=mi>0</span> <span class=n>manifests</span><span class=o>=</span><span class=mi>163</span> <span class=n>shared</span><span class=o>=</span><span class=mi>0</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>info</span><span class=p>:</span> <span class=n>Planning</span> <span class=n>completed</span> <span class=ow>in</span> <span class=mf>2.12</span><span class=n>s</span>
+</span></span><span class=line><span class=cl><span class=n>uploading</span><span class=p>:</span> <span class=n>registry</span><span class=o>.</span><span class=n>redhat</span><span class=o>.</span><span class=n>demolab</span><span class=p>:</span><span class=mi>8443</span><span class=o>/</span><span class=n>ocp4</span><span class=o>/</span><span class=n>openshift4</span> <span class=n>sha256</span><span class=p>:</span><span class=mi>7253</span><span class=n>c5d7bf339222334565e0ec7ac88dd017dc9b9ec01654d26e8dda07408548</span> <span class=mf>81.38</span><span class=n>MiB</span>
+</span></span><span class=line><span class=cl><span class=n>uploading</span><span class=p>:</span> <span class=n>registry</span><span class=o>.</span><span class=n>redhat</span><span class=o>.</span><span class=n>demolab</span><span class=p>:</span><span class=mi>8443</span><span class=o>/</span><span class=n>ocp4</span><span class=o>/</span><span class=n>openshift4</span> <span class=n>sha256</span><span class=p>:</span><span class=mf>8e549</span><span class=n>eaeb17902a2a516d03776112ad7a9bfd10cd2d1c298fe31b1c15d3b4166</span> <span class=mf>154.4</span><span class=n>MiB</span>
+</span></span><span class=line><span class=cl><span class=n>uploading</span><span class=p>:</span> <span class=n>registry</span><span class=o>.</span><span class=n>redhat</span><span class=o>.</span><span class=n>demolab</span><span class=p>:</span><span class=mi>8443</span><span class=o>/</span><span class=n>ocp4</span><span class=o>/</span><span class=n>openshift4</span> <span class=n>sha256</span><span class=p>:</span><span class=mi>11456</span><span class=n>a2e94a652afe44f2645d83a051160119fd953b2459167cc88232adbf9ed</span> <span class=mf>31.45</span><span class=n>MiB</span>
+</span></span><span class=line><span class=cl><span class=n>uploading</span><span class=p>:</span> <span class=n>registry</span><span class=o>.</span><span class=n>redhat</span><span class=o>.</span><span class=n>demolab</span><span class=p>:</span><span class=mi>8443</span><span class=o>/</span><span class=n>ocp4</span><span class=o>/</span><span class=n>openshift4</span> <span class=n>sha256</span><span class=p>:</span><span class=mi>4</span><span class=n>ceffbad995c4d6e76142c6b46e7f2e06fcd2ddb6eb2c3624cc0244ae018356f</span> <span class=mf>106.9</span><span class=n>MiB</span>
+</span></span><span class=line><span class=cl><span class=o>...</span>
+</span></span><span class=line><span class=cl><span class=o>...</span>
+</span></span><span class=line><span class=cl><span class=n>sha256</span><span class=p>:</span><span class=mi>2</span><span class=n>d80cc5beffc10607a53eb6c013e87d03e267cdf0b8fc678b40acf5432957714</span> <span class=n>registry</span><span class=o>.</span><span class=n>redhat</span><span class=o>.</span><span class=n>demolab</span><span class=p>:</span><span class=mi>8443</span><span class=o>/</span><span class=n>ocp4</span><span class=o>/</span><span class=n>openshift4</span><span class=p>:</span><span class=mf>4.10</span><span class=o>.</span><span class=mi>0</span><span class=o>-</span><span class=n>rc</span><span class=o>.</span><span class=mi>3</span><span class=o>-</span><span class=n>x86_64</span><span class=o>-</span><span class=n>multus</span><span class=o>-</span><span class=n>networkpolicy</span>
+</span></span><span class=line><span class=cl><span class=n>sha256</span><span class=p>:</span><span class=n>df3b0ec40395ea460fbf2728ca7adff79dbaebddcffce003e88b3fb9cb2c9759</span> <span class=n>registry</span><span class=o>.</span><span class=n>redhat</span><span class=o>.</span><span class=n>demolab</span><span class=p>:</span><span class=mi>8443</span><span class=o>/</span><span class=n>ocp4</span><span class=o>/</span><span class=n>openshift4</span><span class=p>:</span><span class=mf>4.10</span><span class=o>.</span><span class=mi>0</span><span class=o>-</span><span class=n>rc</span><span class=o>.</span><span class=mi>3</span><span class=o>-</span><span class=n>x86_64</span><span class=o>-</span><span class=n>must</span><span class=o>-</span><span class=n>gather</span>
+</span></span><span class=line><span class=cl><span class=n>sha256</span><span class=p>:</span><span class=n>a340ea3d86560de8cf9ee2c1afe42ad24e5eefc9903a0073abe9dc54815bf710</span> <span class=n>registry</span><span class=o>.</span><span class=n>redhat</span><span class=o>.</span><span class=n>demolab</span><span class=p>:</span><span class=mi>8443</span><span class=o>/</span><span class=n>ocp4</span><span class=o>/</span><span class=n>openshift4</span><span class=p>:</span><span class=mf>4.10</span><span class=o>.</span><span class=mi>0</span><span class=o>-</span><span class=n>rc</span><span class=o>.</span><span class=mi>3</span><span class=o>-</span><span class=n>x86_64</span><span class=o>-</span><span class=n>console</span><span class=o>-</span><span class=n>operator</span>
+</span></span><span class=line><span class=cl><span class=n>sha256</span><span class=p>:</span><span class=n>f532e7f50cadfc757a6d277ab5476a31a4f24aac0afc615da6ff9f7ce5e2b538</span> <span class=n>registry</span><span class=o>.</span><span class=n>redhat</span><span class=o>.</span><span class=n>demolab</span><span class=p>:</span><span class=mi>8443</span><span class=o>/</span><span class=n>ocp4</span><span class=o>/</span><span class=n>openshift4</span><span class=p>:</span><span class=mf>4.10</span><span class=o>.</span><span class=mi>0</span><span class=o>-</span><span class=n>rc</span><span class=o>.</span><span class=mi>3</span><span class=o>-</span><span class=n>x86_64</span><span class=o>-</span><span class=n>cluster</span><span class=o>-</span><span class=n>image</span><span class=o>-</span><span class=n>registry</span><span class=o>-</span><span class=n>operator</span>
+</span></span><span class=line><span class=cl><span class=n>info</span><span class=p>:</span> <span class=n>Mirroring</span> <span class=n>completed</span> <span class=ow>in</span> <span class=mi>1</span><span class=n>m17</span><span class=o>.</span><span class=mi>77</span><span class=n>s</span> <span class=p>(</span><span class=mf>5.572</span><span class=n>MB</span><span class=o>/</span><span class=n>s</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>/#4/ Directly push the release images to the local registry by using following command:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>$ oc adm release mirror -a ${LOCAL_SECRET_JSON} --from=quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE} --to=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY} --apply-release-image-signature
+</span></span></code></pre></td></tr></table></div></div><blockquote><p><a class=link href=https://docs.openshift.com/container-platform/4.10/openshift_images/samples-operator-alt-registry.html target=_blank rel=noopener>更多配置請參考 Mirroring the OpenShift Container Platform image repository</a></p></blockquote><h2 id=mirror-後結果>mirror 後結果</h2><p><img src=https://i.imgur.com/APzRuyc.png loading=lazy></p><hr><h2 id=reference>Reference</h2><ul><li><a class=link href=https://docs.openshift.com/container-platform/4.10/installing/disconnected_install/installing-mirroring-creating-registry.html#mirror-registry-localhost_installing-mirroring-creating-registry target=_blank rel=noopener>Mirroring on a local host with mirror registry for Red Hat OpenShift</a></li><li><a class=link href=https://cloud.redhat.com/blog/introducing-mirror-registry-for-red-hat-openshift target=_blank rel=noopener>https://cloud.redhat.com/blog/introducing-mirror-registry-for-red-hat-openshift</a></li><li><a class=link href=https://access.redhat.com/support/policy/updates/openshift#omr target=_blank rel=noopener>https://access.redhat.com/support/policy/updates/openshift#omr</a></li><li><a class=link href="https://www.youtube.com/watch?v=j5e4OT71N0A" target=_blank rel=noopener>https://www.youtube.com/watch?v=j5e4OT71N0A</a></li></ul></section><footer class=article-footer><section class=article-tags><a href=/tags/registry/>Registry</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>相關文章</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/openshift/security-zones/><div class=article-details><h2 class=article-title>Deep dive - OpenShift 叢集節點跨網段架構規劃</h2></div></a></article><article><a href=/openshift/sno-installer/><div class=article-details><h2 class=article-title>單節點 OpenShift 部署與應用探討</h2></div></a></article><article><a href=/openshift/gpu-operator/><div class=article-details><h2 class=article-title>NVIDIA GPU Operator on OpenShift4</h2></div></a></article><article><a href=/openshift/install-troubleshooting/><div class=article-details><h2 class=article-title>OpenShift Intsall Troubleshooting Notes</h2></div></a></article><article><a href=/openshift/ocp4-install/><div class=article-details><h2 class=article-title>OpenShift 4.8.x UPI install on Bare metal</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy;
 2022 -
-2024 Frank's Notes
-</section>
-<section class=powerby>
-Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> <br>
-Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.10.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a>
-</section>
-</footer>
-<div class=pswp tabindex=-1 role=dialog aria-hidden=true>
-<div class=pswp__bg></div>
-<div class=pswp__scroll-wrap>
-<div class=pswp__container>
-<div class=pswp__item></div>
-<div class=pswp__item></div>
-<div class=pswp__item></div>
-</div>
-<div class="pswp__ui pswp__ui--hidden">
-<div class=pswp__top-bar>
-<div class=pswp__counter></div>
-<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+2025 Frank's Notes</section><section class=powerby>使用 <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> 建立<br>主題 <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.29.0>Stack</a></b> 由 <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a> 設計</section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
 <button class="pswp__button pswp__button--share" title=Share></button>
 <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-<div class=pswp__preloader>
-<div class=pswp__preloader__icn>
-<div class=pswp__preloader__cut>
-<div class=pswp__preloader__donut></div>
-</div>
-</div>
-</div>
-</div>
-<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-<div class=pswp__share-tooltip></div>
-</div>
-<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
 </button>
-<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-</button>
-<div class=pswp__caption>
-<div class=pswp__caption__center></div>
-</div>
-</div>
-</div>
-</div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css integrity="sha256-c0uckgykQ9v5k+IqViZOZKc47Jn7KQil4/MP3ySA3F8=" crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE=" crossorigin=anonymous>
-</main>
-<aside class="sidebar right-sidebar sticky">
-<section class="widget archives">
-<div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg>
-</div>
-<h2 class="widget-title section-title">目錄</h2>
-<div class=widget--toc>
-<nav id=TableOfContents>
-<ul>
-<li>
-<ul>
-<li><a href=#情境與使用目標>情境與使用目標</a></li>
-<li><a href=#事前準備>事前準備</a></li>
-<li><a href=#安裝>安裝</a></li>
-<li><a href=#開始備份-openshift-images>開始備份 OpenShift images</a></li>
-<li><a href=#mirror-後結果>mirror 後結果</a></li>
-<li><a href=#reference>Reference</a></li>
-</ul>
-</li>
-</ul>
-</nav>
-</div>
-</section>
-</aside>
-</div>
-<script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script>
-<script>(function(){const a=document.createElement('link');a.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",a.type="text/css",a.rel="stylesheet",document.head.appendChild(a)})()</script>
-</body>
-</html>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.cf5b8ca6afa08b0cc41dceeca49f6bd141f0e588ebd20a362e6c34daa1a775f7.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

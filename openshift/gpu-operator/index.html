@@ -1,145 +1,31 @@
-<!doctype html><html lang=zh-tw dir=ltr>
-<head><meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="本篇介紹如何在 OpenShift 與 GPU節點上，透過GPU Operator 快速部署 GPU Driver"><title>NVIDIA GPU Operator on OpenShift4</title>
-<link rel=canonical href=https://blog.yylin.io/openshift/gpu-operator/>
-<link rel=stylesheet href=/scss/style.min.5dfb59e7e9320a8eb7995abb74271d0b47aa7bd7423004549c2964fd78196c75.css><meta property="og:title" content="NVIDIA GPU Operator on OpenShift4">
-<meta property="og:description" content="本篇介紹如何在 OpenShift 與 GPU節點上，透過GPU Operator 快速部署 GPU Driver">
-<meta property="og:url" content="https://blog.yylin.io/openshift/gpu-operator/">
-<meta property="og:site_name" content="Frank's Notes">
-<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="GPU"><meta property="article:tag" content="OpenShift"><meta property="article:published_time" content="2022-02-28T21:40:40+08:00"><meta property="article:modified_time" content="2022-02-28T21:40:40+08:00">
-<meta name=twitter:title content="NVIDIA GPU Operator on OpenShift4">
-<meta name=twitter:description content="本篇介紹如何在 OpenShift 與 GPU節點上，透過GPU Operator 快速部署 GPU Driver">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-60ZBHV66GB"></script>
-<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-60ZBHV66GB',{anonymize_ip:!1})}</script>
-<style>h1{letter-spacing:6px}</style>
-</head>
-<body class=article-page>
-<script>(function(){const a='StackColorScheme';localStorage.getItem(a)||localStorage.setItem(a,"auto")})()</script><script>(function(){const b='StackColorScheme',a=localStorage.getItem(b),c=window.matchMedia('(prefers-color-scheme: dark)').matches===!0;a=='dark'||a==='auto'&&c?document.documentElement.dataset.scheme='dark':document.documentElement.dataset.scheme='light'})()</script>
-<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky">
-<button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label=切換選單>
-<span class=hamburger-box>
-<span class=hamburger-inner></span>
-</span>
-</button>
-<header>
-<div class=site-meta>
-<h1 class=site-name><a href=/>Frank's Notes</a></h1>
-<h2 class=site-description>拆解|筆記|復盤</h2>
-</div>
-</header><ol class=menu id=main-menu>
-<li>
-<a href=/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
-<span>Home</span>
-</a>
-</li>
-<li>
-<a href=/about/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
-<span>About</span>
-</a>
-</li>
-<li>
-<a href=/archives/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
-<span>Archives</span>
-</a>
-</li>
-<li>
-<a href=/search/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
-<span>Search</span>
-</a>
-</li>
-<li>
-<a href=/links/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
-<span>Links</span>
-</a>
-</li>
-<div class=menu-bottom-section>
-<li id=dark-mode-toggle><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
-<span>夜晚模式</span>
-</li>
-</div>
-</ol>
-</aside>
-<main class="main full-width">
-<article class=main-article>
-<header class=article-header>
-<div class=article-details>
-<header class=article-category>
-<a href=/categories/openshift/>
-OpenShift
-</a>
-</header>
-<div class=article-title-wrapper>
-<h2 class=article-title>
-<a href=/openshift/gpu-operator/>NVIDIA GPU Operator on OpenShift4</a>
-</h2>
-<h3 class=article-subtitle>
-本篇介紹如何在 OpenShift 與 GPU節點上，透過GPU Operator 快速部署 GPU Driver
-</h3>
-</div>
-<footer class=article-time>
-<div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
-<time class=article-time--published>Feb 28, 2022</time>
-</div>
-<div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
-<time class=article-time--reading>
-閱讀時間: 5 分鐘
-</time>
-</div>
-</footer>
-</div>
-</header>
-<section class=article-content>
-<p>Nvidia GPU Operator v1.9 on OpenShift 4.9.9 包含以上版本，安裝不用再進行額外權限配置]</p>
-<h2 id=openshift-499-或更高的版本-1>OpenShift 4.9.9 或更高的版本 [1]</h2>
-<p>針對 driver toolkit 取消必要安裝要求:</p>
-<ul>
-<li>Set up an entitlement</li>
-<li>Mirror the RPM packages in a disconnected environment</li>
-<li>Configure a proxy to access the package repository</li>
-</ul>
-<p>[1] <a class=link href=https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/steps-overview.html#entitlement-free-supported-versions target=_blank rel=noopener>https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/steps-overview.html#entitlement-free-supported-versions</a></p>
-<h2 id=openshift-498-與以下版本-2>OpenShift 4.9.8 與以下版本 [2]</h2>
-<p>需手動操作獲取 OCP 憑證，創建 MachineConfig 來認證 OCP 叢集，擴大授權 Images 使用權限範圍，來安裝 Nvidia Operator :</p>
-<ol>
-<li>從 Red Hat Customer Portal 下載 Red Hat OpenShift Container Platform 訂閱憑證 (啟用權限需要登入 OCP 憑證）。</li>
-<li>創建一個 MachineConfig 啟用訂閱管理平台並提供有效訂閱憑證。等待 MachineConfigOperator 重啟節點並完成 MachineConfig。</li>
-<li>驗證叢集所有節點更新權限是否正常。</li>
-</ol>
-<blockquote>
-<p>補充 - NVIDIA GPU Operator 安裝會部署幾個 Pod 服務，用於管理和啟用 GPU 在 OpenShift 中運作。其中一些 Pod 需要 OpenShift 使用一些非 Universal Base Image (UBI) 默認授權的 Images。必須在 OpenShift Cluster 中啟用信任的授權 Images，來啟動 NVIDIA GPU 驅動程式的容器運行。</p>
-</blockquote>
-<p>[1] <a class=link href=https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/steps-overview.html#entitlement-free-supported-versions target=_blank rel=noopener>https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/steps-overview.html#entitlement-free-supported-versions</a>
-[2] <a class=link href=https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/cluster-entitlement.html#enabling-a-cluster-wide-entitlemenent target=_blank rel=noopener>https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/cluster-entitlement.html#enabling-a-cluster-wide-entitlemenent</a></p>
-<h2 id=install-operator---node-feature-discovery>Install Operator - Node Feature Discovery</h2>
-<p><img src=https://i.imgur.com/3J8zoZU.png loading=lazy>
-<img src=https://i.imgur.com/NDepxYJ.png loading=lazy></p>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+<!doctype html><html lang=zh-tw dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="本篇介紹如何在 OpenShift 與 GPU節點上，透過GPU Operator 快速部署 GPU Driver"><title>NVIDIA GPU Operator on OpenShift4</title>
+<link rel=canonical href=https://blog.yylin.io/openshift/gpu-operator/><link rel=stylesheet href=/scss/style.min.5dfb59e7e9320a8eb7995abb74271d0b47aa7bd7423004549c2964fd78196c75.css><meta property='og:title' content="NVIDIA GPU Operator on OpenShift4"><meta property='og:description' content="本篇介紹如何在 OpenShift 與 GPU節點上，透過GPU Operator 快速部署 GPU Driver"><meta property='og:url' content='https://blog.yylin.io/openshift/gpu-operator/'><meta property='og:site_name' content="Frank's Notes"><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='GPU'><meta property='article:tag' content='OpenShift'><meta property='article:published_time' content='2022-02-28T21:40:40+08:00'><meta property='article:modified_time' content='2022-02-28T21:40:40+08:00'><meta name=twitter:title content="NVIDIA GPU Operator on OpenShift4"><meta name=twitter:description content="本篇介紹如何在 OpenShift 與 GPU節點上，透過GPU Operator 快速部署 GPU Driver"><script async src="https://www.googletagmanager.com/gtag/js?id=G-60ZBHV66GB"></script><script>var dnt,doNotTrack=!1;if(!1&&(dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes"),!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-60ZBHV66GB")}</script></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label=切換選單>
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><div class=site-meta><h1 class=site-name><a href=/>Frank's Notes</a></h1><h2 class=site-description>拆解|筆記|復盤</h2></div></header><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/about/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>About</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li><a href=/links/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Links</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>夜晚模式</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">目錄</h2><div class=widget--toc><nav id=TableOfContents><ul><li><ul><li><a href=#openshift-499-或更高的版本-1>OpenShift 4.9.9 或更高的版本 [1]</a></li><li><a href=#openshift-498-與以下版本-2>OpenShift 4.9.8 與以下版本 [2]</a></li><li><a href=#install-operator---node-feature-discovery>Install Operator - Node Feature Discovery</a></li><li><a href=#installing-the-nvidia-gpu-operator>Installing the NVIDIA GPU Operator</a></li><li><a href=#validating-the-gpu-availability>Validating the GPU availability</a></li><li><a href=#running-a-sample-gpu-application>Running a sample GPU Application</a></li><li><a href=#getting-information-about-the-gpu>Getting information about the GPU¶</a></li></ul></li></ul></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/openshift/>OpenShift</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/openshift/gpu-operator/>NVIDIA GPU Operator on OpenShift4</a></h2><h3 class=article-subtitle>本篇介紹如何在 OpenShift 與 GPU節點上，透過GPU Operator 快速部署 GPU Driver</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Feb 28, 2022</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>閱讀時間: 5 分鐘</time></div></footer></div></header><section class=article-content><p>Nvidia GPU Operator v1.9 on OpenShift 4.9.9 包含以上版本，安裝不用再進行額外權限配置]</p><h2 id=openshift-499-或更高的版本-1>OpenShift 4.9.9 或更高的版本 [1]</h2><p>針對 driver toolkit 取消必要安裝要求:</p><ul><li>Set up an entitlement</li><li>Mirror the RPM packages in a disconnected environment</li><li>Configure a proxy to access the package repository</li></ul><p>[1] <a class=link href=https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/steps-overview.html#entitlement-free-supported-versions target=_blank rel=noopener>https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/steps-overview.html#entitlement-free-supported-versions</a></p><h2 id=openshift-498-與以下版本-2>OpenShift 4.9.8 與以下版本 [2]</h2><p>需手動操作獲取 OCP 憑證，創建 MachineConfig 來認證 OCP 叢集，擴大授權 Images 使用權限範圍，來安裝 Nvidia Operator :</p><ol><li>從 Red Hat Customer Portal 下載 Red Hat OpenShift Container Platform 訂閱憑證 (啟用權限需要登入 OCP 憑證）。</li><li>創建一個 MachineConfig 啟用訂閱管理平台並提供有效訂閱憑證。等待 MachineConfigOperator 重啟節點並完成 MachineConfig。</li><li>驗證叢集所有節點更新權限是否正常。</li></ol><blockquote><p>補充 - NVIDIA GPU Operator 安裝會部署幾個 Pod 服務，用於管理和啟用 GPU 在 OpenShift 中運作。其中一些 Pod 需要 OpenShift 使用一些非 Universal Base Image (UBI) 默認授權的 Images。必須在 OpenShift Cluster 中啟用信任的授權 Images，來啟動 NVIDIA GPU 驅動程式的容器運行。</p></blockquote><p>[1] <a class=link href=https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/steps-overview.html#entitlement-free-supported-versions target=_blank rel=noopener>https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/steps-overview.html#entitlement-free-supported-versions</a>
+[2] <a class=link href=https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/cluster-entitlement.html#enabling-a-cluster-wide-entitlemenent target=_blank rel=noopener>https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/cluster-entitlement.html#enabling-a-cluster-wide-entitlemenent</a></p><h2 id=install-operator---node-feature-discovery>Install Operator - Node Feature Discovery</h2><p><img src=https://i.imgur.com/3J8zoZU.png loading=lazy>
+<img src=https://i.imgur.com/NDepxYJ.png loading=lazy></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
 </span><span class=lnt>5
 </span><span class=lnt>6
 </span><span class=lnt>7
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>[lab-user@bastion ~]$ oc get no
-NAME                                         STATUS   ROLES    AGE     VERSION
-ip-10-0-135-51.us-east-2.compute.internal    Ready    worker   3h5m    v1.22.3+e790d7f
-ip-10-0-142-219.us-east-2.compute.internal   Ready    master   3h14m   v1.22.3+e790d7f
-ip-10-0-167-35.us-east-2.compute.internal    Ready    worker   3h5m    v1.22.3+e790d7f
-ip-10-0-186-251.us-east-2.compute.internal   Ready    master   3h14m   v1.22.3+e790d7f
-ip-10-0-213-103.us-east-2.compute.internal   Ready    master   3h14m   v1.22.3+e790d7f
-</code></pre></td></tr></table>
-</div>
-</div><p><img src=https://i.imgur.com/456JizI.png loading=lazy></p>
-<ul>
-<li>要驗證實例是否已創建，請運行：</li>
-</ul>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>[lab-user@bastion ~]$ oc get no
+</span></span><span class=line><span class=cl>NAME                                         STATUS   ROLES    AGE     VERSION
+</span></span><span class=line><span class=cl>ip-10-0-135-51.us-east-2.compute.internal    Ready    worker   3h5m    v1.22.3+e790d7f
+</span></span><span class=line><span class=cl>ip-10-0-142-219.us-east-2.compute.internal   Ready    master   3h14m   v1.22.3+e790d7f
+</span></span><span class=line><span class=cl>ip-10-0-167-35.us-east-2.compute.internal    Ready    worker   3h5m    v1.22.3+e790d7f
+</span></span><span class=line><span class=cl>ip-10-0-186-251.us-east-2.compute.internal   Ready    master   3h14m   v1.22.3+e790d7f
+</span></span><span class=line><span class=cl>ip-10-0-213-103.us-east-2.compute.internal   Ready    master   3h14m   v1.22.3+e790d7f
+</span></span></code></pre></td></tr></table></div></div><p><img src=https://i.imgur.com/456JizI.png loading=lazy></p><ul><li>要驗證實例是否已創建，請運行：</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
@@ -147,30 +33,17 @@ ip-10-0-213-103.us-east-2.compute.internal   Ready    master   3h14m   v1.22.3+e
 </span><span class=lnt>6
 </span><span class=lnt>7
 </span><span class=lnt>8
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>[lab-user@bastion ~]$ oc get pods -n openshift-nfd
-NAME                                      READY   STATUS    RESTARTS   AGE
-nfd-controller-manager-6f65f47cf6-tg6gj   2/2     Running   0          24m
-nfd-master-d7cqw                          1/1     Running   0          35s
-nfd-master-j42m9                          1/1     Running   0          35s
-nfd-master-r64nv                          1/1     Running   0          35s
-nfd-worker-24tzn                          1/1     Running   0          35s
-nfd-worker-5rsg2                          1/1     Running   0          35s
-</code></pre></td></tr></table>
-</div>
-</div><ul>
-<li>成功的部署會顯示一個Running狀態。</li>
-</ul>
-<h2 id=installing-the-nvidia-gpu-operator>Installing the NVIDIA GPU Operator</h2>
-<p>With the Node Feature Discovery Operator installed you can continue with the final step and install the NVIDIA GPU Operator.</p>
-<p>As a cluster administrator, you can install the NVIDIA GPU Operator using the OpenShift Container Platform CLI or the web console.</p>
-<p><img src=https://i.imgur.com/zSZnOQc.png loading=lazy>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>[lab-user@bastion ~]$ oc get pods -n openshift-nfd
+</span></span><span class=line><span class=cl>NAME                                      READY   STATUS    RESTARTS   AGE
+</span></span><span class=line><span class=cl>nfd-controller-manager-6f65f47cf6-tg6gj   2/2     Running   0          24m
+</span></span><span class=line><span class=cl>nfd-master-d7cqw                          1/1     Running   0          35s
+</span></span><span class=line><span class=cl>nfd-master-j42m9                          1/1     Running   0          35s
+</span></span><span class=line><span class=cl>nfd-master-r64nv                          1/1     Running   0          35s
+</span></span><span class=line><span class=cl>nfd-worker-24tzn                          1/1     Running   0          35s
+</span></span><span class=line><span class=cl>nfd-worker-5rsg2                          1/1     Running   0          35s
+</span></span></code></pre></td></tr></table></div></div><ul><li>成功的部署會顯示一個Running狀態。</li></ul><h2 id=installing-the-nvidia-gpu-operator>Installing the NVIDIA GPU Operator</h2><p>With the Node Feature Discovery Operator installed you can continue with the final step and install the NVIDIA GPU Operator.</p><p>As a cluster administrator, you can install the NVIDIA GPU Operator using the OpenShift Container Platform CLI or the web console.</p><p><img src=https://i.imgur.com/zSZnOQc.png loading=lazy>
 <img src=https://i.imgur.com/H5mLoWH.png loading=lazy>
-<img src=https://i.imgur.com/gV3G6kq.png loading=lazy></p>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+<img src=https://i.imgur.com/gV3G6kq.png loading=lazy></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -212,71 +85,53 @@ nfd-worker-5rsg2                          1/1     Running   0          35s
 </span><span class=lnt>40
 </span><span class=lnt>41
 </span><span class=lnt>42
-</span><span class=lnt>43
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>kind: ClusterPolicy
-apiVersion: nvidia.com/v1
-metadata:
-  name: gpu-cluster-policy
-spec:
-  dcgmExporter:
-    config:
-      name: &#39;&#39;
-  dcgm:
-    enabled: true
-  daemonsets: {}
-  devicePlugin: {}
-  driver:
-    enabled: true
-    use_ocp_driver_toolkit: true
-    repoConfig:
-      configMapName: &#39;&#39;
-    certConfig:
-      name: &#39;&#39;
-    licensingConfig:
-      nlsEnabled: false
-      configMapName: &#39;&#39;
-    virtualTopology:
-      config: &#39;&#39;
-  gfd: {}
-  migManager:
-    enabled: true
-  nodeStatusExporter:
-    enabled: true
-  operator:
-    defaultRuntime: crio
-    deployGFD: true
-    initContainer: {}
-  mig:
-    strategy: single
-  toolkit:
-    enabled: true
-  validator:
-    plugin:
-      env:
-        - name: WITH_WORKLOAD
-          value: &#39;true&#39;
-
-</code></pre></td></tr></table>
-</div>
-</div><p>Create the ClusterPolicy custom resource. This CRD will create several OCP resources. It will evaluate all the labels for the each node in the cluster and look for this:</p>
-<p><img src=https://i.imgur.com/k4xdsx8.png loading=lazy></p>
-<p><img src=https://i.imgur.com/45ygkxL.png loading=lazy></p>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=n>kind</span><span class=p>:</span> <span class=n>ClusterPolicy</span>
+</span></span><span class=line><span class=cl><span class=n>apiVersion</span><span class=p>:</span> <span class=n>nvidia</span><span class=o>.</span><span class=n>com</span><span class=o>/</span><span class=n>v1</span>
+</span></span><span class=line><span class=cl><span class=n>metadata</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>  <span class=n>name</span><span class=p>:</span> <span class=n>gpu</span><span class=o>-</span><span class=n>cluster</span><span class=o>-</span><span class=n>policy</span>
+</span></span><span class=line><span class=cl><span class=n>spec</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>  <span class=n>dcgmExporter</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>config</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>      <span class=n>name</span><span class=p>:</span> <span class=s1>&#39;&#39;</span>
+</span></span><span class=line><span class=cl>  <span class=n>dcgm</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>enabled</span><span class=p>:</span> <span class=bp>true</span>
+</span></span><span class=line><span class=cl>  <span class=n>daemonsets</span><span class=p>:</span> <span class=p>{}</span>
+</span></span><span class=line><span class=cl>  <span class=n>devicePlugin</span><span class=p>:</span> <span class=p>{}</span>
+</span></span><span class=line><span class=cl>  <span class=n>driver</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>enabled</span><span class=p>:</span> <span class=bp>true</span>
+</span></span><span class=line><span class=cl>    <span class=n>use_ocp_driver_toolkit</span><span class=p>:</span> <span class=bp>true</span>
+</span></span><span class=line><span class=cl>    <span class=n>repoConfig</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>      <span class=n>configMapName</span><span class=p>:</span> <span class=s1>&#39;&#39;</span>
+</span></span><span class=line><span class=cl>    <span class=n>certConfig</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>      <span class=n>name</span><span class=p>:</span> <span class=s1>&#39;&#39;</span>
+</span></span><span class=line><span class=cl>    <span class=n>licensingConfig</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>      <span class=n>nlsEnabled</span><span class=p>:</span> <span class=bp>false</span>
+</span></span><span class=line><span class=cl>      <span class=n>configMapName</span><span class=p>:</span> <span class=s1>&#39;&#39;</span>
+</span></span><span class=line><span class=cl>    <span class=n>virtualTopology</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>      <span class=n>config</span><span class=p>:</span> <span class=s1>&#39;&#39;</span>
+</span></span><span class=line><span class=cl>  <span class=n>gfd</span><span class=p>:</span> <span class=p>{}</span>
+</span></span><span class=line><span class=cl>  <span class=n>migManager</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>enabled</span><span class=p>:</span> <span class=bp>true</span>
+</span></span><span class=line><span class=cl>  <span class=n>nodeStatusExporter</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>enabled</span><span class=p>:</span> <span class=bp>true</span>
+</span></span><span class=line><span class=cl>  <span class=n>operator</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>defaultRuntime</span><span class=p>:</span> <span class=n>crio</span>
+</span></span><span class=line><span class=cl>    <span class=n>deployGFD</span><span class=p>:</span> <span class=bp>true</span>
+</span></span><span class=line><span class=cl>    <span class=n>initContainer</span><span class=p>:</span> <span class=p>{}</span>
+</span></span><span class=line><span class=cl>  <span class=n>mig</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>strategy</span><span class=p>:</span> <span class=n>single</span>
+</span></span><span class=line><span class=cl>  <span class=n>toolkit</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>enabled</span><span class=p>:</span> <span class=bp>true</span>
+</span></span><span class=line><span class=cl>  <span class=n>validator</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>plugin</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>      <span class=n>env</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=o>-</span> <span class=n>name</span><span class=p>:</span> <span class=n>WITH_WORKLOAD</span>
+</span></span><span class=line><span class=cl>          <span class=n>value</span><span class=p>:</span> <span class=s1>&#39;true&#39;</span>
+</span></span></code></pre></td></tr></table></div></div><p>Create the ClusterPolicy custom resource. This CRD will create several OCP resources. It will evaluate all the labels for the each node in the cluster and look for this:</p><p><img src=https://i.imgur.com/k4xdsx8.png loading=lazy></p><p><img src=https://i.imgur.com/45ygkxL.png loading=lazy></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>$ oc project nvidia-gpu-operator 
-$ oc get pod -o wide
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=validating-the-gpu-availability>Validating the GPU availability</h2>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>$ oc project nvidia-gpu-operator 
+</span></span><span class=line><span class=cl>$ oc get pod -o wide
+</span></span></code></pre></td></tr></table></div></div><h2 id=validating-the-gpu-availability>Validating the GPU availability</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -326,68 +181,57 @@ $ oc get pod -o wide
 </span><span class=lnt>48
 </span><span class=lnt>49
 </span><span class=lnt>50
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>[lab-user@bastion ~]$ oc get pod | grep nvidia-device-plugin-daemonset
-nvidia-device-plugin-daemonset-bspfh                 1/1     Running     0          21m
-nvidia-device-plugin-daemonset-n62dm                 1/1     Running     0          21m
-[lab-user@bastion ~]$ oc exec -ti nvidia-device-plugin-daemonset-bspfh -- nvidia-smi
-Defaulted container &#34;nvidia-device-plugin-ctr&#34; out of: nvidia-device-plugin-ctr, toolkit-validation (init)
-Fri Jan 28 06:47:21 2022
-+-----------------------------------------------------------------------------+
-| NVIDIA-SMI 470.82.01    Driver Version: 470.82.01    CUDA Version: 11.4     |
-|-------------------------------+----------------------+----------------------+
-| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
-| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
-|                               |                      |               MIG M. |
-|===============================+======================+======================|
-|   0  Tesla V100-SXM2...  On   | 00000000:00:1E.0 Off |                    0 |
-| N/A   32C    P0    23W / 300W |      0MiB / 16160MiB |      0%      Default |
-|                               |                      |                  N/A |
-+-------------------------------+----------------------+----------------------+
-
-+-----------------------------------------------------------------------------+
-| Processes:                                                                  |
-|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
-|        ID   ID                                                   Usage      |
-|=============================================================================|
-|  No running processes found                                                 |
-+-----------------------------------------------------------------------------+
-
-...
-...
-$ oc exec -ti nvidia-device-plugin-daemonset-n62dm -- nvidia-smi
-Defaulted container &#34;nvidia-device-plugin-ctr&#34; out of: nvidia-device-plugin-ctr, toolkit-validation (init)
-Fri Jan 28 06:47:44 2022
-+-----------------------------------------------------------------------------+
-| NVIDIA-SMI 470.82.01    Driver Version: 470.82.01    CUDA Version: 11.4     |
-|-------------------------------+----------------------+----------------------+
-| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
-| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
-|                               |                      |               MIG M. |
-|===============================+======================+======================|
-|   0  Tesla V100-SXM2...  On   | 00000000:00:1E.0 Off |                    0 |
-| N/A   26C    P0    24W / 300W |      0MiB / 16160MiB |      0%      Default |
-|                               |                      |                  N/A |
-+-------------------------------+----------------------+----------------------+
-
-+-----------------------------------------------------------------------------+
-| Processes:                                                                  |
-|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
-|        ID   ID                                                   Usage      |
-|=============================================================================|
-|  No running processes found                                                 |
-+-----------------------------------------------------------------------------+
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=running-a-sample-gpu-application>Running a sample GPU Application</h2>
-<p>Run a simple CUDA VectorAdd sample, which adds two vectors together to ensure the GPUs have bootstrapped correctly.</p>
-<ol>
-<li>Run the following:</li>
-</ol>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=p>[</span><span class=n>lab</span><span class=o>-</span><span class=n>user</span><span class=err>@</span><span class=n>bastion</span> <span class=o>~</span><span class=p>]</span><span class=o>$</span> <span class=n>oc</span> <span class=n>get</span> <span class=n>pod</span> <span class=o>|</span> <span class=n>grep</span> <span class=n>nvidia</span><span class=o>-</span><span class=n>device</span><span class=o>-</span><span class=n>plugin</span><span class=o>-</span><span class=n>daemonset</span>
+</span></span><span class=line><span class=cl><span class=n>nvidia</span><span class=o>-</span><span class=n>device</span><span class=o>-</span><span class=n>plugin</span><span class=o>-</span><span class=n>daemonset</span><span class=o>-</span><span class=n>bspfh</span>                 <span class=mi>1</span><span class=o>/</span><span class=mi>1</span>     <span class=n>Running</span>     <span class=mi>0</span>          <span class=mi>21</span><span class=n>m</span>
+</span></span><span class=line><span class=cl><span class=n>nvidia</span><span class=o>-</span><span class=n>device</span><span class=o>-</span><span class=n>plugin</span><span class=o>-</span><span class=n>daemonset</span><span class=o>-</span><span class=n>n62dm</span>                 <span class=mi>1</span><span class=o>/</span><span class=mi>1</span>     <span class=n>Running</span>     <span class=mi>0</span>          <span class=mi>21</span><span class=n>m</span>
+</span></span><span class=line><span class=cl><span class=p>[</span><span class=n>lab</span><span class=o>-</span><span class=n>user</span><span class=err>@</span><span class=n>bastion</span> <span class=o>~</span><span class=p>]</span><span class=o>$</span> <span class=n>oc</span> <span class=n>exec</span> <span class=o>-</span><span class=n>ti</span> <span class=n>nvidia</span><span class=o>-</span><span class=n>device</span><span class=o>-</span><span class=n>plugin</span><span class=o>-</span><span class=n>daemonset</span><span class=o>-</span><span class=n>bspfh</span> <span class=o>--</span> <span class=n>nvidia</span><span class=o>-</span><span class=n>smi</span>
+</span></span><span class=line><span class=cl><span class=n>Defaulted</span> <span class=n>container</span> <span class=s2>&#34;nvidia-device-plugin-ctr&#34;</span> <span class=n>out</span> <span class=n>of</span><span class=p>:</span> <span class=n>nvidia</span><span class=o>-</span><span class=n>device</span><span class=o>-</span><span class=n>plugin</span><span class=o>-</span><span class=n>ctr</span><span class=p>,</span> <span class=n>toolkit</span><span class=o>-</span><span class=n>validation</span> <span class=p>(</span><span class=n>init</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>Fri</span> <span class=n>Jan</span> <span class=mi>28</span> <span class=mi>06</span><span class=p>:</span><span class=mi>47</span><span class=p>:</span><span class=mi>21</span> <span class=mi>2022</span>
+</span></span><span class=line><span class=cl><span class=o>+-----------------------------------------------------------------------------+</span>
+</span></span><span class=line><span class=cl><span class=o>|</span> <span class=n>NVIDIA</span><span class=o>-</span><span class=n>SMI</span> <span class=mf>470.82</span><span class=o>.</span><span class=mi>01</span>    <span class=n>Driver</span> <span class=n>Version</span><span class=p>:</span> <span class=mf>470.82</span><span class=o>.</span><span class=mi>01</span>    <span class=n>CUDA</span> <span class=n>Version</span><span class=p>:</span> <span class=mf>11.4</span>     <span class=o>|</span>
+</span></span><span class=line><span class=cl><span class=o>|-------------------------------+----------------------+----------------------+</span>
+</span></span><span class=line><span class=cl><span class=o>|</span> <span class=n>GPU</span>  <span class=n>Name</span>        <span class=n>Persistence</span><span class=o>-</span><span class=n>M</span><span class=o>|</span> <span class=n>Bus</span><span class=o>-</span><span class=n>Id</span>        <span class=n>Disp</span><span class=o>.</span><span class=n>A</span> <span class=o>|</span> <span class=n>Volatile</span> <span class=n>Uncorr</span><span class=o>.</span> <span class=n>ECC</span> <span class=o>|</span>
+</span></span><span class=line><span class=cl><span class=o>|</span> <span class=n>Fan</span>  <span class=n>Temp</span>  <span class=n>Perf</span>  <span class=n>Pwr</span><span class=p>:</span><span class=n>Usage</span><span class=o>/</span><span class=n>Cap</span><span class=o>|</span>         <span class=n>Memory</span><span class=o>-</span><span class=n>Usage</span> <span class=o>|</span> <span class=n>GPU</span><span class=o>-</span><span class=n>Util</span>  <span class=n>Compute</span> <span class=n>M</span><span class=o>.</span> <span class=o>|</span>
+</span></span><span class=line><span class=cl><span class=o>|</span>                               <span class=o>|</span>                      <span class=o>|</span>               <span class=n>MIG</span> <span class=n>M</span><span class=o>.</span> <span class=o>|</span>
+</span></span><span class=line><span class=cl><span class=o>|===============================+======================+======================|</span>
+</span></span><span class=line><span class=cl><span class=o>|</span>   <span class=mi>0</span>  <span class=n>Tesla</span> <span class=n>V100</span><span class=o>-</span><span class=n>SXM2</span><span class=o>...</span>  <span class=n>On</span>   <span class=o>|</span> <span class=mi>00000000</span><span class=p>:</span><span class=mi>00</span><span class=p>:</span><span class=mi>1</span><span class=n>E</span><span class=o>.</span><span class=mi>0</span> <span class=n>Off</span> <span class=o>|</span>                    <span class=mi>0</span> <span class=o>|</span>
+</span></span><span class=line><span class=cl><span class=o>|</span> <span class=n>N</span><span class=o>/</span><span class=n>A</span>   <span class=mi>32</span><span class=n>C</span>    <span class=n>P0</span>    <span class=mi>23</span><span class=n>W</span> <span class=o>/</span> <span class=mi>300</span><span class=n>W</span> <span class=o>|</span>      <span class=mi>0</span><span class=n>MiB</span> <span class=o>/</span> <span class=mi>16160</span><span class=n>MiB</span> <span class=o>|</span>      <span class=mi>0</span><span class=o>%</span>      <span class=n>Default</span> <span class=o>|</span>
+</span></span><span class=line><span class=cl><span class=o>|</span>                               <span class=o>|</span>                      <span class=o>|</span>                  <span class=n>N</span><span class=o>/</span><span class=n>A</span> <span class=o>|</span>
+</span></span><span class=line><span class=cl><span class=o>+-------------------------------+----------------------+----------------------+</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>+-----------------------------------------------------------------------------+</span>
+</span></span><span class=line><span class=cl><span class=o>|</span> <span class=n>Processes</span><span class=p>:</span>                                                                  <span class=o>|</span>
+</span></span><span class=line><span class=cl><span class=o>|</span>  <span class=n>GPU</span>   <span class=n>GI</span>   <span class=n>CI</span>        <span class=n>PID</span>   <span class=n>Type</span>   <span class=n>Process</span> <span class=n>name</span>                  <span class=n>GPU</span> <span class=n>Memory</span> <span class=o>|</span>
+</span></span><span class=line><span class=cl><span class=o>|</span>        <span class=n>ID</span>   <span class=n>ID</span>                                                   <span class=n>Usage</span>      <span class=o>|</span>
+</span></span><span class=line><span class=cl><span class=o>|=============================================================================|</span>
+</span></span><span class=line><span class=cl><span class=o>|</span>  <span class=n>No</span> <span class=n>running</span> <span class=n>processes</span> <span class=n>found</span>                                                 <span class=o>|</span>
+</span></span><span class=line><span class=cl><span class=o>+-----------------------------------------------------------------------------+</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>...</span>
+</span></span><span class=line><span class=cl><span class=o>...</span>
+</span></span><span class=line><span class=cl><span class=o>$</span> <span class=n>oc</span> <span class=n>exec</span> <span class=o>-</span><span class=n>ti</span> <span class=n>nvidia</span><span class=o>-</span><span class=n>device</span><span class=o>-</span><span class=n>plugin</span><span class=o>-</span><span class=n>daemonset</span><span class=o>-</span><span class=n>n62dm</span> <span class=o>--</span> <span class=n>nvidia</span><span class=o>-</span><span class=n>smi</span>
+</span></span><span class=line><span class=cl><span class=n>Defaulted</span> <span class=n>container</span> <span class=s2>&#34;nvidia-device-plugin-ctr&#34;</span> <span class=n>out</span> <span class=n>of</span><span class=p>:</span> <span class=n>nvidia</span><span class=o>-</span><span class=n>device</span><span class=o>-</span><span class=n>plugin</span><span class=o>-</span><span class=n>ctr</span><span class=p>,</span> <span class=n>toolkit</span><span class=o>-</span><span class=n>validation</span> <span class=p>(</span><span class=n>init</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>Fri</span> <span class=n>Jan</span> <span class=mi>28</span> <span class=mi>06</span><span class=p>:</span><span class=mi>47</span><span class=p>:</span><span class=mi>44</span> <span class=mi>2022</span>
+</span></span><span class=line><span class=cl><span class=o>+-----------------------------------------------------------------------------+</span>
+</span></span><span class=line><span class=cl><span class=o>|</span> <span class=n>NVIDIA</span><span class=o>-</span><span class=n>SMI</span> <span class=mf>470.82</span><span class=o>.</span><span class=mi>01</span>    <span class=n>Driver</span> <span class=n>Version</span><span class=p>:</span> <span class=mf>470.82</span><span class=o>.</span><span class=mi>01</span>    <span class=n>CUDA</span> <span class=n>Version</span><span class=p>:</span> <span class=mf>11.4</span>     <span class=o>|</span>
+</span></span><span class=line><span class=cl><span class=o>|-------------------------------+----------------------+----------------------+</span>
+</span></span><span class=line><span class=cl><span class=o>|</span> <span class=n>GPU</span>  <span class=n>Name</span>        <span class=n>Persistence</span><span class=o>-</span><span class=n>M</span><span class=o>|</span> <span class=n>Bus</span><span class=o>-</span><span class=n>Id</span>        <span class=n>Disp</span><span class=o>.</span><span class=n>A</span> <span class=o>|</span> <span class=n>Volatile</span> <span class=n>Uncorr</span><span class=o>.</span> <span class=n>ECC</span> <span class=o>|</span>
+</span></span><span class=line><span class=cl><span class=o>|</span> <span class=n>Fan</span>  <span class=n>Temp</span>  <span class=n>Perf</span>  <span class=n>Pwr</span><span class=p>:</span><span class=n>Usage</span><span class=o>/</span><span class=n>Cap</span><span class=o>|</span>         <span class=n>Memory</span><span class=o>-</span><span class=n>Usage</span> <span class=o>|</span> <span class=n>GPU</span><span class=o>-</span><span class=n>Util</span>  <span class=n>Compute</span> <span class=n>M</span><span class=o>.</span> <span class=o>|</span>
+</span></span><span class=line><span class=cl><span class=o>|</span>                               <span class=o>|</span>                      <span class=o>|</span>               <span class=n>MIG</span> <span class=n>M</span><span class=o>.</span> <span class=o>|</span>
+</span></span><span class=line><span class=cl><span class=o>|===============================+======================+======================|</span>
+</span></span><span class=line><span class=cl><span class=o>|</span>   <span class=mi>0</span>  <span class=n>Tesla</span> <span class=n>V100</span><span class=o>-</span><span class=n>SXM2</span><span class=o>...</span>  <span class=n>On</span>   <span class=o>|</span> <span class=mi>00000000</span><span class=p>:</span><span class=mi>00</span><span class=p>:</span><span class=mi>1</span><span class=n>E</span><span class=o>.</span><span class=mi>0</span> <span class=n>Off</span> <span class=o>|</span>                    <span class=mi>0</span> <span class=o>|</span>
+</span></span><span class=line><span class=cl><span class=o>|</span> <span class=n>N</span><span class=o>/</span><span class=n>A</span>   <span class=mi>26</span><span class=n>C</span>    <span class=n>P0</span>    <span class=mi>24</span><span class=n>W</span> <span class=o>/</span> <span class=mi>300</span><span class=n>W</span> <span class=o>|</span>      <span class=mi>0</span><span class=n>MiB</span> <span class=o>/</span> <span class=mi>16160</span><span class=n>MiB</span> <span class=o>|</span>      <span class=mi>0</span><span class=o>%</span>      <span class=n>Default</span> <span class=o>|</span>
+</span></span><span class=line><span class=cl><span class=o>|</span>                               <span class=o>|</span>                      <span class=o>|</span>                  <span class=n>N</span><span class=o>/</span><span class=n>A</span> <span class=o>|</span>
+</span></span><span class=line><span class=cl><span class=o>+-------------------------------+----------------------+----------------------+</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>+-----------------------------------------------------------------------------+</span>
+</span></span><span class=line><span class=cl><span class=o>|</span> <span class=n>Processes</span><span class=p>:</span>                                                                  <span class=o>|</span>
+</span></span><span class=line><span class=cl><span class=o>|</span>  <span class=n>GPU</span>   <span class=n>GI</span>   <span class=n>CI</span>        <span class=n>PID</span>   <span class=n>Type</span>   <span class=n>Process</span> <span class=n>name</span>                  <span class=n>GPU</span> <span class=n>Memory</span> <span class=o>|</span>
+</span></span><span class=line><span class=cl><span class=o>|</span>        <span class=n>ID</span>   <span class=n>ID</span>                                                   <span class=n>Usage</span>      <span class=o>|</span>
+</span></span><span class=line><span class=cl><span class=o>|=============================================================================|</span>
+</span></span><span class=line><span class=cl><span class=o>|</span>  <span class=n>No</span> <span class=n>running</span> <span class=n>processes</span> <span class=n>found</span>                                                 <span class=o>|</span>
+</span></span><span class=line><span class=cl><span class=o>+-----------------------------------------------------------------------------+</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=running-a-sample-gpu-application>Running a sample GPU Application</h2><p>Run a simple CUDA VectorAdd sample, which adds two vectors together to ensure the GPUs have bootstrapped correctly.</p><ol><li>Run the following:</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -403,225 +247,55 @@ Fri Jan 28 06:47:44 2022
 </span><span class=lnt>14
 </span><span class=lnt>15
 </span><span class=lnt>16
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>cat &lt;&lt; EOF | oc create -f -
-
-apiVersion: v1
-kind: Pod
-metadata:
-  name: cuda-vectoradd
-spec:
- restartPolicy: OnFailure
- containers:
- - name: cuda-vectoradd
-   image: &#34;nvidia/samples:vectoradd-cuda11.2.1&#34;
-   resources:
-     limits:
-       nvidia.com/gpu: 1
-EOF
-pod/cuda-vectoradd created
-</code></pre></td></tr></table>
-</div>
-</div><ol start=2>
-<li>Check the logs of the container:</li>
-</ol>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>cat &lt;&lt; EOF | oc create -f -
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>apiVersion: v1
+</span></span><span class=line><span class=cl>kind: Pod
+</span></span><span class=line><span class=cl>metadata:
+</span></span><span class=line><span class=cl>  name: cuda-vectoradd
+</span></span><span class=line><span class=cl>spec:
+</span></span><span class=line><span class=cl> restartPolicy: OnFailure
+</span></span><span class=line><span class=cl> containers:
+</span></span><span class=line><span class=cl> - name: cuda-vectoradd
+</span></span><span class=line><span class=cl>   image: &#34;nvidia/samples:vectoradd-cuda11.2.1&#34;
+</span></span><span class=line><span class=cl>   resources:
+</span></span><span class=line><span class=cl>     limits:
+</span></span><span class=line><span class=cl>       nvidia.com/gpu: 1
+</span></span><span class=line><span class=cl>EOF
+</span></span><span class=line><span class=cl>pod/cuda-vectoradd created
+</span></span></code></pre></td></tr></table></div></div><ol start=2><li>Check the logs of the container:</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
 </span><span class=lnt>5
 </span><span class=lnt>6
 </span><span class=lnt>7
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>[lab-user@bastion ~]$ oc logs cuda-vectoradd
-[Vector addition of 50000 elements]
-Copy input data from the host memory to the CUDA device
-CUDA kernel launch with 196 blocks of 256 threads
-Copy output data from the CUDA device to the host memory
-Test PASSED
-Done
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=getting-information-about-the-gpu>Getting information about the GPU¶</h2>
-<p>The nvidia-smi shows memory usage, GPU utilization and the temperature of the GPU. Test the GPU access by running the popular nvidia-smi command within the pod.</p>
-<p>To view GPU utilization, run nvidia-smi from a pod in the GPU Operator daemonset.</p>
-<ol>
-<li>Change to the nvidia-gpu-operator project:</li>
-</ol>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>$ oc project nvidia-gpu-operator
-</code></pre></td></tr></table>
-</div>
-</div><ol start=2>
-<li>Run the following command to view these new pods:</li>
-</ol>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>$ oc get pod -owide -lopenshift.driver-toolkit=true 
-</code></pre></td></tr></table>
-</div>
-</div><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>[lab-user@bastion ~]$ oc logs cuda-vectoradd
+</span></span><span class=line><span class=cl>[Vector addition of 50000 elements]
+</span></span><span class=line><span class=cl>Copy input data from the host memory to the CUDA device
+</span></span><span class=line><span class=cl>CUDA kernel launch with 196 blocks of 256 threads
+</span></span><span class=line><span class=cl>Copy output data from the CUDA device to the host memory
+</span></span><span class=line><span class=cl>Test PASSED
+</span></span><span class=line><span class=cl>Done
+</span></span></code></pre></td></tr></table></div></div><h2 id=getting-information-about-the-gpu>Getting information about the GPU¶</h2><p>The nvidia-smi shows memory usage, GPU utilization and the temperature of the GPU. Test the GPU access by running the popular nvidia-smi command within the pod.</p><p>To view GPU utilization, run nvidia-smi from a pod in the GPU Operator daemonset.</p><ol><li>Change to the nvidia-gpu-operator project:</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>$ oc project nvidia-gpu-operator
+</span></span></code></pre></td></tr></table></div></div><ol start=2><li>Run the following command to view these new pods:</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=o>$</span> <span class=n>oc</span> <span class=n>get</span> <span class=n>pod</span> <span class=o>-</span><span class=n>owide</span> <span class=o>-</span><span class=n>lopenshift</span><span class=o>.</span><span class=n>driver</span><span class=o>-</span><span class=n>toolkit</span><span class=o>=</span><span class=bp>true</span> 
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>NAME                                                 READY   STATUS    RESTARTS   AGE   IP             NODE                                        NOMINATED NODE   READINESS GATES
-nvidia-driver-daemonset-49.84.202201102104-0-gl557   2/2     Running   0          26m   10.131.0.106   ip-10-0-167-35.us-east-2.compute.internal   &lt;none&gt;           &lt;none&gt;
-nvidia-driver-daemonset-49.84.202201102104-0-k9sg5   2/2     Running   0          26m   10.128.2.17    ip-10-0-135-51.us-east-2.compute.internal   &lt;none&gt;           &lt;none&gt;
-</code></pre></td></tr></table>
-</div>
-</div><ol start=3>
-<li>Run the nvidia-smi command within the pod:</li>
-</ol>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>$ oc exec -it nvidia-driver-daemonset-48.84.202110270303-0-9df9j -- nvidia-smi
-</code></pre></td></tr></table>
-</div>
-</div>
-</section>
-<footer class=article-footer>
-<section class=article-tags>
-<a href=/tags/gpu/>GPU</a>
-<a href=/tags/openshift/>OpenShift</a>
-</section>
-<section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
-<span>Licensed under CC BY-NC-SA 4.0</span>
-</section>
-</footer>
-</article>
-<aside class=related-contents--wrapper>
-<h2 class=section-title>相關文章</h2>
-<div class=related-contents>
-<div class="flex article-list--tile">
-<article>
-<a href=/openshift/security-zones/>
-<div class=article-details>
-<h2 class=article-title>Deep dive - OpenShift 叢集節點跨網段架構規劃</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/openshift/sno-installer/>
-<div class=article-details>
-<h2 class=article-title>單節點 OpenShift 部署與應用探討</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/openshift/gpu-utilization/>
-<div class=article-details>
-<h2 class=article-title>OpenShift 啟用 GPU Operator Dashboard</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/openshift/mirror-registry-for-ocp4-install/>
-<div class=article-details>
-<h2 class=article-title>Disconnected Environment - Introducing Mirror Registry for Red Hat OpenShift</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/openshift/install-troubleshooting/>
-<div class=article-details>
-<h2 class=article-title>OpenShift Intsall Troubleshooting Notes</h2>
-</div>
-</a>
-</article>
-</div>
-</div>
-</aside>
-<footer class=site-footer>
-<section class=copyright>
-&copy;
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>NAME                                                 READY   STATUS    RESTARTS   AGE   IP             NODE                                        NOMINATED NODE   READINESS GATES
+</span></span><span class=line><span class=cl>nvidia-driver-daemonset-49.84.202201102104-0-gl557   2/2     Running   0          26m   10.131.0.106   ip-10-0-167-35.us-east-2.compute.internal   &lt;none&gt;           &lt;none&gt;
+</span></span><span class=line><span class=cl>nvidia-driver-daemonset-49.84.202201102104-0-k9sg5   2/2     Running   0          26m   10.128.2.17    ip-10-0-135-51.us-east-2.compute.internal   &lt;none&gt;           &lt;none&gt;
+</span></span></code></pre></td></tr></table></div></div><ol start=3><li>Run the nvidia-smi command within the pod:</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>$ oc exec -it nvidia-driver-daemonset-48.84.202110270303-0-9df9j -- nvidia-smi
+</span></span></code></pre></td></tr></table></div></div></section><footer class=article-footer><section class=article-tags><a href=/tags/gpu/>GPU</a>
+<a href=/tags/openshift/>OpenShift</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>相關文章</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/openshift/security-zones/><div class=article-details><h2 class=article-title>Deep dive - OpenShift 叢集節點跨網段架構規劃</h2></div></a></article><article><a href=/openshift/sno-installer/><div class=article-details><h2 class=article-title>單節點 OpenShift 部署與應用探討</h2></div></a></article><article><a href=/openshift/gpu-utilization/><div class=article-details><h2 class=article-title>OpenShift 啟用 GPU Operator Dashboard</h2></div></a></article><article><a href=/openshift/mirror-registry-for-ocp4-install/><div class=article-details><h2 class=article-title>Disconnected Environment - Introducing Mirror Registry for Red Hat OpenShift</h2></div></a></article><article><a href=/openshift/install-troubleshooting/><div class=article-details><h2 class=article-title>OpenShift Intsall Troubleshooting Notes</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy;
 2022 -
-2024 Frank's Notes
-</section>
-<section class=powerby>
-Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> <br>
-Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.10.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a>
-</section>
-</footer>
-<div class=pswp tabindex=-1 role=dialog aria-hidden=true>
-<div class=pswp__bg></div>
-<div class=pswp__scroll-wrap>
-<div class=pswp__container>
-<div class=pswp__item></div>
-<div class=pswp__item></div>
-<div class=pswp__item></div>
-</div>
-<div class="pswp__ui pswp__ui--hidden">
-<div class=pswp__top-bar>
-<div class=pswp__counter></div>
-<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+2025 Frank's Notes</section><section class=powerby>使用 <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> 建立<br>主題 <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.29.0>Stack</a></b> 由 <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a> 設計</section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
 <button class="pswp__button pswp__button--share" title=Share></button>
 <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-<div class=pswp__preloader>
-<div class=pswp__preloader__icn>
-<div class=pswp__preloader__cut>
-<div class=pswp__preloader__donut></div>
-</div>
-</div>
-</div>
-</div>
-<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-<div class=pswp__share-tooltip></div>
-</div>
-<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
 </button>
-<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-</button>
-<div class=pswp__caption>
-<div class=pswp__caption__center></div>
-</div>
-</div>
-</div>
-</div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css integrity="sha256-c0uckgykQ9v5k+IqViZOZKc47Jn7KQil4/MP3ySA3F8=" crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE=" crossorigin=anonymous>
-</main>
-<aside class="sidebar right-sidebar sticky">
-<section class="widget archives">
-<div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg>
-</div>
-<h2 class="widget-title section-title">目錄</h2>
-<div class=widget--toc>
-<nav id=TableOfContents>
-<ul>
-<li>
-<ul>
-<li><a href=#openshift-499-或更高的版本-1>OpenShift 4.9.9 或更高的版本 [1]</a></li>
-<li><a href=#openshift-498-與以下版本-2>OpenShift 4.9.8 與以下版本 [2]</a></li>
-<li><a href=#install-operator---node-feature-discovery>Install Operator - Node Feature Discovery</a></li>
-<li><a href=#installing-the-nvidia-gpu-operator>Installing the NVIDIA GPU Operator</a></li>
-<li><a href=#validating-the-gpu-availability>Validating the GPU availability</a></li>
-<li><a href=#running-a-sample-gpu-application>Running a sample GPU Application</a></li>
-<li><a href=#getting-information-about-the-gpu>Getting information about the GPU¶</a></li>
-</ul>
-</li>
-</ul>
-</nav>
-</div>
-</section>
-</aside>
-</div>
-<script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script>
-<script>(function(){const a=document.createElement('link');a.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",a.type="text/css",a.rel="stylesheet",document.head.appendChild(a)})()</script>
-</body>
-</html>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.cf5b8ca6afa08b0cc41dceeca49f6bd141f0e588ebd20a362e6c34daa1a775f7.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

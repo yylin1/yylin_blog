@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>CICD on Frank's Notes</title><link>https://blog.yylin.io/tags/cicd/</link><description>Recent content in CICD on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Sat, 25 Jun 2022 09:40:40 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/tags/cicd/index.xml" rel="self" type="application/rss+xml"/><item><title>在 ACM 透過 OpenShift-GitOps/ArgoCD 管理應用程式</title><link>https://blog.yylin.io/openshift/argocd-and-acm/</link><pubDate>Sat, 25 Jun 2022 09:40:40 +0800</pubDate><guid>https://blog.yylin.io/openshift/argocd-and-acm/</guid><description>&lt;h2 id="概述">概述&lt;/h2>
-&lt;p>從 ACM 2.5 版開始正式 GA 功能，您可以透過 ApplicationSets 來配置 ArgoCD / OpenShift-GitOps ，通過單一管理平台以可擴展的方式管理您的所有 GitOps Applications。&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>CICD on Frank's Notes</title><link>https://blog.yylin.io/tags/cicd/</link><description>Recent content in CICD on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Sat, 25 Jun 2022 09:40:40 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/tags/cicd/index.xml" rel="self" type="application/rss+xml"/><item><title>在 ACM 透過 OpenShift-GitOps/ArgoCD 管理應用程式</title><link>https://blog.yylin.io/openshift/argocd-and-acm/</link><pubDate>Sat, 25 Jun 2022 09:40:40 +0800</pubDate><guid>https://blog.yylin.io/openshift/argocd-and-acm/</guid><description>&lt;h2 id="概述">概述
+&lt;/h2>&lt;p>從 ACM 2.5 版開始正式 GA 功能，您可以透過 ApplicationSets 來配置 ArgoCD / OpenShift-GitOps ，通過單一管理平台以可擴展的方式管理您的所有 GitOps Applications。&lt;/p>
 &lt;p>ApplicationSet Controller 是一個 Kubernetes Controller，它增加對 ApplicationSet CustomResourceDefinition (CRD) 的支持。&lt;/p>
 &lt;p>ApplicationSet Controller 在與 Argo CD 一起安裝時，通過添加額外的功能來支持以叢集管理員為中心的場景來補充它。&lt;/p>
 &lt;p>ApplicationSet Ccontroller 提供：&lt;/p>
@@ -13,8 +13,8 @@
 &lt;/li>
 &lt;/ul>
 &lt;p>我們將介紹如何將 ACM 與 OpenShift GitOps 的 ApplicationSets 連接起來，以便在託管 Cluster 中配置和部署 OpenShift GitOps Application 和 ApplicationSet。&lt;/p>
-&lt;h2 id="環境配置-先決條件">環境配置-先決條件&lt;/h2>
-&lt;ul>
+&lt;h2 id="環境配置-先決條件">環境配置-先決條件
+&lt;/h2>&lt;ul>
 &lt;li>我們需要使用 Operator Hub 在 ACM Hub 那座 OpenShift Cluster 中安裝 OpenShift GitOps：&lt;/li>
 &lt;/ul>
 &lt;div class="highlight">&lt;div class="chroma">
@@ -22,8 +22,8 @@
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ until oc apply -k https://github.com/RedHat-EMEA-SSA-Team/ns-gitops/tree/bootstrap/bootstrap ; do sleep 2; done
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">$ until oc apply -k https://github.com/RedHat-EMEA-SSA-Team/ns-gitops/tree/bootstrap/bootstrap ; do sleep 2; done
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>
@@ -34,8 +34,8 @@
 &lt;p>另一方面，我們需要配置管理不同的 Cluster (e.g. Public Cloud)。在我的例子中，我使用我環境中部署 2 座 OCP Cluster 叢集，並將在這篇文章中用於部署我的 Application。&lt;/p>
 &lt;/li>
 &lt;/ul>
-&lt;h2 id="於-openshift-gitops--argocd-配置託管叢集">於 OpenShift GitOps / ArgoCD 配置託管叢集&lt;/h2>
-&lt;p>要在 ACM 中配置和鏈接 OpenShift GitOps，我們可以將一組一個或多個託管 Cluster 註冊到 Argo CD 或 OpenShift GitOps Operator 的實例。&lt;/p>
+&lt;h2 id="於-openshift-gitops--argocd-配置託管叢集">於 OpenShift GitOps / ArgoCD 配置託管叢集
+&lt;/h2>&lt;p>要在 ACM 中配置和鏈接 OpenShift GitOps，我們可以將一組一個或多個託管 Cluster 註冊到 Argo CD 或 OpenShift GitOps Operator 的實例。&lt;/p>
 &lt;p>註冊後，我們可以使用從 ACM Hub Application Controller 的 Application 和 ApplicationSets 將我們需要部署的應用程式部署到這些叢集。然後，我們可以設置一個連續的 GitOps 環境，以在開發、暫存和生產環境中跨叢集自動化配置 Application 的一致性。&lt;/p>
 &lt;ul>
 &lt;li>首先，我們需要創建 cluster sets 並將託管 clusters 添加到這些 cluster sets：&lt;/li>
@@ -51,13 +51,14 @@
 &lt;/span>&lt;span class="lnt">7
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ cat acmgitops/managedclusterset.yaml
-apiVersion: cluster.open-cluster-management.io/v1alpha1
-kind: ManagedClusterSet
-metadata:
-name: all-openshift-clusters
-spec: {}
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">$ cat acmgitops/managedclusterset.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">apiVersion: cluster.open-cluster-management.io/v1alpha1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kind: ManagedClusterSet
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">metadata:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: all-openshift-clusters
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> spec: {}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>
@@ -84,16 +85,18 @@ spec: {}
 &lt;/span>&lt;span class="lnt">11
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ cat managedclustersetbinding.yaml
-apiVersion: cluster.open-cluster-management.io/v1alpha1
-kind: ManagedClusterSetBinding
-metadata:
-name: all-openshift-clusters
-namespace: openshift-gitops
-spec:
-clusterSet: all-openshift-clusters
-$ oc apply -f managedclustersetbinding.yaml
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">$ cat managedclustersetbinding.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">apiVersion: cluster.open-cluster-management.io/v1alpha1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kind: ManagedClusterSetBinding
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">metadata:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: all-openshift-clusters
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> namespace: openshift-gitops
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">spec:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> clusterSet: all-openshift-clusters
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ oc apply -f managedclustersetbinding.yaml
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>在託管叢集綁定中使用的 namespace 中，創建放置自定義資源以選擇一組託管叢集以註冊到 ArgoCD 或 OpenShift GitOps Operator instance：&lt;/li>
@@ -116,21 +119,21 @@ $ oc apply -f managedclustersetbinding.yaml
 &lt;/span>&lt;span class="lnt">14
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">apiVersion: cluster.open-cluster-management.io/v1alpha1
-kind: Placement
-metadata:
-name: all-openshift-clusters
-namespace: openshift-gitops
-spec:
-predicates:
-- requiredClusterSelector:
-labelSelector:
-matchExpressions:
-- key: vendor
-operator: &amp;#34;In&amp;#34;
-values:
-- OpenShift
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">apiVersion: cluster.open-cluster-management.io/v1alpha1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kind: Placement
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">metadata:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: all-openshift-clusters
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> namespace: openshift-gitops
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">spec:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> predicates:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - requiredClusterSelector:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> labelSelector:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> matchExpressions:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - key: vendor
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> operator: &amp;#34;In&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> values:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - OpenShift
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
 &lt;p>注意：只有 OpenShift 叢集註冊到 Argo CD 或 GitOps Operator instance，而不是其他 Kubernetes 叢集。&lt;/p>
@@ -156,21 +159,21 @@ values:
 &lt;/span>&lt;span class="lnt">14
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">apiVersion: apps.open-cluster-management.io/v1alpha1
-kind: GitOpsCluster
-metadata:
-name: argo-acm-clusters
-namespace: openshift-gitops
-spec:
-argoServer:
-cluster: local-cluster
-argoNamespace: openshift-gitops
-placementRef:
-kind: Placement
-apiVersion: cluster.open-cluster-management.io/v1alpha1
-name: all-openshift-clusters
-namespace: openshift-gitops
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">apiVersion: apps.open-cluster-management.io/v1alpha1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kind: GitOpsCluster
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">metadata:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: argo-acm-clusters
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> namespace: openshift-gitops
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">spec:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> argoServer:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> cluster: local-cluster
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> argoNamespace: openshift-gitops
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> placementRef:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> kind: Placement
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> apiVersion: cluster.open-cluster-management.io/v1alpha1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: all-openshift-clusters
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> namespace: openshift-gitops
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>這使 Argo CD instance 能夠將 Application 部署到任何 ACM Hub 託管叢集中。&lt;/p>
 &lt;p>正如我們從前面的示例中看到的，placementRef.name 被定義為 &lt;code>all-openshift-clusters&lt;/code>，並被指定為安裝在 argoNamespace：openshift-gitops 中的 GitOps 實例的目標叢集。&lt;/p>
@@ -178,8 +181,8 @@ namespace: openshift-gitops
 &lt;ul>
 &lt;li>幾分鐘後，我們在 ACM Hub 中生成了 GitOps Cluster CRD，我們將能夠直接從 Application 部分的 ACM Hub 控制台定義 Application 和ApplicationSet。&lt;/li>
 &lt;/ul>
-&lt;h2 id="從-acm-hub-部署-argocdopenshift-gitops-applicationset">從 ACM Hub 部署 ArgoCD/OpenShift GitOps ApplicationSet&lt;/h2>
-&lt;p>一旦我們通過 ACM Hub 中的 GitOps Cluster CRD 啟用了 OpenShift GitOps 和 ACM 之間的整合，我們就可以直接在 ACM Hub 中部署 ApplicationSet，在一個單一的頁面中管理所有 ArgoCD Application。&lt;/p>
+&lt;h2 id="從-acm-hub-部署-argocdopenshift-gitops-applicationset">從 ACM Hub 部署 ArgoCD/OpenShift GitOps ApplicationSet
+&lt;/h2>&lt;p>一旦我們通過 ACM Hub 中的 GitOps Cluster CRD 啟用了 OpenShift GitOps 和 ACM 之間的整合，我們就可以直接在 ACM Hub 中部署 ApplicationSet，在一個單一的頁面中管理所有 ArgoCD Application。&lt;/p>
 &lt;p>另一方面，我們還將受益於&lt;a class="link" href="https://argocd-applicationset.readthedocs.io/en/stable/Generators/" target="_blank" rel="noopener"
 >ArgoCD ApplicationSets 的不同生成器的特性&lt;/a>。&lt;/p>
 &lt;p>使用這些生成方式，我們可以從不同叢集中的單個 Repository 部署多個 Application，利用 ApplicationSet 為每個託管的 Cluster 的從Repository 中的配置不同對象及要部署的 Application。&lt;/p>
@@ -223,36 +226,36 @@ loading="lazy"
 &lt;/span>&lt;span class="lnt">29
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">apiVersion: argoproj.io/v1alpha1
-kind: ApplicationSet
-metadata:
-name: acm-appsets
-namespace: openshift-gitops
-spec:
-generators:
-- clusterDecisionResource:
-configMapRef: acm-placement
-labelSelector:
-matchLabels:
-cluster.open-cluster-management.io/placement: acm-appsets-placement
-requeueAfterSeconds: 180
-template:
-metadata:
-name: &amp;#39;acm-appsets-&amp;#39;
-spec:
-destination:
-namespace: bgdk
-server: &amp;#39;&amp;#39;
-project: default
-source:
-path: apps/bgd/overlays/bgdk
-repoURL: &amp;#39;https://github.com/yylin1/ns-apps/&amp;#39;
-targetRevision: single-app
-syncPolicy:
-automated:
-prune: true
-selfHeal: true
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">apiVersion: argoproj.io/v1alpha1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kind: ApplicationSet
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">metadata:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: acm-appsets
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> namespace: openshift-gitops
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">spec:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> generators:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - clusterDecisionResource:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> configMapRef: acm-placement
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> labelSelector:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> matchLabels:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> cluster.open-cluster-management.io/placement: acm-appsets-placement
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> requeueAfterSeconds: 180
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> template:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> metadata:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: &amp;#39;acm-appsets-&amp;#39;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> spec:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> destination:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> namespace: bgdk
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> server: &amp;#39;&amp;#39;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> project: default
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> source:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> path: apps/bgd/overlays/bgdk
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> repoURL: &amp;#39;https://github.com/yylin1/ns-apps/&amp;#39;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> targetRevision: single-app
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> syncPolicy:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> automated:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> prune: true
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> selfHeal: true
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>注意：目標 namespace 可以是 openshift-gitops。BGDK 可能會更改，但它會以這種方式離開，因為我們需要放置一個目標 namespace，即ApplicationSet 本身不需要它（Applicatio bgdk 也不需要）&lt;/p>
 &lt;ul>
@@ -297,8 +300,8 @@ loading="lazy"
 loading="lazy"
 >&lt;/p>
 &lt;p>這些是由 ACM Hub 中生成的 GitOps CRD 自動生成和管理的，它與託管 Cluster 對應。&lt;/p>
-&lt;h2 id="reference">Reference&lt;/h2>
-&lt;ul>
+&lt;h2 id="reference">Reference
+&lt;/h2>&lt;ul>
 &lt;li>&lt;a class="link" href="https://github.com/RedHat-EMEA-SSA-Team/ns-gitops/" target="_blank" rel="noopener"
 >https://github.com/RedHat-EMEA-SSA-Team/ns-gitops/&lt;/a>&lt;/li>
 &lt;li>&lt;a class="link" href="https://rcarrata.com/openshift/argo-and-acm/" target="_blank" rel="noopener"
@@ -307,8 +310,8 @@ loading="lazy"
 &lt;p>&lt;img src="https://www.redhat.com/cms/managed-files/container-platforms-pipelines.png"
 loading="lazy"
 >&lt;/p>
-&lt;h2 id="主要特性">主要特性&lt;/h2>
-&lt;ul>
+&lt;h2 id="主要特性">主要特性
+&lt;/h2>&lt;ul>
 &lt;li>OpenShift Pipelines 是一個無服務器的 CI/CD 系統，它在獨立的容器中運行 Pipelines，以及所有需要的依賴組件。&lt;/li>
 &lt;li>OpenShift Pipelines 是為開發微服務架構的非中心化團隊設計的。&lt;/li>
 &lt;li>OpenShift Pipelines 使用標準 CI（pipeline）定義，這些與現有的 Kubernetes 工具集成擴展可擴展和擴展，可讓您定義和擴展 Kubernetes。&lt;/li>
@@ -323,10 +326,10 @@ loading="lazy"
 &lt;li>Pipeline&lt;/li>
 &lt;li>PipelineRun&lt;/li>
 &lt;/ul>
-&lt;h2 id="pipelineresource">PipelineResource&lt;/h2>
-&lt;p>PipelineResource 簡單來說可以作為 task 的 input or output，而每個 task 可以有多個 input &amp;amp; output。&lt;/p>
-&lt;h2 id="syntax">Syntax&lt;/h2>
-&lt;p>PipelineResource 的定義中會有以下必要資訊：&lt;/p>
+&lt;h2 id="pipelineresource">PipelineResource
+&lt;/h2>&lt;p>PipelineResource 簡單來說可以作為 task 的 input or output，而每個 task 可以有多個 input &amp;amp; output。&lt;/p>
+&lt;h2 id="syntax">Syntax
+&lt;/h2>&lt;p>PipelineResource 的定義中會有以下必要資訊：&lt;/p>
 &lt;ul>
 &lt;li>
 &lt;p>apiVersion：目前固定是 tekton.dev/v1alpha1&lt;/p>
@@ -348,8 +351,8 @@ loading="lazy"
 &lt;ul>
 &lt;li>params：不同的 resource type 可能會有的不同額外參數資訊&lt;/li>
 &lt;/ul>
-&lt;h2 id="resource-type">Resource Type&lt;/h2>
-&lt;p>有了以上概念後，接著要知道的是 PipelineResources 共有以下幾種類型：&lt;/p>
+&lt;h2 id="resource-type">Resource Type
+&lt;/h2>&lt;p>有了以上概念後，接著要知道的是 PipelineResources 共有以下幾種類型：&lt;/p>
 &lt;ul>
 &lt;li>Git Resource&lt;/li>
 &lt;li>Pull Request Resource&lt;/li>
@@ -359,8 +362,8 @@ loading="lazy"
 &lt;li>Cloud Event Resource&lt;/li>
 &lt;/ul>
 &lt;p>以下就針對比較常用的 Git &amp;amp; Image resource 說明，其他的部份可以參考官網的詳細文件。&lt;/p>
-&lt;h3 id="git-resource">Git Resource&lt;/h3>
-&lt;p>一般的 git repository，作為 task input 時，Tekton 執行 task 前會將程式碼 clone 回來，因此這邊就必須注意 git repository 存取的權限問題，若是 private repository 就要額外提供 credential 資訊才可以正常運作&lt;/p>
+&lt;h3 id="git-resource">Git Resource
+&lt;/h3>&lt;p>一般的 git repository，作為 task input 時，Tekton 執行 task 前會將程式碼 clone 回來，因此這邊就必須注意 git repository 存取的權限問題，若是 private repository 就要額外提供 credential 資訊才可以正常運作&lt;/p>
 &lt;p>以下是一個標準的 Git PipelineResource 的定義：&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -382,26 +385,26 @@ loading="lazy"
 &lt;/span>&lt;span class="lnt">16
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">apiVersion: tekton.dev/v1alpha1
-kind: PipelineResource
-metadata:
-name: wizzbang-git
-namespace: default
-spec:
-type: git
-params:
-- name: url
-value: https://github.com/wizzbangcorp/wizzbang.git
-# 可用 branch, tag, commit SHA or ref
-# 沒指定就會拉 master branch
-- name: revision
-value: master
-# value: some_awesome_feature
-# value: refs/pull/52525/head
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">apiVersion: tekton.dev/v1alpha1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kind: PipelineResource
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">metadata:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: wizzbang-git
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> namespace: default
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">spec:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> type: git
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> params:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: url
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> value: https://github.com/wizzbangcorp/wizzbang.git
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # 可用 branch, tag, commit SHA or ref
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # 沒指定就會拉 master branch
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: revision
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> value: master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # value: some_awesome_feature
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # value: refs/pull/52525/head
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;h2 id="task--clustertask">Task &amp;amp; ClusterTask&lt;/h2>
-&lt;p>&lt;code>Task&lt;/code>(&amp;amp; &lt;code>ClusterTask&lt;/code>) 中包含了一連串的 step，通常是使用者要用來執行 CI flow，而這些工作會在單一個 pod 中以多個 container 的形式逐一完成。&lt;/p>
+&lt;/div>&lt;h2 id="task--clustertask">Task &amp;amp; ClusterTask
+&lt;/h2>&lt;p>&lt;code>Task&lt;/code>(&amp;amp; &lt;code>ClusterTask&lt;/code>) 中包含了一連串的 step，通常是使用者要用來執行 CI flow，而這些工作會在單一個 pod 中以多個 container 的形式逐一完成。&lt;/p>
 &lt;p>Task &amp;amp; ClusterTask 兩者的不同在於 Task 是屬於 namespace level，而 ClusterTask 是屬於 cluster level&lt;/p>
 &lt;p>而在 Task 的定義中，最重要的部份有以下三個項目：&lt;/p>
 &lt;ul>
@@ -456,52 +459,52 @@ value: master
 &lt;/span>&lt;span class="lnt">42
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">apiVersion: tekton.dev/v1alpha1
-kind: Task
-metadata:
-name: deploy-using-kubectl
-spec:
-inputs:
-resources:
-- name: source
-type: git
-- name: image
-type: image
-params:
-- name: path
-type: string
-description: Path to the manifest to apply
-- name: yamlPathToImage
-type: string
-description:
-The path to the image to replace in the yaml manifest (arg to yq)
-steps:
-# step 中可以定義多個執行工作，會依照順序執行
-- name: replace-image
-image: mikefarah/yq
-command: [&amp;#34;yq&amp;#34;]
-args:
-- &amp;#34;w&amp;#34;
-- &amp;#34;-i&amp;#34;
-- &amp;#34;$(inputs.params.path)&amp;#34;
-- &amp;#34;$(inputs.params.yamlPathToImage)&amp;#34;
-- &amp;#34;$(inputs.resources.image.url)&amp;#34;
-- name: run-kubectl
-image: lachlanevenson/k8s-kubectl
-command: [&amp;#34;kubectl&amp;#34;]
-args:
-- &amp;#34;apply&amp;#34;
-- &amp;#34;-f&amp;#34;
-- &amp;#34;$(inputs.params.path)&amp;#34;
-# 此 volume 在 task 中沒有用到，只是一個範例而已
-# 用以表示可以在 task 中定義 volume 並使用
-volumes:
-- name: example-volume
-emptyDir: {}
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">apiVersion: tekton.dev/v1alpha1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kind: Task
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">metadata:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: deploy-using-kubectl
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">spec:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> inputs:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> resources:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: source
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> type: git
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: image
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> type: image
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> params:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: path
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> type: string
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> description: Path to the manifest to apply
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: yamlPathToImage
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> type: string
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> description:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> The path to the image to replace in the yaml manifest (arg to yq)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> steps:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # step 中可以定義多個執行工作，會依照順序執行
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: replace-image
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> image: mikefarah/yq
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> command: [&amp;#34;yq&amp;#34;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> args:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - &amp;#34;w&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - &amp;#34;-i&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - &amp;#34;$(inputs.params.path)&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - &amp;#34;$(inputs.params.yamlPathToImage)&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - &amp;#34;$(inputs.resources.image.url)&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: run-kubectl
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> image: lachlanevenson/k8s-kubectl
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> command: [&amp;#34;kubectl&amp;#34;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> args:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - &amp;#34;apply&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - &amp;#34;-f&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - &amp;#34;$(inputs.params.path)&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # 此 volume 在 task 中沒有用到，只是一個範例而已
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # 用以表示可以在 task 中定義 volume 並使用
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> volumes:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: example-volume
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> emptyDir: {}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;h2 id="taskrun">TaskRun&lt;/h2>
-&lt;p>定義了 task 之後，Tekton 並不會主動執行任何 task，這時候就必須要搭配 TaskRun 才可以讓 task 真正的執行指定工作。&lt;/p>
+&lt;/div>&lt;h2 id="taskrun">TaskRun
+&lt;/h2>&lt;p>定義了 task 之後，Tekton 並不會主動執行任何 task，這時候就必須要搭配 TaskRun 才可以讓 task 真正的執行指定工作。&lt;/p>
 &lt;p>以下是一個標準的 TaskRun 定義：&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -531,39 +534,38 @@ emptyDir: {}
 &lt;/span>&lt;span class="lnt">24
 &lt;/span>&lt;span class="lnt">25
 &lt;/span>&lt;span class="lnt">26
-&lt;/span>&lt;span class="lnt">27
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback"># 以下幾個(apiVersion, kind, metadata, spec)是必要資訊
-apiVersion: tekton.dev/v1alpha1
-kind: TaskRun
-metadata:
-name: build-docker-image-from-git-source-task-run
-spec:
-serviceAccount: robot-docker-basic
-# 指定到已經預先定義好的 Task
-taskRef:
-name: build-docker-image-from-git-source
-inputs:
-resources:
-- name: docker-source
-# 指定到已經預先定義好的 PipelineResource
-resourceRef:
-name: git-tekton-test
-params:
-- name: pathToDockerFile
-value: Dockerfile
-- name: pathToContext
-value: /workspace/docker-source/examples/microservices/leeroy-web
-outputs:
-resources:
-- name: builtImage
-resourceRef:
-name: image-tekton-test
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"># 以下幾個(apiVersion, kind, metadata, spec)是必要資訊
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">apiVersion: tekton.dev/v1alpha1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kind: TaskRun
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">metadata:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: build-docker-image-from-git-source-task-run
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">spec:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> serviceAccount: robot-docker-basic
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # 指定到已經預先定義好的 Task
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> taskRef:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: build-docker-image-from-git-source
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> inputs:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> resources:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: docker-source
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # 指定到已經預先定義好的 PipelineResource
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> resourceRef:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: git-tekton-test
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> params:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: pathToDockerFile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> value: Dockerfile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: pathToContext
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> value: /workspace/docker-source/examples/microservices/leeroy-web
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> outputs:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> resources:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: builtImage
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> resourceRef:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: image-tekton-test
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;h2 id="pipeline">Pipeline&lt;/h2>
-&lt;p>Pipeline 其實可以把它簡單思考為前面 Task 的集合，有順序性的排列，並透過之後介紹的 PipelineRun 來運作。&lt;/p>
+&lt;/div>&lt;h2 id="pipeline">Pipeline
+&lt;/h2>&lt;p>Pipeline 其實可以把它簡單思考為前面 Task 的集合，有順序性的排列，並透過之後介紹的 PipelineRun 來運作。&lt;/p>
 &lt;p>成功運行 Pipeline 結果:&lt;/p>
 &lt;p>&lt;img src="https://www.redhat.com/architect/sites/default/files/styles/embed_large/public/2022-06/4-pipeline.png?itok=Eex7RxG9"
 loading="lazy"
@@ -572,8 +574,8 @@ loading="lazy"
 &lt;p>&lt;img src="https://www.redhat.com/architect/sites/default/files/styles/embed_large/public/2022-06/5-ci-dev-pipeline-failed.png?itok=dzFYWfKl"
 loading="lazy"
 >&lt;/p>
-&lt;h2 id="結語">結語&lt;/h2>
-&lt;p>以上內容(PipelineResource, Task, TaskRun, Pipeline, PipelineRun) 是 Tekton 中執行工作的必要元素，實際上執行的 CI/CD 工作都會與這幾個部份有關。&lt;/p>
+&lt;h2 id="結語">結語
+&lt;/h2>&lt;p>以上內容(PipelineResource, Task, TaskRun, Pipeline, PipelineRun) 是 Tekton 中執行工作的必要元素，實際上執行的 CI/CD 工作都會與這幾個部份有關。&lt;/p>
 &lt;p>Tekton 將所有的基本元素拆分成一個一個的 k8s CRD(Custom Resource Definition)，如果是稍微複雜一點的 CI/CD 工作，可能就會需要定義不少個 CRD 才能完成，而且在設計上相對於其他的 CI server(例如：GitLab CI, Drone CI)可能不是這麼直覺；但這樣的設計提供了以下優點：&lt;/p>
 &lt;ul>
 &lt;li>
@@ -588,8 +590,8 @@ loading="lazy"
 &lt;/ul>
 &lt;p>若是未來有考慮 workload 都跑在 k8s 上的使用者，在選擇 CI/CD 的工具時或許可以將 Tekton 考慮進行。&lt;/p>
 &lt;p>接著可能會面臨到的問題可能是，如果希望作到 GitOps，光是以上項目好像不夠還有相關元件支援性。&lt;/p>
-&lt;h2 id="reference">Reference&lt;/h2>
-&lt;ul>
+&lt;h2 id="reference">Reference
+&lt;/h2>&lt;ul>
 &lt;li>&lt;a class="link" href="https://github.com/tektoncd/pipeline/tree/main/examples" target="_blank" rel="noopener"
 >pipeline/examples&lt;/a>&lt;/li>
 &lt;li>&lt;a class="link" href="https://github.com/tektoncd/pipeline/blob/main/docs/resources.md" target="_blank" rel="noopener"

@@ -3,9 +3,9 @@
 &lt;blockquote>
 &lt;p>備註: 由於資源有限情況下，透過單一伺服器(主機)透過 VM 模擬實際節點硬體資源環境，這邊主要透過檢測與除錯，來確保 OpenShift 部署成功。&lt;/p>
 &lt;/blockquote>
-&lt;h2 id="部署常見問題整理-持續更新">部署常見問題整理 (持續更新)&lt;/h2>
-&lt;h3 id="超時等待-bootstrap-節點啟動">超時等待 &lt;code>bootstrap&lt;/code> 節點啟動&lt;/h3>
-&lt;ul>
+&lt;h2 id="部署常見問題整理-持續更新">部署常見問題整理 (持續更新)
+&lt;/h2>&lt;h3 id="超時等待-bootstrap-節點啟動">超時等待 &lt;code>bootstrap&lt;/code> 節點啟動
+&lt;/h3>&lt;ul>
 &lt;li>發現特定 Pod 持續&lt;code>RunningNotReady&lt;/code> 狀態&lt;/li>
 &lt;/ul>
 &lt;div class="highlight">&lt;div class="chroma">
@@ -15,10 +15,10 @@
 &lt;/span>&lt;span class="lnt">3
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">W0830 11:16:37.087497 35214 reflector.go:436] k8s.io/client-go/tools/watch/informerwatcher.go:146: watch of *v1.ConfigMap ended with: very short watch: k8s.io/client-go/tools/watch/informerwatcher.go:146: Unexpected watch close - watch lasted less than a second and no items received
-apiserver - &amp;gt; RunningNotReady
-Aug 30 03:42:37 bootstrap.lab.yiylin.internal bootkube.sh[644199]: Pod Status:openshift-kube-apiserver/kube-apiserver RunningNotReady
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="n">W0830&lt;/span> &lt;span class="mi">11&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">16&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mf">37.087497&lt;/span> &lt;span class="mi">35214&lt;/span> &lt;span class="n">reflector&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">go&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">436&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="n">k8s&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">io&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">client&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">go&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">tools&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">watch&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">informerwatcher&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">go&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">146&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">watch&lt;/span> &lt;span class="n">of&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">v1&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">ConfigMap&lt;/span> &lt;span class="n">ended&lt;/span> &lt;span class="n">with&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">very&lt;/span> &lt;span class="n">short&lt;/span> &lt;span class="n">watch&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">k8s&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">io&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">client&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">go&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">tools&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">watch&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">informerwatcher&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">go&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">146&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Unexpected&lt;/span> &lt;span class="n">watch&lt;/span> &lt;span class="n">close&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="n">watch&lt;/span> &lt;span class="n">lasted&lt;/span> &lt;span class="n">less&lt;/span> &lt;span class="n">than&lt;/span> &lt;span class="n">a&lt;/span> &lt;span class="n">second&lt;/span> &lt;span class="ow">and&lt;/span> &lt;span class="n">no&lt;/span> &lt;span class="n">items&lt;/span> &lt;span class="n">received&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">apiserver&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">RunningNotReady&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Aug&lt;/span> &lt;span class="mi">30&lt;/span> &lt;span class="mi">03&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">42&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">37&lt;/span> &lt;span class="n">bootstrap&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">lab&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">yiylin&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">internal&lt;/span> &lt;span class="n">bootkube&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">sh&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">644199&lt;/span>&lt;span class="p">]:&lt;/span> &lt;span class="n">Pod&lt;/span> &lt;span class="n">Status&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">openshift&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">kube&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">apiserver&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">kube&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">apiserver&lt;/span> &lt;span class="n">RunningNotReady&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
 &lt;p>此情境請透過收集&lt;code>bootstrap&lt;/code> 節點日誌，來確認環境問題&lt;/p>
@@ -31,11 +31,11 @@ Aug 30 03:42:37 bootstrap.lab.yiylin.internal bootkube.sh[644199]: Pod Status:op
 &lt;/span>&lt;span class="lnt">4
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ ./openshift-install gather bootstrap --dir&lt;span class="o">=&lt;/span>&amp;lt;installation_directory&amp;gt;
-...
-INFO Pulling debug logs from the bootstrap machine
-INFO Bootstrap gather logs captured here &lt;span class="s2">&amp;#34;&amp;lt;installation_directory&amp;gt;/log-bundle-&amp;lt;timestamp&amp;gt;.tar.gz&amp;#34;&lt;/span>
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ ./openshift-install gather bootstrap --dir&lt;span class="o">=&lt;/span>&amp;lt;installation_directory&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">INFO Pulling debug logs from the bootstrap machine
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">INFO Bootstrap gather logs captured here &lt;span class="s2">&amp;#34;&amp;lt;installation_directory&amp;gt;/log-bundle-&amp;lt;timestamp&amp;gt;.tar.gz&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ul>
 &lt;li>蒐集包含 bootstrap process / bootstrap 上所有 Pod/Container 的 log&lt;/li>
@@ -49,15 +49,15 @@ INFO Bootstrap gather logs captured here &lt;span class="s2">&amp;#34;&amp;lt;in
 &lt;li>master bootstrap 全部安裝完，然後下 wait for complete 確認最終才可移除 bootstrap node&lt;/li>
 &lt;/ol>
 &lt;/blockquote>
-&lt;h4 id="reference">Reference:&lt;/h4>
-&lt;ul>
+&lt;h4 id="reference">Reference:
+&lt;/h4>&lt;ul>
 &lt;li>&lt;a class="link" href="https://docs.openshift.com/container-platform/4.8/installing/installing-troubleshooting.html#installation-bootstrap-gather_installing-troubleshooting" target="_blank" rel="noopener"
 >Gathering logs from a failed installation&lt;/a>&lt;/li>
 &lt;li>&lt;a class="link" href="https://docs.openshift.com/container-platform/4.8/installing/installing_bare_metal/installing-bare-metal.html#installation-installing-bare-metal_installing-bare-metal" target="_blank" rel="noopener"
 >Waiting for the bootstrap process to complete&lt;/a>&lt;/li>
 &lt;/ul>
-&lt;h3 id="master-node-部署不起來檢查並驗證-etcd-運行之硬碟是否正常運作-">Master Node 部署不起來，檢查並驗證 etcd 運行之硬碟是否正常運作 ?&lt;/h3>
-&lt;ul>
+&lt;h3 id="master-node-部署不起來檢查並驗證-etcd-運行之硬碟是否正常運作-">Master Node 部署不起來，檢查並驗證 etcd 運行之硬碟是否正常運作 ?
+&lt;/h3>&lt;ul>
 &lt;li>大部分 master 無法建置情境，通常可能會有原因是硬碟速度問題(硬碟壞軌)&lt;/li>
 &lt;/ul>
 &lt;blockquote>
@@ -72,14 +72,14 @@ INFO Bootstrap gather logs captured here &lt;span class="s2">&amp;#34;&amp;lt;in
 &lt;/span>&lt;span class="lnt">4
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ oc debug node/&amp;lt;master_node&amp;gt;
-&lt;span class="o">[&lt;/span>...&lt;span class="o">]&lt;/span>
-sh-4.4# chroot /host bash
-&lt;span class="o">[&lt;/span>root@&amp;lt;master_node&amp;gt; /&lt;span class="o">]&lt;/span>&lt;span class="c1"># podman run --volume /var/lib/etcd:/var/lib/etcd:Z quay.io/openshift-scale/etcd-perf&lt;/span>
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ oc debug node/&amp;lt;master_node&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>...&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sh-4.4# chroot /host bash
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@&amp;lt;master_node&amp;gt; /&lt;span class="o">]&lt;/span>&lt;span class="c1"># podman run --volume /var/lib/etcd:/var/lib/etcd:Z quay.io/openshift-scale/etcd-perf&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;h4 id="reference-1">Reference:&lt;/h4>
-&lt;ul>
+&lt;/div>&lt;h4 id="reference-1">Reference:
+&lt;/h4>&lt;ul>
 &lt;li>&lt;a class="link" href="https://access.redhat.com/solutions/4885641" target="_blank" rel="noopener"
 >How to Use &amp;lsquo;fio&amp;rsquo; to Check Etcd Disk Performance in OCP
 &lt;/a>&lt;/li>
@@ -88,8 +88,8 @@ sh-4.4# chroot /host bash
 &lt;li>&lt;a class="link" href="https://www.ibm.com/docs/en/cloud-private/3.2.x?topic=requirements-hardware-recommendations" target="_blank" rel="noopener"
 >Hardware requirements and recommendations&lt;/a>&lt;/li>
 &lt;/ul>
-&lt;h2 id="補充檢查---除錯流程">補充|檢查 - 除錯流程&lt;/h2>
-&lt;ol>
+&lt;h2 id="補充檢查---除錯流程">補充|檢查 - 除錯流程
+&lt;/h2>&lt;ol>
 &lt;li>
 &lt;p>部署過程都透過 bootkube 確認部署狀態資訊，log 會不斷顯示錯誤然後 loop 確認環節，嘗試能不能從他錯誤訊息找出規則(也就是他跳錯誤的地方，通常是在 log restart之前)&lt;/p>
 &lt;/li>
@@ -100,8 +100,8 @@ sh-4.4# chroot /host bash
 &lt;p>如果以上幾個 Pod 有問題，透過 &lt;code>crictl ps&lt;/code> 跟 &lt;code>crictl log&lt;/code> 去查看 Container Log，問題有可能是連續的錯誤，所以可能是 API 有問題，可能是 Controller/Scheduler 引起，細節需要透過上面提到方式，下載節點所有 Log 日誌來比對檢查，找到正確的錯誤資訊來排除錯誤&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;h2 id="reference-2">Reference:&lt;/h2>
-&lt;ul>
+&lt;h2 id="reference-2">Reference:
+&lt;/h2>&lt;ul>
 &lt;li>&lt;a class="link" href="https://connect.redhat.com/en/blog/openshift-troubleshooting-resources" target="_blank" rel="noopener"
 >OpenShift Troubleshooting Resources&lt;/a>&lt;/li>
 &lt;/ul></description></item></channel></rss>

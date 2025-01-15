@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>CI/CD on Frank's Notes</title><link>https://blog.yylin.io/categories/ci/cd/</link><description>Recent content in CI/CD on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><atom:link href="https://blog.yylin.io/categories/ci/cd/index.xml" rel="self" type="application/rss+xml"/><item><title>CI/CD: Tekton Pipeline 實戰</title><link>https://blog.yylin.io/openshift/pipelines/</link><pubDate>Tue, 21 Jun 2022 21:40:40 +0800</pubDate><guid>https://blog.yylin.io/openshift/pipelines/</guid><description>&lt;p>OpenShift Pipelines 是一個基於 Kubernetes 資源的雲塊的持續和持續交付（持續集成和持續交付，簡稱 CI/CD）的解決方案。它通過執行執行的細節，使用 Tekton 進行跨平台的自動部署。Tekton 引入了多種標準的自定義資源定義 (CRD)，定義可跨 Kubernetes 分佈用於 CI/CD 管道。&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>CI/CD on Frank's Notes</title><link>https://blog.yylin.io/categories/ci/cd/</link><description>Recent content in CI/CD on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Tue, 21 Jun 2022 21:40:40 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/categories/ci/cd/index.xml" rel="self" type="application/rss+xml"/><item><title>CI/CD: Tekton Pipeline 實戰</title><link>https://blog.yylin.io/openshift/pipelines/</link><pubDate>Tue, 21 Jun 2022 21:40:40 +0800</pubDate><guid>https://blog.yylin.io/openshift/pipelines/</guid><description>&lt;p>OpenShift Pipelines 是一個基於 Kubernetes 資源的雲塊的持續和持續交付（持續集成和持續交付，簡稱 CI/CD）的解決方案。它通過執行執行的細節，使用 Tekton 進行跨平台的自動部署。Tekton 引入了多種標準的自定義資源定義 (CRD)，定義可跨 Kubernetes 分佈用於 CI/CD 管道。&lt;/p>
 &lt;p>&lt;img src="https://www.redhat.com/cms/managed-files/container-platforms-pipelines.png"
 loading="lazy"
 >&lt;/p>
-&lt;h2 id="主要特性">主要特性&lt;/h2>
-&lt;ul>
+&lt;h2 id="主要特性">主要特性
+&lt;/h2>&lt;ul>
 &lt;li>OpenShift Pipelines 是一個無服務器的 CI/CD 系統，它在獨立的容器中運行 Pipelines，以及所有需要的依賴組件。&lt;/li>
 &lt;li>OpenShift Pipelines 是為開發微服務架構的非中心化團隊設計的。&lt;/li>
 &lt;li>OpenShift Pipelines 使用標準 CI（pipeline）定義，這些與現有的 Kubernetes 工具集成擴展可擴展和擴展，可讓您定義和擴展 Kubernetes。&lt;/li>
@@ -18,10 +18,10 @@ loading="lazy"
 &lt;li>Pipeline&lt;/li>
 &lt;li>PipelineRun&lt;/li>
 &lt;/ul>
-&lt;h2 id="pipelineresource">PipelineResource&lt;/h2>
-&lt;p>PipelineResource 簡單來說可以作為 task 的 input or output，而每個 task 可以有多個 input &amp;amp; output。&lt;/p>
-&lt;h2 id="syntax">Syntax&lt;/h2>
-&lt;p>PipelineResource 的定義中會有以下必要資訊：&lt;/p>
+&lt;h2 id="pipelineresource">PipelineResource
+&lt;/h2>&lt;p>PipelineResource 簡單來說可以作為 task 的 input or output，而每個 task 可以有多個 input &amp;amp; output。&lt;/p>
+&lt;h2 id="syntax">Syntax
+&lt;/h2>&lt;p>PipelineResource 的定義中會有以下必要資訊：&lt;/p>
 &lt;ul>
 &lt;li>
 &lt;p>apiVersion：目前固定是 tekton.dev/v1alpha1&lt;/p>
@@ -43,8 +43,8 @@ loading="lazy"
 &lt;ul>
 &lt;li>params：不同的 resource type 可能會有的不同額外參數資訊&lt;/li>
 &lt;/ul>
-&lt;h2 id="resource-type">Resource Type&lt;/h2>
-&lt;p>有了以上概念後，接著要知道的是 PipelineResources 共有以下幾種類型：&lt;/p>
+&lt;h2 id="resource-type">Resource Type
+&lt;/h2>&lt;p>有了以上概念後，接著要知道的是 PipelineResources 共有以下幾種類型：&lt;/p>
 &lt;ul>
 &lt;li>Git Resource&lt;/li>
 &lt;li>Pull Request Resource&lt;/li>
@@ -54,8 +54,8 @@ loading="lazy"
 &lt;li>Cloud Event Resource&lt;/li>
 &lt;/ul>
 &lt;p>以下就針對比較常用的 Git &amp;amp; Image resource 說明，其他的部份可以參考官網的詳細文件。&lt;/p>
-&lt;h3 id="git-resource">Git Resource&lt;/h3>
-&lt;p>一般的 git repository，作為 task input 時，Tekton 執行 task 前會將程式碼 clone 回來，因此這邊就必須注意 git repository 存取的權限問題，若是 private repository 就要額外提供 credential 資訊才可以正常運作&lt;/p>
+&lt;h3 id="git-resource">Git Resource
+&lt;/h3>&lt;p>一般的 git repository，作為 task input 時，Tekton 執行 task 前會將程式碼 clone 回來，因此這邊就必須注意 git repository 存取的權限問題，若是 private repository 就要額外提供 credential 資訊才可以正常運作&lt;/p>
 &lt;p>以下是一個標準的 Git PipelineResource 的定義：&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -77,26 +77,26 @@ loading="lazy"
 &lt;/span>&lt;span class="lnt">16
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">apiVersion: tekton.dev/v1alpha1
-kind: PipelineResource
-metadata:
-name: wizzbang-git
-namespace: default
-spec:
-type: git
-params:
-- name: url
-value: https://github.com/wizzbangcorp/wizzbang.git
-# 可用 branch, tag, commit SHA or ref
-# 沒指定就會拉 master branch
-- name: revision
-value: master
-# value: some_awesome_feature
-# value: refs/pull/52525/head
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">apiVersion: tekton.dev/v1alpha1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kind: PipelineResource
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">metadata:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: wizzbang-git
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> namespace: default
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">spec:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> type: git
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> params:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: url
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> value: https://github.com/wizzbangcorp/wizzbang.git
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # 可用 branch, tag, commit SHA or ref
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # 沒指定就會拉 master branch
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: revision
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> value: master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # value: some_awesome_feature
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # value: refs/pull/52525/head
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;h2 id="task--clustertask">Task &amp;amp; ClusterTask&lt;/h2>
-&lt;p>&lt;code>Task&lt;/code>(&amp;amp; &lt;code>ClusterTask&lt;/code>) 中包含了一連串的 step，通常是使用者要用來執行 CI flow，而這些工作會在單一個 pod 中以多個 container 的形式逐一完成。&lt;/p>
+&lt;/div>&lt;h2 id="task--clustertask">Task &amp;amp; ClusterTask
+&lt;/h2>&lt;p>&lt;code>Task&lt;/code>(&amp;amp; &lt;code>ClusterTask&lt;/code>) 中包含了一連串的 step，通常是使用者要用來執行 CI flow，而這些工作會在單一個 pod 中以多個 container 的形式逐一完成。&lt;/p>
 &lt;p>Task &amp;amp; ClusterTask 兩者的不同在於 Task 是屬於 namespace level，而 ClusterTask 是屬於 cluster level&lt;/p>
 &lt;p>而在 Task 的定義中，最重要的部份有以下三個項目：&lt;/p>
 &lt;ul>
@@ -151,52 +151,52 @@ value: master
 &lt;/span>&lt;span class="lnt">42
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">apiVersion: tekton.dev/v1alpha1
-kind: Task
-metadata:
-name: deploy-using-kubectl
-spec:
-inputs:
-resources:
-- name: source
-type: git
-- name: image
-type: image
-params:
-- name: path
-type: string
-description: Path to the manifest to apply
-- name: yamlPathToImage
-type: string
-description:
-The path to the image to replace in the yaml manifest (arg to yq)
-steps:
-# step 中可以定義多個執行工作，會依照順序執行
-- name: replace-image
-image: mikefarah/yq
-command: [&amp;#34;yq&amp;#34;]
-args:
-- &amp;#34;w&amp;#34;
-- &amp;#34;-i&amp;#34;
-- &amp;#34;$(inputs.params.path)&amp;#34;
-- &amp;#34;$(inputs.params.yamlPathToImage)&amp;#34;
-- &amp;#34;$(inputs.resources.image.url)&amp;#34;
-- name: run-kubectl
-image: lachlanevenson/k8s-kubectl
-command: [&amp;#34;kubectl&amp;#34;]
-args:
-- &amp;#34;apply&amp;#34;
-- &amp;#34;-f&amp;#34;
-- &amp;#34;$(inputs.params.path)&amp;#34;
-# 此 volume 在 task 中沒有用到，只是一個範例而已
-# 用以表示可以在 task 中定義 volume 並使用
-volumes:
-- name: example-volume
-emptyDir: {}
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">apiVersion: tekton.dev/v1alpha1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kind: Task
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">metadata:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: deploy-using-kubectl
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">spec:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> inputs:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> resources:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: source
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> type: git
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: image
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> type: image
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> params:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: path
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> type: string
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> description: Path to the manifest to apply
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: yamlPathToImage
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> type: string
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> description:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> The path to the image to replace in the yaml manifest (arg to yq)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> steps:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # step 中可以定義多個執行工作，會依照順序執行
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: replace-image
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> image: mikefarah/yq
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> command: [&amp;#34;yq&amp;#34;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> args:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - &amp;#34;w&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - &amp;#34;-i&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - &amp;#34;$(inputs.params.path)&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - &amp;#34;$(inputs.params.yamlPathToImage)&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - &amp;#34;$(inputs.resources.image.url)&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: run-kubectl
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> image: lachlanevenson/k8s-kubectl
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> command: [&amp;#34;kubectl&amp;#34;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> args:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - &amp;#34;apply&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - &amp;#34;-f&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - &amp;#34;$(inputs.params.path)&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # 此 volume 在 task 中沒有用到，只是一個範例而已
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # 用以表示可以在 task 中定義 volume 並使用
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> volumes:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: example-volume
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> emptyDir: {}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;h2 id="taskrun">TaskRun&lt;/h2>
-&lt;p>定義了 task 之後，Tekton 並不會主動執行任何 task，這時候就必須要搭配 TaskRun 才可以讓 task 真正的執行指定工作。&lt;/p>
+&lt;/div>&lt;h2 id="taskrun">TaskRun
+&lt;/h2>&lt;p>定義了 task 之後，Tekton 並不會主動執行任何 task，這時候就必須要搭配 TaskRun 才可以讓 task 真正的執行指定工作。&lt;/p>
 &lt;p>以下是一個標準的 TaskRun 定義：&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -226,39 +226,38 @@ emptyDir: {}
 &lt;/span>&lt;span class="lnt">24
 &lt;/span>&lt;span class="lnt">25
 &lt;/span>&lt;span class="lnt">26
-&lt;/span>&lt;span class="lnt">27
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback"># 以下幾個(apiVersion, kind, metadata, spec)是必要資訊
-apiVersion: tekton.dev/v1alpha1
-kind: TaskRun
-metadata:
-name: build-docker-image-from-git-source-task-run
-spec:
-serviceAccount: robot-docker-basic
-# 指定到已經預先定義好的 Task
-taskRef:
-name: build-docker-image-from-git-source
-inputs:
-resources:
-- name: docker-source
-# 指定到已經預先定義好的 PipelineResource
-resourceRef:
-name: git-tekton-test
-params:
-- name: pathToDockerFile
-value: Dockerfile
-- name: pathToContext
-value: /workspace/docker-source/examples/microservices/leeroy-web
-outputs:
-resources:
-- name: builtImage
-resourceRef:
-name: image-tekton-test
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"># 以下幾個(apiVersion, kind, metadata, spec)是必要資訊
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">apiVersion: tekton.dev/v1alpha1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kind: TaskRun
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">metadata:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: build-docker-image-from-git-source-task-run
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">spec:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> serviceAccount: robot-docker-basic
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # 指定到已經預先定義好的 Task
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> taskRef:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: build-docker-image-from-git-source
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> inputs:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> resources:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: docker-source
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # 指定到已經預先定義好的 PipelineResource
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> resourceRef:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: git-tekton-test
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> params:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: pathToDockerFile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> value: Dockerfile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: pathToContext
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> value: /workspace/docker-source/examples/microservices/leeroy-web
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> outputs:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> resources:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: builtImage
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> resourceRef:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: image-tekton-test
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;h2 id="pipeline">Pipeline&lt;/h2>
-&lt;p>Pipeline 其實可以把它簡單思考為前面 Task 的集合，有順序性的排列，並透過之後介紹的 PipelineRun 來運作。&lt;/p>
+&lt;/div>&lt;h2 id="pipeline">Pipeline
+&lt;/h2>&lt;p>Pipeline 其實可以把它簡單思考為前面 Task 的集合，有順序性的排列，並透過之後介紹的 PipelineRun 來運作。&lt;/p>
 &lt;p>成功運行 Pipeline 結果:&lt;/p>
 &lt;p>&lt;img src="https://www.redhat.com/architect/sites/default/files/styles/embed_large/public/2022-06/4-pipeline.png?itok=Eex7RxG9"
 loading="lazy"
@@ -267,8 +266,8 @@ loading="lazy"
 &lt;p>&lt;img src="https://www.redhat.com/architect/sites/default/files/styles/embed_large/public/2022-06/5-ci-dev-pipeline-failed.png?itok=dzFYWfKl"
 loading="lazy"
 >&lt;/p>
-&lt;h2 id="結語">結語&lt;/h2>
-&lt;p>以上內容(PipelineResource, Task, TaskRun, Pipeline, PipelineRun) 是 Tekton 中執行工作的必要元素，實際上執行的 CI/CD 工作都會與這幾個部份有關。&lt;/p>
+&lt;h2 id="結語">結語
+&lt;/h2>&lt;p>以上內容(PipelineResource, Task, TaskRun, Pipeline, PipelineRun) 是 Tekton 中執行工作的必要元素，實際上執行的 CI/CD 工作都會與這幾個部份有關。&lt;/p>
 &lt;p>Tekton 將所有的基本元素拆分成一個一個的 k8s CRD(Custom Resource Definition)，如果是稍微複雜一點的 CI/CD 工作，可能就會需要定義不少個 CRD 才能完成，而且在設計上相對於其他的 CI server(例如：GitLab CI, Drone CI)可能不是這麼直覺；但這樣的設計提供了以下優點：&lt;/p>
 &lt;ul>
 &lt;li>
@@ -283,8 +282,8 @@ loading="lazy"
 &lt;/ul>
 &lt;p>若是未來有考慮 workload 都跑在 k8s 上的使用者，在選擇 CI/CD 的工具時或許可以將 Tekton 考慮進行。&lt;/p>
 &lt;p>接著可能會面臨到的問題可能是，如果希望作到 GitOps，光是以上項目好像不夠還有相關元件支援性。&lt;/p>
-&lt;h2 id="reference">Reference&lt;/h2>
-&lt;ul>
+&lt;h2 id="reference">Reference
+&lt;/h2>&lt;ul>
 &lt;li>&lt;a class="link" href="https://github.com/tektoncd/pipeline/tree/main/examples" target="_blank" rel="noopener"
 >pipeline/examples&lt;/a>&lt;/li>
 &lt;li>&lt;a class="link" href="https://github.com/tektoncd/pipeline/blob/main/docs/resources.md" target="_blank" rel="noopener"

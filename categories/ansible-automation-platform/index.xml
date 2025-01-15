@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ansible Automation Platform on Frank's Notes</title><link>https://blog.yylin.io/categories/ansible-automation-platform/</link><description>Recent content in Ansible Automation Platform on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Sat, 19 Nov 2022 12:00:40 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/categories/ansible-automation-platform/index.xml" rel="self" type="application/rss+xml"/><item><title>透過自動化進行 TWGCB 臺灣政府組態標準合規 - 邏輯檢查</title><link>https://blog.yylin.io/ansible/twgcb/</link><pubDate>Sat, 19 Nov 2022 12:00:40 +0800</pubDate><guid>https://blog.yylin.io/ansible/twgcb/</guid><description>&lt;h2 id="-概述-">/ 概述 /&lt;/h2>
-&lt;p>TWGCB 由行政院國家資通安全會報技術服務中心發佈，政府組態基準(Government Configuration Baseline，簡稱GCB)目的在於規範資通訊設備 (例如：個人電腦、伺服器主機及網通設備等) 的一致性安全設定 (例如：密碼長度、更新期限等)，以降低成為駭客入侵管道，進而引發資安事件之風險。(擷取資料: &lt;a class="link" href="https://www.nccst.nat.gov.tw/GCB" target="_blank" rel="noopener"
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ansible Automation Platform on Frank's Notes</title><link>https://blog.yylin.io/categories/ansible-automation-platform/</link><description>Recent content in Ansible Automation Platform on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Sat, 19 Nov 2022 12:00:40 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/categories/ansible-automation-platform/index.xml" rel="self" type="application/rss+xml"/><item><title>透過自動化進行 TWGCB 臺灣政府組態標準合規 - 邏輯檢查</title><link>https://blog.yylin.io/ansible/twgcb/</link><pubDate>Sat, 19 Nov 2022 12:00:40 +0800</pubDate><guid>https://blog.yylin.io/ansible/twgcb/</guid><description>&lt;h2 id="-概述-">/ 概述 /
+&lt;/h2>&lt;p>TWGCB 由行政院國家資通安全會報技術服務中心發佈，政府組態基準(Government Configuration Baseline，簡稱GCB)目的在於規範資通訊設備 (例如：個人電腦、伺服器主機及網通設備等) 的一致性安全設定 (例如：密碼長度、更新期限等)，以降低成為駭客入侵管道，進而引發資安事件之風險。(擷取資料: &lt;a class="link" href="https://www.nccst.nat.gov.tw/GCB" target="_blank" rel="noopener"
 >行政院國家資通安全會報技術服務中心&lt;/a>)。&lt;/p>
-&lt;h3 id="twgcb-發展與目的">TWGCB 發展與目的&lt;/h3>
-&lt;p>政府主要目的期望藉由提供電腦作業環境一致性資安防護基準與實作指引，供政府機關及企業能透過建立安全組態，提升資安防護能力。&lt;/p>
+&lt;h3 id="twgcb-發展與目的">TWGCB 發展與目的
+&lt;/h3>&lt;p>政府主要目的期望藉由提供電腦作業環境一致性資安防護基準與實作指引，供政府機關及企業能透過建立安全組態，提升資安防護能力。&lt;/p>
 &lt;p>本文以提供 &lt;code>TWGCB for Red Hat Enterprise Linux 8&lt;/code> 作業系統為例，GCB 主要規範機關內作業系統有一致性安全設定，以降低成為駭客入侵管道，進而引發資安事件之風險：&lt;/p>
 &lt;ol>
 &lt;li>發展一致性安全組態設定&lt;/li>
@@ -19,7 +19,7 @@
 &lt;p>&lt;img src="https://blog.yylin.io/ansible/twgcb/img/01.png"
 width="961"
 height="723"
-srcset="https://blog.yylin.io/ansible/twgcb/img/01_hud6584220a655dc6a45384a3f1945fff9_203206_480x0_resize_box_3.png 480w, https://blog.yylin.io/ansible/twgcb/img/01_hud6584220a655dc6a45384a3f1945fff9_203206_1024x0_resize_box_3.png 1024w"
+srcset="https://blog.yylin.io/ansible/twgcb/img/01_hu10376596329273281823.png 480w, https://blog.yylin.io/ansible/twgcb/img/01_hu7084706771291277340.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="132"
@@ -27,7 +27,7 @@ data-flex-basis="319px"
 > &lt;img src="https://blog.yylin.io/ansible/twgcb/img/02.png"
 width="963"
 height="722"
-srcset="https://blog.yylin.io/ansible/twgcb/img/02_hu347fcb8edb75ab1e3bc8921a22fa1bad_215596_480x0_resize_box_3.png 480w, https://blog.yylin.io/ansible/twgcb/img/02_hu347fcb8edb75ab1e3bc8921a22fa1bad_215596_1024x0_resize_box_3.png 1024w"
+srcset="https://blog.yylin.io/ansible/twgcb/img/02_hu11041581734252056760.png 480w, https://blog.yylin.io/ansible/twgcb/img/02_hu17689836911224263188.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="133"
@@ -39,8 +39,8 @@ data-flex-basis="320px"
 &lt;p>擷取至 &lt;a class="link" href="https://download.nccst.nat.gov.tw/attachfilegcb/TWGCB-01-008_Red%20Hat%20Enterprise%20Linux%208%E6%94%BF%E5%BA%9C%E7%B5%84%E6%85%8B%E5%9F%BA%E6%BA%96%E8%AA%AA%E6%98%8E%E6%96%87%E4%BB%B6v1.0_1100924.pdf" target="_blank" rel="noopener"
 >TWGCB-01-008(v1.0)-政府組態基準說明文件&lt;/a>&lt;/p>
 &lt;/blockquote>
-&lt;h2 id="-引入前思考-">/ 引入前思考 /&lt;/h2>
-&lt;p>各企業為確保有所本能符合政府合規檢核基準，企業資安維運團隊的將要思考，如何採用規範及當前大量基礎設施，包含三大面向：&lt;/p>
+&lt;h2 id="-引入前思考-">/ 引入前思考 /
+&lt;/h2>&lt;p>各企業為確保有所本能符合政府合規檢核基準，企業資安維運團隊的將要思考，如何採用規範及當前大量基礎設施，包含三大面向：&lt;/p>
 &lt;ol>
 &lt;li>如何定義系統組態合規標準條例(不影響企業服務)&lt;/li>
 &lt;li>大範圍檢查及修正的人力成本？&lt;/li>
@@ -56,8 +56,8 @@ data-flex-basis="320px"
 &lt;p>補充: 其他作業系統，若要評估資安條例及防範規範檢查，可以參考&lt;a class="link" href="https://blog.yylin.io/ansible/openscap/" target="_blank" rel="noopener"
 >實現 OpenSCAP 自動化邏輯檢查&lt;/a> 文章介紹的 OpenSCAP 工具。&lt;/p>
 &lt;/blockquote>
-&lt;h2 id="-透過-ansible-結合-twgcb-實現系統自動化合規檢查-">/ 透過 Ansible 結合 TWGCB 實現系統「自動化」合規檢查 /&lt;/h2>
-&lt;p>上述文中釐清企業狀態與需求，這邊列出當前引入 TWGCB 政府組態規範目標：&lt;/p>
+&lt;h2 id="-透過-ansible-結合-twgcb-實現系統自動化合規檢查-">/ 透過 Ansible 結合 TWGCB 實現系統「自動化」合規檢查 /
+&lt;/h2>&lt;p>上述文中釐清企業狀態與需求，這邊列出當前引入 TWGCB 政府組態規範目標：&lt;/p>
 &lt;ul>
 &lt;li>提供一套自動檢測&lt;/li>
 &lt;li>能夠定時執行&lt;/li>
@@ -75,14 +75,14 @@ data-flex-basis="320px"
 &lt;p>&lt;img src="https://blog.yylin.io/ansible/twgcb/img/03.png"
 width="1289"
 height="850"
-srcset="https://blog.yylin.io/ansible/twgcb/img/03_hu9ff8c18a355c3f28cc4488abe913d01b_171120_480x0_resize_box_3.png 480w, https://blog.yylin.io/ansible/twgcb/img/03_hu9ff8c18a355c3f28cc4488abe913d01b_171120_1024x0_resize_box_3.png 1024w"
+srcset="https://blog.yylin.io/ansible/twgcb/img/03_hu11453233817986676866.png 480w, https://blog.yylin.io/ansible/twgcb/img/03_hu11337611815281116846.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="151"
 data-flex-basis="363px"
 >&lt;/p>
-&lt;h3 id="展示---產出-rhel-8-主機組態設定檢查報表">展示 - 產出 RHEL 8 主機組態設定檢查報表&lt;/h3>
-&lt;ul>
+&lt;h3 id="展示---產出-rhel-8-主機組態設定檢查報表">展示 - 產出 RHEL 8 主機組態設定檢查報表
+&lt;/h3>&lt;ul>
 &lt;li>
 &lt;p>作業目的：
 自動至 RHEL8 主機進行 TWGCB 檢查項目，結果整合於 HTML 報表中呈現。&lt;/p>
@@ -96,7 +96,7 @@ data-flex-basis="363px"
 &lt;p>&lt;img src="https://blog.yylin.io/ansible/twgcb/img/04.png"
 width="1207"
 height="643"
-srcset="https://blog.yylin.io/ansible/twgcb/img/04_hu60e577c5d7bb63275dc28fd9b434cec4_149018_480x0_resize_box_3.png 480w, https://blog.yylin.io/ansible/twgcb/img/04_hu60e577c5d7bb63275dc28fd9b434cec4_149018_1024x0_resize_box_3.png 1024w"
+srcset="https://blog.yylin.io/ansible/twgcb/img/04_hu16304466249840666709.png 480w, https://blog.yylin.io/ansible/twgcb/img/04_hu9168871375261575034.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="187"
@@ -112,7 +112,7 @@ data-flex-basis="450px"
 &lt;p>&lt;img src="https://blog.yylin.io/ansible/twgcb/img/05.png"
 width="1912"
 height="934"
-srcset="https://blog.yylin.io/ansible/twgcb/img/05_hu92c189cefd195a4ea632bbaddf368070_452776_480x0_resize_box_3.png 480w, https://blog.yylin.io/ansible/twgcb/img/05_hu92c189cefd195a4ea632bbaddf368070_452776_1024x0_resize_box_3.png 1024w"
+srcset="https://blog.yylin.io/ansible/twgcb/img/05_hu7697216096884647341.png 480w, https://blog.yylin.io/ansible/twgcb/img/05_hu15099071333303989943.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="204"
@@ -129,8 +129,8 @@ title="YouTube Video"
 >
 &lt;/iframe>
 &lt;/div>
-&lt;h3 id="補充展示---運行修復-rhel-主機設備規則並比對先前報表結果">補充展示 - 運行修復 RHEL 主機設備規則並比對先前報表結果&lt;/h3>
-&lt;blockquote>
+&lt;h3 id="補充展示---運行修復-rhel-主機設備規則並比對先前報表結果">補充展示 - 運行修復 RHEL 主機設備規則並比對先前報表結果
+&lt;/h3>&lt;blockquote>
 &lt;p>邏輯檢查修復部分，需要經過企業內部資安團隊與當前服務不衝突情況下評估，並藉由專業顧問團隊同時釐清需求，才會進行大量修復情境，以下展示以「網路設定」條例做修復展示。&lt;/p>
 &lt;/blockquote>
 &lt;ul>
@@ -147,7 +147,7 @@ title="YouTube Video"
 &lt;p>&lt;img src="https://blog.yylin.io/ansible/twgcb/img/06.png"
 width="1034"
 height="523"
-srcset="https://blog.yylin.io/ansible/twgcb/img/06_hu985a02afff0d10678c06c6f7b9955442_121485_480x0_resize_box_3.png 480w, https://blog.yylin.io/ansible/twgcb/img/06_hu985a02afff0d10678c06c6f7b9955442_121485_1024x0_resize_box_3.png 1024w"
+srcset="https://blog.yylin.io/ansible/twgcb/img/06_hu14191314222633371221.png 480w, https://blog.yylin.io/ansible/twgcb/img/06_hu14890416031261046585.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="197"
@@ -157,7 +157,7 @@ data-flex-basis="474px"
 &lt;img src="https://blog.yylin.io/ansible/twgcb/img/07.png"
 width="1083"
 height="515"
-srcset="https://blog.yylin.io/ansible/twgcb/img/07_hufb34822caa4fbf68cba40044391a37d1_168446_480x0_resize_box_3.png 480w, https://blog.yylin.io/ansible/twgcb/img/07_hufb34822caa4fbf68cba40044391a37d1_168446_1024x0_resize_box_3.png 1024w"
+srcset="https://blog.yylin.io/ansible/twgcb/img/07_hu9588483461229734595.png 480w, https://blog.yylin.io/ansible/twgcb/img/07_hu3006203337796922519.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="210"
@@ -174,16 +174,16 @@ title="YouTube Video"
 >
 &lt;/iframe>
 &lt;/div>
-&lt;h2 id="-結論-">/ 結論 /&lt;/h2>
-&lt;p>我們可以透過台灣 GCB 組態基準進行邏輯檢查，透過 Ansible 客製化 Playbook 腳本提供大量主機節點，對企業客戶來說條例檢查過程 Output log 資訊很重要，Red Hat 專業顧問團隊將企業需求的客製化報表提供客戶，有完整可視化條例資訊查看，更能幫助企業資安團隊，確認當前環境使用的套件及安裝組態做清查及彙整，並透過每次運行報告清單中變化，來查閱這些變化是不是符合流程申請，以企業客戶需求導向給一個範本出來，讓客戶有一個基本的概念與依據組態管理自動化檢驗擁有完整報告，如此將可大幅降低資安風險，即可延伸探討後續修正及相對應資安防範措施。&lt;/p>
-&lt;h2 id="reference">Reference&lt;/h2>
-&lt;ul>
+&lt;h2 id="-結論-">/ 結論 /
+&lt;/h2>&lt;p>我們可以透過台灣 GCB 組態基準進行邏輯檢查，透過 Ansible 客製化 Playbook 腳本提供大量主機節點，對企業客戶來說條例檢查過程 Output log 資訊很重要，Red Hat 專業顧問團隊將企業需求的客製化報表提供客戶，有完整可視化條例資訊查看，更能幫助企業資安團隊，確認當前環境使用的套件及安裝組態做清查及彙整，並透過每次運行報告清單中變化，來查閱這些變化是不是符合流程申請，以企業客戶需求導向給一個範本出來，讓客戶有一個基本的概念與依據組態管理自動化檢驗擁有完整報告，如此將可大幅降低資安風險，即可延伸探討後續修正及相對應資安防範措施。&lt;/p>
+&lt;h2 id="reference">Reference
+&lt;/h2>&lt;ul>
 &lt;li>&lt;a class="link" href="https://www.mss.com.tw/gcb.html" target="_blank" rel="noopener"
 >https://www.mss.com.tw/gcb.html&lt;/a>&lt;/li>
-&lt;/ul></description></item><item><title>透過自動化進行 TWGCB 臺灣政府組態標準合規 - 邏輯檢查</title><link>https://blog.yylin.io/ansible/twgcb/</link><pubDate>Sat, 19 Nov 2022 12:00:40 +0800</pubDate><guid>https://blog.yylin.io/ansible/twgcb/</guid><description/></item><item><title>實現 OpenSCAP 自動化邏輯檢查</title><link>https://blog.yylin.io/ansible/openscap/</link><pubDate>Sun, 25 Sep 2022 12:00:40 +0800</pubDate><guid>https://blog.yylin.io/ansible/openscap/</guid><description>&lt;h2 id="概述">概述&lt;/h2>
-&lt;p>SCAP (Security Content Automation Protocol)是一包資安標準的集合。實作 SCAP 的工具有好幾種，其中一個是 OpenSCAP 開源工具，運用 OpenSCAP 可做到全自動的檢查、script/ansible playbook的報告與修復。但「修復」這段不太可能全自動，需要人為判斷要不要修復會不會與公司定義的規則互相衝突，否則完全聽從某些嚴格的 SCAP Rules，派下去之後反而造成維運及開發團隊環境配置衝突，導致相關影響及不便性。&lt;/p>
-&lt;h2 id="透過-openscap-和-satellite-實現系統合規檢查">透過 OpenSCAP 和 Satellite 實現系統合規檢查&lt;/h2>
-&lt;p>在 Red Hat Satellite 中，包含可以配置 OpenSCAP 項目提供的工具用於實施安全合規性檢查。有關 OpenSCAP 的更多信息，可以參見Guide to the Secure &lt;a class="link" href="https://static.open-scap.org/ssg-guides/ssg-rhel7-guide-cui.html#!" target="_blank" rel="noopener"
+&lt;/ul></description></item><item><title>透過自動化進行 TWGCB 臺灣政府組態標準合規 - 邏輯檢查</title><link>https://blog.yylin.io/ansible/twgcb/</link><pubDate>Sat, 19 Nov 2022 12:00:40 +0800</pubDate><guid>https://blog.yylin.io/ansible/twgcb/</guid><description/></item><item><title>實現 OpenSCAP 自動化邏輯檢查</title><link>https://blog.yylin.io/ansible/openscap/</link><pubDate>Sun, 25 Sep 2022 12:00:40 +0800</pubDate><guid>https://blog.yylin.io/ansible/openscap/</guid><description>&lt;h2 id="概述">概述
+&lt;/h2>&lt;p>SCAP (Security Content Automation Protocol)是一包資安標準的集合。實作 SCAP 的工具有好幾種，其中一個是 OpenSCAP 開源工具，運用 OpenSCAP 可做到全自動的檢查、script/ansible playbook的報告與修復。但「修復」這段不太可能全自動，需要人為判斷要不要修復會不會與公司定義的規則互相衝突，否則完全聽從某些嚴格的 SCAP Rules，派下去之後反而造成維運及開發團隊環境配置衝突，導致相關影響及不便性。&lt;/p>
+&lt;h2 id="透過-openscap-和-satellite-實現系統合規檢查">透過 OpenSCAP 和 Satellite 實現系統合規檢查
+&lt;/h2>&lt;p>在 Red Hat Satellite 中，包含可以配置 OpenSCAP 項目提供的工具用於實施安全合規性檢查。有關 OpenSCAP 的更多信息，可以參見Guide to the Secure &lt;a class="link" href="https://static.open-scap.org/ssg-guides/ssg-rhel7-guide-cui.html#!" target="_blank" rel="noopener"
 >Configuration of Red Hat Enterprise Linux 7&lt;/a>
 和 &lt;a class="link" href="http://static.open-scap.org/ssg-guides/ssg-rhel8-guide-cui.html#!" target="_blank" rel="noopener"
 >Guide to the Secure Configuration of Red Hat Enterprise Linux 8&lt;/a>。通過 Satellite Web UI，可以在 Red Hat Satellite 管理的所有主機上進行計劃的合規性檢查和直接查看對應報告。&lt;/p>
@@ -205,8 +205,8 @@ title="YouTube Video"
 >
 &lt;/iframe>
 &lt;/div>
-&lt;h2 id="補充-openscap與資安合規生命週期">/補充/ OpenSCAP與資安合規生命週期&lt;/h2>
-&lt;p>為什麼需要系統安全檢查強化工具，OpenSCAP 可以完美的參與整個資安合規的生命週期：&lt;/p>
+&lt;h2 id="補充-openscap與資安合規生命週期">/補充/ OpenSCAP與資安合規生命週期
+&lt;/h2>&lt;p>為什麼需要系統安全檢查強化工具，OpenSCAP 可以完美的參與整個資安合規的生命週期：&lt;/p>
 &lt;ul>
 &lt;li>評估當前系統不合規的地方&lt;/li>
 &lt;li>將找到的問題，依重要性分類&lt;/li>
@@ -224,8 +224,8 @@ title="YouTube Video"
 &lt;li>資安規則細節項目太多，要做好整合不容易&lt;/li>
 &lt;li>人工檢測，即便做成 SOP，也不容易實踐&lt;/li>
 &lt;/ul>
-&lt;h2 id="reference">Reference&lt;/h2>
-&lt;ul>
+&lt;h2 id="reference">Reference
+&lt;/h2>&lt;ul>
 &lt;li>OpenSCAP on Github: &lt;a class="link" href="https://github.com/OpenSCAP/openscap" target="_blank" rel="noopener"
 >https://github.com/OpenSCAP/openscap&lt;/a>&lt;/li>
 &lt;li>&lt;a class="link" href="https://www.open-scap.org/" target="_blank" rel="noopener"
