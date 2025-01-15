@@ -2,23 +2,23 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Pages on Frank&#39;s Notes</title>
-        <link>https://blog.yylin.io/page/</link>
+        <link>http://localhost:1313/page/</link>
         <description>Recent content in Pages on Frank&#39;s Notes</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-tw</language>
-        <lastBuildDate>Sun, 13 Mar 2022 17:19:42 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/page/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 13 Mar 2022 17:19:42 +0800</lastBuildDate><atom:link href="http://localhost:1313/page/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>About</title>
-        <link>https://blog.yylin.io/about/</link>
+        <link>http://localhost:1313/about/</link>
         <pubDate>Sun, 13 Mar 2022 17:19:42 +0800</pubDate>
         
-        <guid>https://blog.yylin.io/about/</guid>
-        <description>&lt;h2 id=&#34;profile&#34;&gt;Profile&lt;/h2&gt;
-&lt;h2 id=&#34;specialist-solutions-architect-at-red-hat&#34;&gt;Specialist Solutions Architect at Red Hat&lt;/h2&gt;
-&lt;p&gt;Hello, 我是 YI-YANG (Frank) Lin&lt;/p&gt;
+        <guid>http://localhost:1313/about/</guid>
+        <description>&lt;h2 id=&#34;profile&#34;&gt;Profile
+&lt;/h2&gt;&lt;h2 id=&#34;specialist-solutions-architect-at-red-hat&#34;&gt;Specialist Solutions Architect at Red Hat
+&lt;/h2&gt;&lt;p&gt;Hello, 我是 YI-YANG (Frank) Lin&lt;/p&gt;
 &lt;p&gt;此 Blog 主要是用來「拆解」一些工作上接觸到或是開源專案，遇到技術疑問「復盤」思維脈絡。&lt;/p&gt;
 &lt;p&gt;並透過學習過程「筆記」文章，歡迎大家一起交流討論！&lt;/p&gt;
-&lt;h2 id=&#34;contact&#34;&gt;Contact&lt;/h2&gt;
-&lt;ul&gt;
+&lt;h2 id=&#34;contact&#34;&gt;Contact
+&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;GitHub: &lt;a class=&#34;link&#34; href=&#34;https://github.com/yylin1&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://github.com/yylin1&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Speaker Deck: &lt;a class=&#34;link&#34; href=&#34;https://speakerdeck.com/yylin1&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -28,26 +28,26 @@
         </item>
         <item>
         <title></title>
-        <link>https://blog.yylin.io/</link>
+        <link>http://localhost:1313/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>https://blog.yylin.io/</guid>
+        <guid>http://localhost:1313/</guid>
         <description></description>
         </item>
         <item>
         <title>Links</title>
-        <link>https://blog.yylin.io/links/</link>
+        <link>http://localhost:1313/links/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>https://blog.yylin.io/links/</guid>
+        <guid>http://localhost:1313/links/</guid>
         <description></description>
         </item>
         <item>
         <title>Search</title>
-        <link>https://blog.yylin.io/search/</link>
+        <link>http://localhost:1313/search/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>https://blog.yylin.io/search/</guid>
+        <guid>http://localhost:1313/search/</guid>
         <description></description>
         </item>
         

@@ -1,0 +1,846 @@
+<!doctype html>
+<html lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      id="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <title>
+      About | 
+    </title><meta
+  name="application-name"
+  content="" />
+<meta
+  name="apple-mobile-web-app-title"
+  content="" />
+
+
+  <meta name="title" content="About" />
+
+
+
+  <meta name="description" content="" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" /><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <link rel="stylesheet" href="/css/styles.css" />
+  
+
+
+
+
+
+<link href="/font/Oswald-VariableFont_wght/result.css" rel="stylesheet" />
+
+  
+    
+    
+    
+    <link href="/css/syntax.css" rel="stylesheet" />
+  <script
+  defer
+  src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.13.10/dist/cdn.min.js"></script>
+<script
+  defer
+  src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.13.10/dist/cdn.min.js"></script>
+<script
+  defer
+  src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.10/dist/cdn.min.js"></script>
+<script>
+
+  let _initDarkMode = localStorage.getItem("color-theme") === "dark" || (!("color-theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches);
+
+  if (_initDarkMode) {
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+  }
+
+  let _enableBgImg = "true" === "true";
+  let _lightbgImg = '\/images\/default\/bg.svg';
+  let _darkbgImg = '\/images\/default\/bg-dark.svg';
+
+  if (_enableBgImg) {
+    let _lightbg = new Image();
+    let _darkbg = new Image();
+    _lightbg.src = _lightbgImg;
+    _darkbg.src = _darkbgImg;
+  }
+
+  document.addEventListener("alpine:init", () => {
+    Alpine.store("darkMode", {
+      on: _initDarkMode,
+      animate: 'false' === 'false',
+
+      initDark: _initDarkMode,
+      initLight: !(_initDarkMode),
+      toDarkAnimate: false,
+      toLightAnimate: false,
+
+      toggle() {
+        this.on = !this.on;
+
+        this.toDarkAnimate = this.animate && this.on && this.initLight;
+        this.toLightAnimate = this.animate && !this.on && this.initDark;
+
+        if (this.on) {
+          document.documentElement.classList.add("dark");
+          localStorage.setItem("color-theme", "dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+          localStorage.setItem("color-theme", "light");
+        }
+
+      },
+    });
+
+    Alpine.store('bgImg', {
+      on: _enableBgImg,
+      light: _lightbgImg,
+      dark: _darkbgImg,
+      bgImg: Alpine.store('darkMode').on ? this.dark : this.light, 
+
+      init() {
+        if (!this.on) {
+          this.light = "";
+          this.dark = "";
+        }
+        this.updateBgImg();
+        
+        Alpine.effect(() => {
+          this.updateBgImg();
+        });
+      },
+
+      updateBgImg() {
+        if (this.on) {
+          const darkModeOn = Alpine.store('darkMode').on;
+          this.bgImg = darkModeOn ? this.dark : this.light;
+        } else {
+          this.bgImg = "";
+        }
+      }
+    });
+
+  });
+</script>
+
+
+
+    <style>
+      [x-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+
+  <body
+    x-ref="body"
+    x-data="{ 
+      shrink: window.scrollY > 10 ? true : false,
+      scrollY: 0,
+      bgOpen: $store.bgImg.on,
+    }"
+    @scroll.window="shrink = (window.scrollY > 10 ? true : false)"
+    :style="'background-image: ' + 'url(' + $store.bgImg.bgImg + ')'"
+    :class="{'bg-white': !bgOpen, 'dark:bg-gray-900': !bgOpen, 'bg-cover': bgOpen, 'bg-fixed': bgOpen, 'dark:delay-300': $store.darkMode.animate}"
+    class="-z-10 flex h-screen flex-col scroll-auto">
+    
+    
+    
+    <div
+      x-show="$store.darkMode.toDarkAnimate"
+      x-cloak
+      x-transition:enter="animate-bgScaleInTr"
+      x-transition:leave="animate-bgScaleOutTr"
+      :style="'background-image: ' + 'url(' + $store.bgImg.dark + ')'"
+      :class="{'bg-gray-900': !bgOpen,'dark:bg-gray-900': !bgOpen, 'bg-cover': bgOpen, 'bg-fixed': bgOpen}"
+      class="fixed left-0 top-0 -z-10 h-full w-full"></div>
+    
+    
+    
+    <div
+      x-show="$store.darkMode.toLightAnimate"
+      x-cloak
+      x-transition:enter="animate-bgScaleOutTr"
+      x-transition:leave="animate-bgScaleInTr"
+      x-init="$watch(
+        '$store.darkMode.toLightAnimate', (value) => {
+          if (bgOpen) {
+            $el.style.backgroundImage = 'url(' + $store.bgImg.dark + ')'
+            if (value) {
+              setTimeout(() => {
+                $el.style.backgroundImage = 'url(' + $store.bgImg.light + ')'
+              }, 300)
+            } 
+          } else {
+            $el.classList.remove('bg-white');
+            $el.classList.add('bg-gray-900')
+            if (value) {
+              setTimeout(()=>{
+                $el.classList.remove('bg-gray-900');
+                $el.classList.add('bg-white')
+              }, 300)
+            } 
+          }
+        }
+      )"
+      :style="'background-image: ' + 'url(' + $store.bgImg.dark + ')'"
+      :class="{'bg-gray-900': !bgOpen,'dark:bg-gray-900': !bgOpen, 'bg-cover': bgOpen, 'bg-fixed': bgOpen}"
+      class="fixed left-0 top-0 -z-10 h-full w-full"></div><header x-data="{ isMobile: false }" class="z-40 h-38 w-full flex-shrink-0">
+  <nav
+    id="nav"
+    :class="{ 'h-25': shrink, 'h-38': !shrink, 'shadow-md': shrink, 'bg-white/85': shrink, 'dark:bg-gray-900/85': shrink, 'backdrop-blur-md': shrink}"
+    class="fixed inset-0 mx-auto flex h-38 items-center justify-between px-4 transition-all duration-500 ease-in-out"
+    aria-label="Global">
+    <div
+      class="mx-auto flex w-screen flex-wrap items-center justify-between place-self-center object-center px-1 md:w-[1000px] md:px-4">
+      <div class="flex lg:flex-1"><a x-data href="/" class="p-1.5">
+  <span class="sr-only"></span>
+  
+  
+  
+
+
+  <div class="w-[130px]">
+    
+    <img
+      x-cloak
+      x-show="!$store.darkMode.on"
+      src=""
+      class="h-[56px]"
+      alt="Logo" />
+    
+    <img
+      x-cloak
+      x-show="$store.darkMode.on"
+      src=""
+      class="h-[56px]"
+      alt="Logo" />
+  </div></a>
+</div>
+
+      <div class="hidden lg:flex lg:gap-x-6">
+        
+  
+    <a
+      href="/_index.zh-tw/"
+      class="hs-menus text-sm font-semibold leading-6 text-gray-900 hover:text-[--hs-text-color-hover] dark:text-white"
+      >Home</a
+    >
+  
+
+  
+    <a
+      href="/page/about/"
+      class="hs-menus text-sm font-semibold leading-6 text-gray-900 hover:text-[--hs-text-color-hover] dark:text-white"
+      >About</a
+    >
+  
+
+  
+    <a
+      href="/archives/"
+      class="hs-menus text-sm font-semibold leading-6 text-gray-900 hover:text-[--hs-text-color-hover] dark:text-white"
+      >Archives</a
+    >
+  
+
+  
+    <a
+      href="/page/search/"
+      class="hs-menus text-sm font-semibold leading-6 text-gray-900 hover:text-[--hs-text-color-hover] dark:text-white"
+      >Search</a
+    >
+  
+
+  
+    <a
+      href="/page/links/links/"
+      class="hs-menus text-sm font-semibold leading-6 text-gray-900 hover:text-[--hs-text-color-hover] dark:text-white"
+      >Links</a
+    >
+  
+
+
+
+  <div x-data="{ isOpen: false }" class="hs-menus relative">
+    <button
+      type="button"
+      @click="isOpen = !isOpen"
+      class="group flex items-center text-sm font-semibold leading-6 text-gray-900 hover:text-[--hs-text-color-hover] dark:text-white"
+      aria-expanded="false">
+      
+      <svg
+        class="size-4 flex-none transition"
+        :class="{ 'rotate-180': isOpen }"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        aria-hidden="true">
+        <path
+          fill-rule="evenodd"
+          d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+          clip-rule="evenodd" />
+      </svg>
+    </button>
+
+    <div
+      x-show="isOpen"
+      x-cloak
+      x-transition:enter="transition ease-out duration-200"
+      x-transition:enter-start="opacity-0 translate-y-1"
+      x-transition:enter-end="opacity-100 translate-y-0"
+      x-transition:leave="transition ease-in duration-150"
+      x-transition:leave-start="opacity-100 translate-y-0"
+      x-transition:leave-end="opacity-0 translate-y-1"
+      @click.away="isOpen = false"
+      @scroll.window.away="isOpen = false"
+      class="absolute -left-6 top-full z-10 mt-3 w-screen max-w-40 overflow-hidden rounded-xl bg-white/95 shadow-lg ring-1 ring-gray-900/5 backdrop-blur-xl dark:bg-gray-800/95">
+      <div class="p-2">
+        
+          <div
+            class="relative rounded-lg px-4 py-2.5 text-sm leading-6 hover:bg-gray-300/30 hover:backdrop-blur-md">
+            <a
+              href="//localhost:1313/categories/ansible-automation-platform/"
+              class="block font-semibold text-gray-900 hover:text-[--hs-text-color-hover] dark:text-gray-400 dark:hover:text-white">
+              Ansible Automation Platform
+              <span class="absolute inset-0"></span>
+            </a>
+          </div>
+        
+          <div
+            class="relative rounded-lg px-4 py-2.5 text-sm leading-6 hover:bg-gray-300/30 hover:backdrop-blur-md">
+            <a
+              href="//localhost:1313/categories/ci/cd/"
+              class="block font-semibold text-gray-900 hover:text-[--hs-text-color-hover] dark:text-gray-400 dark:hover:text-white">
+              CI/CD
+              <span class="absolute inset-0"></span>
+            </a>
+          </div>
+        
+          <div
+            class="relative rounded-lg px-4 py-2.5 text-sm leading-6 hover:bg-gray-300/30 hover:backdrop-blur-md">
+            <a
+              href="//localhost:1313/categories/cloud-service-provider/"
+              class="block font-semibold text-gray-900 hover:text-[--hs-text-color-hover] dark:text-gray-400 dark:hover:text-white">
+              Cloud Service Provider
+              <span class="absolute inset-0"></span>
+            </a>
+          </div>
+        
+          <div
+            class="relative rounded-lg px-4 py-2.5 text-sm leading-6 hover:bg-gray-300/30 hover:backdrop-blur-md">
+            <a
+              href="//localhost:1313/categories/community/"
+              class="block font-semibold text-gray-900 hover:text-[--hs-text-color-hover] dark:text-gray-400 dark:hover:text-white">
+              Community
+              <span class="absolute inset-0"></span>
+            </a>
+          </div>
+        
+          <div
+            class="relative rounded-lg px-4 py-2.5 text-sm leading-6 hover:bg-gray-300/30 hover:backdrop-blur-md">
+            <a
+              href="//localhost:1313/categories/gpu/"
+              class="block font-semibold text-gray-900 hover:text-[--hs-text-color-hover] dark:text-gray-400 dark:hover:text-white">
+              GPU
+              <span class="absolute inset-0"></span>
+            </a>
+          </div>
+        
+          <div
+            class="relative rounded-lg px-4 py-2.5 text-sm leading-6 hover:bg-gray-300/30 hover:backdrop-blur-md">
+            <a
+              href="//localhost:1313/categories/openshift/"
+              class="block font-semibold text-gray-900 hover:text-[--hs-text-color-hover] dark:text-gray-400 dark:hover:text-white">
+              OpenShift
+              <span class="absolute inset-0"></span>
+            </a>
+          </div>
+        
+          <div
+            class="relative rounded-lg px-4 py-2.5 text-sm leading-6 hover:bg-gray-300/30 hover:backdrop-blur-md">
+            <a
+              href="//localhost:1313/categories/retrospect/"
+              class="block font-semibold text-gray-900 hover:text-[--hs-text-color-hover] dark:text-gray-400 dark:hover:text-white">
+              Retrospect
+              <span class="absolute inset-0"></span>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+      </div>
+
+      <div class="flex flex-1 items-center justify-end">
+<div class="flex size-10">
+  <button
+    type="button"
+    @click="$store.darkMode.toggle()"
+    class="group rounded-full p-2.5 text-sm text-black transition hover:bg-white hover:shadow-[0_7px_29px_0_rgba(100,100,111,0.2)] dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:shadow-[0_5px_15px_rgba(0,0,0,0.35)]">
+    <svg
+      x-show="!$store.darkMode.on"
+      x-cloak
+      class="size-5"
+      fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 -960 960 960">
+      <path
+        d="M480-120q-150 0-255-105T120-480q0-150 105-255t255-105q14 0 27.5 1t26.5 3q-41 29-65.5 75.5T444-660q0 90 63 153t153 63q55 0 101-24.5t75-65.5q2 13 3 26.5t1 27.5q0 150-105 255T480-120Zm0-80q88 0 158-48.5T740-375q-20 5-40 8t-40 3q-123 0-209.5-86.5T364-660q0-20 3-40t8-40q-78 32-126.5 102T200-480q0 116 82 198t198 82Zm-10-270Z" />
+    </svg>
+
+    <svg
+      x-show="$store.darkMode.on"
+      x-cloak
+      class="size-5"
+      fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 -960 960 960">
+      <path
+        d="M480-360q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35Zm0 80q-83 0-141.5-58.5T280-480q0-83 58.5-141.5T480-680q83 0 141.5 58.5T680-480q0 83-58.5 141.5T480-280ZM200-440H40v-80h160v80Zm720 0H760v-80h160v80ZM440-760v-160h80v160h-80Zm0 720v-160h80v160h-80ZM256-650l-101-97 57-59 96 100-52 56Zm492 496-97-101 53-55 101 97-57 59Zm-98-550 97-101 59 57-100 96-56-52ZM154-212l101-97 55 53-97 101-59-57Zm326-268Z" />
+    </svg>
+  </button>
+</div>
+
+<div class="flex lg:hidden">
+          <button
+            type="button"
+            @click="isMobile = true; scrollY = window.scrollY; document.body.style.overflow = 'hidden';"
+            class="group inline-flex items-center justify-center rounded-full p-2.5 text-center text-black transition hover:bg-white hover:shadow-[0_7px_29px_0_rgba(100,100,111,0.2)] dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:shadow-[0_5px_15px_rgba(0,0,0,0.35)]">
+            <span class="sr-only">Open main menu</span>
+            <svg
+              class="size-5"
+              viewBox="0 0 1024 1024"
+              version="1.1"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+              p-id="9670">
+              <path
+                d="M904 160H120c-4.4 0-8 3.6-8 8v64c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-64c0-4.4-3.6-8-8-8zM904 784H120c-4.4 0-8 3.6-8 8v64c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-64c0-4.4-3.6-8-8-8zM904 472H120c-4.4 0-8 3.6-8 8v64c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-64c0-4.4-3.6-8-8-8z"
+                p-id="9671"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  
+  <div x-show="isMobile" x-cloak role="dialog" aria-modal="true">
+    <div class="fixed inset-0 z-10"></div>
+    <div
+      class="fixed inset-0 z-10 w-full overflow-y-auto bg-white/85 p-4 backdrop-blur-md dark:bg-gray-900/85 sm:ring-1 sm:ring-gray-900/10">
+      <div class="mx-auto mt-10 flex w-full items-center justify-center"><a x-data href="/" class="p-1.5">
+  <span class="sr-only"></span>
+  
+  
+  
+
+
+  <div class="w-[130px]">
+    
+    <img
+      x-cloak
+      x-show="!$store.darkMode.on"
+      src=""
+      class="h-[56px]"
+      alt="Logo" />
+    
+    <img
+      x-cloak
+      x-show="$store.darkMode.on"
+      src=""
+      class="h-[56px]"
+      alt="Logo" />
+  </div></a>
+</div>
+
+      <div class="mt-6 flow-root">
+        <div class="-my-6 divide-y divide-gray-500/10">
+          <div class="flex flex-col space-y-2 py-6">
+            
+  
+    <a
+      href="/_index.zh-tw/"
+      class="hs-menus w-full rounded-lg px-3 py-2 text-center text-base font-semibold leading-7 text-gray-900 hover:text-[--hs-text-color-hover] dark:text-white"
+      >Home</a
+    >
+  
+
+  
+    <a
+      href="/page/about/"
+      class="hs-menus w-full rounded-lg px-3 py-2 text-center text-base font-semibold leading-7 text-gray-900 hover:text-[--hs-text-color-hover] dark:text-white"
+      >About</a
+    >
+  
+
+  
+    <a
+      href="/archives/"
+      class="hs-menus w-full rounded-lg px-3 py-2 text-center text-base font-semibold leading-7 text-gray-900 hover:text-[--hs-text-color-hover] dark:text-white"
+      >Archives</a
+    >
+  
+
+  
+    <a
+      href="/page/search/"
+      class="hs-menus w-full rounded-lg px-3 py-2 text-center text-base font-semibold leading-7 text-gray-900 hover:text-[--hs-text-color-hover] dark:text-white"
+      >Search</a
+    >
+  
+
+  
+    <a
+      href="/page/links/links/"
+      class="hs-menus w-full rounded-lg px-3 py-2 text-center text-base font-semibold leading-7 text-gray-900 hover:text-[--hs-text-color-hover] dark:text-white"
+      >Links</a
+    >
+  
+
+
+
+  <div x-data="{ subMenuOpen: false }" class="hs-menus">
+    <button
+      @click="subMenuOpen = !subMenuOpen"
+      type="button"
+      :class="{ 'text-[--hs-text-color-hover]': subMenuOpen, 'text-gray-900': !subMenuOpen, 'dark:text-[--hs-text-color-hover]': subMenuOpen, 'dark:text-white': !subMenuOpen }"
+      class="group flex w-full flex-col items-center justify-center rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 hover:text-[--hs-text-color-hover] dark:text-white"
+      aria-controls="disclosure-1"
+      aria-expanded="false">
+      
+      <svg
+        :class="{ 'rotate-180': subMenuOpen }"
+        class="size-4 flex-none transition"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        aria-hidden="true">
+        <path
+          fill-rule="evenodd"
+          d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+          clip-rule="evenodd" />
+      </svg>
+    </button>
+
+    <div
+      x-show="subMenuOpen"
+      x-cloak
+      x-collapse
+      class="flex flex-col space-y-1"
+      id="disclosure-1">
+      
+        <a
+          href="//localhost:1313/categories/ansible-automation-platform/"
+          class="block rounded-lg px-3 py-2 text-center text-sm font-semibold leading-7 text-gray-900 hover:text-[--hs-text-color-hover] dark:text-white"
+          >Ansible Automation Platform</a
+        >
+      
+        <a
+          href="//localhost:1313/categories/ci/cd/"
+          class="block rounded-lg px-3 py-2 text-center text-sm font-semibold leading-7 text-gray-900 hover:text-[--hs-text-color-hover] dark:text-white"
+          >CI/CD</a
+        >
+      
+        <a
+          href="//localhost:1313/categories/cloud-service-provider/"
+          class="block rounded-lg px-3 py-2 text-center text-sm font-semibold leading-7 text-gray-900 hover:text-[--hs-text-color-hover] dark:text-white"
+          >Cloud Service Provider</a
+        >
+      
+        <a
+          href="//localhost:1313/categories/community/"
+          class="block rounded-lg px-3 py-2 text-center text-sm font-semibold leading-7 text-gray-900 hover:text-[--hs-text-color-hover] dark:text-white"
+          >Community</a
+        >
+      
+        <a
+          href="//localhost:1313/categories/gpu/"
+          class="block rounded-lg px-3 py-2 text-center text-sm font-semibold leading-7 text-gray-900 hover:text-[--hs-text-color-hover] dark:text-white"
+          >GPU</a
+        >
+      
+        <a
+          href="//localhost:1313/categories/openshift/"
+          class="block rounded-lg px-3 py-2 text-center text-sm font-semibold leading-7 text-gray-900 hover:text-[--hs-text-color-hover] dark:text-white"
+          >OpenShift</a
+        >
+      
+        <a
+          href="//localhost:1313/categories/retrospect/"
+          class="block rounded-lg px-3 py-2 text-center text-sm font-semibold leading-7 text-gray-900 hover:text-[--hs-text-color-hover] dark:text-white"
+          >Retrospect</a
+        >
+      
+
+    </div>
+  </div>
+
+
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-14 flex h-12 w-full flex-col items-center justify-center">
+        <button
+          @click="isMobile = false; document.body.style.overflow = ''; window.scrollTo(0, scrollY);"
+          class="buttom-circle flex h-12 w-12 items-center justify-center rounded-full bg-white/85 p-3 text-gray-900 backdrop-blur-md  hover:text-gray-500 dark:bg-gray-800/85 dark:text-gray-200">
+          <span class="sr-only">Close mobile menu</span>
+          <svg
+            fill="currentColor"
+            class="h-4 w-4"
+            viewBox="0 0 1024 1024"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            p-id="5967">
+            <path
+              d="M143.616 47.104l830.08 830.08c26.24 26.24 26.24 69.888 0 96.128-26.24 26.24-69.888 26.24-96.128 0L47.488 143.232c-17.536-26.24-17.536-69.888 0-96.128 26.24-26.24 69.888-26.24 96.128 0z m0 0"
+              p-id="5968"></path>
+            <path
+              d="M982.528 143.232L152.32 973.312c-26.24 26.24-69.888 26.24-96.128 0-26.24-26.24-26.24-69.888 0-96.128L886.4 47.104c26.24-26.24 69.888-26.24 96.128 0 17.408 26.24 17.408 69.888 0 96.128z m0 0"
+              p-id="5969"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+  
+  
+
+  
+    <div id="hs-feature" class="h-60 w-full md:h-120">
+
+
+
+
+<div class="h-full w-full bg-[#f18788] text-center"></div>
+</div>
+  
+
+
+  <div
+    id="hs-content-container"
+    class="my-5 w-full rounded-b-lg px-5 md:px-10 lg:px-1">
+    <div
+      class="mx-auto flex max-w-screen-xl lg:grid lg:grid-flow-col lg:grid-cols-4 xl:grid-cols-5">
+      
+      <div
+  class="hidden lg:sticky lg:top-28 lg:mt-2 lg:flex lg:max-w-60 lg:flex-col lg:items-stretch lg:overflow-y-auto"></div>
+
+      
+      <div id="hs-container" class="mx-auto w-full lg:col-span-2 xl:col-span-3">
+        <div class="py-5 md:px-1 lg:px-5">
+          <div class="flex w-full flex-col">
+            <div
+              class="hs-content-meta flex flex-row flex-wrap items-center space-x-1 pb-2 pt-1 text-xs font-normal tracking-wide text-gray-500/90 dark:text-gray-500">
+              
+              <span class="hs-content-category flex flex-row gap-1">
+                
+              </span>
+            </div>
+            <div
+              id="hs-content-title"
+              class="hs-content-title py-1 text-start text-3xl font-bold tracking-wide text-black dark:text-white lg:text-4xl">
+              About
+            </div>
+
+            <div
+              class="hs-content-meta flex flex-row flex-wrap items-center space-x-1 pb-1 pt-3.5 text-xs font-extralight tracking-wide text-gray-500/90 dark:text-gray-600">
+              <span>2022/03/13</span>
+              <div
+                class="h-1 w-1 rounded-full bg-red-700 dark:bg-red-700/50"></div>
+              <span>20&nbsp;words</span>
+              <div
+                class="h-1 w-1 rounded-full bg-red-700 dark:bg-red-700/50"></div>
+              <span>1&nbsp;mins</span>
+              
+              
+            </div>
+          </div>
+
+          
+
+
+          <div
+            id="hs-content"
+            class="hs-content format mx-auto mt-2 max-w-none dark:format-invert md:format-base format-figure:flex format-figure:flex-col format-figure:items-center format-img:cursor-zoom-in dark:text-gray-300 lg:mt-11">
+            <h2 class="group head-tag" id="profile">Profile<a data-title-of-head class="group-hover:after:content-['__#'] no-underline hover:text-[--hs-text-color-hover]" href="#profile"></a></h2><h2 class="group head-tag" id="specialist-solutions-architect-at-red-hat">Specialist Solutions Architect at Red Hat<a data-title-of-head class="group-hover:after:content-['__#'] no-underline hover:text-[--hs-text-color-hover]" href="#specialist-solutions-architect-at-red-hat"></a></h2><p>Hello, 我是 YI-YANG (Frank) Lin</p>
+<p>此 Blog 主要是用來「拆解」一些工作上接觸到或是開源專案，遇到技術疑問「復盤」思維脈絡。</p>
+<p>並透過學習過程「筆記」文章，歡迎大家一起交流討論！</p>
+<h2 class="group head-tag" id="contact">Contact<a data-title-of-head class="group-hover:after:content-['__#'] no-underline hover:text-[--hs-text-color-hover]" href="#contact"></a></h2><ul>
+<li>GitHub: 
+<a
+  href="https://github.com/yylin1"
+  
+    target="_blank"
+  
+  >https://github.com/yylin1</a
+>
+</li>
+<li>Speaker Deck: 
+<a
+  href="https://speakerdeck.com/yylin1"
+  
+    target="_blank"
+  
+  >https://speakerdeck.com/yylin1</a
+>
+</li>
+</ul>
+
+          </div>
+
+          <div class="hs-content-meta pb-5 pt-3">
+            
+            <span
+              class="hs-content-tag flex flex-row flex-wrap justify-start gap-2 pl-1 text-sm font-normal tracking-wide text-gray-500/90 dark:text-gray-500">
+              
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      
+
+    </div>
+
+    
+    
+
+  </div>
+
+  
+  
+    <button
+      x-data="{
+        show: false,
+        init() {
+          window.addEventListener('scroll', () => {
+            this.show = window.scrollY > 100
+          })
+        }
+      }"
+      x-show="show"
+      @click="window.scrollTo({ top: 0, behavior: 'smooth' })"
+      x-cloak
+      type="button"
+      class="buttom-circle fixed bottom-24 end-8 flex h-14 w-14 items-center justify-center bg-white/85 text-gray-500 backdrop-blur-md dark:bg-gray-800/85 dark:text-gray-500 md:end-20">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="size-6"
+        fill="currentColor"
+        viewBox="0 -960 960 960">
+        <path
+          d="M440-160v-487L216-423l-56-57 320-320 320 320-56 57-224-224v487h-80Z" />
+      </svg>
+      <span class="sr-only">Go to Top</span>
+    </button>
+  
+
+
+
+    <footer
+  id="footer"
+  x-ref="footer"
+  class="hs-footer mx-auto mt-5 flex flex-col items-center gap-y-3 py-6 text-xs text-gray-700 dark:text-gray-500">
+  <span class="h-px w-full max-w-4xl bg-gray-700 dark:bg-gray-600"></span>
+
+  <div class="flex h-5 space-x-3">
+    
+
+
+
+  </div>
+
+  
+  
+  <span x-data class="flex flex-row items-center justify-center"
+    >Powered by <a href="https://gohugo.io/" aria-label="hugo link">
+    <img
+    src="/images/default/hugo-logo-wide.svg"
+    alt="Hugo"
+    class="mx-1 h-3" />
+    </a> & <a
+    href="https://github.com/mrhelloboy/seven"
+    aria-label="The github address of seven theme">
+    <img
+    x-show="!$store.darkMode.on"
+    x-cloak
+    id="footer-theme-light-logo"
+    src="/images/default/seven-logo.svg"
+    alt="seven theme logo"
+    class="mx-1 h-5" />
+
+    <img
+    x-show="$store.darkMode.on"
+    x-cloak
+    id="footer-theme-dark-logo"
+    src="/images/default/seven-logo-dark.svg"
+    alt="seven theme logo"
+    class="mx-1 h-5" />
+    </a></span
+  >
+
+  <span class="flex flex-col items-center justify-between space-y-3">
+    &copy;
+    
+    
+    
+       -
+      2025
+    
+
+    
+    All Rights Reserved
+  </span>
+</footer>
+
+  
+  
+  <script src="/js/toc.js"></script>
+
+  
+  
+  <script src="/js/zoom-img.js" defer></script>
+
+  
+  
+  <script src="/js/link-to-top.js" defer></script>
+
+  
+    
+    
+    <script src="/js/code-copy.js" defer></script>
+  
+
+
+  <script>
+    function toComment() {
+      window.scrollTo({
+        top: document.getElementById("hs-comment").offsetTop - 100,
+        behavior: "smooth",
+      });
+    }
+  </script>
+
+</body>
+</html>

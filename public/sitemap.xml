@@ -2,158 +2,165 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://blog.yylin.io/</loc>
-    <lastmod>2023-12-30T13:33:28+08:00</lastmod>
+    <loc>http://localhost:1313/</loc>
+    <lastmod>2025-01-16T01:23:08+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/year/2023-retrospect-and-prospect/</loc>
-    <lastmod>2023-12-30T13:33:28+08:00</lastmod>
+    <loc>http://localhost:1313/post/my-first-post/</loc>
+    <lastmod>2025-01-16T01:23:08+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/categories/</loc>
-    <lastmod>2023-12-30T13:33:28+08:00</lastmod>
+    <loc>http://localhost:1313/post/</loc>
+    <lastmod>2025-01-16T01:23:08+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/post/</loc>
-    <lastmod>2023-12-30T13:33:28+08:00</lastmod>
+    <loc>http://localhost:1313/post/hello/</loc>
+    <lastmod>2024-01-02T12:13:14+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/tags/retrospect/</loc>
-    <lastmod>2023-12-30T13:33:28+08:00</lastmod>
+    <loc>http://localhost:1313/year/2023-retrospect-and-prospect/</loc>
+    <lastmod>2023-12-31T13:33:28+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/categories/retrospect/</loc>
-    <lastmod>2023-12-30T13:33:28+08:00</lastmod>
+    <loc>http://localhost:1313/categories/</loc>
+    <lastmod>2023-12-31T13:33:28+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/tags/</loc>
-    <lastmod>2023-12-30T13:33:28+08:00</lastmod>
+    <loc>http://localhost:1313/tags/retrospect/</loc>
+    <lastmod>2023-12-31T13:33:28+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/year/2022-retrospect-and-prospect/</loc>
+    <loc>http://localhost:1313/categories/retrospect/</loc>
+    <lastmod>2023-12-31T13:33:28+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2023-12-31T13:33:28+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/year/2022-retrospect-and-prospect/</loc>
     <lastmod>2022-12-31T13:33:28+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/tags/ansible-automation-platform/</loc>
+    <loc>http://localhost:1313/tags/ansible-automation-platform/</loc>
     <lastmod>2022-12-19T12:00:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/categories/ansible-automation-platform/</loc>
+    <loc>http://localhost:1313/categories/ansible-automation-platform/</loc>
     <lastmod>2022-12-19T12:00:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/ansible/ansible-tower-upgrade-to-ansible-automation-platform-2/</loc>
+    <loc>http://localhost:1313/ansible/ansible-tower-upgrade-to-ansible-automation-platform-2/</loc>
     <lastmod>2022-12-19T12:00:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/ansible/twgcb/</loc>
+    <loc>http://localhost:1313/ansible/twgcb/</loc>
     <lastmod>2022-11-19T12:00:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/ansible/twgcb/</loc>
+    <loc>http://localhost:1313/ansible/twgcb/</loc>
     <lastmod>2022-11-19T12:00:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/openshift/security-zones/</loc>
+    <loc>http://localhost:1313/openshift/security-zones/</loc>
     <lastmod>2022-09-27T12:00:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/tags/openshift/</loc>
+    <loc>http://localhost:1313/tags/openshift/</loc>
     <lastmod>2022-09-27T12:00:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/categories/openshift/</loc>
+    <loc>http://localhost:1313/categories/openshift/</loc>
     <lastmod>2022-09-27T12:00:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/ansible/openscap/</loc>
+    <loc>http://localhost:1313/ansible/openscap/</loc>
     <lastmod>2022-09-25T12:00:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/openshift/sno-installer/</loc>
+    <loc>http://localhost:1313/openshift/sno-installer/</loc>
     <lastmod>2022-09-24T21:40:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/categories/community/</loc>
+    <loc>http://localhost:1313/categories/community/</loc>
     <lastmod>2022-08-28T03:40:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/tags/coscup/</loc>
+    <loc>http://localhost:1313/tags/coscup/</loc>
     <lastmod>2022-08-28T03:40:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/community/coscup2022/</loc>
+    <loc>http://localhost:1313/community/coscup2022/</loc>
     <lastmod>2022-08-28T03:40:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/tags/kcd/</loc>
+    <loc>http://localhost:1313/tags/kcd/</loc>
     <lastmod>2022-08-28T03:40:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/tags/gpu/</loc>
+    <loc>http://localhost:1313/tags/gpu/</loc>
     <lastmod>2022-06-28T21:40:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/categories/gpu/</loc>
+    <loc>http://localhost:1313/categories/gpu/</loc>
     <lastmod>2022-06-28T21:40:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/openshift/gpu-utilization/</loc>
+    <loc>http://localhost:1313/openshift/gpu-utilization/</loc>
     <lastmod>2022-06-28T21:40:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/tags/acm/</loc>
+    <loc>http://localhost:1313/tags/acm/</loc>
     <lastmod>2022-06-25T09:40:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/tags/argocd/</loc>
+    <loc>http://localhost:1313/tags/argocd/</loc>
     <lastmod>2022-06-25T09:40:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/tags/cicd/</loc>
+    <loc>http://localhost:1313/tags/cicd/</loc>
     <lastmod>2022-06-25T09:40:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/categories/cloud-service-provider/</loc>
+    <loc>http://localhost:1313/categories/cloud-service-provider/</loc>
     <lastmod>2022-06-25T09:40:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/openshift/argocd-and-acm/</loc>
+    <loc>http://localhost:1313/openshift/argocd-and-acm/</loc>
     <lastmod>2022-06-25T09:40:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/openshift/pipelines/</loc>
+    <loc>http://localhost:1313/categories/ci/cd/</loc>
     <lastmod>2022-06-21T21:40:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/tags/tekton/</loc>
+    <loc>http://localhost:1313/openshift/pipelines/</loc>
     <lastmod>2022-06-21T21:40:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/tags/aro/</loc>
+    <loc>http://localhost:1313/tags/tekton/</loc>
+    <lastmod>2022-06-21T21:40:40+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/aro/</loc>
     <lastmod>2022-03-13T21:40:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/tags/azure/</loc>
+    <loc>http://localhost:1313/tags/azure/</loc>
     <lastmod>2022-03-13T21:40:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/openshift/aro/</loc>
+    <loc>http://localhost:1313/openshift/aro/</loc>
     <lastmod>2022-03-13T21:40:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/about/</loc>
+    <loc>http://localhost:1313/about/</loc>
     <lastmod>2022-03-13T17:19:42+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/page/</loc>
+    <loc>http://localhost:1313/page/</loc>
     <lastmod>2022-03-13T17:19:42+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/openshift/mirror-registry-for-ocp4-install/</loc>
+    <loc>http://localhost:1313/openshift/mirror-registry-for-ocp4-install/</loc>
     <lastmod>2022-03-07T00:53:25+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/tags/registry/</loc>
+    <loc>http://localhost:1313/tags/registry/</loc>
     <lastmod>2022-03-07T00:53:25+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/openshift/gpu-operator/</loc>
+    <loc>http://localhost:1313/openshift/gpu-operator/</loc>
     <lastmod>2022-02-28T21:40:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/year/2021-retrospect-and-prospect/</loc>
+    <loc>http://localhost:1313/year/2021-retrospect-and-prospect/</loc>
     <lastmod>2021-12-31T13:33:28+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/tags/aws/</loc>
+    <loc>http://localhost:1313/tags/aws/</loc>
     <lastmod>2021-09-30T14:54:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/openshift/rosa/</loc>
+    <loc>http://localhost:1313/openshift/rosa/</loc>
     <lastmod>2021-09-30T14:54:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/tags/rosa/</loc>
+    <loc>http://localhost:1313/tags/rosa/</loc>
     <lastmod>2021-09-30T14:54:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/openshift/install-troubleshooting/</loc>
+    <loc>http://localhost:1313/openshift/install-troubleshooting/</loc>
     <lastmod>2021-09-29T00:53:25+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/tags/troubleshooting/</loc>
+    <loc>http://localhost:1313/tags/troubleshooting/</loc>
     <lastmod>2021-09-29T00:53:25+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/tags/ocp-4.x/</loc>
+    <loc>http://localhost:1313/tags/ocp-4.x/</loc>
     <lastmod>2021-09-26T14:54:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/openshift/ocp4-install/</loc>
+    <loc>http://localhost:1313/openshift/ocp4-install/</loc>
     <lastmod>2021-09-26T14:54:40+08:00</lastmod>
   </url><url>
-    <loc>https://blog.yylin.io/</loc>
+    <loc>http://localhost:1313/</loc>
   </url><url>
-    <loc>https://blog.yylin.io/archives/</loc>
+    <loc>http://localhost:1313/archives/</loc>
   </url><url>
-    <loc>https://blog.yylin.io/categories/ci/cd/</loc>
+    <loc>http://localhost:1313/links/</loc>
   </url><url>
-    <loc>https://blog.yylin.io/links/</loc>
-  </url><url>
-    <loc>https://blog.yylin.io/search/</loc>
+    <loc>http://localhost:1313/search/</loc>
   </url>
 </urlset>

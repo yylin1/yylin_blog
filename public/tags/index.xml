@@ -2,144 +2,144 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Tags on Frank&#39;s Notes</title>
-        <link>https://blog.yylin.io/tags/</link>
+        <link>http://localhost:1313/tags/</link>
         <description>Recent content in Tags on Frank&#39;s Notes</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-tw</language>
-        <lastBuildDate>Sat, 30 Dec 2023 13:33:28 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 31 Dec 2023 13:33:28 +0800</lastBuildDate><atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Retrospect</title>
-        <link>https://blog.yylin.io/tags/retrospect/</link>
-        <pubDate>Sat, 30 Dec 2023 13:33:28 +0800</pubDate>
+        <link>http://localhost:1313/tags/retrospect/</link>
+        <pubDate>Sun, 31 Dec 2023 13:33:28 +0800</pubDate>
         
-        <guid>https://blog.yylin.io/tags/retrospect/</guid>
+        <guid>http://localhost:1313/tags/retrospect/</guid>
         <description></description>
         </item>
         <item>
         <title>Ansible Automation Platform</title>
-        <link>https://blog.yylin.io/tags/ansible-automation-platform/</link>
+        <link>http://localhost:1313/tags/ansible-automation-platform/</link>
         <pubDate>Mon, 19 Dec 2022 12:00:40 +0800</pubDate>
         
-        <guid>https://blog.yylin.io/tags/ansible-automation-platform/</guid>
+        <guid>http://localhost:1313/tags/ansible-automation-platform/</guid>
         <description></description>
         </item>
         <item>
         <title>OpenShift</title>
-        <link>https://blog.yylin.io/tags/openshift/</link>
+        <link>http://localhost:1313/tags/openshift/</link>
         <pubDate>Tue, 27 Sep 2022 12:00:40 +0800</pubDate>
         
-        <guid>https://blog.yylin.io/tags/openshift/</guid>
+        <guid>http://localhost:1313/tags/openshift/</guid>
         <description></description>
         </item>
         <item>
         <title>COSCUP</title>
-        <link>https://blog.yylin.io/tags/coscup/</link>
+        <link>http://localhost:1313/tags/coscup/</link>
         <pubDate>Sun, 28 Aug 2022 03:40:40 +0800</pubDate>
         
-        <guid>https://blog.yylin.io/tags/coscup/</guid>
+        <guid>http://localhost:1313/tags/coscup/</guid>
         <description></description>
         </item>
         <item>
         <title>KCD</title>
-        <link>https://blog.yylin.io/tags/kcd/</link>
+        <link>http://localhost:1313/tags/kcd/</link>
         <pubDate>Sun, 28 Aug 2022 03:40:40 +0800</pubDate>
         
-        <guid>https://blog.yylin.io/tags/kcd/</guid>
+        <guid>http://localhost:1313/tags/kcd/</guid>
         <description></description>
         </item>
         <item>
         <title>GPU</title>
-        <link>https://blog.yylin.io/tags/gpu/</link>
+        <link>http://localhost:1313/tags/gpu/</link>
         <pubDate>Tue, 28 Jun 2022 21:40:40 +0800</pubDate>
         
-        <guid>https://blog.yylin.io/tags/gpu/</guid>
+        <guid>http://localhost:1313/tags/gpu/</guid>
         <description></description>
         </item>
         <item>
         <title>ACM</title>
-        <link>https://blog.yylin.io/tags/acm/</link>
+        <link>http://localhost:1313/tags/acm/</link>
         <pubDate>Sat, 25 Jun 2022 09:40:40 +0800</pubDate>
         
-        <guid>https://blog.yylin.io/tags/acm/</guid>
+        <guid>http://localhost:1313/tags/acm/</guid>
         <description></description>
         </item>
         <item>
         <title>ArgoCD</title>
-        <link>https://blog.yylin.io/tags/argocd/</link>
+        <link>http://localhost:1313/tags/argocd/</link>
         <pubDate>Sat, 25 Jun 2022 09:40:40 +0800</pubDate>
         
-        <guid>https://blog.yylin.io/tags/argocd/</guid>
+        <guid>http://localhost:1313/tags/argocd/</guid>
         <description></description>
         </item>
         <item>
         <title>CICD</title>
-        <link>https://blog.yylin.io/tags/cicd/</link>
+        <link>http://localhost:1313/tags/cicd/</link>
         <pubDate>Sat, 25 Jun 2022 09:40:40 +0800</pubDate>
         
-        <guid>https://blog.yylin.io/tags/cicd/</guid>
+        <guid>http://localhost:1313/tags/cicd/</guid>
         <description></description>
         </item>
         <item>
         <title>Tekton</title>
-        <link>https://blog.yylin.io/tags/tekton/</link>
+        <link>http://localhost:1313/tags/tekton/</link>
         <pubDate>Tue, 21 Jun 2022 21:40:40 +0800</pubDate>
         
-        <guid>https://blog.yylin.io/tags/tekton/</guid>
+        <guid>http://localhost:1313/tags/tekton/</guid>
         <description></description>
         </item>
         <item>
         <title>ARO</title>
-        <link>https://blog.yylin.io/tags/aro/</link>
+        <link>http://localhost:1313/tags/aro/</link>
         <pubDate>Sun, 13 Mar 2022 21:40:40 +0800</pubDate>
         
-        <guid>https://blog.yylin.io/tags/aro/</guid>
+        <guid>http://localhost:1313/tags/aro/</guid>
         <description></description>
         </item>
         <item>
         <title>Azure</title>
-        <link>https://blog.yylin.io/tags/azure/</link>
+        <link>http://localhost:1313/tags/azure/</link>
         <pubDate>Sun, 13 Mar 2022 21:40:40 +0800</pubDate>
         
-        <guid>https://blog.yylin.io/tags/azure/</guid>
+        <guid>http://localhost:1313/tags/azure/</guid>
         <description></description>
         </item>
         <item>
         <title>Registry</title>
-        <link>https://blog.yylin.io/tags/registry/</link>
+        <link>http://localhost:1313/tags/registry/</link>
         <pubDate>Mon, 07 Mar 2022 00:53:25 +0800</pubDate>
         
-        <guid>https://blog.yylin.io/tags/registry/</guid>
+        <guid>http://localhost:1313/tags/registry/</guid>
         <description></description>
         </item>
         <item>
         <title>AWS</title>
-        <link>https://blog.yylin.io/tags/aws/</link>
+        <link>http://localhost:1313/tags/aws/</link>
         <pubDate>Thu, 30 Sep 2021 14:54:40 +0800</pubDate>
         
-        <guid>https://blog.yylin.io/tags/aws/</guid>
+        <guid>http://localhost:1313/tags/aws/</guid>
         <description></description>
         </item>
         <item>
         <title>ROSA</title>
-        <link>https://blog.yylin.io/tags/rosa/</link>
+        <link>http://localhost:1313/tags/rosa/</link>
         <pubDate>Thu, 30 Sep 2021 14:54:40 +0800</pubDate>
         
-        <guid>https://blog.yylin.io/tags/rosa/</guid>
+        <guid>http://localhost:1313/tags/rosa/</guid>
         <description></description>
         </item>
         <item>
         <title>Troubleshooting</title>
-        <link>https://blog.yylin.io/tags/troubleshooting/</link>
+        <link>http://localhost:1313/tags/troubleshooting/</link>
         <pubDate>Wed, 29 Sep 2021 00:53:25 +0800</pubDate>
         
-        <guid>https://blog.yylin.io/tags/troubleshooting/</guid>
+        <guid>http://localhost:1313/tags/troubleshooting/</guid>
         <description></description>
         </item>
         <item>
         <title>OCP 4.x</title>
-        <link>https://blog.yylin.io/tags/ocp-4.x/</link>
+        <link>http://localhost:1313/tags/ocp-4.x/</link>
         <pubDate>Sun, 26 Sep 2021 14:54:40 +0800</pubDate>
         
-        <guid>https://blog.yylin.io/tags/ocp-4.x/</guid>
+        <guid>http://localhost:1313/tags/ocp-4.x/</guid>
         <description></description>
         </item>
         

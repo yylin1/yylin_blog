@@ -2,27 +2,27 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Ansible Automation Platform on Frank&#39;s Notes</title>
-        <link>https://blog.yylin.io/categories/ansible-automation-platform/</link>
+        <link>http://localhost:1313/categories/ansible-automation-platform/</link>
         <description>Recent content in Ansible Automation Platform on Frank&#39;s Notes</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-tw</language>
-        <lastBuildDate>Mon, 19 Dec 2022 12:00:40 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/categories/ansible-automation-platform/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 19 Dec 2022 12:00:40 +0800</lastBuildDate><atom:link href="http://localhost:1313/categories/ansible-automation-platform/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>針對 Ansible Tower 升級 AAP 2 建議方案及執行確認</title>
-        <link>https://blog.yylin.io/ansible/ansible-tower-upgrade-to-ansible-automation-platform-2/</link>
+        <link>http://localhost:1313/ansible/ansible-tower-upgrade-to-ansible-automation-platform-2/</link>
         <pubDate>Mon, 19 Dec 2022 12:00:40 +0800</pubDate>
         
-        <guid>https://blog.yylin.io/ansible/ansible-tower-upgrade-to-ansible-automation-platform-2/</guid>
+        <guid>http://localhost:1313/ansible/ansible-tower-upgrade-to-ansible-automation-platform-2/</guid>
         <description>&lt;p&gt;隨著 Ansible Automation Platform 2.0 於今年七月中釋出 Early Access 版本，我之後會寫一篇文章介紹與大家之前比較熟悉的 Ansible Tower 在特性上有什麼差別，有興趣的朋友可以先在新的環境玩玩看，先不要急著升級，因為之後會有更多新功能，也會在之後的文章一併介紹。&lt;/p&gt;
 &lt;p&gt;本篇主要是介紹升級 Ansible Tower 3.8.4 (Ansible Tower 的最後一版) 到 Ansible Automation Platform 2.0 的作法。&lt;/p&gt;
 &lt;p&gt;之所以會有這篇文章的出現，主要是因為 Ansible Automation Platform 2.0 以及之後的版本對於 RHEL 作業系統和 Ansible-core 的版本都會有一些限制，所以先寫篇文章記錄一下，之後有朋友想升級也可以當個參考 。&amp;quot;&lt;/p&gt;
-&lt;h2 id=&#34;環境&#34;&gt;/環境/&lt;/h2&gt;
-&lt;p&gt;RHEL 7.9
+&lt;h2 id=&#34;環境&#34;&gt;/環境/
+&lt;/h2&gt;&lt;p&gt;RHEL 7.9
 RHEL 8.4
 Ansible Tower 3.8.4
 Ansible Automation Platform 2.0 Early Access
 (以下簡稱 AAP2.0)&lt;/p&gt;
-&lt;h2 id=&#34;ansible-tower-的升級路線&#34;&gt;/Ansible Tower 的升級路線/&lt;/h2&gt;
-&lt;p&gt;Ansible Tower 升級可以參考 Upgrading an Existing Tower Installation，並且分為以下兩種情況：&lt;/p&gt;
+&lt;h2 id=&#34;ansible-tower-的升級路線&#34;&gt;/Ansible Tower 的升級路線/
+&lt;/h2&gt;&lt;p&gt;Ansible Tower 升級可以參考 Upgrading an Existing Tower Installation，並且分為以下兩種情況：&lt;/p&gt;
 &lt;p&gt;(1) 假設您的 Ansible Tower 版本在 3.7 以上基本上可以總結為以下三步驟：&lt;/p&gt;
 &lt;p&gt;使用官方下載連結下載目標版本 Ansible Tower 壓縮檔並解壓縮
 備份舊版本的 Ansible Tower 資料（包含 Templates, Projects 等設定），備份步驟可以參考 Backing Up and Restoring Tower
@@ -56,12 +56,12 @@ Ansible Automation Platform 2.0 Early Access
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;
-先講一下我的升級路徑：
-
-- 參考 Migration from AAP 1.2 to Ansible Automation Platform 2: Side by side upgrade - Step 1 指南參考：
-
-&lt;div class=&#34;video-wrapper&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;先講一下我的升級路徑：
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;- 參考 Migration from AAP 1.2 to Ansible Automation Platform 2: Side by side upgrade - Step 1 指南參考：
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;div class=&#34;video-wrapper&#34;&gt;
     &lt;iframe loading=&#34;lazy&#34; 
             src=&#34;https://www.youtube.com/embed/EKf3u1QdpNo&#34; 
             allowfullscreen 
@@ -70,28 +70,29 @@ Ansible Automation Platform 2.0 Early Access
     &lt;/iframe&gt;
 &lt;/div&gt;
 
-
-## Reference
-
-- [Red Hat Ansible Tower Upgrade from 3.5 to 3.8 – when running setup.sh is not enough](https://www.martinberger.com/2020/12/red-hat-ansible-tower-upgrade-from-3-5-to-3-8-when-running-setup-sh-is-not-enough-or-i-have-made-fire/)
-- [How Can I Uninstall Ansible Tower?](https://access.redhat.com/solutions/3107181)
-- [Backing Up and Restoring Tower](https://docs.ansible.com/ansible-tower/latest/html/administration/backup_restore.html)
-- [Ansible Automation Platform 2 Installation Guide](https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/2.2/html/red_hat_ansible_automation_platform_operator_installation_guide/index)
-- [Ansible Tower 升級 Ansible Automation Platform 2.0 作法 by Hazel](https://hazel.style/2021/10/29/Ansible-Tower-upgrade-to-Ansible-Automation-Platform-2/#more)&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;## Reference
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;- [Red Hat Ansible Tower Upgrade from 3.5 to 3.8 – when running setup.sh is not enough](https://www.martinberger.com/2020/12/red-hat-ansible-tower-upgrade-from-3-5-to-3-8-when-running-setup-sh-is-not-enough-or-i-have-made-fire/)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;- [How Can I Uninstall Ansible Tower?](https://access.redhat.com/solutions/3107181)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;- [Backing Up and Restoring Tower](https://docs.ansible.com/ansible-tower/latest/html/administration/backup_restore.html)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;- [Ansible Automation Platform 2 Installation Guide](https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/2.2/html/red_hat_ansible_automation_platform_operator_installation_guide/index)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;- [Ansible Tower 升級 Ansible Automation Platform 2.0 作法 by Hazel](https://hazel.style/2021/10/29/Ansible-Tower-upgrade-to-Ansible-Automation-Platform-2/#more)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;</description>
         </item>
         <item>
         <title>透過自動化進行 TWGCB 臺灣政府組態標準合規 - 邏輯檢查</title>
-        <link>https://blog.yylin.io/ansible/twgcb/</link>
+        <link>http://localhost:1313/ansible/twgcb/</link>
         <pubDate>Sat, 19 Nov 2022 12:00:40 +0800</pubDate>
         
-        <guid>https://blog.yylin.io/ansible/twgcb/</guid>
-        <description>&lt;h2 id=&#34;-概述-&#34;&gt;/ 概述 /&lt;/h2&gt;
-&lt;p&gt;TWGCB 由行政院國家資通安全會報技術服務中心發佈，政府組態基準(Government Configuration Baseline，簡稱GCB)目的在於規範資通訊設備 (例如：個人電腦、伺服器主機及網通設備等) 的一致性安全設定 (例如：密碼長度、更新期限等)，以降低成為駭客入侵管道，進而引發資安事件之風險。(擷取資料: &lt;a class=&#34;link&#34; href=&#34;https://www.nccst.nat.gov.tw/GCB&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+        <guid>http://localhost:1313/ansible/twgcb/</guid>
+        <description>&lt;h2 id=&#34;-概述-&#34;&gt;/ 概述 /
+&lt;/h2&gt;&lt;p&gt;TWGCB 由行政院國家資通安全會報技術服務中心發佈，政府組態基準(Government Configuration Baseline，簡稱GCB)目的在於規範資通訊設備 (例如：個人電腦、伺服器主機及網通設備等) 的一致性安全設定 (例如：密碼長度、更新期限等)，以降低成為駭客入侵管道，進而引發資安事件之風險。(擷取資料: &lt;a class=&#34;link&#34; href=&#34;https://www.nccst.nat.gov.tw/GCB&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;行政院國家資通安全會報技術服務中心&lt;/a&gt;)。&lt;/p&gt;
-&lt;h3 id=&#34;twgcb-發展與目的&#34;&gt;TWGCB 發展與目的&lt;/h3&gt;
-&lt;p&gt;政府主要目的期望藉由提供電腦作業環境一致性資安防護基準與實作指引，供政府機關及企業能透過建立安全組態，提升資安防護能力。&lt;/p&gt;
+&lt;h3 id=&#34;twgcb-發展與目的&#34;&gt;TWGCB 發展與目的
+&lt;/h3&gt;&lt;p&gt;政府主要目的期望藉由提供電腦作業環境一致性資安防護基準與實作指引，供政府機關及企業能透過建立安全組態，提升資安防護能力。&lt;/p&gt;
 &lt;p&gt;本文以提供 &lt;code&gt;TWGCB for Red Hat Enterprise Linux 8&lt;/code&gt; 作業系統為例，GCB 主要規範機關內作業系統有一致性安全設定，以降低成為駭客入侵管道，進而引發資安事件之風險：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;發展一致性安全組態設定&lt;/li&gt;
@@ -105,10 +106,10 @@ Ansible Automation Platform 2.0 Early Access
 &lt;li&gt;CIS (Center for Internet Security) RHEL 8 Benchmark&lt;/li&gt;
 &lt;li&gt;DISA(Defense Information Systems Agency) RHEL 8 STIG 以及 TWGCB for RHEL 5 相關內容&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://blog.yylin.io/ansible/twgcb/img/01.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/ansible/twgcb/img/01.png&#34;
 	width=&#34;961&#34;
 	height=&#34;723&#34;
-	srcset=&#34;https://blog.yylin.io/ansible/twgcb/img/01_hud6584220a655dc6a45384a3f1945fff9_203206_480x0_resize_box_3.png 480w, https://blog.yylin.io/ansible/twgcb/img/01_hud6584220a655dc6a45384a3f1945fff9_203206_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/ansible/twgcb/img/01_hu10376596329273281823.png 480w, http://localhost:1313/ansible/twgcb/img/01_hu7084706771291277340.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -116,10 +117,10 @@ Ansible Automation Platform 2.0 Early Access
 		data-flex-grow=&#34;132&#34;
 		data-flex-basis=&#34;319px&#34;
 	
-&gt; &lt;img src=&#34;https://blog.yylin.io/ansible/twgcb/img/02.png&#34;
+&gt; &lt;img src=&#34;http://localhost:1313/ansible/twgcb/img/02.png&#34;
 	width=&#34;963&#34;
 	height=&#34;722&#34;
-	srcset=&#34;https://blog.yylin.io/ansible/twgcb/img/02_hu347fcb8edb75ab1e3bc8921a22fa1bad_215596_480x0_resize_box_3.png 480w, https://blog.yylin.io/ansible/twgcb/img/02_hu347fcb8edb75ab1e3bc8921a22fa1bad_215596_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/ansible/twgcb/img/02_hu11041581734252056760.png 480w, http://localhost:1313/ansible/twgcb/img/02_hu17689836911224263188.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -134,8 +135,8 @@ Ansible Automation Platform 2.0 Early Access
 &lt;p&gt;擷取至 &lt;a class=&#34;link&#34; href=&#34;https://download.nccst.nat.gov.tw/attachfilegcb/TWGCB-01-008_Red%20Hat%20Enterprise%20Linux%208%E6%94%BF%E5%BA%9C%E7%B5%84%E6%85%8B%E5%9F%BA%E6%BA%96%E8%AA%AA%E6%98%8E%E6%96%87%E4%BB%B6v1.0_1100924.pdf&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;TWGCB-01-008(v1.0)-政府組態基準說明文件&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h2 id=&#34;-引入前思考-&#34;&gt;/ 引入前思考 /&lt;/h2&gt;
-&lt;p&gt;各企業為確保有所本能符合政府合規檢核基準，企業資安維運團隊的將要思考，如何採用規範及當前大量基礎設施，包含三大面向：&lt;/p&gt;
+&lt;h2 id=&#34;-引入前思考-&#34;&gt;/ 引入前思考 /
+&lt;/h2&gt;&lt;p&gt;各企業為確保有所本能符合政府合規檢核基準，企業資安維運團隊的將要思考，如何採用規範及當前大量基礎設施，包含三大面向：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;如何定義系統組態合規標準條例(不影響企業服務)&lt;/li&gt;
 &lt;li&gt;大範圍檢查及修正的人力成本？&lt;/li&gt;
@@ -151,8 +152,8 @@ Ansible Automation Platform 2.0 Early Access
 &lt;p&gt;補充: 其他作業系統，若要評估資安條例及防範規範檢查，可以參考&lt;a class=&#34;link&#34; href=&#34;https://blog.yylin.io/ansible/openscap/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;實現 OpenSCAP 自動化邏輯檢查&lt;/a&gt; 文章介紹的 OpenSCAP 工具。&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h2 id=&#34;-透過-ansible-結合-twgcb-實現系統自動化合規檢查-&#34;&gt;/ 透過 Ansible 結合 TWGCB 實現系統「自動化」合規檢查 /&lt;/h2&gt;
-&lt;p&gt;上述文中釐清企業狀態與需求，這邊列出當前引入 TWGCB 政府組態規範目標：&lt;/p&gt;
+&lt;h2 id=&#34;-透過-ansible-結合-twgcb-實現系統自動化合規檢查-&#34;&gt;/ 透過 Ansible 結合 TWGCB 實現系統「自動化」合規檢查 /
+&lt;/h2&gt;&lt;p&gt;上述文中釐清企業狀態與需求，這邊列出當前引入 TWGCB 政府組態規範目標：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;提供一套自動檢測&lt;/li&gt;
 &lt;li&gt;能夠定時執行&lt;/li&gt;
@@ -167,10 +168,10 @@ Ansible Automation Platform 2.0 Early Access
 &lt;li&gt;定義客製化腳本 | 整合 TWGCB 組態檢查&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;自動化工具需要透過腳本運行，顧問團隊透過訪談及列舉需求，開發出企業客戶所需的專業腳本，企業維運人員透過 UI 介面方便管理者後續操作及工作流程串接，運行後續提供「結果報告」，協助企業釐清當前環境依據 TWGCB Profile 是否符合對應規範及條例，讓企業有檢驗後依據，並能將此報告交由企業內部資安團隊進行後續修正依據。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://blog.yylin.io/ansible/twgcb/img/03.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/ansible/twgcb/img/03.png&#34;
 	width=&#34;1289&#34;
 	height=&#34;850&#34;
-	srcset=&#34;https://blog.yylin.io/ansible/twgcb/img/03_hu9ff8c18a355c3f28cc4488abe913d01b_171120_480x0_resize_box_3.png 480w, https://blog.yylin.io/ansible/twgcb/img/03_hu9ff8c18a355c3f28cc4488abe913d01b_171120_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/ansible/twgcb/img/03_hu11453233817986676866.png 480w, http://localhost:1313/ansible/twgcb/img/03_hu11337611815281116846.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -179,8 +180,8 @@ Ansible Automation Platform 2.0 Early Access
 		data-flex-basis=&#34;363px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h3 id=&#34;展示---產出-rhel-8-主機組態設定檢查報表&#34;&gt;展示 - 產出 RHEL 8 主機組態設定檢查報表&lt;/h3&gt;
-&lt;ul&gt;
+&lt;h3 id=&#34;展示---產出-rhel-8-主機組態設定檢查報表&#34;&gt;展示 - 產出 RHEL 8 主機組態設定檢查報表
+&lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;作業目的：
 自動至 RHEL8 主機進行 TWGCB 檢查項目，結果整合於 HTML 報表中呈現。&lt;/p&gt;
@@ -191,10 +192,10 @@ Ansible Automation Platform 2.0 Early Access
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;首先，配置 TWGCB Check Report 於 Ansible Automation Platform 環境，一鍵點選執行就會進行節點 TWGCB 邏輯檢查&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://blog.yylin.io/ansible/twgcb/img/04.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/ansible/twgcb/img/04.png&#34;
 	width=&#34;1207&#34;
 	height=&#34;643&#34;
-	srcset=&#34;https://blog.yylin.io/ansible/twgcb/img/04_hu60e577c5d7bb63275dc28fd9b434cec4_149018_480x0_resize_box_3.png 480w, https://blog.yylin.io/ansible/twgcb/img/04_hu60e577c5d7bb63275dc28fd9b434cec4_149018_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/ansible/twgcb/img/04_hu16304466249840666709.png 480w, http://localhost:1313/ansible/twgcb/img/04_hu9168871375261575034.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -210,10 +211,10 @@ Ansible Automation Platform 2.0 Early Access
 &lt;li&gt;依據組態基準項目進行 「類別」分類&lt;/li&gt;
 &lt;li&gt;檔案行首的「+」符號 =&amp;gt; 可以確認結果狀態與資訊&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://blog.yylin.io/ansible/twgcb/img/05.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/ansible/twgcb/img/05.png&#34;
 	width=&#34;1912&#34;
 	height=&#34;934&#34;
-	srcset=&#34;https://blog.yylin.io/ansible/twgcb/img/05_hu92c189cefd195a4ea632bbaddf368070_452776_480x0_resize_box_3.png 480w, https://blog.yylin.io/ansible/twgcb/img/05_hu92c189cefd195a4ea632bbaddf368070_452776_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/ansible/twgcb/img/05_hu7697216096884647341.png 480w, http://localhost:1313/ansible/twgcb/img/05_hu15099071333303989943.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -234,8 +235,8 @@ Ansible Automation Platform 2.0 Early Access
     &lt;/iframe&gt;
 &lt;/div&gt;
 
-&lt;h3 id=&#34;補充展示---運行修復-rhel-主機設備規則並比對先前報表結果&#34;&gt;補充展示 - 運行修復 RHEL 主機設備規則並比對先前報表結果&lt;/h3&gt;
-&lt;blockquote&gt;
+&lt;h3 id=&#34;補充展示---運行修復-rhel-主機設備規則並比對先前報表結果&#34;&gt;補充展示 - 運行修復 RHEL 主機設備規則並比對先前報表結果
+&lt;/h3&gt;&lt;blockquote&gt;
 &lt;p&gt;邏輯檢查修復部分，需要經過企業內部資安團隊與當前服務不衝突情況下評估，並藉由專業顧問團隊同時釐清需求，才會進行大量修復情境，以下展示以「網路設定」條例做修復展示。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
@@ -249,10 +250,10 @@ Ansible Automation Platform 2.0 Early Access
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;首先配置針對 &lt;code&gt;TWGCB-01-008-0129&lt;/code&gt; 及 &lt;code&gt;TWGCB-01-008-0130&lt;/code&gt; 條例撰寫對應修復 Task，並且透過 AAP 一鍵運行修復：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://blog.yylin.io/ansible/twgcb/img/06.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/ansible/twgcb/img/06.png&#34;
 	width=&#34;1034&#34;
 	height=&#34;523&#34;
-	srcset=&#34;https://blog.yylin.io/ansible/twgcb/img/06_hu985a02afff0d10678c06c6f7b9955442_121485_480x0_resize_box_3.png 480w, https://blog.yylin.io/ansible/twgcb/img/06_hu985a02afff0d10678c06c6f7b9955442_121485_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/ansible/twgcb/img/06_hu14191314222633371221.png 480w, http://localhost:1313/ansible/twgcb/img/06_hu14890416031261046585.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -262,10 +263,10 @@ Ansible Automation Platform 2.0 Early Access
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;重新運行 &lt;code&gt;TWGCB Check Report&lt;/code&gt; 後比對邏輯檢查結果，發現條例內容已經做修復，並顯示 PASS 資訊：
-&lt;img src=&#34;https://blog.yylin.io/ansible/twgcb/img/07.png&#34;
+&lt;img src=&#34;http://localhost:1313/ansible/twgcb/img/07.png&#34;
 	width=&#34;1083&#34;
 	height=&#34;515&#34;
-	srcset=&#34;https://blog.yylin.io/ansible/twgcb/img/07_hufb34822caa4fbf68cba40044391a37d1_168446_480x0_resize_box_3.png 480w, https://blog.yylin.io/ansible/twgcb/img/07_hufb34822caa4fbf68cba40044391a37d1_168446_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;http://localhost:1313/ansible/twgcb/img/07_hu9588483461229734595.png 480w, http://localhost:1313/ansible/twgcb/img/07_hu3006203337796922519.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -286,10 +287,10 @@ Ansible Automation Platform 2.0 Early Access
     &lt;/iframe&gt;
 &lt;/div&gt;
 
-&lt;h2 id=&#34;-結論-&#34;&gt;/ 結論 /&lt;/h2&gt;
-&lt;p&gt;我們可以透過台灣 GCB 組態基準進行邏輯檢查，透過 Ansible 客製化 Playbook 腳本提供大量主機節點，對企業客戶來說條例檢查過程 Output log 資訊很重要，Red Hat 專業顧問團隊將企業需求的客製化報表提供客戶，有完整可視化條例資訊查看，更能幫助企業資安團隊，確認當前環境使用的套件及安裝組態做清查及彙整，並透過每次運行報告清單中變化，來查閱這些變化是不是符合流程申請，以企業客戶需求導向給一個範本出來，讓客戶有一個基本的概念與依據組態管理自動化檢驗擁有完整報告，如此將可大幅降低資安風險，即可延伸探討後續修正及相對應資安防範措施。&lt;/p&gt;
-&lt;h2 id=&#34;reference&#34;&gt;Reference&lt;/h2&gt;
-&lt;ul&gt;
+&lt;h2 id=&#34;-結論-&#34;&gt;/ 結論 /
+&lt;/h2&gt;&lt;p&gt;我們可以透過台灣 GCB 組態基準進行邏輯檢查，透過 Ansible 客製化 Playbook 腳本提供大量主機節點，對企業客戶來說條例檢查過程 Output log 資訊很重要，Red Hat 專業顧問團隊將企業需求的客製化報表提供客戶，有完整可視化條例資訊查看，更能幫助企業資安團隊，確認當前環境使用的套件及安裝組態做清查及彙整，並透過每次運行報告清單中變化，來查閱這些變化是不是符合流程申請，以企業客戶需求導向給一個範本出來，讓客戶有一個基本的概念與依據組態管理自動化檢驗擁有完整報告，如此將可大幅降低資安風險，即可延伸探討後續修正及相對應資安防範措施。&lt;/p&gt;
+&lt;h2 id=&#34;reference&#34;&gt;Reference
+&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.mss.com.tw/gcb.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://www.mss.com.tw/gcb.html&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -297,22 +298,22 @@ Ansible Automation Platform 2.0 Early Access
         </item>
         <item>
         <title>透過自動化進行 TWGCB 臺灣政府組態標準合規 - 邏輯檢查</title>
-        <link>https://blog.yylin.io/ansible/twgcb/</link>
+        <link>http://localhost:1313/ansible/twgcb/</link>
         <pubDate>Sat, 19 Nov 2022 12:00:40 +0800</pubDate>
         
-        <guid>https://blog.yylin.io/ansible/twgcb/</guid>
+        <guid>http://localhost:1313/ansible/twgcb/</guid>
         <description></description>
         </item>
         <item>
         <title>實現 OpenSCAP 自動化邏輯檢查</title>
-        <link>https://blog.yylin.io/ansible/openscap/</link>
+        <link>http://localhost:1313/ansible/openscap/</link>
         <pubDate>Sun, 25 Sep 2022 12:00:40 +0800</pubDate>
         
-        <guid>https://blog.yylin.io/ansible/openscap/</guid>
-        <description>&lt;h2 id=&#34;概述&#34;&gt;概述&lt;/h2&gt;
-&lt;p&gt;SCAP (Security Content Automation Protocol)是一包資安標準的集合。實作 SCAP 的工具有好幾種，其中一個是 OpenSCAP 開源工具，運用 OpenSCAP 可做到全自動的檢查、script/ansible playbook的報告與修復。但「修復」這段不太可能全自動，需要人為判斷要不要修復會不會與公司定義的規則互相衝突，否則完全聽從某些嚴格的 SCAP Rules，派下去之後反而造成維運及開發團隊環境配置衝突，導致相關影響及不便性。&lt;/p&gt;
-&lt;h2 id=&#34;透過-openscap-和-satellite-實現系統合規檢查&#34;&gt;透過 OpenSCAP 和 Satellite 實現系統合規檢查&lt;/h2&gt;
-&lt;p&gt;在 Red Hat Satellite 中，包含可以配置 OpenSCAP 項目提供的工具用於實施安全合規性檢查。有關 OpenSCAP 的更多信息，可以參見Guide to the Secure &lt;a class=&#34;link&#34; href=&#34;https://static.open-scap.org/ssg-guides/ssg-rhel7-guide-cui.html#!&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+        <guid>http://localhost:1313/ansible/openscap/</guid>
+        <description>&lt;h2 id=&#34;概述&#34;&gt;概述
+&lt;/h2&gt;&lt;p&gt;SCAP (Security Content Automation Protocol)是一包資安標準的集合。實作 SCAP 的工具有好幾種，其中一個是 OpenSCAP 開源工具，運用 OpenSCAP 可做到全自動的檢查、script/ansible playbook的報告與修復。但「修復」這段不太可能全自動，需要人為判斷要不要修復會不會與公司定義的規則互相衝突，否則完全聽從某些嚴格的 SCAP Rules，派下去之後反而造成維運及開發團隊環境配置衝突，導致相關影響及不便性。&lt;/p&gt;
+&lt;h2 id=&#34;透過-openscap-和-satellite-實現系統合規檢查&#34;&gt;透過 OpenSCAP 和 Satellite 實現系統合規檢查
+&lt;/h2&gt;&lt;p&gt;在 Red Hat Satellite 中，包含可以配置 OpenSCAP 項目提供的工具用於實施安全合規性檢查。有關 OpenSCAP 的更多信息，可以參見Guide to the Secure &lt;a class=&#34;link&#34; href=&#34;https://static.open-scap.org/ssg-guides/ssg-rhel7-guide-cui.html#!&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Configuration of Red Hat Enterprise Linux 7&lt;/a&gt;
 和 &lt;a class=&#34;link&#34; href=&#34;http://static.open-scap.org/ssg-guides/ssg-rhel8-guide-cui.html#!&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Guide to the Secure Configuration of Red Hat Enterprise Linux 8&lt;/a&gt;。通過 Satellite Web UI，可以在 Red Hat Satellite 管理的所有主機上進行計劃的合規性檢查和直接查看對應報告。&lt;/p&gt;
@@ -335,8 +336,8 @@ Ansible Automation Platform 2.0 Early Access
     &lt;/iframe&gt;
 &lt;/div&gt;
 
-&lt;h2 id=&#34;補充-openscap與資安合規生命週期&#34;&gt;/補充/ OpenSCAP與資安合規生命週期&lt;/h2&gt;
-&lt;p&gt;為什麼需要系統安全檢查強化工具，OpenSCAP 可以完美的參與整個資安合規的生命週期：&lt;/p&gt;
+&lt;h2 id=&#34;補充-openscap與資安合規生命週期&#34;&gt;/補充/ OpenSCAP與資安合規生命週期
+&lt;/h2&gt;&lt;p&gt;為什麼需要系統安全檢查強化工具，OpenSCAP 可以完美的參與整個資安合規的生命週期：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;評估當前系統不合規的地方&lt;/li&gt;
 &lt;li&gt;將找到的問題，依重要性分類&lt;/li&gt;
@@ -354,8 +355,8 @@ Ansible Automation Platform 2.0 Early Access
 &lt;li&gt;資安規則細節項目太多，要做好整合不容易&lt;/li&gt;
 &lt;li&gt;人工檢測，即便做成 SOP，也不容易實踐&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;reference&#34;&gt;Reference&lt;/h2&gt;
-&lt;ul&gt;
+&lt;h2 id=&#34;reference&#34;&gt;Reference
+&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;OpenSCAP on Github: &lt;a class=&#34;link&#34; href=&#34;https://github.com/OpenSCAP/openscap&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://github.com/OpenSCAP/openscap&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.open-scap.org/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;

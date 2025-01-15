@@ -1,32 +1,32 @@
 <!DOCTYPE html>
 <html lang="zh-tw" dir="ltr">
-    <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='本篇文章主要是整理 OpenShift 4.x 安裝遇到問題與相關除錯常用介紹。'><title>OpenShift Intsall Troubleshooting Notes</title>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="本篇文章主要是整理 OpenShift 4.x 安裝遇到問題與相關除錯常用介紹。">
+<title>OpenShift Intsall Troubleshooting Notes</title>
 
-<link rel='canonical' href='https://blog.yylin.io/openshift/install-troubleshooting/'>
+<link rel='canonical' href='http://localhost:1313/openshift/install-troubleshooting/'>
 
-<link rel="stylesheet" href="/scss/style.min.5dfb59e7e9320a8eb7995abb74271d0b47aa7bd7423004549c2964fd78196c75.css"><meta property='og:title' content='OpenShift Intsall Troubleshooting Notes'>
-<meta property='og:description' content='本篇文章主要是整理 OpenShift 4.x 安裝遇到問題與相關除錯常用介紹。'>
-<meta property='og:url' content='https://blog.yylin.io/openshift/install-troubleshooting/'>
+<link rel="stylesheet" href="/scss/style.min.5dfb59e7e9320a8eb7995abb74271d0b47aa7bd7423004549c2964fd78196c75.css"><meta property='og:title' content="OpenShift Intsall Troubleshooting Notes">
+<meta property='og:description' content="本篇文章主要是整理 OpenShift 4.x 安裝遇到問題與相關除錯常用介紹。">
+<meta property='og:url' content='http://localhost:1313/openshift/install-troubleshooting/'>
 <meta property='og:site_name' content='Frank&#39;s Notes'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Troubleshooting' /><meta property='article:published_time' content='2021-09-29T00:53:25&#43;08:00'/><meta property='article:modified_time' content='2021-09-29T00:53:25&#43;08:00'/>
 <meta name="twitter:title" content="OpenShift Intsall Troubleshooting Notes">
 <meta name="twitter:description" content="本篇文章主要是整理 OpenShift 4.x 安裝遇到問題與相關除錯常用介紹。">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-60ZBHV66GB"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-60ZBHV66GB', { 'anonymize_ip': false });
-}
-</script>
-<style>
-	h1 {
-		letter-spacing: 6px;
-	}
-</style>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-60ZBHV66GB"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-60ZBHV66GB');
+        }
+      </script>
     </head>
     <body class="
     article-page
@@ -63,8 +63,6 @@ if (!doNotTrack) {
     <header>
         
             
-            
-            
         
         
         <div class="site-meta">
@@ -75,7 +73,6 @@ if (!doNotTrack) {
         
         
         
-
         <li >
             <a href='/' >
                 
@@ -96,7 +93,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/about/' >
                 
@@ -116,7 +112,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/archives/' >
                 
@@ -137,7 +132,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/search/' >
                 
@@ -157,7 +151,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/links/' >
                 
@@ -176,12 +169,12 @@ if (!doNotTrack) {
             </a>
         </li>
         
+        <li class="menu-bottom-section">
+            <ol class="menu">
 
-        <div class="menu-bottom-section">
-            
-            
-                <li id="dark-mode-toggle">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <circle cx="8" cy="12" r="2" />
   <rect x="2" y="6" width="20" height="12" rx="6" />
@@ -189,7 +182,7 @@ if (!doNotTrack) {
 
 
 
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <circle cx="16" cy="12" r="2" />
   <rect x="2" y="6" width="20" height="12" rx="6" />
@@ -197,13 +190,59 @@ if (!doNotTrack) {
 
 
 
-                    <span>夜晚模式</span>
-                </li>
-            
-        </div>
+                        <span>夜晚模式</span>
+                    </li>
+                
+            </ol>
+        </li>
     </ol>
 </aside>
-<main class="main full-width">
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目錄</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#部署常見問題整理-持續更新">部署常見問題整理 (持續更新)</a>
+          <ul>
+            <li><a href="#超時等待-bootstrap-節點啟動">超時等待 <code>bootstrap</code> 節點啟動</a></li>
+            <li><a href="#master-node-部署不起來檢查並驗證-etcd-運行之硬碟是否正常運作-">Master Node 部署不起來，檢查並驗證 etcd 運行之硬碟是否正常運作 ?</a></li>
+          </ul>
+        </li>
+        <li><a href="#補充檢查---除錯流程">補充|檢查 - 除錯流程</a></li>
+        <li><a href="#reference-2">Reference:</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
     <article class="main-article">
     <header class="article-header">
 
@@ -230,6 +269,9 @@ if (!doNotTrack) {
         
     </div>
 
+    
+    
+    
     
     <footer class="article-time">
         
@@ -267,6 +309,7 @@ if (!doNotTrack) {
 
     
 </div>
+
 </header>
 
     <section class="article-content">
@@ -277,9 +320,9 @@ if (!doNotTrack) {
 <blockquote>
 <p>備註: 由於資源有限情況下，透過單一伺服器(主機)透過 VM 模擬實際節點硬體資源環境，這邊主要透過檢測與除錯，來確保 OpenShift 部署成功。</p>
 </blockquote>
-<h2 id="部署常見問題整理-持續更新">部署常見問題整理 (持續更新)</h2>
-<h3 id="超時等待-bootstrap-節點啟動">超時等待 <code>bootstrap</code> 節點啟動</h3>
-<ul>
+<h2 id="部署常見問題整理-持續更新">部署常見問題整理 (持續更新)
+</h2><h3 id="超時等待-bootstrap-節點啟動">超時等待 <code>bootstrap</code> 節點啟動
+</h3><ul>
 <li>發現特定 Pod 持續<code>RunningNotReady</code> 狀態</li>
 </ul>
 <div class="highlight"><div class="chroma">
@@ -289,10 +332,10 @@ if (!doNotTrack) {
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">W0830 11:16:37.087497   35214 reflector.go:436] k8s.io/client-go/tools/watch/informerwatcher.go:146: watch of *v1.ConfigMap ended with: very short watch: k8s.io/client-go/tools/watch/informerwatcher.go:146: Unexpected watch close - watch lasted less than a second and no items received
-apiserver - &gt; RunningNotReady
-Aug 30 03:42:37 bootstrap.lab.yiylin.internal bootkube.sh[644199]:         Pod Status:openshift-kube-apiserver/kube-apiserver        RunningNotReady
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">W0830</span> <span class="mi">11</span><span class="p">:</span><span class="mi">16</span><span class="p">:</span><span class="mf">37.087497</span>   <span class="mi">35214</span> <span class="n">reflector</span><span class="o">.</span><span class="n">go</span><span class="p">:</span><span class="mi">436</span><span class="p">]</span> <span class="n">k8s</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">client</span><span class="o">-</span><span class="n">go</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">watch</span><span class="o">/</span><span class="n">informerwatcher</span><span class="o">.</span><span class="n">go</span><span class="p">:</span><span class="mi">146</span><span class="p">:</span> <span class="n">watch</span> <span class="n">of</span> <span class="o">*</span><span class="n">v1</span><span class="o">.</span><span class="n">ConfigMap</span> <span class="n">ended</span> <span class="n">with</span><span class="p">:</span> <span class="n">very</span> <span class="n">short</span> <span class="n">watch</span><span class="p">:</span> <span class="n">k8s</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">client</span><span class="o">-</span><span class="n">go</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">watch</span><span class="o">/</span><span class="n">informerwatcher</span><span class="o">.</span><span class="n">go</span><span class="p">:</span><span class="mi">146</span><span class="p">:</span> <span class="n">Unexpected</span> <span class="n">watch</span> <span class="n">close</span> <span class="o">-</span> <span class="n">watch</span> <span class="n">lasted</span> <span class="n">less</span> <span class="n">than</span> <span class="n">a</span> <span class="n">second</span> <span class="ow">and</span> <span class="n">no</span> <span class="n">items</span> <span class="n">received</span>
+</span></span><span class="line"><span class="cl"><span class="n">apiserver</span> <span class="o">-</span> <span class="o">&gt;</span> <span class="n">RunningNotReady</span>
+</span></span><span class="line"><span class="cl"><span class="n">Aug</span> <span class="mi">30</span> <span class="mi">03</span><span class="p">:</span><span class="mi">42</span><span class="p">:</span><span class="mi">37</span> <span class="n">bootstrap</span><span class="o">.</span><span class="n">lab</span><span class="o">.</span><span class="n">yiylin</span><span class="o">.</span><span class="n">internal</span> <span class="n">bootkube</span><span class="o">.</span><span class="n">sh</span><span class="p">[</span><span class="mi">644199</span><span class="p">]:</span>         <span class="n">Pod</span> <span class="n">Status</span><span class="p">:</span><span class="n">openshift</span><span class="o">-</span><span class="n">kube</span><span class="o">-</span><span class="n">apiserver</span><span class="o">/</span><span class="n">kube</span><span class="o">-</span><span class="n">apiserver</span>        <span class="n">RunningNotReady</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>此情境請透過收集<code>bootstrap</code> 節點日誌，來確認環境問題</p>
@@ -305,11 +348,11 @@ Aug 30 03:42:37 bootstrap.lab.yiylin.internal bootkube.sh[644199]:         Pod S
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ ./openshift-install gather bootstrap --dir<span class="o">=</span>&lt;installation_directory&gt; 
-...
-INFO Pulling debug logs from the bootstrap machine
-INFO Bootstrap gather logs captured here <span class="s2">&#34;&lt;installation_directory&gt;/log-bundle-&lt;timestamp&gt;.tar.gz&#34;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ ./openshift-install gather bootstrap --dir<span class="o">=</span>&lt;installation_directory&gt; 
+</span></span><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">INFO Pulling debug logs from the bootstrap machine
+</span></span><span class="line"><span class="cl">INFO Bootstrap gather logs captured here <span class="s2">&#34;&lt;installation_directory&gt;/log-bundle-&lt;timestamp&gt;.tar.gz&#34;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
 <li>蒐集包含 bootstrap process / bootstrap 上所有 Pod/Container 的 log</li>
@@ -323,15 +366,15 @@ INFO Bootstrap gather logs captured here <span class="s2">&#34;&lt;installation_
 <li>master bootstrap 全部安裝完，然後下 wait for complete 確認最終才可移除 bootstrap node</li>
 </ol>
 </blockquote>
-<h4 id="reference">Reference:</h4>
-<ul>
+<h4 id="reference">Reference:
+</h4><ul>
 <li><a class="link" href="https://docs.openshift.com/container-platform/4.8/installing/installing-troubleshooting.html#installation-bootstrap-gather_installing-troubleshooting"  target="_blank" rel="noopener"
     >Gathering logs from a failed installation</a></li>
 <li><a class="link" href="https://docs.openshift.com/container-platform/4.8/installing/installing_bare_metal/installing-bare-metal.html#installation-installing-bare-metal_installing-bare-metal"  target="_blank" rel="noopener"
     >Waiting for the bootstrap process to complete</a></li>
 </ul>
-<h3 id="master-node-部署不起來檢查並驗證-etcd-運行之硬碟是否正常運作-">Master Node 部署不起來，檢查並驗證 etcd 運行之硬碟是否正常運作 ?</h3>
-<ul>
+<h3 id="master-node-部署不起來檢查並驗證-etcd-運行之硬碟是否正常運作-">Master Node 部署不起來，檢查並驗證 etcd 運行之硬碟是否正常運作 ?
+</h3><ul>
 <li>大部分 master 無法建置情境，通常可能會有原因是硬碟速度問題(硬碟壞軌)</li>
 </ul>
 <blockquote>
@@ -346,14 +389,14 @@ INFO Bootstrap gather logs captured here <span class="s2">&#34;&lt;installation_
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ oc debug node/&lt;master_node&gt;
-<span class="o">[</span>...<span class="o">]</span>
-sh-4.4# chroot /host bash
-<span class="o">[</span>root@&lt;master_node&gt; /<span class="o">]</span><span class="c1"># podman run --volume /var/lib/etcd:/var/lib/etcd:Z quay.io/openshift-scale/etcd-perf</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ oc debug node/&lt;master_node&gt;
+</span></span><span class="line"><span class="cl"><span class="o">[</span>...<span class="o">]</span>
+</span></span><span class="line"><span class="cl">sh-4.4# chroot /host bash
+</span></span><span class="line"><span class="cl"><span class="o">[</span>root@&lt;master_node&gt; /<span class="o">]</span><span class="c1"># podman run --volume /var/lib/etcd:/var/lib/etcd:Z quay.io/openshift-scale/etcd-perf</span>
+</span></span></code></pre></td></tr></table>
 </div>
-</div><h4 id="reference-1">Reference:</h4>
-<ul>
+</div><h4 id="reference-1">Reference:
+</h4><ul>
 <li><a class="link" href="https://access.redhat.com/solutions/4885641"  target="_blank" rel="noopener"
     >How to Use &lsquo;fio&rsquo; to Check Etcd Disk Performance in OCP
 </a></li>
@@ -362,8 +405,8 @@ sh-4.4# chroot /host bash
 <li><a class="link" href="https://www.ibm.com/docs/en/cloud-private/3.2.x?topic=requirements-hardware-recommendations"  target="_blank" rel="noopener"
     >Hardware requirements and recommendations</a></li>
 </ul>
-<h2 id="補充檢查---除錯流程">補充|檢查 - 除錯流程</h2>
-<ol>
+<h2 id="補充檢查---除錯流程">補充|檢查 - 除錯流程
+</h2><ol>
 <li>
 <p>部署過程都透過 bootkube 確認部署狀態資訊，log 會不斷顯示錯誤然後 loop 確認環節，嘗試能不能從他錯誤訊息找出規則(也就是他跳錯誤的地方，通常是在 log restart之前)</p>
 </li>
@@ -374,8 +417,8 @@ sh-4.4# chroot /host bash
 <p>如果以上幾個 Pod 有問題，透過 <code>crictl ps</code> 跟 <code>crictl log</code> 去查看 Container Log，問題有可能是連續的錯誤，所以可能是 API 有問題，可能是 Controller/Scheduler 引起，細節需要透過上面提到方式，下載節點所有 Log 日誌來比對檢查，找到正確的錯誤資訊來排除錯誤</p>
 </li>
 </ol>
-<h2 id="reference-2">Reference:</h2>
-<ul>
+<h2 id="reference-2">Reference:
+</h2><ul>
 <li><a class="link" href="https://connect.redhat.com/en/blog/openshift-troubleshooting-resources"  target="_blank" rel="noopener"
     >OpenShift Troubleshooting Resources</a></li>
 </ul>
@@ -414,9 +457,9 @@ sh-4.4# chroot /host bash
 
     
 
-<aside class="related-contents--wrapper">
+<aside class="related-content--wrapper">
     <h2 class="section-title">相關文章</h2>
-    <div class="related-contents">
+    <div class="related-content">
         <div class="flex article-list--tile">
             
                 
@@ -430,6 +473,7 @@ sh-4.4# chroot /host bash
         </div>
     </a>
 </article>
+
             
                 
 <article class="">
@@ -442,6 +486,7 @@ sh-4.4# chroot /host bash
         </div>
     </a>
 </article>
+
             
                 
 <article class="">
@@ -454,6 +499,7 @@ sh-4.4# chroot /host bash
         </div>
     </a>
 </article>
+
             
                 
 <article class="">
@@ -466,6 +512,7 @@ sh-4.4# chroot /host bash
         </div>
     </a>
 </article>
+
             
                 
 <article class="">
@@ -478,6 +525,7 @@ sh-4.4# chroot /host bash
         </div>
     </a>
 </article>
+
             
         </div>
     </div>
@@ -494,12 +542,12 @@ sh-4.4# chroot /host bash
         
             2022 - 
         
-        2024 Frank&#39;s Notes
+        2025 Frank&#39;s Notes
     </section>
     
     <section class="powerby">
-        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.10.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 建立 <br />
+        主題 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.29.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 設計
     </section>
 </footer>
 
@@ -576,63 +624,19 @@ sh-4.4# chroot /host bash
                 >
             </script><link 
                 rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
             ><link 
                 rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
             >
 
             </main>
-    <aside class="sidebar right-sidebar sticky">
-        
-            
-                
-    <section class="widget archives">
-        <div class="widget-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <line x1="5" y1="9" x2="19" y2="9" />
-  <line x1="5" y1="15" x2="19" y2="15" />
-  <line x1="11" y1="4" x2="7" y2="20" />
-  <line x1="17" y1="4" x2="13" y2="20" />
-</svg>
-
-
-
-        </div>
-        <h2 class="widget-title section-title">目錄</h2>
-        
-        <div class="widget--toc">
-            <nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#部署常見問題整理-持續更新">部署常見問題整理 (持續更新)</a>
-          <ul>
-            <li><a href="#超時等待-bootstrap-節點啟動">超時等待 <code>bootstrap</code> 節點啟動</a></li>
-            <li><a href="#master-node-部署不起來檢查並驗證-etcd-運行之硬碟是否正常運作-">Master Node 部署不起來，檢查並驗證 etcd 運行之硬碟是否正常運作 ?</a></li>
-          </ul>
-        </li>
-        <li><a href="#補充檢查---除錯流程">補充|檢查 - 除錯流程</a></li>
-        <li><a href="#reference-2">Reference:</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-        </div>
-    </section>
-
-            
-        
-    </aside>
-
-
         </div>
         <script 
-                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.c9433a56200c7fa053931db65ffb3761c72efa2034cbab024da4dc851d619762.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');

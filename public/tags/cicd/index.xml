@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>CICD on Frank&#39;s Notes</title>
-        <link>https://blog.yylin.io/tags/cicd/</link>
+        <link>http://localhost:1313/tags/cicd/</link>
         <description>Recent content in CICD on Frank&#39;s Notes</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-tw</language>
-        <lastBuildDate>Sat, 25 Jun 2022 09:40:40 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/tags/cicd/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 25 Jun 2022 09:40:40 +0800</lastBuildDate><atom:link href="http://localhost:1313/tags/cicd/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>在 ACM 透過 OpenShift-GitOps/ArgoCD 管理應用程式</title>
-        <link>https://blog.yylin.io/openshift/argocd-and-acm/</link>
+        <link>http://localhost:1313/openshift/argocd-and-acm/</link>
         <pubDate>Sat, 25 Jun 2022 09:40:40 +0800</pubDate>
         
-        <guid>https://blog.yylin.io/openshift/argocd-and-acm/</guid>
-        <description>&lt;h2 id=&#34;概述&#34;&gt;概述&lt;/h2&gt;
-&lt;p&gt;從 ACM 2.5 版開始正式 GA 功能，您可以透過 ApplicationSets 來配置 ArgoCD / OpenShift-GitOps ，通過單一管理平台以可擴展的方式管理您的所有 GitOps Applications。&lt;/p&gt;
+        <guid>http://localhost:1313/openshift/argocd-and-acm/</guid>
+        <description>&lt;h2 id=&#34;概述&#34;&gt;概述
+&lt;/h2&gt;&lt;p&gt;從 ACM 2.5 版開始正式 GA 功能，您可以透過 ApplicationSets 來配置 ArgoCD / OpenShift-GitOps ，通過單一管理平台以可擴展的方式管理您的所有 GitOps Applications。&lt;/p&gt;
 &lt;p&gt;ApplicationSet Controller 是一個 Kubernetes Controller，它增加對 ApplicationSet CustomResourceDefinition (CRD) 的支持。&lt;/p&gt;
 &lt;p&gt;ApplicationSet Controller 在與 Argo CD 一起安裝時，通過添加額外的功能來支持以叢集管理員為中心的場景來補充它。&lt;/p&gt;
 &lt;p&gt;ApplicationSet Ccontroller 提供：&lt;/p&gt;
@@ -27,8 +27,8 @@
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;我們將介紹如何將 ACM 與 OpenShift GitOps 的 ApplicationSets 連接起來，以便在託管 Cluster 中配置和部署 OpenShift GitOps Application 和 ApplicationSet。&lt;/p&gt;
-&lt;h2 id=&#34;環境配置-先決條件&#34;&gt;環境配置-先決條件&lt;/h2&gt;
-&lt;ul&gt;
+&lt;h2 id=&#34;環境配置-先決條件&#34;&gt;環境配置-先決條件
+&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;我們需要使用 Operator Hub 在 ACM Hub 那座 OpenShift Cluster 中安裝 OpenShift GitOps：&lt;/li&gt;
 &lt;/ul&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -36,8 +36,8 @@
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;$ until oc apply -k https://github.com/RedHat-EMEA-SSA-Team/ns-gitops/tree/bootstrap/bootstrap ; do sleep 2; done
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$ until oc apply -k https://github.com/RedHat-EMEA-SSA-Team/ns-gitops/tree/bootstrap/bootstrap ; do sleep 2; done
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;ul&gt;
 &lt;li&gt;
@@ -48,8 +48,8 @@
 &lt;p&gt;另一方面，我們需要配置管理不同的 Cluster (e.g. Public Cloud)。在我的例子中，我使用我環境中部署 2 座 OCP Cluster 叢集，並將在這篇文章中用於部署我的 Application。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;於-openshift-gitops--argocd-配置託管叢集&#34;&gt;於 OpenShift GitOps / ArgoCD 配置託管叢集&lt;/h2&gt;
-&lt;p&gt;要在 ACM 中配置和鏈接 OpenShift GitOps，我們可以將一組一個或多個託管 Cluster 註冊到 Argo CD 或 OpenShift GitOps Operator 的實例。&lt;/p&gt;
+&lt;h2 id=&#34;於-openshift-gitops--argocd-配置託管叢集&#34;&gt;於 OpenShift GitOps / ArgoCD 配置託管叢集
+&lt;/h2&gt;&lt;p&gt;要在 ACM 中配置和鏈接 OpenShift GitOps，我們可以將一組一個或多個託管 Cluster 註冊到 Argo CD 或 OpenShift GitOps Operator 的實例。&lt;/p&gt;
 &lt;p&gt;註冊後，我們可以使用從 ACM Hub Application Controller 的 Application 和 ApplicationSets 將我們需要部署的應用程式部署到這些叢集。然後，我們可以設置一個連續的 GitOps 環境，以在開發、暫存和生產環境中跨叢集自動化配置 Application 的一致性。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;首先，我們需要創建 cluster sets 並將託管 clusters 添加到這些 cluster sets：&lt;/li&gt;
@@ -65,14 +65,14 @@
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;$ cat acmgitops/managedclusterset.yaml
-
-apiVersion: cluster.open-cluster-management.io/v1alpha1
-kind: ManagedClusterSet
-metadata:
-  name: all-openshift-clusters
-  spec: {}
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$ cat acmgitops/managedclusterset.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;apiVersion: cluster.open-cluster-management.io/v1alpha1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kind: ManagedClusterSet
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;metadata:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  name: all-openshift-clusters
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  spec: {}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;ul&gt;
 &lt;li&gt;
@@ -99,18 +99,18 @@ metadata:
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;$ cat managedclustersetbinding.yaml
-
-apiVersion: cluster.open-cluster-management.io/v1alpha1
-kind: ManagedClusterSetBinding
-metadata:
-  name: all-openshift-clusters
-  namespace: openshift-gitops
-spec:
-  clusterSet: all-openshift-clusters
-
-$ oc apply -f managedclustersetbinding.yaml
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$ cat managedclustersetbinding.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;apiVersion: cluster.open-cluster-management.io/v1alpha1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kind: ManagedClusterSetBinding
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;metadata:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  name: all-openshift-clusters
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  namespace: openshift-gitops
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;spec:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  clusterSet: all-openshift-clusters
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;$ oc apply -f managedclustersetbinding.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;ul&gt;
 &lt;li&gt;在託管叢集綁定中使用的 namespace 中，創建放置自定義資源以選擇一組託管叢集以註冊到 ArgoCD 或 OpenShift GitOps Operator instance：&lt;/li&gt;
@@ -133,21 +133,21 @@ $ oc apply -f managedclustersetbinding.yaml
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;apiVersion: cluster.open-cluster-management.io/v1alpha1
-kind: Placement
-metadata:
-  name: all-openshift-clusters
-  namespace: openshift-gitops
-spec:
-  predicates:
-  - requiredClusterSelector:
-      labelSelector:
-        matchExpressions:
-        - key: vendor
-          operator: &amp;#34;In&amp;#34;
-          values:
-          - OpenShift
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;apiVersion: cluster.open-cluster-management.io/v1alpha1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kind: Placement
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;metadata:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  name: all-openshift-clusters
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  namespace: openshift-gitops
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;spec:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  predicates:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  - requiredClusterSelector:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      labelSelector:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        matchExpressions:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        - key: vendor
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          operator: &amp;#34;In&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          values:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          - OpenShift
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;blockquote&gt;
 &lt;p&gt;注意：只有 OpenShift 叢集註冊到 Argo CD 或 GitOps Operator instance，而不是其他 Kubernetes 叢集。&lt;/p&gt;
@@ -173,21 +173,21 @@ spec:
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;apiVersion: apps.open-cluster-management.io/v1alpha1
-kind: GitOpsCluster
-metadata:
-  name: argo-acm-clusters
-  namespace: openshift-gitops
-spec:
-  argoServer:
-    cluster: local-cluster
-    argoNamespace: openshift-gitops
-  placementRef:
-    kind: Placement
-    apiVersion: cluster.open-cluster-management.io/v1alpha1
-    name: all-openshift-clusters
-    namespace: openshift-gitops
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;apiVersion: apps.open-cluster-management.io/v1alpha1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kind: GitOpsCluster
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;metadata:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  name: argo-acm-clusters
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  namespace: openshift-gitops
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;spec:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  argoServer:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    cluster: local-cluster
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    argoNamespace: openshift-gitops
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  placementRef:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    kind: Placement
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    apiVersion: cluster.open-cluster-management.io/v1alpha1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    name: all-openshift-clusters
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    namespace: openshift-gitops
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;這使 Argo CD instance 能夠將 Application 部署到任何 ACM Hub 託管叢集中。&lt;/p&gt;
 &lt;p&gt;正如我們從前面的示例中看到的，placementRef.name 被定義為 &lt;code&gt;all-openshift-clusters&lt;/code&gt;，並被指定為安裝在 argoNamespace：openshift-gitops 中的 GitOps 實例的目標叢集。&lt;/p&gt;
@@ -195,8 +195,8 @@ spec:
 &lt;ul&gt;
 &lt;li&gt;幾分鐘後，我們在 ACM Hub 中生成了 GitOps Cluster CRD，我們將能夠直接從 Application 部分的 ACM Hub 控制台定義 Application 和ApplicationSet。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;從-acm-hub-部署-argocdopenshift-gitops-applicationset&#34;&gt;從 ACM Hub 部署 ArgoCD/OpenShift GitOps ApplicationSet&lt;/h2&gt;
-&lt;p&gt;一旦我們通過 ACM Hub 中的 GitOps Cluster CRD 啟用了 OpenShift GitOps 和 ACM 之間的整合，我們就可以直接在 ACM Hub 中部署 ApplicationSet，在一個單一的頁面中管理所有 ArgoCD Application。&lt;/p&gt;
+&lt;h2 id=&#34;從-acm-hub-部署-argocdopenshift-gitops-applicationset&#34;&gt;從 ACM Hub 部署 ArgoCD/OpenShift GitOps ApplicationSet
+&lt;/h2&gt;&lt;p&gt;一旦我們通過 ACM Hub 中的 GitOps Cluster CRD 啟用了 OpenShift GitOps 和 ACM 之間的整合，我們就可以直接在 ACM Hub 中部署 ApplicationSet，在一個單一的頁面中管理所有 ArgoCD Application。&lt;/p&gt;
 &lt;p&gt;另一方面，我們還將受益於&lt;a class=&#34;link&#34; href=&#34;https://argocd-applicationset.readthedocs.io/en/stable/Generators/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;ArgoCD ApplicationSets 的不同生成器的特性&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;使用這些生成方式，我們可以從不同叢集中的單個  Repository 部署多個 Application，利用 ApplicationSet 為每個託管的 Cluster 的從Repository 中的配置不同對象及要部署的 Application。&lt;/p&gt;
@@ -245,36 +245,36 @@ spec:
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;apiVersion: argoproj.io/v1alpha1
-kind: ApplicationSet
-metadata:
-  name: acm-appsets
-  namespace: openshift-gitops
-spec:
-  generators:
-    - clusterDecisionResource:
-        configMapRef: acm-placement
-        labelSelector:
-          matchLabels:
-            cluster.open-cluster-management.io/placement: acm-appsets-placement
-        requeueAfterSeconds: 180
-  template:
-    metadata:
-      name: &amp;#39;acm-appsets-&amp;#39;
-    spec:
-      destination:
-        namespace: bgdk
-        server: &amp;#39;&amp;#39;
-      project: default
-      source:
-        path: apps/bgd/overlays/bgdk
-        repoURL: &amp;#39;https://github.com/yylin1/ns-apps/&amp;#39;
-        targetRevision: single-app
-      syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;apiVersion: argoproj.io/v1alpha1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kind: ApplicationSet
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;metadata:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  name: acm-appsets
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  namespace: openshift-gitops
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;spec:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  generators:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    - clusterDecisionResource:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        configMapRef: acm-placement
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        labelSelector:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          matchLabels:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            cluster.open-cluster-management.io/placement: acm-appsets-placement
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        requeueAfterSeconds: 180
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  template:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    metadata:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      name: &amp;#39;acm-appsets-&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    spec:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      destination:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        namespace: bgdk
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        server: &amp;#39;&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      project: default
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      source:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        path: apps/bgd/overlays/bgdk
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        repoURL: &amp;#39;https://github.com/yylin1/ns-apps/&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        targetRevision: single-app
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      syncPolicy:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        automated:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          prune: true
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          selfHeal: true
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;注意：目標 namespace 可以是 openshift-gitops。BGDK 可能會更改，但它會以這種方式離開，因為我們需要放置一個目標 namespace，即ApplicationSet 本身不需要它（Applicatio bgdk 也不需要）&lt;/p&gt;
 &lt;ul&gt;
@@ -349,8 +349,8 @@ spec:
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;這些是由 ACM Hub 中生成的 GitOps CRD 自動生成和管理的，它與託管 Cluster 對應。&lt;/p&gt;
-&lt;h2 id=&#34;reference&#34;&gt;Reference&lt;/h2&gt;
-&lt;ul&gt;
+&lt;h2 id=&#34;reference&#34;&gt;Reference
+&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/RedHat-EMEA-SSA-Team/ns-gitops/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://github.com/RedHat-EMEA-SSA-Team/ns-gitops/&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://rcarrata.com/openshift/argo-and-acm/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -360,10 +360,10 @@ spec:
         </item>
         <item>
         <title>CI/CD: Tekton Pipeline 實戰</title>
-        <link>https://blog.yylin.io/openshift/pipelines/</link>
+        <link>http://localhost:1313/openshift/pipelines/</link>
         <pubDate>Tue, 21 Jun 2022 21:40:40 +0800</pubDate>
         
-        <guid>https://blog.yylin.io/openshift/pipelines/</guid>
+        <guid>http://localhost:1313/openshift/pipelines/</guid>
         <description>&lt;p&gt;OpenShift Pipelines 是一個基於 Kubernetes 資源的雲塊的持續和持續交付（持續集成和持續交付，簡稱 CI/CD）的解決方案。它通過執行執行的細節，使用 Tekton 進行跨平台的自動部署。Tekton 引入了多種標準的自定義資源定義 (CRD)，定義可跨 Kubernetes 分佈用於 CI/CD 管道。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://www.redhat.com/cms/managed-files/container-platforms-pipelines.png&#34;
 	
@@ -373,8 +373,8 @@ spec:
 	
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;主要特性&#34;&gt;主要特性&lt;/h2&gt;
-&lt;ul&gt;
+&lt;h2 id=&#34;主要特性&#34;&gt;主要特性
+&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;OpenShift Pipelines 是一個無服務器的 CI/CD 系統，它在獨立的容器中運行 Pipelines，以及所有需要的依賴組件。&lt;/li&gt;
 &lt;li&gt;OpenShift Pipelines 是為開發微服務架構的非中心化團隊設計的。&lt;/li&gt;
 &lt;li&gt;OpenShift Pipelines 使用標準 CI（pipeline）定義，這些與現有的 Kubernetes 工具集成擴展可擴展和擴展，可讓您定義和擴展 Kubernetes。&lt;/li&gt;
@@ -389,10 +389,10 @@ spec:
 &lt;li&gt;Pipeline&lt;/li&gt;
 &lt;li&gt;PipelineRun&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;pipelineresource&#34;&gt;PipelineResource&lt;/h2&gt;
-&lt;p&gt;PipelineResource 簡單來說可以作為 task 的 input or output，而每個 task 可以有多個 input &amp;amp; output。&lt;/p&gt;
-&lt;h2 id=&#34;syntax&#34;&gt;Syntax&lt;/h2&gt;
-&lt;p&gt;PipelineResource 的定義中會有以下必要資訊：&lt;/p&gt;
+&lt;h2 id=&#34;pipelineresource&#34;&gt;PipelineResource
+&lt;/h2&gt;&lt;p&gt;PipelineResource 簡單來說可以作為 task 的 input or output，而每個 task 可以有多個 input &amp;amp; output。&lt;/p&gt;
+&lt;h2 id=&#34;syntax&#34;&gt;Syntax
+&lt;/h2&gt;&lt;p&gt;PipelineResource 的定義中會有以下必要資訊：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;apiVersion：目前固定是 tekton.dev/v1alpha1&lt;/p&gt;
@@ -414,8 +414,8 @@ spec:
 &lt;ul&gt;
 &lt;li&gt;params：不同的 resource type 可能會有的不同額外參數資訊&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;resource-type&#34;&gt;Resource Type&lt;/h2&gt;
-&lt;p&gt;有了以上概念後，接著要知道的是 PipelineResources 共有以下幾種類型：&lt;/p&gt;
+&lt;h2 id=&#34;resource-type&#34;&gt;Resource Type
+&lt;/h2&gt;&lt;p&gt;有了以上概念後，接著要知道的是 PipelineResources 共有以下幾種類型：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Git Resource&lt;/li&gt;
 &lt;li&gt;Pull Request Resource&lt;/li&gt;
@@ -425,8 +425,8 @@ spec:
 &lt;li&gt;Cloud Event Resource&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;以下就針對比較常用的 Git &amp;amp; Image resource 說明，其他的部份可以參考官網的詳細文件。&lt;/p&gt;
-&lt;h3 id=&#34;git-resource&#34;&gt;Git Resource&lt;/h3&gt;
-&lt;p&gt;一般的 git repository，作為 task input 時，Tekton 執行 task 前會將程式碼 clone 回來，因此這邊就必須注意 git repository 存取的權限問題，若是 private repository 就要額外提供 credential 資訊才可以正常運作&lt;/p&gt;
+&lt;h3 id=&#34;git-resource&#34;&gt;Git Resource
+&lt;/h3&gt;&lt;p&gt;一般的 git repository，作為 task input 時，Tekton 執行 task 前會將程式碼 clone 回來，因此這邊就必須注意 git repository 存取的權限問題，若是 private repository 就要額外提供 credential 資訊才可以正常運作&lt;/p&gt;
 &lt;p&gt;以下是一個標準的 Git PipelineResource 的定義：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -448,26 +448,26 @@ spec:
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;apiVersion: tekton.dev/v1alpha1
-kind: PipelineResource
-metadata:
-  name: wizzbang-git
-  namespace: default
-spec:
-  type: git
-  params:
-    - name: url
-      value: https://github.com/wizzbangcorp/wizzbang.git
-    # 可用 branch, tag, commit SHA or ref
-    # 沒指定就會拉 master branch
-    - name: revision
-      value: master
-      # value: some_awesome_feature
-      # value: refs/pull/52525/head
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;apiVersion: tekton.dev/v1alpha1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kind: PipelineResource
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;metadata:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  name: wizzbang-git
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  namespace: default
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;spec:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  type: git
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  params:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    - name: url
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      value: https://github.com/wizzbangcorp/wizzbang.git
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    # 可用 branch, tag, commit SHA or ref
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    # 沒指定就會拉 master branch
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    - name: revision
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      value: master
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      # value: some_awesome_feature
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      # value: refs/pull/52525/head
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;task--clustertask&#34;&gt;Task &amp;amp; ClusterTask&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;Task&lt;/code&gt;(&amp;amp; &lt;code&gt;ClusterTask&lt;/code&gt;) 中包含了一連串的 step，通常是使用者要用來執行 CI flow，而這些工作會在單一個 pod 中以多個 container 的形式逐一完成。&lt;/p&gt;
+&lt;/div&gt;&lt;h2 id=&#34;task--clustertask&#34;&gt;Task &amp;amp; ClusterTask
+&lt;/h2&gt;&lt;p&gt;&lt;code&gt;Task&lt;/code&gt;(&amp;amp; &lt;code&gt;ClusterTask&lt;/code&gt;) 中包含了一連串的 step，通常是使用者要用來執行 CI flow，而這些工作會在單一個 pod 中以多個 container 的形式逐一完成。&lt;/p&gt;
 &lt;p&gt;Task &amp;amp; ClusterTask 兩者的不同在於 Task 是屬於 namespace level，而 ClusterTask 是屬於 cluster level&lt;/p&gt;
 &lt;p&gt;而在 Task 的定義中，最重要的部份有以下三個項目：&lt;/p&gt;
 &lt;ul&gt;
@@ -522,52 +522,52 @@ spec:
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;42
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;apiVersion: tekton.dev/v1alpha1
-kind: Task
-metadata:
-  name: deploy-using-kubectl
-spec:
-  inputs:
-    resources:
-      - name: source
-        type: git
-      - name: image
-        type: image
-    params:
-      - name: path
-        type: string
-        description: Path to the manifest to apply
-      - name: yamlPathToImage
-        type: string
-        description:
-          The path to the image to replace in the yaml manifest (arg to yq)
-  steps:
-    # step 中可以定義多個執行工作，會依照順序執行
-    - name: replace-image
-      image: mikefarah/yq
-      command: [&amp;#34;yq&amp;#34;]
-      args:
-        - &amp;#34;w&amp;#34;
-        - &amp;#34;-i&amp;#34;
-        - &amp;#34;$(inputs.params.path)&amp;#34;
-        - &amp;#34;$(inputs.params.yamlPathToImage)&amp;#34;
-        - &amp;#34;$(inputs.resources.image.url)&amp;#34;
-    - name: run-kubectl
-      image: lachlanevenson/k8s-kubectl
-      command: [&amp;#34;kubectl&amp;#34;]
-      args:
-        - &amp;#34;apply&amp;#34;
-        - &amp;#34;-f&amp;#34;
-        - &amp;#34;$(inputs.params.path)&amp;#34;
-  # 此 volume 在 task 中沒有用到，只是一個範例而已
-  # 用以表示可以在 task 中定義 volume 並使用
-  volumes:
-    - name: example-volume
-      emptyDir: {}
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;apiVersion: tekton.dev/v1alpha1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kind: Task
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;metadata:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  name: deploy-using-kubectl
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;spec:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  inputs:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    resources:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      - name: source
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        type: git
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      - name: image
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        type: image
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    params:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      - name: path
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        type: string
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        description: Path to the manifest to apply
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      - name: yamlPathToImage
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        type: string
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        description:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          The path to the image to replace in the yaml manifest (arg to yq)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  steps:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    # step 中可以定義多個執行工作，會依照順序執行
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    - name: replace-image
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      image: mikefarah/yq
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      command: [&amp;#34;yq&amp;#34;]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      args:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        - &amp;#34;w&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        - &amp;#34;-i&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        - &amp;#34;$(inputs.params.path)&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        - &amp;#34;$(inputs.params.yamlPathToImage)&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        - &amp;#34;$(inputs.resources.image.url)&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    - name: run-kubectl
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      image: lachlanevenson/k8s-kubectl
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      command: [&amp;#34;kubectl&amp;#34;]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      args:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        - &amp;#34;apply&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        - &amp;#34;-f&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        - &amp;#34;$(inputs.params.path)&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  # 此 volume 在 task 中沒有用到，只是一個範例而已
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  # 用以表示可以在 task 中定義 volume 並使用
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  volumes:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    - name: example-volume
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      emptyDir: {}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;taskrun&#34;&gt;TaskRun&lt;/h2&gt;
-&lt;p&gt;定義了 task 之後，Tekton 並不會主動執行任何 task，這時候就必須要搭配 TaskRun 才可以讓 task 真正的執行指定工作。&lt;/p&gt;
+&lt;/div&gt;&lt;h2 id=&#34;taskrun&#34;&gt;TaskRun
+&lt;/h2&gt;&lt;p&gt;定義了 task 之後，Tekton 並不會主動執行任何 task，這時候就必須要搭配 TaskRun 才可以讓 task 真正的執行指定工作。&lt;/p&gt;
 &lt;p&gt;以下是一個標準的 TaskRun 定義：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -597,40 +597,38 @@ spec:
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;# 以下幾個(apiVersion, kind, metadata, spec)是必要資訊
-apiVersion: tekton.dev/v1alpha1
-kind: TaskRun
-metadata:
-  name: build-docker-image-from-git-source-task-run
-spec:
-  serviceAccount: robot-docker-basic
-  # 指定到已經預先定義好的 Task
-  taskRef:
-    name: build-docker-image-from-git-source
-  inputs:
-    resources:
-      - name: docker-source
-        # 指定到已經預先定義好的 PipelineResource
-        resourceRef:
-          name: git-tekton-test
-    params:
-      - name: pathToDockerFile
-        value: Dockerfile
-      - name: pathToContext
-        value: /workspace/docker-source/examples/microservices/leeroy-web
-  outputs:
-    resources:
-      - name: builtImage
-        resourceRef:
-          name: image-tekton-test
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# 以下幾個(apiVersion, kind, metadata, spec)是必要資訊
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;apiVersion: tekton.dev/v1alpha1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kind: TaskRun
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;metadata:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  name: build-docker-image-from-git-source-task-run
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;spec:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  serviceAccount: robot-docker-basic
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  # 指定到已經預先定義好的 Task
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  taskRef:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    name: build-docker-image-from-git-source
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  inputs:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    resources:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      - name: docker-source
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        # 指定到已經預先定義好的 PipelineResource
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        resourceRef:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          name: git-tekton-test
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    params:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      - name: pathToDockerFile
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        value: Dockerfile
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      - name: pathToContext
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        value: /workspace/docker-source/examples/microservices/leeroy-web
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  outputs:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    resources:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      - name: builtImage
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        resourceRef:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          name: image-tekton-test
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;pipeline&#34;&gt;Pipeline&lt;/h2&gt;
-&lt;p&gt;Pipeline 其實可以把它簡單思考為前面 Task 的集合，有順序性的排列，並透過之後介紹的 PipelineRun 來運作。&lt;/p&gt;
+&lt;/div&gt;&lt;h2 id=&#34;pipeline&#34;&gt;Pipeline
+&lt;/h2&gt;&lt;p&gt;Pipeline 其實可以把它簡單思考為前面 Task 的集合，有順序性的排列，並透過之後介紹的 PipelineRun 來運作。&lt;/p&gt;
 &lt;p&gt;成功運行 Pipeline 結果:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://www.redhat.com/architect/sites/default/files/styles/embed_large/public/2022-06/4-pipeline.png?itok=Eex7RxG9&#34;
 	
@@ -649,8 +647,8 @@ spec:
 	
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;結語&#34;&gt;結語&lt;/h2&gt;
-&lt;p&gt;以上內容(PipelineResource, Task, TaskRun, Pipeline, PipelineRun) 是 Tekton 中執行工作的必要元素，實際上執行的 CI/CD 工作都會與這幾個部份有關。&lt;/p&gt;
+&lt;h2 id=&#34;結語&#34;&gt;結語
+&lt;/h2&gt;&lt;p&gt;以上內容(PipelineResource, Task, TaskRun, Pipeline, PipelineRun) 是 Tekton 中執行工作的必要元素，實際上執行的 CI/CD 工作都會與這幾個部份有關。&lt;/p&gt;
 &lt;p&gt;Tekton 將所有的基本元素拆分成一個一個的 k8s CRD(Custom Resource Definition)，如果是稍微複雜一點的 CI/CD 工作，可能就會需要定義不少個 CRD 才能完成，而且在設計上相對於其他的 CI server(例如：GitLab CI, Drone CI)可能不是這麼直覺；但這樣的設計提供了以下優點：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -665,8 +663,8 @@ spec:
 &lt;/ul&gt;
 &lt;p&gt;若是未來有考慮 workload 都跑在 k8s 上的使用者，在選擇 CI/CD 的工具時或許可以將 Tekton 考慮進行。&lt;/p&gt;
 &lt;p&gt;接著可能會面臨到的問題可能是，如果希望作到 GitOps，光是以上項目好像不夠還有相關元件支援性。&lt;/p&gt;
-&lt;h2 id=&#34;reference&#34;&gt;Reference&lt;/h2&gt;
-&lt;ul&gt;
+&lt;h2 id=&#34;reference&#34;&gt;Reference
+&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/tektoncd/pipeline/tree/main/examples&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;pipeline/examples&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/tektoncd/pipeline/blob/main/docs/resources.md&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;

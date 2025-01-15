@@ -1,32 +1,32 @@
 <!DOCTYPE html>
 <html lang="zh-tw" dir="ltr">
-    <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='本篇文章主要是說明 OpenShift 4.8 裸機伺服器(Bare-metal Server)部署過程與環境架構整理，並針對過程遇到問題透過記錄整理過程，延伸可能經常遇到的問題與探討。'><title>OpenShift 4.8.x UPI install on Bare metal</title>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="本篇文章主要是說明 OpenShift 4.8 裸機伺服器(Bare-metal Server)部署過程與環境架構整理，並針對過程遇到問題透過記錄整理過程，延伸可能經常遇到的問題與探討。">
+<title>OpenShift 4.8.x UPI install on Bare metal</title>
 
-<link rel='canonical' href='https://blog.yylin.io/openshift/ocp4-install/'>
+<link rel='canonical' href='http://localhost:1313/openshift/ocp4-install/'>
 
-<link rel="stylesheet" href="/scss/style.min.5dfb59e7e9320a8eb7995abb74271d0b47aa7bd7423004549c2964fd78196c75.css"><meta property='og:title' content='OpenShift 4.8.x UPI install on Bare metal'>
-<meta property='og:description' content='本篇文章主要是說明 OpenShift 4.8 裸機伺服器(Bare-metal Server)部署過程與環境架構整理，並針對過程遇到問題透過記錄整理過程，延伸可能經常遇到的問題與探討。'>
-<meta property='og:url' content='https://blog.yylin.io/openshift/ocp4-install/'>
+<link rel="stylesheet" href="/scss/style.min.5dfb59e7e9320a8eb7995abb74271d0b47aa7bd7423004549c2964fd78196c75.css"><meta property='og:title' content="OpenShift 4.8.x UPI install on Bare metal">
+<meta property='og:description' content="本篇文章主要是說明 OpenShift 4.8 裸機伺服器(Bare-metal Server)部署過程與環境架構整理，並針對過程遇到問題透過記錄整理過程，延伸可能經常遇到的問題與探討。">
+<meta property='og:url' content='http://localhost:1313/openshift/ocp4-install/'>
 <meta property='og:site_name' content='Frank&#39;s Notes'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='OCP 4.x' /><meta property='article:published_time' content='2021-09-26T14:54:40&#43;08:00'/><meta property='article:modified_time' content='2021-09-26T14:54:40&#43;08:00'/>
 <meta name="twitter:title" content="OpenShift 4.8.x UPI install on Bare metal">
 <meta name="twitter:description" content="本篇文章主要是說明 OpenShift 4.8 裸機伺服器(Bare-metal Server)部署過程與環境架構整理，並針對過程遇到問題透過記錄整理過程，延伸可能經常遇到的問題與探討。">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-60ZBHV66GB"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-60ZBHV66GB', { 'anonymize_ip': false });
-}
-</script>
-<style>
-	h1 {
-		letter-spacing: 6px;
-	}
-</style>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-60ZBHV66GB"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-60ZBHV66GB');
+        }
+      </script>
     </head>
     <body class="
     article-page
@@ -63,8 +63,6 @@ if (!doNotTrack) {
     <header>
         
             
-            
-            
         
         
         <div class="site-meta">
@@ -75,7 +73,6 @@ if (!doNotTrack) {
         
         
         
-
         <li >
             <a href='/' >
                 
@@ -96,7 +93,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/about/' >
                 
@@ -116,7 +112,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/archives/' >
                 
@@ -137,7 +132,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/search/' >
                 
@@ -157,7 +151,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/links/' >
                 
@@ -176,12 +169,12 @@ if (!doNotTrack) {
             </a>
         </li>
         
+        <li class="menu-bottom-section">
+            <ol class="menu">
 
-        <div class="menu-bottom-section">
-            
-            
-                <li id="dark-mode-toggle">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <circle cx="8" cy="12" r="2" />
   <rect x="2" y="6" width="20" height="12" rx="6" />
@@ -189,7 +182,7 @@ if (!doNotTrack) {
 
 
 
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <circle cx="16" cy="12" r="2" />
   <rect x="2" y="6" width="20" height="12" rx="6" />
@@ -197,13 +190,77 @@ if (!doNotTrack) {
 
 
 
-                    <span>夜晚模式</span>
-                </li>
-            
-        </div>
+                        <span>夜晚模式</span>
+                    </li>
+                
+            </ol>
+        </li>
     </ol>
 </aside>
-<main class="main full-width">
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目錄</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#部署版本說明">部署版本說明：</a></li>
+        <li><a href="#reference">Reference</a></li>
+        <li><a href="#事前準備">事前準備</a>
+          <ul>
+            <li><a href="#download-urls">Download URLs</a></li>
+            <li><a href="#network-and-hosts-info">Network and Hosts Info</a></li>
+          </ul>
+        </li>
+        <li><a href="#bastion">Bastion</a>
+          <ul>
+            <li><a href="#事前準備-1">事前準備</a></li>
+            <li><a href="#安裝與設定-dns-server">安裝與設定 DNS Server</a></li>
+            <li><a href="#安裝與設定-http-server">安裝與設定 HTTP Server</a></li>
+            <li><a href="#產生-openshift-ignition-fils">產生 OpenShift Ignition fils</a></li>
+          </ul>
+        </li>
+        <li><a href="#bootstrap">Bootstrap</a></li>
+        <li><a href="#maters">Maters</a></li>
+        <li><a href="#workers-amp-infras">Workers &amp; Infras</a>
+          <ul>
+            <li><a href="#搬移資源至-infra-nodes">搬移資源至 Infra nodes</a></li>
+          </ul>
+        </li>
+        <li><a href="#web-console">Web Console</a></li>
+        <li><a href="#terminal-login">Terminal Login</a></li>
+        <li><a href="#references">References</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
     <article class="main-article">
     <header class="article-header">
 
@@ -230,6 +287,9 @@ if (!doNotTrack) {
         
     </div>
 
+    
+    
+    
     
     <footer class="article-time">
         
@@ -267,6 +327,7 @@ if (!doNotTrack) {
 
     
 </div>
+
 </header>
 
     <section class="article-content">
@@ -278,8 +339,8 @@ if (!doNotTrack) {
 [共同撰寫編輯]: <a class="link" href="https://k2r2bai.com/"  target="_blank" rel="noopener"
     >Kyle Bai</a></p>
 </blockquote>
-<h2 id="部署版本說明">部署版本說明：</h2>
-<ul>
+<h2 id="部署版本說明">部署版本說明：
+</h2><ul>
 <li>Proxmox Environment v6.1-7
 <ul>
 <li>CPU: 8-Core, 16-Thread Unlocked / Memory: 128 GB</li>
@@ -287,15 +348,15 @@ if (!doNotTrack) {
 </li>
 <li>OpenShift v4.8.x.</li>
 </ul>
-<h2 id="reference">Reference</h2>
-<ul>
+<h2 id="reference">Reference
+</h2><ul>
 <li>參考官網文件 - <a class="link" href="https://docs.openshift.com/container-platform/4.8/installing/installing_bare_metal/installing-bare-metal.html"  target="_blank" rel="noopener"
     >Installing a user-provisioned cluster on bare metal</a></li>
 </ul>
-<h2 id="事前準備">事前準備</h2>
-<p>開始前，需要先準備以下資訊與要求。</p>
-<h3 id="download-urls">Download URLs</h3>
-<ul>
+<h2 id="事前準備">事前準備
+</h2><p>開始前，需要先準備以下資訊與要求。</p>
+<h3 id="download-urls">Download URLs
+</h3><ul>
 <li><a class="link" href="https://console.redhat.com/openshift/install/metal/user-provisioned"  target="_blank" rel="noopener"
     >User-provisioned infrastructure</a>: 可下載 OpenShift Installer、CLI 與 Pull secrets(需要登入 Red Hat 註冊帳號權限)</li>
 <li><a class="link" href="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest-4.8/"  target="_blank" rel="noopener"
@@ -328,84 +389,84 @@ if (!doNotTrack) {
 <p>過程中會透過 <code>wget</code> 下載，因此在有網路狀況下，不需要預先下載。</p>
 </blockquote>
 <hr>
-<h3 id="network-and-hosts-info">Network and Hosts Info</h3>
-<ul>
+<h3 id="network-and-hosts-info">Network and Hosts Info
+</h3><ul>
 <li><strong>OpenShift subnet CIDR</strong>: 192.168.101.0/24</li>
 <li><strong>OpenShift Pod Network(CNI)</strong>: 10.128.0.0/14</li>
 <li><strong>OpenShift Service Network</strong>: 172.3.0.0/16</li>
 <li><strong>Domain</strong>: lab.yiylin.internal</li>
 </ul>
 <div class="table-wrapper"><table>
-<thead>
-<tr>
-<th>Hosts</th>
-<th>IP</th>
-<th>CPU</th>
-<th>RAM</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>bashtion</td>
-<td>192.168.101.9</td>
-<td>2 vCore</td>
-<td>4G</td>
-</tr>
-<tr>
-<td>bootstrap</td>
-<td>192.168.101.10</td>
-<td>4 vCore</td>
-<td>8G</td>
-</tr>
-<tr>
-<td>master-1</td>
-<td>192.168.101.21</td>
-<td>4 vCore</td>
-<td>8G</td>
-</tr>
-<tr>
-<td>master-2</td>
-<td>192.168.191.22</td>
-<td>4 vCore</td>
-<td>8G</td>
-</tr>
-<tr>
-<td>master-3</td>
-<td>192.168.191.23</td>
-<td>4 vCore</td>
-<td>8G</td>
-</tr>
-<tr>
-<td>worker-1</td>
-<td>192.168.191.31</td>
-<td>4 vCore</td>
-<td>8G</td>
-</tr>
-<tr>
-<td>worker-2</td>
-<td>192.168.191.32</td>
-<td>4 vCore</td>
-<td>8G</td>
-</tr>
-<tr>
-<td>infra-1</td>
-<td>192.168.191.41</td>
-<td>4 vCore</td>
-<td>8G</td>
-</tr>
-<tr>
-<td>infra-2</td>
-<td>192.168.191.42</td>
-<td>4 vCore</td>
-<td>8G</td>
-</tr>
-<tr>
-<td>infra-3</td>
-<td>192.168.191.43</td>
-<td>4 vCore</td>
-<td>8G</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>Hosts</th>
+          <th>IP</th>
+          <th>CPU</th>
+          <th>RAM</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>bashtion</td>
+          <td>192.168.101.9</td>
+          <td>2 vCore</td>
+          <td>4G</td>
+      </tr>
+      <tr>
+          <td>bootstrap</td>
+          <td>192.168.101.10</td>
+          <td>4 vCore</td>
+          <td>8G</td>
+      </tr>
+      <tr>
+          <td>master-1</td>
+          <td>192.168.101.21</td>
+          <td>4 vCore</td>
+          <td>8G</td>
+      </tr>
+      <tr>
+          <td>master-2</td>
+          <td>192.168.191.22</td>
+          <td>4 vCore</td>
+          <td>8G</td>
+      </tr>
+      <tr>
+          <td>master-3</td>
+          <td>192.168.191.23</td>
+          <td>4 vCore</td>
+          <td>8G</td>
+      </tr>
+      <tr>
+          <td>worker-1</td>
+          <td>192.168.191.31</td>
+          <td>4 vCore</td>
+          <td>8G</td>
+      </tr>
+      <tr>
+          <td>worker-2</td>
+          <td>192.168.191.32</td>
+          <td>4 vCore</td>
+          <td>8G</td>
+      </tr>
+      <tr>
+          <td>infra-1</td>
+          <td>192.168.191.41</td>
+          <td>4 vCore</td>
+          <td>8G</td>
+      </tr>
+      <tr>
+          <td>infra-2</td>
+          <td>192.168.191.42</td>
+          <td>4 vCore</td>
+          <td>8G</td>
+      </tr>
+      <tr>
+          <td>infra-3</td>
+          <td>192.168.191.43</td>
+          <td>4 vCore</td>
+          <td>8G</td>
+      </tr>
+  </tbody>
 </table></div>
 <blockquote>
 <p>這裡為了方便測試，將 PXE / HAProxy / DNS Server 等都放在 bastion上。
@@ -413,8 +474,8 @@ if (!doNotTrack) {
     >Minimum resource requirements</a>。
 請先透過 <code>Proxmox Environment</code> 開啟對應 <code>hardware</code> VM。</p>
 </blockquote>
-<h4 id="補充-network-說明">補充 Network 說明</h4>
-<blockquote>
+<h4 id="補充-network-說明">補充 Network 說明
+</h4><blockquote>
 <p>其中 <code>OpenShift subnet CIDR</code> 請修改為自己當前 Proxmox Environment 網路配置)
 <img src="https://i.imgur.com/8UnOcXL.jpg"
 	
@@ -425,22 +486,22 @@ if (!doNotTrack) {
 	
 ></p>
 </blockquote>
-<h2 id="bastion">Bastion</h2>
-<p>透過 Live CD 安裝 RHEL 8 版本(或使用 CentOS 8)，並確保網路設定正確。</p>
+<h2 id="bastion">Bastion
+</h2><p>透過 Live CD 安裝 RHEL 8 版本(或使用 CentOS 8)，並確保網路設定正確。</p>
 <blockquote>
 <p>RHEL 需要確認 <code>subscription</code> 驗證，確保 repo 源可正常取得</p>
 </blockquote>
-<h3 id="事前準備-1">事前準備</h3>
-<p>進入 <code>bastion</code> 機器，安裝 jq 與 wget 工具等:</p>
+<h3 id="事前準備-1">事前準備
+</h3><p>進入 <code>bastion</code> 機器，安裝 jq 與 wget 工具等:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ sudo su -
-$ yum install -y wget jq vim
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ sudo su -
+</span></span><span class="line"><span class="cl">$ yum install -y wget jq vim
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>關閉 bastion 防火牆:</p>
 <div class="highlight"><div class="chroma">
@@ -449,9 +510,9 @@ $ yum install -y wget jq vim
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">$ systemctl stop firewalld
-$ systemctl disable firewalld
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ systemctl stop firewalld
+</span></span><span class="line"><span class="cl">$ systemctl disable firewalld
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>&gt; 這邊方便測試，所以直接關閉 :D。</p>
 <p>設定與關閉 SELinux:</p>
@@ -463,11 +524,11 @@ $ systemctl disable firewalld
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">$ vim /etc/selinux/config
-<span class="nv">SELINUX</span><span class="o">=</span>disabled
-
-$ setenforce <span class="m">0</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ vim /etc/selinux/config
+</span></span><span class="line"><span class="cl"><span class="nv">SELINUX</span><span class="o">=</span>disabled
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ setenforce <span class="m">0</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>這邊方便測試實驗，所以直接關閉。</p>
@@ -478,8 +539,8 @@ $ setenforce <span class="m">0</span>
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ ssh-keygen -t rsa
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ ssh-keygen -t rsa
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>這邊方便測試，以 root 來建立。</p>
@@ -491,9 +552,9 @@ $ setenforce <span class="m">0</span>
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="nb">export</span> <span class="nv">DOMAIN</span><span class="o">=</span>lab.yiylin.internal
-<span class="nb">export</span> <span class="nv">OCP_NETWORK_CIDR</span><span class="o">=</span>192.168.101.0/24 
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">DOMAIN</span><span class="o">=</span>lab.yiylin.internal
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">OCP_NETWORK_CIDR</span><span class="o">=</span>192.168.101.0/24 
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>下載 OpenShift Installer 與 CLI 工具，並解壓縮檔案到 <code>/usr/local/bin/</code> 底下:</p>
 <div class="highlight"><div class="chroma">
@@ -511,28 +572,28 @@ $ setenforce <span class="m">0</span>
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="c1"># CLI</span>
-$ wget -c https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest-4.8/openshift-client-linux.tar.gz -O - <span class="p">|</span> tar -xz
-$ mv <span class="o">{</span>oc,kubectl<span class="o">}</span> /usr/local/bin/
-$ oc version
-Client Version: 4.8.2
-
-<span class="c1"># Installer</span>
-$ wget -c https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest-4.8/openshift-install-linux.tar.gz -O - <span class="p">|</span> tar -xz
-$ mv openshift-install /usr/local/bin/
-$ openshift-install version
-openshift-install 4.8.2
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="c1"># CLI</span>
+</span></span><span class="line"><span class="cl">$ wget -c https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest-4.8/openshift-client-linux.tar.gz -O - <span class="p">|</span> tar -xz
+</span></span><span class="line"><span class="cl">$ mv <span class="o">{</span>oc,kubectl<span class="o">}</span> /usr/local/bin/
+</span></span><span class="line"><span class="cl">$ oc version
+</span></span><span class="line"><span class="cl">Client Version: 4.8.2
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Installer</span>
+</span></span><span class="line"><span class="cl">$ wget -c https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest-4.8/openshift-install-linux.tar.gz -O - <span class="p">|</span> tar -xz
+</span></span><span class="line"><span class="cl">$ mv openshift-install /usr/local/bin/
+</span></span><span class="line"><span class="cl">$ openshift-install version
+</span></span><span class="line"><span class="cl">openshift-install 4.8.2
+</span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="安裝與設定-dns-server">安裝與設定 DNS Server</h3>
-<p>安裝 DNS server 套件，這邊使用 <code>dnsmasq</code> 來提供服務:</p>
+</div><h3 id="安裝與設定-dns-server">安裝與設定 DNS Server
+</h3><p>安裝 DNS server 套件，這邊使用 <code>dnsmasq</code> 來提供服務:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ yum -y install dnsmasq bind-utils
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ yum -y install dnsmasq bind-utils
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>這部分也可參考 OCP 官網安裝 <a class="link" href="https://docs.openshift.com/container-platform/4.8/installing/installing_bare_metal/installing-bare-metal.html#installation-dns-user-infra-example_installing-bare-metal"  target="_blank" rel="noopener"
@@ -593,57 +654,57 @@ openshift-install 4.8.2
 </span><span class="lnt">50
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ cat &lt;&lt; <span class="s2">&#34;EOF&#34;</span> &gt; /etc/dnsmasq.d/openshift.conf
-<span class="nv">server</span><span class="o">=</span>8.8.8.8
-
-<span class="nv">domain</span><span class="o">=</span><span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,<span class="si">${</span><span class="nv">OCP_NETWORK_CIDR</span><span class="si">}</span>,local
-
-<span class="c1"># A Records(api)</span>
-host-record<span class="o">=</span>api.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>, 192.168.101.9
-host-record<span class="o">=</span>api-int.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,
-host-record<span class="o">=</span>api-int.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,192.168.101.9
-
-<span class="c1"># A Records(hosts)</span>
-host-record<span class="o">=</span>bastion.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,192.168.101.9
-host-record<span class="o">=</span>bootstrap.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,192.168.101.10
-host-record<span class="o">=</span>master-1.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,192.168.101.21
-host-record<span class="o">=</span>master-2.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,192.168.101.22
-host-record<span class="o">=</span>master-3.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,192.168.101.23
-host-record<span class="o">=</span>worker-1.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,192.168.101.31
-host-record<span class="o">=</span>worker-2.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,192.168.101.32
-host-record<span class="o">=</span>infra-1.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,192.168.101.41
-host-record<span class="o">=</span>infra-2.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,192.168.101.42
-host-record<span class="o">=</span>infra-3.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,192.168.101.43
-
-<span class="c1"># A Records(etcd)</span>
-host-record<span class="o">=</span>etcd-0.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,192.168.101.21
-host-record<span class="o">=</span>etcd-1.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,192.168.101.22
-host-record<span class="o">=</span>etcd-2.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,192.168.101.23
-
-srv-host<span class="o">=</span>_etcd-server-ssl._tcp.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,etcd-0.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,2380,0,10
-srv-host<span class="o">=</span>_etcd-server-ssl._tcp.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,etcd-1.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,2380,0,10
-srv-host<span class="o">=</span>_etcd-server-ssl._tcp.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,etcd-2.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,2380,0,10
-
-<span class="c1"># PTRs</span>
-<span class="nv">address</span><span class="o">=</span>/apps.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.9
-<span class="nv">address</span><span class="o">=</span>/.apps.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.9
-<span class="nv">address</span><span class="o">=</span>/api.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.9
-<span class="nv">address</span><span class="o">=</span>/api-int.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.9
-<span class="nv">address</span><span class="o">=</span>/bastion.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.9
-<span class="nv">address</span><span class="o">=</span>/bootstrap.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.10
-<span class="nv">address</span><span class="o">=</span>/master-1.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.21
-<span class="nv">address</span><span class="o">=</span>/master-2.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.22
-<span class="nv">address</span><span class="o">=</span>/master-3.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.23
-<span class="nv">address</span><span class="o">=</span>/etcd-0.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.21
-<span class="nv">address</span><span class="o">=</span>/etcd-1.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.22
-<span class="nv">address</span><span class="o">=</span>/etcd-2.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.23
-<span class="nv">address</span><span class="o">=</span>/worker-1.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.31
-<span class="nv">address</span><span class="o">=</span>/worker-2.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.32
-<span class="nv">address</span><span class="o">=</span>/infra-1.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.41
-<span class="nv">address</span><span class="o">=</span>/infra-2.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.42
-<span class="nv">address</span><span class="o">=</span>/infra-3.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.43
-EOF
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ cat &lt;&lt; <span class="s2">&#34;EOF&#34;</span> &gt; /etc/dnsmasq.d/openshift.conf
+</span></span><span class="line"><span class="cl"><span class="nv">server</span><span class="o">=</span>8.8.8.8
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">domain</span><span class="o">=</span><span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,<span class="si">${</span><span class="nv">OCP_NETWORK_CIDR</span><span class="si">}</span>,local
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># A Records(api)</span>
+</span></span><span class="line"><span class="cl">host-record<span class="o">=</span>api.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>, 192.168.101.9
+</span></span><span class="line"><span class="cl">host-record<span class="o">=</span>api-int.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,
+</span></span><span class="line"><span class="cl">host-record<span class="o">=</span>api-int.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,192.168.101.9
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># A Records(hosts)</span>
+</span></span><span class="line"><span class="cl">host-record<span class="o">=</span>bastion.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,192.168.101.9
+</span></span><span class="line"><span class="cl">host-record<span class="o">=</span>bootstrap.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,192.168.101.10
+</span></span><span class="line"><span class="cl">host-record<span class="o">=</span>master-1.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,192.168.101.21
+</span></span><span class="line"><span class="cl">host-record<span class="o">=</span>master-2.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,192.168.101.22
+</span></span><span class="line"><span class="cl">host-record<span class="o">=</span>master-3.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,192.168.101.23
+</span></span><span class="line"><span class="cl">host-record<span class="o">=</span>worker-1.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,192.168.101.31
+</span></span><span class="line"><span class="cl">host-record<span class="o">=</span>worker-2.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,192.168.101.32
+</span></span><span class="line"><span class="cl">host-record<span class="o">=</span>infra-1.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,192.168.101.41
+</span></span><span class="line"><span class="cl">host-record<span class="o">=</span>infra-2.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,192.168.101.42
+</span></span><span class="line"><span class="cl">host-record<span class="o">=</span>infra-3.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,192.168.101.43
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># A Records(etcd)</span>
+</span></span><span class="line"><span class="cl">host-record<span class="o">=</span>etcd-0.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,192.168.101.21
+</span></span><span class="line"><span class="cl">host-record<span class="o">=</span>etcd-1.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,192.168.101.22
+</span></span><span class="line"><span class="cl">host-record<span class="o">=</span>etcd-2.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,192.168.101.23
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">srv-host<span class="o">=</span>_etcd-server-ssl._tcp.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,etcd-0.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,2380,0,10
+</span></span><span class="line"><span class="cl">srv-host<span class="o">=</span>_etcd-server-ssl._tcp.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,etcd-1.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,2380,0,10
+</span></span><span class="line"><span class="cl">srv-host<span class="o">=</span>_etcd-server-ssl._tcp.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,etcd-2.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>,2380,0,10
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># PTRs</span>
+</span></span><span class="line"><span class="cl"><span class="nv">address</span><span class="o">=</span>/apps.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.9
+</span></span><span class="line"><span class="cl"><span class="nv">address</span><span class="o">=</span>/.apps.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.9
+</span></span><span class="line"><span class="cl"><span class="nv">address</span><span class="o">=</span>/api.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.9
+</span></span><span class="line"><span class="cl"><span class="nv">address</span><span class="o">=</span>/api-int.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.9
+</span></span><span class="line"><span class="cl"><span class="nv">address</span><span class="o">=</span>/bastion.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.9
+</span></span><span class="line"><span class="cl"><span class="nv">address</span><span class="o">=</span>/bootstrap.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.10
+</span></span><span class="line"><span class="cl"><span class="nv">address</span><span class="o">=</span>/master-1.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.21
+</span></span><span class="line"><span class="cl"><span class="nv">address</span><span class="o">=</span>/master-2.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.22
+</span></span><span class="line"><span class="cl"><span class="nv">address</span><span class="o">=</span>/master-3.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.23
+</span></span><span class="line"><span class="cl"><span class="nv">address</span><span class="o">=</span>/etcd-0.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.21
+</span></span><span class="line"><span class="cl"><span class="nv">address</span><span class="o">=</span>/etcd-1.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.22
+</span></span><span class="line"><span class="cl"><span class="nv">address</span><span class="o">=</span>/etcd-2.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.23
+</span></span><span class="line"><span class="cl"><span class="nv">address</span><span class="o">=</span>/worker-1.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.31
+</span></span><span class="line"><span class="cl"><span class="nv">address</span><span class="o">=</span>/worker-2.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.32
+</span></span><span class="line"><span class="cl"><span class="nv">address</span><span class="o">=</span>/infra-1.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.41
+</span></span><span class="line"><span class="cl"><span class="nv">address</span><span class="o">=</span>/infra-2.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.42
+</span></span><span class="line"><span class="cl"><span class="nv">address</span><span class="o">=</span>/infra-3.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>/192.168.101.43
+</span></span><span class="line"><span class="cl">EOF
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>啟動 dnsmasq 服務，並檢測 dnsmasq 設定是否正確:</p>
 <div class="highlight"><div class="chroma">
@@ -653,10 +714,10 @@ EOF
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ systemctl <span class="nb">enable</span> dnsmasq<span class="p">;</span> systemctl start dnsmasq
-$ dnsmasq --test
-dnsmasq: syntax check OK.
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ systemctl <span class="nb">enable</span> dnsmasq<span class="p">;</span> systemctl start dnsmasq
+</span></span><span class="line"><span class="cl">$ dnsmasq --test
+</span></span><span class="line"><span class="cl">dnsmasq: syntax check OK.
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>編輯 <code>/etc/resolv.conf</code> 檔案，修改 nameserver:</p>
 <div class="highlight"><div class="chroma">
@@ -666,10 +727,10 @@ dnsmasq: syntax check OK.
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ cat &lt;&lt; <span class="s2">&#34;EOF&#34;</span> &gt; /etc/resolv.conf
-nameserver 127.0.0.1
-EOF
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ cat &lt;&lt; <span class="s2">&#34;EOF&#34;</span> &gt; /etc/resolv.conf
+</span></span><span class="line"><span class="cl">nameserver 127.0.0.1
+</span></span><span class="line"><span class="cl">EOF
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>驗證 DNS server 正反解:</p>
 <div class="highlight"><div class="chroma">
@@ -681,25 +742,25 @@ EOF
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="c1"># dig domain @dns_server</span>
-$ dig bastion.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span> @192.168.101.9
-
-<span class="c1"># dig -x ip @dns_server</span>
-$ dig -x 192.168.101.9 @192.168.101.9
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="c1"># dig domain @dns_server</span>
+</span></span><span class="line"><span class="cl">$ dig bastion.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span> @192.168.101.9
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># dig -x ip @dns_server</span>
+</span></span><span class="line"><span class="cl">$ dig -x 192.168.101.9 @192.168.101.9
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>請驗證填寫自己對應的 <code>ip address</code></p>
 </blockquote>
-<h3 id="安裝與設定-http-server">安裝與設定 HTTP Server</h3>
-<p>安裝與設定 httpd 套件:</p>
+<h3 id="安裝與設定-http-server">安裝與設定 HTTP Server
+</h3><p>安裝與設定 httpd 套件:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ yum -y install httpd
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ yum -y install httpd
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>編輯 <code>/etc/httpd/conf/httpd.conf</code> 設定檔:</p>
 <div class="highlight"><div class="chroma">
@@ -708,9 +769,9 @@ $ dig -x 192.168.101.9 @192.168.101.9
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="c1">#Listen 12.34.56.78:80</span>
-Listen 8080	
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="c1">#Listen 12.34.56.78:80</span>
+</span></span><span class="line"><span class="cl">Listen 8080	
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>因為 80 是 Ingress-http 使用，除非將 HAProxy 拆成不同節點或用 External LB。</p>
@@ -721,18 +782,18 @@ Listen 8080
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ systemctl <span class="nb">enable</span> httpd<span class="p">;</span> systemctl start httpd
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ systemctl <span class="nb">enable</span> httpd<span class="p">;</span> systemctl start httpd
+</span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="產生-openshift-ignition-fils">產生 OpenShift Ignition fils</h3>
-<p>建立放置 OpenShift Config 檔案的目錄:</p>
+</div><h3 id="產生-openshift-ignition-fils">產生 OpenShift Ignition fils
+</h3><p>建立放置 OpenShift Config 檔案的目錄:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ <span class="nb">cd</span> <span class="nv">$HOME</span> <span class="p">;</span> mkdir <span class="nv">$HOME</span>/ocp4/ignition<span class="p">;</span><span class="nb">cd</span> <span class="nv">$HOME</span>/ocp4/ignition
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ <span class="nb">cd</span> <span class="nv">$HOME</span> <span class="p">;</span> mkdir <span class="nv">$HOME</span>/ocp4/ignition<span class="p">;</span><span class="nb">cd</span> <span class="nv">$HOME</span>/ocp4/ignition
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>建立與編輯 <code>install-config.yaml</code> 檔案:</p>
 <div class="highlight"><div class="chroma">
@@ -762,30 +823,30 @@ Listen 8080
 </span><span class="lnt">23
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
-</span><span class="w"></span><span class="nt">baseDomain</span><span class="p">:</span><span class="w"> </span><span class="l">yiylin.internal</span><span class="w">
-</span><span class="w"></span><span class="nt">compute</span><span class="p">:</span><span class="w">
-</span><span class="w"></span>- <span class="nt">hyperthreading</span><span class="p">:</span><span class="w"> </span><span class="l">Enabled</span><span class="w">
-</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">worker</span><span class="w">
-</span><span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">0</span><span class="w">
-</span><span class="w"></span><span class="nt">controlPlane</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="nt">hyperthreading</span><span class="p">:</span><span class="w"> </span><span class="l">Enabled</span><span class="w">
-</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">master</span><span class="w">
-</span><span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">3</span><span class="w">
-</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">lab</span><span class="w">
-</span><span class="w"></span><span class="nt">networking</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="nt">clusterNetworks</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="nt">cidr</span><span class="p">:</span><span class="w"> </span><span class="m">10.128.0.0</span><span class="l">/14</span><span class="w">
-</span><span class="w">    </span><span class="nt">hostPrefix</span><span class="p">:</span><span class="w"> </span><span class="m">24</span><span class="w">
-</span><span class="w">  </span><span class="nt">networkType</span><span class="p">:</span><span class="w"> </span><span class="l">OpenShiftSDN</span><span class="w">
-</span><span class="w">  </span><span class="nt">serviceNetwork</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="m">172.3.0.0</span><span class="l">/16</span><span class="w">
-</span><span class="w"></span><span class="nt">platform</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="nt">none</span><span class="p">:</span><span class="w"> </span>{}<span class="w">
-</span><span class="w"></span><span class="nt">pullSecret</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;{&#34;auths&#34;:{ YOUR_PULL_SECRETE }}&#39;</span><span class="w">
-</span><span class="w"></span><span class="nt">sshKey</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;SSH_PUB_KEY&#34;</span><span class="w">
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">baseDomain</span><span class="p">:</span><span class="w"> </span><span class="l">yiylin.internal</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">compute</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span>- <span class="nt">hyperthreading</span><span class="p">:</span><span class="w"> </span><span class="l">Enabled</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">worker</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">controlPlane</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">hyperthreading</span><span class="p">:</span><span class="w"> </span><span class="l">Enabled</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">master</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">3</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">lab</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">networking</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">clusterNetworks</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">cidr</span><span class="p">:</span><span class="w"> </span><span class="m">10.128.0.0</span><span class="l">/14</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">hostPrefix</span><span class="p">:</span><span class="w"> </span><span class="m">24</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">networkType</span><span class="p">:</span><span class="w"> </span><span class="l">OpenShiftSDN</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">serviceNetwork</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="m">172.3.0.0</span><span class="l">/16</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">platform</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">none</span><span class="p">:</span><span class="w"> </span>{}<span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">pullSecret</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;{&#34;auths&#34;:{ YOUR_PULL_SECRETE }}&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">sshKey</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;SSH_PUB_KEY&#34;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <ul>
@@ -805,11 +866,11 @@ Listen 8080
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ cp install-config.yaml install-config.yaml.bak
-$ openshift-install create manifests --dir<span class="o">=</span><span class="nv">$HOME</span>/ocp4/ignition
-$ ls <span class="nv">$HOME</span>/ocp4/ignition
-manifests  openshift
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ cp install-config.yaml install-config.yaml.bak
+</span></span><span class="line"><span class="cl">$ openshift-install create manifests --dir<span class="o">=</span><span class="nv">$HOME</span>/ocp4/ignition
+</span></span><span class="line"><span class="cl">$ ls <span class="nv">$HOME</span>/ocp4/ignition
+</span></span><span class="line"><span class="cl">manifests  openshift
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>編輯 <code>manifests/cluster-scheduler-02-config.yml</code> 檔案，設定 <code>mastersSchedulable</code> 值，以確保 master 不作為工作負載節點:</p>
 <div class="highlight"><div class="chroma">
@@ -820,11 +881,11 @@ manifests  openshift
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nn">...</span><span class="w">
-</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="nt">mastersSchedulable</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-</span><span class="w"></span><span class="nn">...</span><span class="w"> 
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nn">...</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">mastersSchedulable</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nn">...</span><span class="w"> 
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>產生 OCP 使用的 Ignition files:</p>
 <div class="highlight"><div class="chroma">
@@ -834,10 +895,10 @@ manifests  openshift
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ openshift-install create ignition-configs --dir<span class="o">=</span><span class="nv">$HOME</span>/ocp4/ignition
-$ ls <span class="nv">$HOME</span>/ocp4/ignition
-auth  bootstrap.ign  master.ign  metadata.json  worker.ign
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ openshift-install create ignition-configs --dir<span class="o">=</span><span class="nv">$HOME</span>/ocp4/ignition
+</span></span><span class="line"><span class="cl">$ ls <span class="nv">$HOME</span>/ocp4/ignition
+</span></span><span class="line"><span class="cl">auth  bootstrap.ign  master.ign  metadata.json  worker.ign
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>撰寫方面安裝 RHCOS 的腳本 <code>$HOME/ocp4/ignition/coreos-install.sh</code>:</p>
 <div class="highlight"><div class="chroma">
@@ -857,20 +918,20 @@ auth  bootstrap.ign  master.ign  metadata.json  worker.ign
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="cp">#!/bin/bash
-</span><span class="cp"></span>
-<span class="nb">set</span> -eu 
-
-<span class="nb">export</span> <span class="nv">DEVICE_NAME</span><span class="o">=</span><span class="si">${</span><span class="nv">DEVICE_NAME</span><span class="k">:-</span><span class="p">/dev/sda</span><span class="si">}</span>
-<span class="nb">export</span> <span class="nv">IGNITION_FILE</span><span class="o">=</span><span class="si">${</span><span class="nv">IGNITION_FILE</span><span class="k">:-</span><span class="nv">bootstrap</span><span class="p">.ign</span><span class="si">}</span> <span class="c1"># bootstrap.ign  master.ign  worker.ign </span>
-<span class="nb">export</span> <span class="nv">IGNITION_URL</span><span class="o">=</span><span class="si">${</span><span class="nv">IGNITION_URL</span><span class="k">:-</span><span class="nv">http</span><span class="p">://192.168.101.9:</span><span class="nv">8080</span><span class="p">/ignition/</span><span class="si">${</span><span class="nv">IGNITION_FILE</span><span class="si">}}</span>
-
-sudo coreos-installer install <span class="si">${</span><span class="nv">DEVICE_NAME</span><span class="si">}</span> <span class="se">\
-</span><span class="se"></span>  --insecure-ignition <span class="se">\
-</span><span class="se"></span>  --ignition-url<span class="o">=</span><span class="si">${</span><span class="nv">IGNITION_URL</span><span class="si">}</span> <span class="se">\
-</span><span class="se"></span>  --firstboot-args rd.neednet<span class="o">=</span><span class="m">1</span> <span class="se">\
-</span><span class="se"></span>  --copy-network
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="nb">set</span> -eu 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">DEVICE_NAME</span><span class="o">=</span><span class="si">${</span><span class="nv">DEVICE_NAME</span><span class="k">:-</span><span class="p">/dev/sda</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">IGNITION_FILE</span><span class="o">=</span><span class="si">${</span><span class="nv">IGNITION_FILE</span><span class="k">:-</span><span class="nv">bootstrap</span><span class="p">.ign</span><span class="si">}</span> <span class="c1"># bootstrap.ign  master.ign  worker.ign </span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">IGNITION_URL</span><span class="o">=</span><span class="si">${</span><span class="nv">IGNITION_URL</span><span class="k">:-</span><span class="nv">http</span><span class="p">://192.168.101.9:</span><span class="nv">8080</span><span class="p">/ignition/</span><span class="si">${</span><span class="nv">IGNITION_FILE</span><span class="si">}}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">sudo coreos-installer install <span class="si">${</span><span class="nv">DEVICE_NAME</span><span class="si">}</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --insecure-ignition <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --ignition-url<span class="o">=</span><span class="si">${</span><span class="nv">IGNITION_URL</span><span class="si">}</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --firstboot-args rd.neednet<span class="o">=</span><span class="m">1</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --copy-network
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>複製 <code>*.ign</code> 與腳本 到 <code>/var/www/html/ignition</code> 目錄:</p>
 <div class="highlight"><div class="chroma">
@@ -883,24 +944,24 @@ sudo coreos-installer install <span class="si">${</span><span class="nv">DEVICE_
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ mkdir /var/www/html/ignition
-$ cp -rp <span class="nv">$HOME</span>/ocp4/ignition/<span class="o">{</span>*.ign,coreos-install.sh<span class="o">}</span> /var/www/html/ignition
-$ ls /var/www/html/ignition
-bootstrap.ign  master.ign  worker.ign coreos-install.sh
-
-$ chmod <span class="m">664</span> -R /var/www/html/ignition/*
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ mkdir /var/www/html/ignition
+</span></span><span class="line"><span class="cl">$ cp -rp <span class="nv">$HOME</span>/ocp4/ignition/<span class="o">{</span>*.ign,coreos-install.sh<span class="o">}</span> /var/www/html/ignition
+</span></span><span class="line"><span class="cl">$ ls /var/www/html/ignition
+</span></span><span class="line"><span class="cl">bootstrap.ign  master.ign  worker.ign coreos-install.sh
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ chmod <span class="m">664</span> -R /var/www/html/ignition/*
+</span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="bootstrap">Bootstrap</h2>
-<p>透過 PVE 建立 Bootstrap 節點，並掛載 RHCOS Live ISO，並進入 Console 執行以下操作。</p>
+</div><h2 id="bootstrap">Bootstrap
+</h2><p>透過 PVE 建立 Bootstrap 節點，並掛載 RHCOS Live ISO，並進入 Console 執行以下操作。</p>
 <p>首先進入系統後，先設定 Network 資訊:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ sudo nmtui
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ sudo nmtui
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>設定網卡資訊:</p>
 <p><img src="https://i.imgur.com/tJFSkiO.png"
@@ -945,8 +1006,8 @@ $ chmod <span class="m">664</span> -R /var/www/html/ignition/*
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ ip -4 a
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ ip -4 a
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>確認網路與 DNS 都能夠被解析到。</p>
@@ -963,14 +1024,14 @@ $ chmod <span class="m">664</span> -R /var/www/html/ignition/*
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ curl http://192.168.101.9:8080/ignition/coreos-install.sh --output coreos-install.sh
-$ chmod u+x coreos-install.sh
-$ ./coreos-install.sh
-
-<span class="c1"># 安裝完成後</span>
-$ lsblk -f
-$ reboot
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ curl http://192.168.101.9:8080/ignition/coreos-install.sh --output coreos-install.sh
+</span></span><span class="line"><span class="cl">$ chmod u+x coreos-install.sh
+</span></span><span class="line"><span class="cl">$ ./coreos-install.sh
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 安裝完成後</span>
+</span></span><span class="line"><span class="cl">$ lsblk -f
+</span></span><span class="line"><span class="cl">$ reboot
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>安裝沒問題後，重新啟動機器，並將 CD-ROM 移除。</p>
@@ -990,17 +1051,17 @@ $ reboot
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ openshift-install wait-for bootstrap-complete --dir<span class="o">=</span><span class="nv">$HOME</span>/ocp4/ignition --log-level debug
-DEBUG OpenShift Installer 4.8.2
-DEBUG Built from commit a5ddd2dd6c72d8a5ea0a5f17acd8b964b6a3d1be
-INFO Waiting up to 20m0s <span class="k">for</span> the Kubernetes API at https://api.lab.yiylin.internal:6443...
-INFO API v1.21.1+051ac4f up
-INFO Waiting up to 30m0s <span class="k">for</span> bootstrapping to complete...
-
-<span class="c1"># 確認 openshift-api-server 以及 machine-config-server LB 可以通</span>
-$ curl -k https://api-int.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>:6443
-$ curl -k https://api-int.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>:22623/config/master <span class="p">|</span> jq .
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ openshift-install wait-for bootstrap-complete --dir<span class="o">=</span><span class="nv">$HOME</span>/ocp4/ignition --log-level debug
+</span></span><span class="line"><span class="cl">DEBUG OpenShift Installer 4.8.2
+</span></span><span class="line"><span class="cl">DEBUG Built from commit a5ddd2dd6c72d8a5ea0a5f17acd8b964b6a3d1be
+</span></span><span class="line"><span class="cl">INFO Waiting up to 20m0s <span class="k">for</span> the Kubernetes API at https://api.lab.yiylin.internal:6443...
+</span></span><span class="line"><span class="cl">INFO API v1.21.1+051ac4f up
+</span></span><span class="line"><span class="cl">INFO Waiting up to 30m0s <span class="k">for</span> bootstrapping to complete...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 確認 openshift-api-server 以及 machine-config-server LB 可以通</span>
+</span></span><span class="line"><span class="cl">$ curl -k https://api-int.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>:6443
+</span></span><span class="line"><span class="cl">$ curl -k https://api-int.<span class="si">${</span><span class="nv">DOMAIN</span><span class="si">}</span>:22623/config/master <span class="p">|</span> jq .
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>當看到此訊息時，就能並往下進行安裝 Masters。若等待過久，可以透過 bastion 進入 bootstrap 節點查看狀況:</p>
 <div class="highlight"><div class="chroma">
@@ -1012,12 +1073,12 @@ $ curl -k https://api-int.<span class="si">${</span><span class="nv">DOMAIN</spa
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">$ ssh core@bootstrap.lab.yiylin.internal
-
-core $ sudo crictl pods
-core $ sudo crictl ps -a
-core $ sudo journalctl -b -f -u bootkube.service
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ ssh core@bootstrap.lab.yiylin.internal
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">core $ sudo crictl pods
+</span></span><span class="line"><span class="cl">core $ sudo crictl ps -a
+</span></span><span class="line"><span class="cl">core $ sudo journalctl -b -f -u bootkube.service
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>正常情況 Pods 要如以下:</p>
 <div class="highlight"><div class="chroma">
@@ -1032,26 +1093,26 @@ core $ sudo journalctl -b -f -u bootkube.service
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">POD ID              CREATED              STATE               NAME                                           NAMESPACE                             ATTEMPT             RUNTIME
-8101e41b16f9e       52 seconds ago       Ready               bootstrap-kube-scheduler-localhost             kube-system                           0                   (default)
-907d0a933771a       52 seconds ago       Ready               bootstrap-kube-controller-manager-localhost    kube-system                           0                   (default)
-a8b709f7caeaa       52 seconds ago       Ready               bootstrap-kube-apiserver-localhost             kube-system                           0                   (default)
-4eb793b3d1844       52 seconds ago       Ready               cloud-credential-operator-localhost            openshift-cloud-credential-operator   0                   (default)
-49a1cdb2b25f9       52 seconds ago       Ready               bootstrap-cluster-version-operator-localhost   openshift-cluster-version             0                   (default)
-c5098e42b5aa5       About a minute ago   Ready               bootstrap-machine-config-operator-localhost    default                               0                   (default)
-e7a3dbc6e0bc0       About a minute ago   Ready               etcd-bootstrap-member-localhost                openshift-etcd                        0                   (default)
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">POD ID              CREATED              STATE               NAME                                           NAMESPACE                             ATTEMPT             RUNTIME
+</span></span><span class="line"><span class="cl">8101e41b16f9e       52 seconds ago       Ready               bootstrap-kube-scheduler-localhost             kube-system                           0                   (default)
+</span></span><span class="line"><span class="cl">907d0a933771a       52 seconds ago       Ready               bootstrap-kube-controller-manager-localhost    kube-system                           0                   (default)
+</span></span><span class="line"><span class="cl">a8b709f7caeaa       52 seconds ago       Ready               bootstrap-kube-apiserver-localhost             kube-system                           0                   (default)
+</span></span><span class="line"><span class="cl">4eb793b3d1844       52 seconds ago       Ready               cloud-credential-operator-localhost            openshift-cloud-credential-operator   0                   (default)
+</span></span><span class="line"><span class="cl">49a1cdb2b25f9       52 seconds ago       Ready               bootstrap-cluster-version-operator-localhost   openshift-cluster-version             0                   (default)
+</span></span><span class="line"><span class="cl">c5098e42b5aa5       About a minute ago   Ready               bootstrap-machine-config-operator-localhost    default                               0                   (default)
+</span></span><span class="line"><span class="cl">e7a3dbc6e0bc0       About a minute ago   Ready               etcd-bootstrap-member-localhost                openshift-etcd                        0                   (default)
+</span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="maters">Maters</h2>
-<p>透過 vCenter 建立 Master 節點，並掛載 RHCOS Live ISO，並進入 Console 執行以下操作。</p>
+</div><h2 id="maters">Maters
+</h2><p>透過 vCenter 建立 Master 節點，並掛載 RHCOS Live ISO，並進入 Console 執行以下操作。</p>
 <p>首先進入系統後，先設定 Network 資訊:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ sudo nmtui
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ sudo nmtui
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>&gt; 網路參考 Bootstrap 設定流程。</p>
 <p>確認沒問題後，執行以下指令來安裝 RHCOS，並設定為 Masters 節點:</p>
@@ -1066,14 +1127,14 @@ e7a3dbc6e0bc0       About a minute ago   Ready               etcd-bootstrap-memb
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ curl http://192.168.101.9:8080/ignition/coreos-install.sh --output coreos-install.sh
-$ chmod u+x coreos-install.sh
-$ <span class="nb">export</span> <span class="nv">IGNITION_FILE</span><span class="o">=</span>master.ign
-$ ./coreos-install.sh
-
-<span class="c1"># 安裝完後</span>
-$ reboot
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ curl http://192.168.101.9:8080/ignition/coreos-install.sh --output coreos-install.sh
+</span></span><span class="line"><span class="cl">$ chmod u+x coreos-install.sh
+</span></span><span class="line"><span class="cl">$ <span class="nb">export</span> <span class="nv">IGNITION_FILE</span><span class="o">=</span>master.ign
+</span></span><span class="line"><span class="cl">$ ./coreos-install.sh
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 安裝完後</span>
+</span></span><span class="line"><span class="cl">$ reboot
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>安裝沒問題後，重新啟動機器，並將 CD-ROM 移除。</p>
@@ -1089,13 +1150,13 @@ $ reboot
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ openshift-install wait-for bootstrap-complete --dir<span class="o">=</span><span class="nv">$HOME</span>/ocp4/ignition --log-level debug
-...
-INFO Waiting up to 30m0s <span class="k">for</span> bootstrapping to complete...
-DEBUG Bootstrap status: <span class="nb">complete</span>
-INFO It is now safe to remove the bootstrap resources
-INFO Time elapsed: 0s
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ openshift-install wait-for bootstrap-complete --dir<span class="o">=</span><span class="nv">$HOME</span>/ocp4/ignition --log-level debug
+</span></span><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">INFO Waiting up to 30m0s <span class="k">for</span> bootstrapping to complete...
+</span></span><span class="line"><span class="cl">DEBUG Bootstrap status: <span class="nb">complete</span>
+</span></span><span class="line"><span class="cl">INFO It is now safe to remove the bootstrap resources
+</span></span><span class="line"><span class="cl">INFO Time elapsed: 0s
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>在 <code>bastion</code> 執行以下指令來查看叢集狀況:</p>
 <div class="highlight"><div class="chroma">
@@ -1119,24 +1180,24 @@ INFO Time elapsed: 0s
 </span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ cp <span class="nv">$HOME</span>/ocp4/ignition/auth/kubeconfig <span class="nv">$HOME</span>/ocp4/kubeconfig
-$ <span class="nb">export</span> <span class="nv">KUBECONFIG</span><span class="o">=</span><span class="nv">$HOME</span>/ocp4/kubeconfig
-$ oc get csr
-NAME                                       AGE   SIGNERNAME                                    REQUESTOR                                                                         CONDITION
-csr-9xqqd                                  25m   kubernetes.io/kubelet-serving                 system:node:etcd-1                                                                Approved,Issued
-csr-gzvwr                                  27m   kubernetes.io/kubelet-serving                 system:node:etcd-0                                                                Approved,Issued
-csr-j6npt                                  25m   kubernetes.io/kubelet-serving                 system:node:etcd-2                                                                Approved,Issued
-csr-mxqkf                                  25m   kubernetes.io/kube-apiserver-client-kubelet   system:serviceaccount:openshift-machine-config-operator:node-bootstrapper         Approved,Issued
-csr-tth9f                                  28m   kubernetes.io/kube-apiserver-client-kubelet   system:serviceaccount:openshift-machine-config-operator:node-bootstrapper         Approved,Issued
-csr-zx9q8                                  25m   kubernetes.io/kube-apiserver-client-kubelet   system:serviceaccount:openshift-machine-config-operator:node-bootstrapper         Approved,Issued
-system:openshift:openshift-authenticator   25m   kubernetes.io/kube-apiserver-client           system:serviceaccount:openshift-authentication-operator:authentication-operator   Approved,Issued
-
-$ oc get no
-NAME                           STATUS   ROLES    AGE   VERSION
-master-1.lab.yiylin.internal   Ready    master   31m   v1.21.1+051ac4f
-master-2.lab.yiylin.internal   Ready    master   15m   v1.21.1+051ac4f
-master-3.lab.yiylin.internal   Ready    master   10m   v1.21.1+051ac4f
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ cp <span class="nv">$HOME</span>/ocp4/ignition/auth/kubeconfig <span class="nv">$HOME</span>/ocp4/kubeconfig
+</span></span><span class="line"><span class="cl">$ <span class="nb">export</span> <span class="nv">KUBECONFIG</span><span class="o">=</span><span class="nv">$HOME</span>/ocp4/kubeconfig
+</span></span><span class="line"><span class="cl">$ oc get csr
+</span></span><span class="line"><span class="cl">NAME                                       AGE   SIGNERNAME                                    REQUESTOR                                                                         CONDITION
+</span></span><span class="line"><span class="cl">csr-9xqqd                                  25m   kubernetes.io/kubelet-serving                 system:node:etcd-1                                                                Approved,Issued
+</span></span><span class="line"><span class="cl">csr-gzvwr                                  27m   kubernetes.io/kubelet-serving                 system:node:etcd-0                                                                Approved,Issued
+</span></span><span class="line"><span class="cl">csr-j6npt                                  25m   kubernetes.io/kubelet-serving                 system:node:etcd-2                                                                Approved,Issued
+</span></span><span class="line"><span class="cl">csr-mxqkf                                  25m   kubernetes.io/kube-apiserver-client-kubelet   system:serviceaccount:openshift-machine-config-operator:node-bootstrapper         Approved,Issued
+</span></span><span class="line"><span class="cl">csr-tth9f                                  28m   kubernetes.io/kube-apiserver-client-kubelet   system:serviceaccount:openshift-machine-config-operator:node-bootstrapper         Approved,Issued
+</span></span><span class="line"><span class="cl">csr-zx9q8                                  25m   kubernetes.io/kube-apiserver-client-kubelet   system:serviceaccount:openshift-machine-config-operator:node-bootstrapper         Approved,Issued
+</span></span><span class="line"><span class="cl">system:openshift:openshift-authenticator   25m   kubernetes.io/kube-apiserver-client           system:serviceaccount:openshift-authentication-operator:authentication-operator   Approved,Issued
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ oc get no
+</span></span><span class="line"><span class="cl">NAME                           STATUS   ROLES    AGE   VERSION
+</span></span><span class="line"><span class="cl">master-1.lab.yiylin.internal   Ready    master   31m   v1.21.1+051ac4f
+</span></span><span class="line"><span class="cl">master-2.lab.yiylin.internal   Ready    master   15m   v1.21.1+051ac4f
+</span></span><span class="line"><span class="cl">master-3.lab.yiylin.internal   Ready    master   10m   v1.21.1+051ac4f
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>完成後，即可進行 Workers 與 Infras 部署，並移除 Bootstrap。若等待過久，可以透過 bastion 進入 masters 節點查看狀況:</p>
 <div class="highlight"><div class="chroma">
@@ -1144,19 +1205,19 @@ master-3.lab.yiylin.internal   Ready    master   10m   v1.21.1+051ac4f
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">$ ssh core@maste-1.lab.yiylin.internal
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ ssh core@maste-1.lab.yiylin.internal
+</span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="workers-amp-infras">Workers &amp; Infras</h2>
-<p>透過 vCenter 建立 Workers &amp; Infras 節點，並掛載 RHCOS Live ISO，並進入 Console 執行以下操作。</p>
+</div><h2 id="workers-amp-infras">Workers &amp; Infras
+</h2><p>透過 vCenter 建立 Workers &amp; Infras 節點，並掛載 RHCOS Live ISO，並進入 Console 執行以下操作。</p>
 <p>首先進入系統後，先設定 Network 資訊:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ sudo nmtui
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ sudo nmtui
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>網路參考 Bootstrap 設定流程。</p>
@@ -1174,15 +1235,15 @@ master-3.lab.yiylin.internal   Ready    master   10m   v1.21.1+051ac4f
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ curl http://192.168.101.9:8080/ignition/coreos-install.sh --output coreos-install.sh
-$ chmod u+x coreos-install.sh
-$ <span class="nb">export</span> <span class="nv">IGNITION_FILE</span><span class="o">=</span>worker.ign
-$ ./coreos-install.sh
-
-<span class="c1"># 安裝完成後</span>
-$ lsblk -f
-$ reboot
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ curl http://192.168.101.9:8080/ignition/coreos-install.sh --output coreos-install.sh
+</span></span><span class="line"><span class="cl">$ chmod u+x coreos-install.sh
+</span></span><span class="line"><span class="cl">$ <span class="nb">export</span> <span class="nv">IGNITION_FILE</span><span class="o">=</span>worker.ign
+</span></span><span class="line"><span class="cl">$ ./coreos-install.sh
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 安裝完成後</span>
+</span></span><span class="line"><span class="cl">$ lsblk -f
+</span></span><span class="line"><span class="cl">$ reboot
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>安裝沒問題後，重新啟動機器，並將 CD-ROM 移除。</p>
@@ -1209,24 +1270,24 @@ $ reboot
 </span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ openshift-install wait-for install-complete --dir<span class="o">=</span><span class="nv">$HOME</span>/ocp4/ignition --log-level debug
-DEBUG OpenShift Installer 4.8.2
-DEBUG Built from commit a5ddd2dd6c72d8a5ea0a5f17acd8b964b6a3d1be
-DEBUG Loading Install Config...
-DEBUG   Loading SSH Key...
-DEBUG   Loading Base Domain...
-DEBUG     Loading Platform...
-DEBUG   Loading Cluster Name...
-DEBUG     Loading Base Domain...
-DEBUG     Loading Platform...
-DEBUG   Loading Networking...
-DEBUG     Loading Platform...
-DEBUG   Loading Pull Secret...
-DEBUG   Loading Platform...
-DEBUG Using Install Config loaded from state file
-INFO Waiting up to 40m0s <span class="k">for</span> the cluster at https://api.lab.yiylin.internal:6443 to initialize...
-DEBUG Still waiting <span class="k">for</span> the cluster to initialize: Some cluster operators are still updating: authentication, console, ingress, monitoring
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ openshift-install wait-for install-complete --dir<span class="o">=</span><span class="nv">$HOME</span>/ocp4/ignition --log-level debug
+</span></span><span class="line"><span class="cl">DEBUG OpenShift Installer 4.8.2
+</span></span><span class="line"><span class="cl">DEBUG Built from commit a5ddd2dd6c72d8a5ea0a5f17acd8b964b6a3d1be
+</span></span><span class="line"><span class="cl">DEBUG Loading Install Config...
+</span></span><span class="line"><span class="cl">DEBUG   Loading SSH Key...
+</span></span><span class="line"><span class="cl">DEBUG   Loading Base Domain...
+</span></span><span class="line"><span class="cl">DEBUG     Loading Platform...
+</span></span><span class="line"><span class="cl">DEBUG   Loading Cluster Name...
+</span></span><span class="line"><span class="cl">DEBUG     Loading Base Domain...
+</span></span><span class="line"><span class="cl">DEBUG     Loading Platform...
+</span></span><span class="line"><span class="cl">DEBUG   Loading Networking...
+</span></span><span class="line"><span class="cl">DEBUG     Loading Platform...
+</span></span><span class="line"><span class="cl">DEBUG   Loading Pull Secret...
+</span></span><span class="line"><span class="cl">DEBUG   Loading Platform...
+</span></span><span class="line"><span class="cl">DEBUG Using Install Config loaded from state file
+</span></span><span class="line"><span class="cl">INFO Waiting up to 40m0s <span class="k">for</span> the cluster at https://api.lab.yiylin.internal:6443 to initialize...
+</span></span><span class="line"><span class="cl">DEBUG Still waiting <span class="k">for</span> the cluster to initialize: Some cluster operators are still updating: authentication, console, ingress, monitoring
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>出現 <code>DEBUG</code> 即可往下操作，因為這部分會需要下載 Images 會比較久</p>
@@ -1252,26 +1313,26 @@ DEBUG Still waiting <span class="k">for</span> the cluster to initialize: Some c
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ <span class="nb">export</span> <span class="nv">KUBECONFIG</span><span class="o">=</span><span class="nv">$HOME</span>/ocp4/kubeconfig
-$ oc get csr -ojson <span class="p">|</span> jq -r .items<span class="o">[]</span> <span class="p">|</span> <span class="k">select</span><span class="o">(</span>.status <span class="o">==</span> <span class="o">{}</span> <span class="o">)</span> <span class="p">|</span> .metadata.name <span class="p">|</span> xargs oc adm certificate approve
-
-<span class="c1"># 確認機器都起來</span>
-$ oc get no
-NAME       STATUS   ROLES    AGE   VERSION
-infra0     Ready    worker   12m   v1.21.1+051ac4f
-infra1     Ready    worker   12m   v1.21.1+051ac4f
-infra2     Ready    worker   12m   v1.21.1+051ac4f
-master0    Ready    master   11h   v1.21.1+051ac4f
-master1    Ready    master   11h   v1.21.1+051ac4f
-master2    Ready    master   11h   v1.21.1+051ac4f
-worker0    Ready    worker   12m   v1.21.1+051ac4f
-worker1    Ready    worker   12m   v1.21.1+051ac4f
-worker2    Ready    worker   12m   v1.21.1+051ac4f
-worker3    Ready    worker   12m   v1.21.1+051ac4f
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ <span class="nb">export</span> <span class="nv">KUBECONFIG</span><span class="o">=</span><span class="nv">$HOME</span>/ocp4/kubeconfig
+</span></span><span class="line"><span class="cl">$ oc get csr -ojson <span class="p">|</span> jq -r .items<span class="o">[]</span> <span class="p">|</span> <span class="k">select</span><span class="o">(</span>.status <span class="o">==</span> <span class="o">{}</span> <span class="o">)</span> <span class="p">|</span> .metadata.name <span class="p">|</span> xargs oc adm certificate approve
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 確認機器都起來</span>
+</span></span><span class="line"><span class="cl">$ oc get no
+</span></span><span class="line"><span class="cl">NAME       STATUS   ROLES    AGE   VERSION
+</span></span><span class="line"><span class="cl">infra0     Ready    worker   12m   v1.21.1+051ac4f
+</span></span><span class="line"><span class="cl">infra1     Ready    worker   12m   v1.21.1+051ac4f
+</span></span><span class="line"><span class="cl">infra2     Ready    worker   12m   v1.21.1+051ac4f
+</span></span><span class="line"><span class="cl">master0    Ready    master   11h   v1.21.1+051ac4f
+</span></span><span class="line"><span class="cl">master1    Ready    master   11h   v1.21.1+051ac4f
+</span></span><span class="line"><span class="cl">master2    Ready    master   11h   v1.21.1+051ac4f
+</span></span><span class="line"><span class="cl">worker0    Ready    worker   12m   v1.21.1+051ac4f
+</span></span><span class="line"><span class="cl">worker1    Ready    worker   12m   v1.21.1+051ac4f
+</span></span><span class="line"><span class="cl">worker2    Ready    worker   12m   v1.21.1+051ac4f
+</span></span><span class="line"><span class="cl">worker3    Ready    worker   12m   v1.21.1+051ac4f
+</span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="搬移資源至-infra-nodes">搬移資源至 Infra nodes</h3>
-<p>接著要將 Worker 與 Infra 角色做拆分，確保系統與 Operator 服務不影響業務服務的負載，參考 <a class="link" href="https://docs.openshift.com/container-platform/4.8/machine_management/creating-infrastructure-machinesets.html#infrastructure-components_creating-infrastructure-machinesets"  target="_blank" rel="noopener"
+</div><h3 id="搬移資源至-infra-nodes">搬移資源至 Infra nodes
+</h3><p>接著要將 Worker 與 Infra 角色做拆分，確保系統與 Operator 服務不影響業務服務的負載，參考 <a class="link" href="https://docs.openshift.com/container-platform/4.8/machine_management/creating-infrastructure-machinesets.html#infrastructure-components_creating-infrastructure-machinesets"  target="_blank" rel="noopener"
     >Creating infrastructure machine sets</a></p>
 <p>設定 infra nodes 的 labels:</p>
 <div class="highlight"><div class="chroma">
@@ -1297,26 +1358,26 @@ worker3    Ready    worker   12m   v1.21.1+051ac4f
 </span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ <span class="k">for</span> i in <span class="o">{</span>1..2<span class="o">}</span><span class="p">;</span> <span class="k">do</span>
-  oc label node worker-<span class="si">${</span><span class="nv">i</span><span class="si">}</span> node-role.kubernetes.io/app<span class="o">=</span> --overwrite
-<span class="k">done</span>
-
-$ <span class="k">for</span> i in <span class="o">{</span>1..3<span class="o">}</span><span class="p">;</span> <span class="k">do</span>
-    oc label node infra-<span class="si">${</span><span class="nv">i</span><span class="si">}</span> node-role.kubernetes.io/infra<span class="o">=</span> --overwrite
-    oc label node infra-<span class="si">${</span><span class="nv">i</span><span class="si">}</span> node-role.kubernetes.io/worker-
-  <span class="k">done</span>
-
-$ oc get no
-NAME                           STATUS   ROLES        AGE    VERSION
-infra-1.lab.yiylin.internal    Ready    infra        31m    v1.21.1+051ac4f
-infra-2.lab.yiylin.internal    Ready    infra        31m    v1.21.1+051ac4f
-infra-3.lab.yiylin.internal    Ready    infra        31m    v1.21.1+051ac4f
-master-1.lab.yiylin.internal   Ready    master       156m   v1.21.1+051ac4f
-master-2.lab.yiylin.internal   Ready    master       140m   v1.21.1+051ac4f
-master-3.lab.yiylin.internal   Ready    master       135m   v1.21.1+051ac4f
-worker-1.lab.yiylin.internal   Ready    app,worker   31m    v1.21.1+051ac4f
-worker-2.lab.yiylin.internal   Ready    app,worker   31m    v1.21.1+051ac4f
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ <span class="k">for</span> i in <span class="o">{</span>1..2<span class="o">}</span><span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">  oc label node worker-<span class="si">${</span><span class="nv">i</span><span class="si">}</span> node-role.kubernetes.io/app<span class="o">=</span> --overwrite
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ <span class="k">for</span> i in <span class="o">{</span>1..3<span class="o">}</span><span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">    oc label node infra-<span class="si">${</span><span class="nv">i</span><span class="si">}</span> node-role.kubernetes.io/infra<span class="o">=</span> --overwrite
+</span></span><span class="line"><span class="cl">    oc label node infra-<span class="si">${</span><span class="nv">i</span><span class="si">}</span> node-role.kubernetes.io/worker-
+</span></span><span class="line"><span class="cl">  <span class="k">done</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ oc get no
+</span></span><span class="line"><span class="cl">NAME                           STATUS   ROLES        AGE    VERSION
+</span></span><span class="line"><span class="cl">infra-1.lab.yiylin.internal    Ready    infra        31m    v1.21.1+051ac4f
+</span></span><span class="line"><span class="cl">infra-2.lab.yiylin.internal    Ready    infra        31m    v1.21.1+051ac4f
+</span></span><span class="line"><span class="cl">infra-3.lab.yiylin.internal    Ready    infra        31m    v1.21.1+051ac4f
+</span></span><span class="line"><span class="cl">master-1.lab.yiylin.internal   Ready    master       156m   v1.21.1+051ac4f
+</span></span><span class="line"><span class="cl">master-2.lab.yiylin.internal   Ready    master       140m   v1.21.1+051ac4f
+</span></span><span class="line"><span class="cl">master-3.lab.yiylin.internal   Ready    master       135m   v1.21.1+051ac4f
+</span></span><span class="line"><span class="cl">worker-1.lab.yiylin.internal   Ready    app,worker   31m    v1.21.1+051ac4f
+</span></span><span class="line"><span class="cl">worker-2.lab.yiylin.internal   Ready    app,worker   31m    v1.21.1+051ac4f
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>編輯 <code>Scheduler</code> 物件，並調整預設 <code>NodeSelector</code>:</p>
 <div class="highlight"><div class="chroma">
@@ -1328,12 +1389,12 @@ worker-2.lab.yiylin.internal   Ready    app,worker   31m    v1.21.1+051ac4f
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ oc edit scheduler cluster
-...
-spec:
-  defaultNodeSelector: node-role.kubernetes.io/app<span class="o">=</span> 
-...
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ oc edit scheduler cluster
+</span></span><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">spec:
+</span></span><span class="line"><span class="cl">  defaultNodeSelector: node-role.kubernetes.io/app<span class="o">=</span> 
+</span></span><span class="line"><span class="cl">...
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>建立 Infra 機器的 Machine Config Pool 檔案:</p>
 <div class="highlight"><div class="chroma">
@@ -1359,26 +1420,26 @@ spec:
 </span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ cat <span class="p">&amp;</span>lt<span class="p">;&amp;</span>lt<span class="p">;</span>EOF <span class="p">|</span> oc apply -f -
-apiVersion: machineconfiguration.openshift.io/v1
-kind: MachineConfigPool
-metadata:
-  name: infra
-spec:
-  machineConfigSelector:
-    matchExpressions:
-    - key: machineconfiguration.openshift.io/role
-      operator: In
-      values:
-      - worker
-      - infra
-  nodeSelector:
-    matchLabels:
-      node-role.kubernetes.io/infra:
-EOF
-
-$ oc get mcp
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ cat <span class="p">&amp;</span>lt<span class="p">;&amp;</span>lt<span class="p">;</span>EOF <span class="p">|</span> oc apply -f -
+</span></span><span class="line"><span class="cl">apiVersion: machineconfiguration.openshift.io/v1
+</span></span><span class="line"><span class="cl">kind: MachineConfigPool
+</span></span><span class="line"><span class="cl">metadata:
+</span></span><span class="line"><span class="cl">  name: infra
+</span></span><span class="line"><span class="cl">spec:
+</span></span><span class="line"><span class="cl">  machineConfigSelector:
+</span></span><span class="line"><span class="cl">    matchExpressions:
+</span></span><span class="line"><span class="cl">    - key: machineconfiguration.openshift.io/role
+</span></span><span class="line"><span class="cl">      operator: In
+</span></span><span class="line"><span class="cl">      values:
+</span></span><span class="line"><span class="cl">      - worker
+</span></span><span class="line"><span class="cl">      - infra
+</span></span><span class="line"><span class="cl">  nodeSelector:
+</span></span><span class="line"><span class="cl">    matchLabels:
+</span></span><span class="line"><span class="cl">      node-role.kubernetes.io/infra:
+</span></span><span class="line"><span class="cl">EOF
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ oc get mcp
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>這時 Infra 節點會重新啟動。</p>
@@ -1398,17 +1459,17 @@ $ oc get mcp
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ oc edit IngressController default -n openshift-ingress-operator
-...
-spec:
-  nodePlacement:
-    nodeSelector:
-      matchLabels:
-        node-role.kubernetes.io/infra:
-  replicas: <span class="m">2</span>
-  
-$ oc -n openshift-ingress get pod -o wide
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ oc edit IngressController default -n openshift-ingress-operator
+</span></span><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">spec:
+</span></span><span class="line"><span class="cl">  nodePlacement:
+</span></span><span class="line"><span class="cl">    nodeSelector:
+</span></span><span class="line"><span class="cl">      matchLabels:
+</span></span><span class="line"><span class="cl">        node-role.kubernetes.io/infra:
+</span></span><span class="line"><span class="cl">  replicas: <span class="m">2</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">$ oc -n openshift-ingress get pod -o wide
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>搬移 Image Registry 元件至 Infra 節點上:</p>
 <div class="highlight"><div class="chroma">
@@ -1423,15 +1484,15 @@ $ oc -n openshift-ingress get pod -o wide
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ oc edit configs.imageregistry.operator.openshift.io/cluster
-...
-spec:
-  nodeSelector:
-    node-role.kubernetes.io/infra:
-...
-
-$ oc -n openshift-image-registry get pods -o wide 
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ oc edit configs.imageregistry.operator.openshift.io/cluster
+</span></span><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">spec:
+</span></span><span class="line"><span class="cl">  nodeSelector:
+</span></span><span class="line"><span class="cl">    node-role.kubernetes.io/infra:
+</span></span><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ oc -n openshift-image-registry get pods -o wide 
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>搬移 Monitoring 元件至 Infra 節點上:</p>
 <div class="highlight"><div class="chroma">
@@ -1476,60 +1537,60 @@ $ oc -n openshift-image-registry get pods -o wide
 </span><span class="lnt">38
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ cat &lt;&lt; <span class="s2">&#34;EOF&#34;</span> &gt; oc apply -f -
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: cluster-monitoring-config
-  namespace: openshift-monitoring
-data:
-  config.yaml: <span class="p">|</span>+
-    alertmanagerMain:
-      nodeSelector:
-        node-role.kubernetes.io/infra:
-    prometheusK8s:
-      nodeSelector:
-        node-role.kubernetes.io/infra:
-    prometheusOperator:
-      nodeSelector:
-        node-role.kubernetes.io/infra:
-    grafana:
-      nodeSelector:
-        node-role.kubernetes.io/infra:
-    k8sPrometheusAdapter:
-      nodeSelector:
-        node-role.kubernetes.io/infra:
-    kubeStateMetrics:
-      nodeSelector:
-        node-role.kubernetes.io/infra:
-    telemeterClient:
-      nodeSelector:
-        node-role.kubernetes.io/infra:
-    openshiftStateMetrics:
-      nodeSelector:
-        node-role.kubernetes.io/infra:
-    thanosQuerier:
-      nodeSelector:
-        node-role.kubernetes.io/infra:
-EOF
-
-$ watch -n 0.1 oc -n openshift-monitoring get pod -o wide
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ cat &lt;&lt; <span class="s2">&#34;EOF&#34;</span> &gt; oc apply -f -
+</span></span><span class="line"><span class="cl">apiVersion: v1
+</span></span><span class="line"><span class="cl">kind: ConfigMap
+</span></span><span class="line"><span class="cl">metadata:
+</span></span><span class="line"><span class="cl">  name: cluster-monitoring-config
+</span></span><span class="line"><span class="cl">  namespace: openshift-monitoring
+</span></span><span class="line"><span class="cl">data:
+</span></span><span class="line"><span class="cl">  config.yaml: <span class="p">|</span>+
+</span></span><span class="line"><span class="cl">    alertmanagerMain:
+</span></span><span class="line"><span class="cl">      nodeSelector:
+</span></span><span class="line"><span class="cl">        node-role.kubernetes.io/infra:
+</span></span><span class="line"><span class="cl">    prometheusK8s:
+</span></span><span class="line"><span class="cl">      nodeSelector:
+</span></span><span class="line"><span class="cl">        node-role.kubernetes.io/infra:
+</span></span><span class="line"><span class="cl">    prometheusOperator:
+</span></span><span class="line"><span class="cl">      nodeSelector:
+</span></span><span class="line"><span class="cl">        node-role.kubernetes.io/infra:
+</span></span><span class="line"><span class="cl">    grafana:
+</span></span><span class="line"><span class="cl">      nodeSelector:
+</span></span><span class="line"><span class="cl">        node-role.kubernetes.io/infra:
+</span></span><span class="line"><span class="cl">    k8sPrometheusAdapter:
+</span></span><span class="line"><span class="cl">      nodeSelector:
+</span></span><span class="line"><span class="cl">        node-role.kubernetes.io/infra:
+</span></span><span class="line"><span class="cl">    kubeStateMetrics:
+</span></span><span class="line"><span class="cl">      nodeSelector:
+</span></span><span class="line"><span class="cl">        node-role.kubernetes.io/infra:
+</span></span><span class="line"><span class="cl">    telemeterClient:
+</span></span><span class="line"><span class="cl">      nodeSelector:
+</span></span><span class="line"><span class="cl">        node-role.kubernetes.io/infra:
+</span></span><span class="line"><span class="cl">    openshiftStateMetrics:
+</span></span><span class="line"><span class="cl">      nodeSelector:
+</span></span><span class="line"><span class="cl">        node-role.kubernetes.io/infra:
+</span></span><span class="line"><span class="cl">    thanosQuerier:
+</span></span><span class="line"><span class="cl">      nodeSelector:
+</span></span><span class="line"><span class="cl">        node-role.kubernetes.io/infra:
+</span></span><span class="line"><span class="cl">EOF
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ watch -n 0.1 oc -n openshift-monitoring get pod -o wide
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>&gt; 其他資源請參考 <a class="link" href="https://docs.openshift.com/container-platform/4.8/machine_management/creating-infrastructure-machinesets.html#infrastructure-moving-logging_creating-infrastructure-machinesets"  target="_blank" rel="noopener"
     >Moving OpenShift Logging resources</a> 搬移。</p>
 <p>叢集初始化會需要一點時間，完成後就可以透過 Console 查看整體狀況。</p>
-<h2 id="web-console">Web Console</h2>
-<p>透過 oc 取得 Web console 的 route URL:</p>
+<h2 id="web-console">Web Console
+</h2><p>透過 oc 取得 Web console 的 route URL:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ oc -n openshift-console get route console -o<span class="o">=</span><span class="nv">jsonpath</span><span class="o">={</span>.spec.host<span class="o">}{</span><span class="se">\n</span><span class="o">}</span>
-console-openshift-console.apps.lab.yiylin.internal
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ oc -n openshift-console get route console -o<span class="o">=</span><span class="nv">jsonpath</span><span class="o">={</span>.spec.host<span class="o">}{</span><span class="se">\n</span><span class="o">}</span>
+</span></span><span class="line"><span class="cl">console-openshift-console.apps.lab.yiylin.internal
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>取得 OpenShift 的 <code>kubeadmin</code> 密碼:</p>
 <div class="highlight"><div class="chroma">
@@ -1537,8 +1598,8 @@ console-openshift-console.apps.lab.yiylin.internal
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ cat <span class="nv">$HOME</span>/ocp4/ignition/auth/kubeadmin-password
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ cat <span class="nv">$HOME</span>/ocp4/ignition/auth/kubeadmin-password
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><img src="https://i.imgur.com/7ykeVUc.png"
 	
@@ -1549,20 +1610,20 @@ console-openshift-console.apps.lab.yiylin.internal
 	
 ></p>
 <hr>
-<h2 id="terminal-login">Terminal Login</h2>
-<p>開啟一個新的 Terminal，在 bastion 節點配置 <code>KUBECONFIG</code></p>
+<h2 id="terminal-login">Terminal Login
+</h2><p>開啟一個新的 Terminal，在 bastion 節點配置 <code>KUBECONFIG</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">$ <span class="nb">export</span> <span class="nv">KUBECONFIG</span><span class="o">=</span><span class="nv">$HOME</span>/ocp4/kubeconfig
-$ oc get no
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ <span class="nb">export</span> <span class="nv">KUBECONFIG</span><span class="o">=</span><span class="nv">$HOME</span>/ocp4/kubeconfig
+</span></span><span class="line"><span class="cl">$ oc get no
+</span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="references">References</h2>
-<ul>
+</div><h2 id="references">References
+</h2><ul>
 <li><a class="link" href="https://github.com/openshift/machine-config-operator/blob/master/docs/custom-pools.md"  target="_blank" rel="noopener"
     >https://github.com/openshift/machine-config-operator/blob/master/docs/custom-pools.md</a></li>
 <li><a class="link" href="https://gist.github.com/kairen/894348c6281f33a981b528e69c3d06bf"  target="_blank" rel="noopener"
@@ -1609,9 +1670,9 @@ $ oc get no
 
     
 
-<aside class="related-contents--wrapper">
+<aside class="related-content--wrapper">
     <h2 class="section-title">相關文章</h2>
-    <div class="related-contents">
+    <div class="related-content">
         <div class="flex article-list--tile">
             
                 
@@ -1625,6 +1686,7 @@ $ oc get no
         </div>
     </a>
 </article>
+
             
                 
 <article class="">
@@ -1637,6 +1699,7 @@ $ oc get no
         </div>
     </a>
 </article>
+
             
                 
 <article class="">
@@ -1649,6 +1712,7 @@ $ oc get no
         </div>
     </a>
 </article>
+
             
                 
 <article class="">
@@ -1661,6 +1725,7 @@ $ oc get no
         </div>
     </a>
 </article>
+
             
                 
 <article class="">
@@ -1673,6 +1738,7 @@ $ oc get no
         </div>
     </a>
 </article>
+
             
         </div>
     </div>
@@ -1689,12 +1755,12 @@ $ oc get no
         
             2022 - 
         
-        2024 Frank&#39;s Notes
+        2025 Frank&#39;s Notes
     </section>
     
     <section class="powerby">
-        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.10.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 建立 <br />
+        主題 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.29.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 設計
     </section>
 </footer>
 
@@ -1771,81 +1837,19 @@ $ oc get no
                 >
             </script><link 
                 rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
             ><link 
                 rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
             >
 
             </main>
-    <aside class="sidebar right-sidebar sticky">
-        
-            
-                
-    <section class="widget archives">
-        <div class="widget-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <line x1="5" y1="9" x2="19" y2="9" />
-  <line x1="5" y1="15" x2="19" y2="15" />
-  <line x1="11" y1="4" x2="7" y2="20" />
-  <line x1="17" y1="4" x2="13" y2="20" />
-</svg>
-
-
-
-        </div>
-        <h2 class="widget-title section-title">目錄</h2>
-        
-        <div class="widget--toc">
-            <nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#部署版本說明">部署版本說明：</a></li>
-        <li><a href="#reference">Reference</a></li>
-        <li><a href="#事前準備">事前準備</a>
-          <ul>
-            <li><a href="#download-urls">Download URLs</a></li>
-            <li><a href="#network-and-hosts-info">Network and Hosts Info</a></li>
-          </ul>
-        </li>
-        <li><a href="#bastion">Bastion</a>
-          <ul>
-            <li><a href="#事前準備-1">事前準備</a></li>
-            <li><a href="#安裝與設定-dns-server">安裝與設定 DNS Server</a></li>
-            <li><a href="#安裝與設定-http-server">安裝與設定 HTTP Server</a></li>
-            <li><a href="#產生-openshift-ignition-fils">產生 OpenShift Ignition fils</a></li>
-          </ul>
-        </li>
-        <li><a href="#bootstrap">Bootstrap</a></li>
-        <li><a href="#maters">Maters</a></li>
-        <li><a href="#workers-amp-infras">Workers &amp; Infras</a>
-          <ul>
-            <li><a href="#搬移資源至-infra-nodes">搬移資源至 Infra nodes</a></li>
-          </ul>
-        </li>
-        <li><a href="#web-console">Web Console</a></li>
-        <li><a href="#terminal-login">Terminal Login</a></li>
-        <li><a href="#references">References</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-        </div>
-    </section>
-
-            
-        
-    </aside>
-
-
         </div>
         <script 
-                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.c9433a56200c7fa053931db65ffb3761c72efa2034cbab024da4dc851d619762.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');

@@ -1,32 +1,32 @@
 <!DOCTYPE html>
 <html lang="zh-tw" dir="ltr">
-    <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='本篇文章主要分享，提供在 OpenShift Container Platform 中透過 Route Sharding，以叢集角度為特定目的創建多個 Route，像是在不同的網段上公開不同的 Router，讓內部和外部署用者訪問不同的 Router，將限制使用者於DMZ區域，無法訪問或直接使用其他叢集區域中的資源，直接保護這些節點及組件來提高安全性。'><title>Deep dive - OpenShift 叢集節點跨網段架構規劃</title>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="本篇文章主要分享，提供在 OpenShift Container Platform 中透過 Route Sharding，以叢集角度為特定目的創建多個 Route，像是在不同的網段上公開不同的 Router，讓內部和外部署用者訪問不同的 Router，將限制使用者於DMZ區域，無法訪問或直接使用其他叢集區域中的資源，直接保護這些節點及組件來提高安全性。">
+<title>Deep dive - OpenShift 叢集節點跨網段架構規劃</title>
 
-<link rel='canonical' href='https://blog.yylin.io/openshift/security-zones/'>
+<link rel='canonical' href='http://localhost:1313/openshift/security-zones/'>
 
-<link rel="stylesheet" href="/scss/style.min.5dfb59e7e9320a8eb7995abb74271d0b47aa7bd7423004549c2964fd78196c75.css"><meta property='og:title' content='Deep dive - OpenShift 叢集節點跨網段架構規劃'>
-<meta property='og:description' content='本篇文章主要分享，提供在 OpenShift Container Platform 中透過 Route Sharding，以叢集角度為特定目的創建多個 Route，像是在不同的網段上公開不同的 Router，讓內部和外部署用者訪問不同的 Router，將限制使用者於DMZ區域，無法訪問或直接使用其他叢集區域中的資源，直接保護這些節點及組件來提高安全性。'>
-<meta property='og:url' content='https://blog.yylin.io/openshift/security-zones/'>
+<link rel="stylesheet" href="/scss/style.min.5dfb59e7e9320a8eb7995abb74271d0b47aa7bd7423004549c2964fd78196c75.css"><meta property='og:title' content="Deep dive - OpenShift 叢集節點跨網段架構規劃">
+<meta property='og:description' content="本篇文章主要分享，提供在 OpenShift Container Platform 中透過 Route Sharding，以叢集角度為特定目的創建多個 Route，像是在不同的網段上公開不同的 Router，讓內部和外部署用者訪問不同的 Router，將限制使用者於DMZ區域，無法訪問或直接使用其他叢集區域中的資源，直接保護這些節點及組件來提高安全性。">
+<meta property='og:url' content='http://localhost:1313/openshift/security-zones/'>
 <meta property='og:site_name' content='Frank&#39;s Notes'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='OpenShift' /><meta property='article:published_time' content='2022-09-27T12:00:40&#43;08:00'/><meta property='article:modified_time' content='2022-09-27T12:00:40&#43;08:00'/>
 <meta name="twitter:title" content="Deep dive - OpenShift 叢集節點跨網段架構規劃">
 <meta name="twitter:description" content="本篇文章主要分享，提供在 OpenShift Container Platform 中透過 Route Sharding，以叢集角度為特定目的創建多個 Route，像是在不同的網段上公開不同的 Router，讓內部和外部署用者訪問不同的 Router，將限制使用者於DMZ區域，無法訪問或直接使用其他叢集區域中的資源，直接保護這些節點及組件來提高安全性。">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-60ZBHV66GB"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-60ZBHV66GB', { 'anonymize_ip': false });
-}
-</script>
-<style>
-	h1 {
-		letter-spacing: 6px;
-	}
-</style>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-60ZBHV66GB"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-60ZBHV66GB');
+        }
+      </script>
     </head>
     <body class="
     article-page
@@ -63,8 +63,6 @@ if (!doNotTrack) {
     <header>
         
             
-            
-            
         
         
         <div class="site-meta">
@@ -75,7 +73,6 @@ if (!doNotTrack) {
         
         
         
-
         <li >
             <a href='/' >
                 
@@ -96,7 +93,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/about/' >
                 
@@ -116,7 +112,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/archives/' >
                 
@@ -137,7 +132,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/search/' >
                 
@@ -157,7 +151,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/links/' >
                 
@@ -176,12 +169,12 @@ if (!doNotTrack) {
             </a>
         </li>
         
+        <li class="menu-bottom-section">
+            <ol class="menu">
 
-        <div class="menu-bottom-section">
-            
-            
-                <li id="dark-mode-toggle">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <circle cx="8" cy="12" r="2" />
   <rect x="2" y="6" width="20" height="12" rx="6" />
@@ -189,7 +182,7 @@ if (!doNotTrack) {
 
 
 
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <circle cx="16" cy="12" r="2" />
   <rect x="2" y="6" width="20" height="12" rx="6" />
@@ -197,13 +190,71 @@ if (!doNotTrack) {
 
 
 
-                    <span>夜晚模式</span>
-                </li>
-            
-        </div>
+                        <span>夜晚模式</span>
+                    </li>
+                
+            </ol>
+        </li>
     </ol>
 </aside>
-<main class="main full-width">
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目錄</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#概述-為什麼有這樣需求">/概述/ 為什麼有這樣需求？</a></li>
+        <li><a href="#探討--相關架構考量">/探討/  相關架構考量</a>
+          <ul>
+            <li><a href="#補充---透過實體隔離方案-">/補充 - 透過<code>實體隔離方案</code> /</a></li>
+            <li><a href="#以下針對本文主要概述-單一叢集跨網段架構-架構圖做細部探討">以下針對本文主要概述「 <code>單一叢集跨網段架構</code> 」架構圖做細部探討：</a></li>
+          </ul>
+        </li>
+        <li><a href="#單一叢集-opensihft-運作於跨網段區域">單一叢集 OpenSihft 運作於跨網段區域</a></li>
+        <li><a href="#操作步驟">操作步驟</a>
+          <ul>
+            <li><a href="#1-dns-配置對外-external-service-使用的-wildcard">1. DNS 配置對外 External Service 使用的 WildCard</a></li>
+            <li><a href="#2-將-router-固定到-infra-node">2. 將 Router 固定到 Infra Node</a></li>
+            <li><a href="#3-創建-ingress-controller-指派為外部應用使用">3. 創建 Ingress Controller 指派為外部應用使用</a></li>
+            <li><a href="#4-限制對內對外服務-ingress-controller-配置">4. 限制對內對外服務 Ingress Controller 配置</a></li>
+            <li><a href="#5-部署應用生成-route-並指定其-hostname和-label-typeservice">5. 部署應用，生成 Route 並指定其 Hostname和 Label (type=service)</a></li>
+            <li><a href="#6-訪問-ap-的-route-地址確認狀態可以訪問">6. 訪問 AP 的 Route 地址，確認狀態可以訪問</a></li>
+          </ul>
+        </li>
+        <li><a href="#延伸討論">延伸討論</a></li>
+        <li><a href="#reference">Reference</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
     <article class="main-article">
     <header class="article-header">
 
@@ -230,6 +281,9 @@ if (!doNotTrack) {
         
     </div>
 
+    
+    
+    
     
     <footer class="article-time">
         
@@ -267,13 +321,14 @@ if (!doNotTrack) {
 
     
 </div>
+
 </header>
 
     <section class="article-content">
     
     
-    <h2 id="概述-為什麼有這樣需求">/概述/ 為什麼有這樣需求？</h2>
-<p>近期剛好接觸客戶需求，希望能透過「單一叢集OpenSihft 運作於跨網段區域」上架構需求，希望有基於能限制不同角色，訪問流量進入 OpenShift 叢集只允許使用特定功能，包含以下需求：</p>
+    <h2 id="概述-為什麼有這樣需求">/概述/ 為什麼有這樣需求？
+</h2><p>近期剛好接觸客戶需求，希望能透過「單一叢集OpenSihft 運作於跨網段區域」上架構需求，希望有基於能限制不同角色，訪問流量進入 OpenShift 叢集只允許使用特定功能，包含以下需求：</p>
 <ol>
 <li>能限制只有叢集管理人員/開發團隊，能直接存取操作 OpenShift 叢集於內部網路中，因此叢集對應的內部服務、API、儲存等，能獲得更多更安全性。</li>
 <li>將提供外部應用程式/服務，隔離於對外 Security Zones 區域，並限制只允許特定的 Router 使用某些特定功能(例如：單純網站服務運行, APP 後端服務)等。</li>
@@ -283,10 +338,10 @@ if (!doNotTrack) {
 </blockquote>
 <p>補充 - 更多場景情境，歡迎大家可以參考 Luis Javier Arizmendi Alonso 分享針對 OpenShift 於 Security Zones 系列文章 - <a class="link" href="https://itnext.io/security-zones-in-openshift-worker-nodes-part-i-introduction-4f85762962d7"  target="_blank" rel="noopener"
     >Security Zones in OpenShift worker nodes</a></p>
-<h2 id="探討--相關架構考量">/探討/  相關架構考量</h2>
-<p>先探討結論，為什麼不採用「針對 Security Zones 進行實體隔離」來達到企業內部制定相對安全標準和法規，例如直接在 DMZ 區域多部署一座 OpenShift 叢集提供對外服務(參考補充)，更直接保護叢集運行產品的應用及服務更能確保安全性，其實重點包含<code>成本考量</code>還有 <code>OpenShift維護成本</code>高，可能企業內部需要更多維運人員來管理不同 OpenShift 叢集上版流程、應用程式、API及相關服務配置管理等，都是總總問題。</p>
-<h3 id="補充---透過實體隔離方案-">/補充 - 透過<code>實體隔離方案</code> /</h3>
-<ul>
+<h2 id="探討--相關架構考量">/探討/  相關架構考量
+</h2><p>先探討結論，為什麼不採用「針對 Security Zones 進行實體隔離」來達到企業內部制定相對安全標準和法規，例如直接在 DMZ 區域多部署一座 OpenShift 叢集提供對外服務(參考補充)，更直接保護叢集運行產品的應用及服務更能確保安全性，其實重點包含<code>成本考量</code>還有 <code>OpenShift維護成本</code>高，可能企業內部需要更多維運人員來管理不同 OpenShift 叢集上版流程、應用程式、API及相關服務配置管理等，都是總總問題。</p>
+<h3 id="補充---透過實體隔離方案-">/補充 - 透過<code>實體隔離方案</code> /
+</h3><ul>
 <li>有助於證明 Data Center 符合安全標準和法規</li>
 <li>更保護叢集 API 和 DMZ 中，不會暴露給外部 Internet</li>
 <li>OpenShift 維護成本高</li>
@@ -294,7 +349,7 @@ if (!doNotTrack) {
 <p><img src="/openshift/security-zones/img/01.png"
 	width="516"
 	height="593"
-	srcset="/openshift/security-zones/img/01_hud6af0256d637efc1e9fc480ef98eae1a_45911_480x0_resize_box_3.png 480w, /openshift/security-zones/img/01_hud6af0256d637efc1e9fc480ef98eae1a_45911_1024x0_resize_box_3.png 1024w"
+	srcset="/openshift/security-zones/img/01_hu17717156163958657040.png 480w, /openshift/security-zones/img/01_hu13722892488924364584.png 1024w"
 	loading="lazy"
 	
 	
@@ -307,11 +362,11 @@ if (!doNotTrack) {
 <blockquote>
 <p>這邊還是一個重點，取決於你對於當前環境規劃與架構設計需求而做選擇</p>
 </blockquote>
-<h3 id="以下針對本文主要概述-單一叢集跨網段架構-架構圖做細部探討">以下針對本文主要概述「 <code>單一叢集跨網段架構</code> 」架構圖做細部探討：</h3>
-<p><img src="/openshift/security-zones/img/02.png"
+<h3 id="以下針對本文主要概述-單一叢集跨網段架構-架構圖做細部探討">以下針對本文主要概述「 <code>單一叢集跨網段架構</code> 」架構圖做細部探討：
+</h3><p><img src="/openshift/security-zones/img/02.png"
 	width="517"
 	height="496"
-	srcset="/openshift/security-zones/img/02_hub4534f67c6d5a4f6e58796ce01e74a58_78220_480x0_resize_box_3.png 480w, /openshift/security-zones/img/02_hub4534f67c6d5a4f6e58796ce01e74a58_78220_1024x0_resize_box_3.png 1024w"
+	srcset="/openshift/security-zones/img/02_hu364572726551734261.png 480w, /openshift/security-zones/img/02_hu8746873943565230045.png 1024w"
 	loading="lazy"
 	
 	
@@ -334,12 +389,12 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ul>
-<h2 id="單一叢集-opensihft-運作於跨網段區域">單一叢集 OpenSihft 運作於跨網段區域</h2>
-<p>下圖 - 為-驗證規劃 OpenShift 示意圖：</p>
+<h2 id="單一叢集-opensihft-運作於跨網段區域">單一叢集 OpenSihft 運作於跨網段區域
+</h2><p>下圖 - 為-驗證規劃 OpenShift 示意圖：</p>
 <p><img src="/openshift/security-zones/img/03.png"
 	width="905"
 	height="764"
-	srcset="/openshift/security-zones/img/03_hu4c832c4ecd980ff8588f2e4451d8a24c_86575_480x0_resize_box_3.png 480w, /openshift/security-zones/img/03_hu4c832c4ecd980ff8588f2e4451d8a24c_86575_1024x0_resize_box_3.png 1024w"
+	srcset="/openshift/security-zones/img/03_hu16588230497044231463.png 480w, /openshift/security-zones/img/03_hu2528234340468498705.png 1024w"
 	loading="lazy"
 	
 	
@@ -348,8 +403,8 @@ if (!doNotTrack) {
 		data-flex-basis="284px"
 	
 ></p>
-<h2 id="操作步驟">操作步驟</h2>
-<ol>
+<h2 id="操作步驟">操作步驟
+</h2><ol>
 <li>需創建對外服務的 Ingress Controller 要如何配置規範</li>
 </ol>
 <ul>
@@ -367,7 +422,7 @@ if (!doNotTrack) {
 <p><img src="/openshift/security-zones/img/05.png"
 	width="1241"
 	height="576"
-	srcset="/openshift/security-zones/img/05_hu81aaa288d3453154f57d3f8367842c22_154219_480x0_resize_box_3.png 480w, /openshift/security-zones/img/05_hu81aaa288d3453154f57d3f8367842c22_154219_1024x0_resize_box_3.png 1024w"
+	srcset="/openshift/security-zones/img/05_hu12081917762074244046.png 480w, /openshift/security-zones/img/05_hu3162526130392197028.png 1024w"
 	loading="lazy"
 	
 	
@@ -382,7 +437,7 @@ if (!doNotTrack) {
 <img src="/openshift/security-zones/img/06.png"
 	width="1115"
 	height="513"
-	srcset="/openshift/security-zones/img/06_hu9a0b08036f071fc3bfebf1085b32fc7b_99190_480x0_resize_box_3.png 480w, /openshift/security-zones/img/06_hu9a0b08036f071fc3bfebf1085b32fc7b_99190_1024x0_resize_box_3.png 1024w"
+	srcset="/openshift/security-zones/img/06_hu15029002741421235044.png 480w, /openshift/security-zones/img/06_hu14683882953504960702.png 1024w"
 	loading="lazy"
 	
 	
@@ -405,7 +460,7 @@ if (!doNotTrack) {
 <p><img src="/openshift/security-zones/img/07.png"
 	width="1229"
 	height="508"
-	srcset="/openshift/security-zones/img/07_huebd1e6a12edf16bac67160f0ad8bb7bc_114486_480x0_resize_box_3.png 480w, /openshift/security-zones/img/07_huebd1e6a12edf16bac67160f0ad8bb7bc_114486_1024x0_resize_box_3.png 1024w"
+	srcset="/openshift/security-zones/img/07_hu11390477539653530451.png 480w, /openshift/security-zones/img/07_hu11762155746729295131.png 1024w"
 	loading="lazy"
 	
 	
@@ -416,35 +471,35 @@ if (!doNotTrack) {
 ></p>
 </li>
 </ul>
-<h3 id="1-dns-配置對外-external-service-使用的-wildcard">1. DNS 配置對外 External Service 使用的 WildCard</h3>
-<div class="table-wrapper"><table>
-<thead>
-<tr>
-<th>Usage</th>
-<th>FQDN</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Kubernetes API</td>
-<td>api.&lt;cluster_name&gt;.&lt;base_domain&gt;</td>
-</tr>
-<tr>
-<td>Internal API</td>
-<td>api-int.&lt;cluster_name&gt;.&lt;base_domain&gt;</td>
-</tr>
-<tr>
-<td>Ingress route</td>
-<td>*.apps.&lt;cluster_name&gt;.&lt;base_domain&gt;</td>
-</tr>
-<tr>
-<td>Application, External Service</td>
-<td>*.service.&lt;cluster_name&gt;.&lt;base_domain&gt;</td>
-</tr>
-</tbody>
+<h3 id="1-dns-配置對外-external-service-使用的-wildcard">1. DNS 配置對外 External Service 使用的 WildCard
+</h3><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>Usage</th>
+          <th>FQDN</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Kubernetes API</td>
+          <td>api.&lt;cluster_name&gt;.&lt;base_domain&gt;</td>
+      </tr>
+      <tr>
+          <td>Internal API</td>
+          <td>api-int.&lt;cluster_name&gt;.&lt;base_domain&gt;</td>
+      </tr>
+      <tr>
+          <td>Ingress route</td>
+          <td>*.apps.&lt;cluster_name&gt;.&lt;base_domain&gt;</td>
+      </tr>
+      <tr>
+          <td>Application, External Service</td>
+          <td>*.service.&lt;cluster_name&gt;.&lt;base_domain&gt;</td>
+      </tr>
+  </tbody>
 </table></div>
-<h3 id="2-將-router-固定到-infra-node">2. 將 Router 固定到 Infra Node</h3>
-<ul>
+<h3 id="2-將-router-固定到-infra-node">2. 將 Router 固定到 Infra Node
+</h3><ul>
 <li>將 Infra Node 依據服務提供區 Zone 1, Zone 2，指定標籤 (範例配置,  region=8, region=10)</li>
 <li>在 IngressController 對象的 matchLabels 中指定  Label 設置為對應 Infra Node</li>
 </ul>
@@ -470,25 +525,25 @@ if (!doNotTrack) {
 </span><span class="lnt">18
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">$ oc label nodes &lt;INFRA_NODE&gt; region=8
-$ oc patch ingresscontroller/default -n  openshift-ingress-operator  --type=merge -p &#39;{&#34;spec&#34;:{&#34;nodePlacement&#34;: {&#34;nodeSelector&#34;: {&#34;matchLabels&#34;: {&#34;region&#34;: &#34;8&#34;}}}}}&#39;
-
-
-apiVersion: operator.openshift.io/v1
-kind: IngressController
-metadata:
-  name: default
-  namespace: openshift-ingress-operator
-spec:
-  replicas: 3
-  nodePlacement:
-    nodeSelector:
-      matchLabels:
-        region: &#34;8&#34;
-
-
-$ oc label nodes &lt;INFRA_NODE&gt; region=10
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ oc label nodes &lt;INFRA_NODE&gt; region=8
+</span></span><span class="line"><span class="cl">$ oc patch ingresscontroller/default -n  openshift-ingress-operator  --type=merge -p &#39;{&#34;spec&#34;:{&#34;nodePlacement&#34;: {&#34;nodeSelector&#34;: {&#34;matchLabels&#34;: {&#34;region&#34;: &#34;8&#34;}}}}}&#39;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">apiVersion: operator.openshift.io/v1
+</span></span><span class="line"><span class="cl">kind: IngressController
+</span></span><span class="line"><span class="cl">metadata:
+</span></span><span class="line"><span class="cl">  name: default
+</span></span><span class="line"><span class="cl">  namespace: openshift-ingress-operator
+</span></span><span class="line"><span class="cl">spec:
+</span></span><span class="line"><span class="cl">  replicas: 3
+</span></span><span class="line"><span class="cl">  nodePlacement:
+</span></span><span class="line"><span class="cl">    nodeSelector:
+</span></span><span class="line"><span class="cl">      matchLabels:
+</span></span><span class="line"><span class="cl">        region: &#34;8&#34;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ oc label nodes &lt;INFRA_NODE&gt; region=10
+</span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
 <li>檢查節點 label 狀態</li>
@@ -504,17 +559,17 @@ $ oc label nodes &lt;INFRA_NODE&gt; region=10
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ oc get node -A --show-labels
-NAME                            STATUS   ROLES    AGE   VERSION           LABELS
-infra-1.ocp4.lab.example.com    Ready    worker   60d   v1.23.5+3afdacb   <span class="nv">region</span><span class="o">=</span>8, beta.kubernetes.io/arch<span class="o">=</span>amd64,...
-infra-2.ocp4.lab.example.com    Ready    worker   60d   v1.23.5+3afdacb   <span class="nv">region</span><span class="o">=</span>8, beta.kubernetes.io/arch<span class="o">=</span>amd64,...
-infra-3.ocp4.lab.example.com    Ready    worker   60d   v1.23.5+3afdacb   <span class="nv">region</span><span class="o">=</span>8, beta.kubernetes.io/arch<span class="o">=</span>amd64,...
-infra-4.ocp4.lab.example.com    Ready    worker   60d   v1.23.5+3afdacb   <span class="nv">region</span><span class="o">=</span>10, beta.kubernetes.io/arch<span class="o">=</span>amd64,...
-infra-5.ocp4.lab.example.com    Ready    worker   60d   v1.23.5+3afdacb   <span class="nv">region</span><span class="o">=</span>10, beta.kubernetes.io/arch<span class="o">=</span>amd64,...
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ oc get node -A --show-labels
+</span></span><span class="line"><span class="cl">NAME                            STATUS   ROLES    AGE   VERSION           LABELS
+</span></span><span class="line"><span class="cl">infra-1.ocp4.lab.example.com    Ready    worker   60d   v1.23.5+3afdacb   <span class="nv">region</span><span class="o">=</span>8, beta.kubernetes.io/arch<span class="o">=</span>amd64,...
+</span></span><span class="line"><span class="cl">infra-2.ocp4.lab.example.com    Ready    worker   60d   v1.23.5+3afdacb   <span class="nv">region</span><span class="o">=</span>8, beta.kubernetes.io/arch<span class="o">=</span>amd64,...
+</span></span><span class="line"><span class="cl">infra-3.ocp4.lab.example.com    Ready    worker   60d   v1.23.5+3afdacb   <span class="nv">region</span><span class="o">=</span>8, beta.kubernetes.io/arch<span class="o">=</span>amd64,...
+</span></span><span class="line"><span class="cl">infra-4.ocp4.lab.example.com    Ready    worker   60d   v1.23.5+3afdacb   <span class="nv">region</span><span class="o">=</span>10, beta.kubernetes.io/arch<span class="o">=</span>amd64,...
+</span></span><span class="line"><span class="cl">infra-5.ocp4.lab.example.com    Ready    worker   60d   v1.23.5+3afdacb   <span class="nv">region</span><span class="o">=</span>10, beta.kubernetes.io/arch<span class="o">=</span>amd64,...
+</span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="3-創建-ingress-controller-指派為外部應用使用">3. 創建 Ingress Controller 指派為外部應用使用</h3>
-<ul>
+</div><h3 id="3-創建-ingress-controller-指派為外部應用使用">3. 創建 Ingress Controller 指派為外部應用使用
+</h3><ul>
 <li>創建命名為 “Service” 的 Ingress Controller(Router) 將允許從外部訪問的應用程式或服務，引流到對應的 Ingress</li>
 <li>如下圖 (指定的 Label  region: ‘10’ )為對外使用的網域</li>
 </ul>
@@ -541,26 +596,26 @@ infra-5.ocp4.lab.example.com    Ready    worker   60d   v1.23.5+3afdacb   <span 
 </span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">$ cat ingress-service.yaml 
-apiVersion: operator.openshift.io/v1
-kind: IngressController
-metadata:
-  name: service
-  namespace: openshift-ingress-operator
-spec:
-  replicas: 2  
-  domain: service.ocp4.lab.example.com   
-  nodePlacement:
-    nodeSelector:
-      matchLabels:
-        region: &#39;10&#39;
-  routeSelector:
-    matchExpressions:
-      - key: type
-        operator: In
-        values:
-          - service
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ cat ingress-service.yaml 
+</span></span><span class="line"><span class="cl">apiVersion: operator.openshift.io/v1
+</span></span><span class="line"><span class="cl">kind: IngressController
+</span></span><span class="line"><span class="cl">metadata:
+</span></span><span class="line"><span class="cl">  name: service
+</span></span><span class="line"><span class="cl">  namespace: openshift-ingress-operator
+</span></span><span class="line"><span class="cl">spec:
+</span></span><span class="line"><span class="cl">  replicas: 2  
+</span></span><span class="line"><span class="cl">  domain: service.ocp4.lab.example.com   
+</span></span><span class="line"><span class="cl">  nodePlacement:
+</span></span><span class="line"><span class="cl">    nodeSelector:
+</span></span><span class="line"><span class="cl">      matchLabels:
+</span></span><span class="line"><span class="cl">        region: &#39;10&#39;
+</span></span><span class="line"><span class="cl">  routeSelector:
+</span></span><span class="line"><span class="cl">    matchExpressions:
+</span></span><span class="line"><span class="cl">      - key: type
+</span></span><span class="line"><span class="cl">        operator: In
+</span></span><span class="line"><span class="cl">        values:
+</span></span><span class="line"><span class="cl">          - service
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>這邊指定對外 External Service 使用的網域</p>
@@ -573,14 +628,14 @@ spec:
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">$ oc apply -f ingress-service.yaml
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ oc apply -f ingress-service.yaml
+</span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="4-限制對內對外服務-ingress-controller-配置">4. 限制對內對外服務 Ingress Controller 配置</h3>
-<p><img src="/openshift/security-zones/img/04.png"
+</div><h3 id="4-限制對內對外服務-ingress-controller-配置">4. 限制對內對外服務 Ingress Controller 配置
+</h3><p><img src="/openshift/security-zones/img/04.png"
 	width="341"
 	height="459"
-	srcset="/openshift/security-zones/img/04_hu4abab21e5dcbbf8538530220842f1a4c_43342_480x0_resize_box_3.png 480w, /openshift/security-zones/img/04_hu4abab21e5dcbbf8538530220842f1a4c_43342_1024x0_resize_box_3.png 1024w"
+	srcset="/openshift/security-zones/img/04_hu9238314658002136427.png 480w, /openshift/security-zones/img/04_hu9377696025785315388.png 1024w"
 	loading="lazy"
 	
 	
@@ -619,26 +674,26 @@ spec:
 </span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">$ oc edit ingresscontroller service -n openshift-ingress-operator
-apiVersion: operator.openshift.io/v1
-kind: IngressController
-metadata:
-  name: service
-  namespace: openshift-ingress-operator
-spec:
-  replicas: 2
-  domain: service.ocp4.lab.example.com 
-  nodePlacement:
-    nodeSelector:
-      matchLabels:
-        region: &#39;10&#39;
-  routeSelector:
-    matchExpressions:
-      - key: type
-        operator: In
-        values:
-        - service
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ oc edit ingresscontroller service -n openshift-ingress-operator
+</span></span><span class="line"><span class="cl">apiVersion: operator.openshift.io/v1
+</span></span><span class="line"><span class="cl">kind: IngressController
+</span></span><span class="line"><span class="cl">metadata:
+</span></span><span class="line"><span class="cl">  name: service
+</span></span><span class="line"><span class="cl">  namespace: openshift-ingress-operator
+</span></span><span class="line"><span class="cl">spec:
+</span></span><span class="line"><span class="cl">  replicas: 2
+</span></span><span class="line"><span class="cl">  domain: service.ocp4.lab.example.com 
+</span></span><span class="line"><span class="cl">  nodePlacement:
+</span></span><span class="line"><span class="cl">    nodeSelector:
+</span></span><span class="line"><span class="cl">      matchLabels:
+</span></span><span class="line"><span class="cl">        region: &#39;10&#39;
+</span></span><span class="line"><span class="cl">  routeSelector:
+</span></span><span class="line"><span class="cl">    matchExpressions:
+</span></span><span class="line"><span class="cl">      - key: type
+</span></span><span class="line"><span class="cl">        operator: In
+</span></span><span class="line"><span class="cl">        values:
+</span></span><span class="line"><span class="cl">        - service
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>檢查 Ingress Controller - default 限制不讓 service 服務進入</p>
@@ -666,37 +721,37 @@ spec:
 </span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">$ oc edit ingresscontroller default -n openshift-ingress-operator 
-apiVersion: operator.openshift.io/v1
-kind: IngressController
-metadata:
-  name: service
-  namespace: openshift-ingress-operator
-spec:
-  replicas: 3 
-  domain: apps.ocp4.lab.example.com 
-  nodePlacement:
-    nodeSelector:
-      matchLabels:
-        region: &#34;8&#34;
-  routeSelector:
-    matchExpressions:
-    - key: type
-      operator: NotIn
-      values:
-      - service
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ oc edit ingresscontroller default -n openshift-ingress-operator 
+</span></span><span class="line"><span class="cl">apiVersion: operator.openshift.io/v1
+</span></span><span class="line"><span class="cl">kind: IngressController
+</span></span><span class="line"><span class="cl">metadata:
+</span></span><span class="line"><span class="cl">  name: service
+</span></span><span class="line"><span class="cl">  namespace: openshift-ingress-operator
+</span></span><span class="line"><span class="cl">spec:
+</span></span><span class="line"><span class="cl">  replicas: 3 
+</span></span><span class="line"><span class="cl">  domain: apps.ocp4.lab.example.com 
+</span></span><span class="line"><span class="cl">  nodePlacement:
+</span></span><span class="line"><span class="cl">    nodeSelector:
+</span></span><span class="line"><span class="cl">      matchLabels:
+</span></span><span class="line"><span class="cl">        region: &#34;8&#34;
+</span></span><span class="line"><span class="cl">  routeSelector:
+</span></span><span class="line"><span class="cl">    matchExpressions:
+</span></span><span class="line"><span class="cl">    - key: type
+</span></span><span class="line"><span class="cl">      operator: NotIn
+</span></span><span class="line"><span class="cl">      values:
+</span></span><span class="line"><span class="cl">      - service
+</span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="5-部署應用生成-route-並指定其-hostname和-label-typeservice">5. 部署應用，生成 Route 並指定其 Hostname和 Label (type=service)</h3>
-<div class="highlight"><div class="chroma">
+</div><h3 id="5-部署應用生成-route-並指定其-hostname和-label-typeservice">5. 部署應用，生成 Route 並指定其 Hostname和 Label (type=service)
+</h3><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">$ oc new-project demo
-$ oc new-app rails-postgresql-example
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ oc new-project demo
+</span></span><span class="line"><span class="cl">$ oc new-app rails-postgresql-example
+</span></span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -710,15 +765,15 @@ $ oc new-app rails-postgresql-example
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">$ oc get pod -o wide
-NAME                                  READY   STATUS      RESTARTS   AGE     IP            NODE                           
-postgresql-1-deploy                   0/1     Completed   0          2d20h   10.129.6.16   worker-3.ocp4.lab.example.com 
-postgresql-1-hjztg                    1/1     Running     0          2d20h   10.129.4.98   worker-2.ocp4.lab.example.com
-rails-postgresql-example-1-build      0/1     Completed   0          2d20h   10.129.4.97   worker-2.ocp4.lab.example.com
-rails-postgresql-example-1-deploy     0/1     Completed   0          2d19h   10.129.8.9    infra-1.ocp4.lab.example.com 
-rails-postgresql-example-1-f8w4l      1/1     Running     0          2d19h   10.129.3.18   worker-1.ocp4.lab.example.com 
-rails-postgresql-example-1-hook-pre   0/1     Completed   0          2d19h   10.129.3.17   worker-1.ocp4.lab.example.com
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ oc get pod -o wide
+</span></span><span class="line"><span class="cl">NAME                                  READY   STATUS      RESTARTS   AGE     IP            NODE                           
+</span></span><span class="line"><span class="cl">postgresql-1-deploy                   0/1     Completed   0          2d20h   10.129.6.16   worker-3.ocp4.lab.example.com 
+</span></span><span class="line"><span class="cl">postgresql-1-hjztg                    1/1     Running     0          2d20h   10.129.4.98   worker-2.ocp4.lab.example.com
+</span></span><span class="line"><span class="cl">rails-postgresql-example-1-build      0/1     Completed   0          2d20h   10.129.4.97   worker-2.ocp4.lab.example.com
+</span></span><span class="line"><span class="cl">rails-postgresql-example-1-deploy     0/1     Completed   0          2d19h   10.129.8.9    infra-1.ocp4.lab.example.com 
+</span></span><span class="line"><span class="cl">rails-postgresql-example-1-f8w4l      1/1     Running     0          2d19h   10.129.3.18   worker-1.ocp4.lab.example.com 
+</span></span><span class="line"><span class="cl">rails-postgresql-example-1-hook-pre   0/1     Completed   0          2d19h   10.129.3.17   worker-1.ocp4.lab.example.com
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>在創建 route 的時候需指定 hostname，不可使用預設名稱，此部分跳過說明，可以看到如以下 route domain 為 <code>.service.ocp4.lab.example.com</code> 結尾。</p>
@@ -730,10 +785,10 @@ rails-postgresql-example-1-hook-pre   0/1     Completed   0          2d19h   10.
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">$ oc get route
-NAME                       HOST/PORT                                               PATH   SERVICES            PORT    TERMINATION   WILDCARD
-rails-postgresql-example   rails-postgresql-example-demo.service.ocp4.lab.example.com     rails-postgresql-example          &lt;all&gt;      None
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ oc get route
+</span></span><span class="line"><span class="cl">NAME                       HOST/PORT                                               PATH   SERVICES            PORT    TERMINATION   WILDCARD
+</span></span><span class="line"><span class="cl">rails-postgresql-example   rails-postgresql-example-demo.service.ocp4.lab.example.com     rails-postgresql-example          &lt;all&gt;      None
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>#指定 label 讓 rails-postgresql-example 的 route 地址與設置解析</p>
@@ -743,11 +798,11 @@ rails-postgresql-example   rails-postgresql-example-demo.service.ocp4.lab.exampl
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">$ oc label route rails-postgresql-example type=service
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ oc label route rails-postgresql-example type=service
+</span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="6-訪問-ap-的-route-地址確認狀態可以訪問">6. 訪問 AP 的 Route 地址，確認狀態可以訪問</h3>
-<ul>
+</div><h3 id="6-訪問-ap-的-route-地址確認狀態可以訪問">6. 訪問 AP 的 Route 地址，確認狀態可以訪問
+</h3><ul>
 <li>預設應用及服務走 default 網頁會讀取不到</li>
 </ul>
 <div class="highlight"><div class="chroma">
@@ -755,13 +810,13 @@ rails-postgresql-example   rails-postgresql-example-demo.service.ocp4.lab.exampl
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">$ oc label route rails-postgresql-example type- 
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ oc label route rails-postgresql-example type- 
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><img src="/openshift/security-zones/img/08.png"
 	width="1127"
 	height="647"
-	srcset="/openshift/security-zones/img/08_huda9aa56bc4effed2df008c35645ed447_142356_480x0_resize_box_3.png 480w, /openshift/security-zones/img/08_huda9aa56bc4effed2df008c35645ed447_142356_1024x0_resize_box_3.png 1024w"
+	srcset="/openshift/security-zones/img/08_hu6618985776594160761.png 480w, /openshift/security-zones/img/08_hu904911471564483782.png 1024w"
 	loading="lazy"
 	
 	
@@ -778,13 +833,13 @@ rails-postgresql-example   rails-postgresql-example-demo.service.ocp4.lab.exampl
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">$ oc label route rails-postgresql-example type=service
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ oc label route rails-postgresql-example type=service
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><img src="/openshift/security-zones/img/09.png"
 	width="1187"
 	height="683"
-	srcset="/openshift/security-zones/img/09_hufbd81718645c2c061487964a68caad0a_251451_480x0_resize_box_3.png 480w, /openshift/security-zones/img/09_hufbd81718645c2c061487964a68caad0a_251451_1024x0_resize_box_3.png 1024w"
+	srcset="/openshift/security-zones/img/09_hu12550618811519662957.png 480w, /openshift/security-zones/img/09_hu6084098090646236718.png 1024w"
 	loading="lazy"
 	
 	
@@ -793,8 +848,8 @@ rails-postgresql-example   rails-postgresql-example-demo.service.ocp4.lab.exampl
 		data-flex-basis="417px"
 	
 ></p>
-<h2 id="延伸討論">延伸討論</h2>
-<ul>
+<h2 id="延伸討論">延伸討論
+</h2><ul>
 <li>本次無討論 Application, External Service 資源放置問題</li>
 </ul>
 <blockquote>
@@ -812,8 +867,8 @@ rails-postgresql-example   rails-postgresql-example-demo.service.ocp4.lab.exampl
 <blockquote>
 <p>若各網段有獨立DNS服務器架構情境？</p>
 </blockquote>
-<h2 id="reference">Reference</h2>
-<ul>
+<h2 id="reference">Reference
+</h2><ul>
 <li><a class="link" href="https://rcarrata.com/openshift/ocp4_route_sharding/"  target="_blank" rel="noopener"
     >Deep dive of Route Sharding in OpenShift 4</a></li>
 <li><a class="link" href="https://itnext.io/security-zones-in-openshift-worker-nodes-part-i-introduction-4f85762962d7"  target="_blank" rel="noopener"
@@ -858,9 +913,9 @@ rails-postgresql-example   rails-postgresql-example-demo.service.ocp4.lab.exampl
 
     
 
-<aside class="related-contents--wrapper">
+<aside class="related-content--wrapper">
     <h2 class="section-title">相關文章</h2>
-    <div class="related-contents">
+    <div class="related-content">
         <div class="flex article-list--tile">
             
                 
@@ -874,6 +929,7 @@ rails-postgresql-example   rails-postgresql-example-demo.service.ocp4.lab.exampl
         </div>
     </a>
 </article>
+
             
                 
 <article class="">
@@ -886,6 +942,7 @@ rails-postgresql-example   rails-postgresql-example-demo.service.ocp4.lab.exampl
         </div>
     </a>
 </article>
+
             
                 
 <article class="">
@@ -898,6 +955,7 @@ rails-postgresql-example   rails-postgresql-example-demo.service.ocp4.lab.exampl
         </div>
     </a>
 </article>
+
             
                 
 <article class="">
@@ -910,6 +968,7 @@ rails-postgresql-example   rails-postgresql-example-demo.service.ocp4.lab.exampl
         </div>
     </a>
 </article>
+
             
                 
 <article class="">
@@ -922,6 +981,7 @@ rails-postgresql-example   rails-postgresql-example-demo.service.ocp4.lab.exampl
         </div>
     </a>
 </article>
+
             
         </div>
     </div>
@@ -938,12 +998,12 @@ rails-postgresql-example   rails-postgresql-example-demo.service.ocp4.lab.exampl
         
             2022 - 
         
-        2024 Frank&#39;s Notes
+        2025 Frank&#39;s Notes
     </section>
     
     <section class="powerby">
-        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.10.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 建立 <br />
+        主題 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.29.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 設計
     </section>
 </footer>
 
@@ -1020,75 +1080,19 @@ rails-postgresql-example   rails-postgresql-example-demo.service.ocp4.lab.exampl
                 >
             </script><link 
                 rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
             ><link 
                 rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
             >
 
             </main>
-    <aside class="sidebar right-sidebar sticky">
-        
-            
-                
-    <section class="widget archives">
-        <div class="widget-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <line x1="5" y1="9" x2="19" y2="9" />
-  <line x1="5" y1="15" x2="19" y2="15" />
-  <line x1="11" y1="4" x2="7" y2="20" />
-  <line x1="17" y1="4" x2="13" y2="20" />
-</svg>
-
-
-
-        </div>
-        <h2 class="widget-title section-title">目錄</h2>
-        
-        <div class="widget--toc">
-            <nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#概述-為什麼有這樣需求">/概述/ 為什麼有這樣需求？</a></li>
-        <li><a href="#探討--相關架構考量">/探討/  相關架構考量</a>
-          <ul>
-            <li><a href="#補充---透過實體隔離方案-">/補充 - 透過<code>實體隔離方案</code> /</a></li>
-            <li><a href="#以下針對本文主要概述-單一叢集跨網段架構-架構圖做細部探討">以下針對本文主要概述「 <code>單一叢集跨網段架構</code> 」架構圖做細部探討：</a></li>
-          </ul>
-        </li>
-        <li><a href="#單一叢集-opensihft-運作於跨網段區域">單一叢集 OpenSihft 運作於跨網段區域</a></li>
-        <li><a href="#操作步驟">操作步驟</a>
-          <ul>
-            <li><a href="#1-dns-配置對外-external-service-使用的-wildcard">1. DNS 配置對外 External Service 使用的 WildCard</a></li>
-            <li><a href="#2-將-router-固定到-infra-node">2. 將 Router 固定到 Infra Node</a></li>
-            <li><a href="#3-創建-ingress-controller-指派為外部應用使用">3. 創建 Ingress Controller 指派為外部應用使用</a></li>
-            <li><a href="#4-限制對內對外服務-ingress-controller-配置">4. 限制對內對外服務 Ingress Controller 配置</a></li>
-            <li><a href="#5-部署應用生成-route-並指定其-hostname和-label-typeservice">5. 部署應用，生成 Route 並指定其 Hostname和 Label (type=service)</a></li>
-            <li><a href="#6-訪問-ap-的-route-地址確認狀態可以訪問">6. 訪問 AP 的 Route 地址，確認狀態可以訪問</a></li>
-          </ul>
-        </li>
-        <li><a href="#延伸討論">延伸討論</a></li>
-        <li><a href="#reference">Reference</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-        </div>
-    </section>
-
-            
-        
-    </aside>
-
-
         </div>
         <script 
-                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.c9433a56200c7fa053931db65ffb3761c72efa2034cbab024da4dc851d619762.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');

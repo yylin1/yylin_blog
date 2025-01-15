@@ -1,32 +1,32 @@
 <!DOCTYPE html>
 <html lang="zh-tw" dir="ltr">
-    <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Ansible Tower 產品生命週期演進關係，企業會開始需要進行 AAP 2 升級計畫，本篇文會介紹如何將現有 AAP 1.x (Ansible Tower 3.X)，包含當前部署模式、腳本工作流程方式及遷移相關等的任何複雜性評估，並介紹 Automation execution environments 解決了什麼問題，後續如何透過 AAP2 建構我們的自動化中台需求。'><title>針對 Ansible Tower 升級 AAP 2 建議方案及執行確認</title>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Ansible Tower 產品生命週期演進關係，企業會開始需要進行 AAP 2 升級計畫，本篇文會介紹如何將現有 AAP 1.x (Ansible Tower 3.X)，包含當前部署模式、腳本工作流程方式及遷移相關等的任何複雜性評估，並介紹 Automation execution environments 解決了什麼問題，後續如何透過 AAP2 建構我們的自動化中台需求。">
+<title>針對 Ansible Tower 升級 AAP 2 建議方案及執行確認</title>
 
-<link rel='canonical' href='https://blog.yylin.io/ansible/ansible-tower-upgrade-to-ansible-automation-platform-2/'>
+<link rel='canonical' href='http://localhost:1313/ansible/ansible-tower-upgrade-to-ansible-automation-platform-2/'>
 
-<link rel="stylesheet" href="/scss/style.min.5dfb59e7e9320a8eb7995abb74271d0b47aa7bd7423004549c2964fd78196c75.css"><meta property='og:title' content='針對 Ansible Tower 升級 AAP 2 建議方案及執行確認'>
-<meta property='og:description' content='Ansible Tower 產品生命週期演進關係，企業會開始需要進行 AAP 2 升級計畫，本篇文會介紹如何將現有 AAP 1.x (Ansible Tower 3.X)，包含當前部署模式、腳本工作流程方式及遷移相關等的任何複雜性評估，並介紹 Automation execution environments 解決了什麼問題，後續如何透過 AAP2 建構我們的自動化中台需求。'>
-<meta property='og:url' content='https://blog.yylin.io/ansible/ansible-tower-upgrade-to-ansible-automation-platform-2/'>
+<link rel="stylesheet" href="/scss/style.min.5dfb59e7e9320a8eb7995abb74271d0b47aa7bd7423004549c2964fd78196c75.css"><meta property='og:title' content="針對 Ansible Tower 升級 AAP 2 建議方案及執行確認">
+<meta property='og:description' content="Ansible Tower 產品生命週期演進關係，企業會開始需要進行 AAP 2 升級計畫，本篇文會介紹如何將現有 AAP 1.x (Ansible Tower 3.X)，包含當前部署模式、腳本工作流程方式及遷移相關等的任何複雜性評估，並介紹 Automation execution environments 解決了什麼問題，後續如何透過 AAP2 建構我們的自動化中台需求。">
+<meta property='og:url' content='http://localhost:1313/ansible/ansible-tower-upgrade-to-ansible-automation-platform-2/'>
 <meta property='og:site_name' content='Frank&#39;s Notes'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Ansible Automation Platform' /><meta property='article:published_time' content='2022-12-19T12:00:40&#43;08:00'/><meta property='article:modified_time' content='2022-12-19T12:00:40&#43;08:00'/>
 <meta name="twitter:title" content="針對 Ansible Tower 升級 AAP 2 建議方案及執行確認">
 <meta name="twitter:description" content="Ansible Tower 產品生命週期演進關係，企業會開始需要進行 AAP 2 升級計畫，本篇文會介紹如何將現有 AAP 1.x (Ansible Tower 3.X)，包含當前部署模式、腳本工作流程方式及遷移相關等的任何複雜性評估，並介紹 Automation execution environments 解決了什麼問題，後續如何透過 AAP2 建構我們的自動化中台需求。">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-60ZBHV66GB"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-60ZBHV66GB', { 'anonymize_ip': false });
-}
-</script>
-<style>
-	h1 {
-		letter-spacing: 6px;
-	}
-</style>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-60ZBHV66GB"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-60ZBHV66GB');
+        }
+      </script>
     </head>
     <body class="
     article-page
@@ -63,8 +63,6 @@ if (!doNotTrack) {
     <header>
         
             
-            
-            
         
         
         <div class="site-meta">
@@ -75,7 +73,6 @@ if (!doNotTrack) {
         
         
         
-
         <li >
             <a href='/' >
                 
@@ -96,7 +93,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/about/' >
                 
@@ -116,7 +112,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/archives/' >
                 
@@ -137,7 +132,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/search/' >
                 
@@ -157,7 +151,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/links/' >
                 
@@ -176,12 +169,12 @@ if (!doNotTrack) {
             </a>
         </li>
         
+        <li class="menu-bottom-section">
+            <ol class="menu">
 
-        <div class="menu-bottom-section">
-            
-            
-                <li id="dark-mode-toggle">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <circle cx="8" cy="12" r="2" />
   <rect x="2" y="6" width="20" height="12" rx="6" />
@@ -189,7 +182,7 @@ if (!doNotTrack) {
 
 
 
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <circle cx="16" cy="12" r="2" />
   <rect x="2" y="6" width="20" height="12" rx="6" />
@@ -197,13 +190,53 @@ if (!doNotTrack) {
 
 
 
-                    <span>夜晚模式</span>
-                </li>
-            
-        </div>
+                        <span>夜晚模式</span>
+                    </li>
+                
+            </ol>
+        </li>
     </ol>
 </aside>
-<main class="main full-width">
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目錄</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#環境">/環境/</a></li>
+        <li><a href="#ansible-tower-的升級路線">/Ansible Tower 的升級路線/</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
     <article class="main-article">
     <header class="article-header">
 
@@ -230,6 +263,9 @@ if (!doNotTrack) {
         
     </div>
 
+    
+    
+    
     
     <footer class="article-time">
         
@@ -267,6 +303,7 @@ if (!doNotTrack) {
 
     
 </div>
+
 </header>
 
     <section class="article-content">
@@ -275,14 +312,14 @@ if (!doNotTrack) {
     <p>隨著 Ansible Automation Platform 2.0 於今年七月中釋出 Early Access 版本，我之後會寫一篇文章介紹與大家之前比較熟悉的 Ansible Tower 在特性上有什麼差別，有興趣的朋友可以先在新的環境玩玩看，先不要急著升級，因為之後會有更多新功能，也會在之後的文章一併介紹。</p>
 <p>本篇主要是介紹升級 Ansible Tower 3.8.4 (Ansible Tower 的最後一版) 到 Ansible Automation Platform 2.0 的作法。</p>
 <p>之所以會有這篇文章的出現，主要是因為 Ansible Automation Platform 2.0 以及之後的版本對於 RHEL 作業系統和 Ansible-core 的版本都會有一些限制，所以先寫篇文章記錄一下，之後有朋友想升級也可以當個參考 。&quot;</p>
-<h2 id="環境">/環境/</h2>
-<p>RHEL 7.9
+<h2 id="環境">/環境/
+</h2><p>RHEL 7.9
 RHEL 8.4
 Ansible Tower 3.8.4
 Ansible Automation Platform 2.0 Early Access
 (以下簡稱 AAP2.0)</p>
-<h2 id="ansible-tower-的升級路線">/Ansible Tower 的升級路線/</h2>
-<p>Ansible Tower 升級可以參考 Upgrading an Existing Tower Installation，並且分為以下兩種情況：</p>
+<h2 id="ansible-tower-的升級路線">/Ansible Tower 的升級路線/
+</h2><p>Ansible Tower 升級可以參考 Upgrading an Existing Tower Installation，並且分為以下兩種情況：</p>
 <p>(1) 假設您的 Ansible Tower 版本在 3.7 以上基本上可以總結為以下三步驟：</p>
 <p>使用官方下載連結下載目標版本 Ansible Tower 壓縮檔並解壓縮
 備份舊版本的 Ansible Tower 資料（包含 Templates, Projects 等設定），備份步驟可以參考 Backing Up and Restoring Tower
@@ -316,12 +353,12 @@ Ansible Automation Platform 2.0 Early Access
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">
-先講一下我的升級路徑：
-
-- 參考 Migration from AAP 1.2 to Ansible Automation Platform 2: Side by side upgrade - Step 1 指南參考：
-
-<div class="video-wrapper">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">先講一下我的升級路徑：
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">- 參考 Migration from AAP 1.2 to Ansible Automation Platform 2: Side by side upgrade - Step 1 指南參考：
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><div class="video-wrapper">
     <iframe loading="lazy" 
             src="https://www.youtube.com/embed/EKf3u1QdpNo" 
             allowfullscreen 
@@ -330,14 +367,15 @@ Ansible Automation Platform 2.0 Early Access
     </iframe>
 </div>
 
-
-## Reference
-
-- [Red Hat Ansible Tower Upgrade from 3.5 to 3.8 – when running setup.sh is not enough](https://www.martinberger.com/2020/12/red-hat-ansible-tower-upgrade-from-3-5-to-3-8-when-running-setup-sh-is-not-enough-or-i-have-made-fire/)
-- [How Can I Uninstall Ansible Tower?](https://access.redhat.com/solutions/3107181)
-- [Backing Up and Restoring Tower](https://docs.ansible.com/ansible-tower/latest/html/administration/backup_restore.html)
-- [Ansible Automation Platform 2 Installation Guide](https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/2.2/html/red_hat_ansible_automation_platform_operator_installation_guide/index)
-- [Ansible Tower 升級 Ansible Automation Platform 2.0 作法 by Hazel](https://hazel.style/2021/10/29/Ansible-Tower-upgrade-to-Ansible-Automation-Platform-2/#more)</code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">## Reference
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">- [Red Hat Ansible Tower Upgrade from 3.5 to 3.8 – when running setup.sh is not enough](https://www.martinberger.com/2020/12/red-hat-ansible-tower-upgrade-from-3-5-to-3-8-when-running-setup-sh-is-not-enough-or-i-have-made-fire/)
+</span></span><span class="line"><span class="cl">- [How Can I Uninstall Ansible Tower?](https://access.redhat.com/solutions/3107181)
+</span></span><span class="line"><span class="cl">- [Backing Up and Restoring Tower](https://docs.ansible.com/ansible-tower/latest/html/administration/backup_restore.html)
+</span></span><span class="line"><span class="cl">- [Ansible Automation Platform 2 Installation Guide](https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/2.2/html/red_hat_ansible_automation_platform_operator_installation_guide/index)
+</span></span><span class="line"><span class="cl">- [Ansible Tower 升級 Ansible Automation Platform 2.0 作法 by Hazel](https://hazel.style/2021/10/29/Ansible-Tower-upgrade-to-Ansible-Automation-Platform-2/#more)
+</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </section>
@@ -374,9 +412,9 @@ Ansible Automation Platform 2.0 Early Access
 
     
 
-<aside class="related-contents--wrapper">
+<aside class="related-content--wrapper">
     <h2 class="section-title">相關文章</h2>
-    <div class="related-contents">
+    <div class="related-content">
         <div class="flex article-list--tile">
             
                 
@@ -390,6 +428,7 @@ Ansible Automation Platform 2.0 Early Access
         </div>
     </a>
 </article>
+
             
                 
 <article class="">
@@ -402,6 +441,7 @@ Ansible Automation Platform 2.0 Early Access
         </div>
     </a>
 </article>
+
             
                 
 <article class="">
@@ -414,6 +454,7 @@ Ansible Automation Platform 2.0 Early Access
         </div>
     </a>
 </article>
+
             
         </div>
     </div>
@@ -430,12 +471,12 @@ Ansible Automation Platform 2.0 Early Access
         
             2022 - 
         
-        2024 Frank&#39;s Notes
+        2025 Frank&#39;s Notes
     </section>
     
     <section class="powerby">
-        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.10.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 建立 <br />
+        主題 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.29.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 設計
     </section>
 </footer>
 
@@ -512,57 +553,19 @@ Ansible Automation Platform 2.0 Early Access
                 >
             </script><link 
                 rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
             ><link 
                 rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
             >
 
             </main>
-    <aside class="sidebar right-sidebar sticky">
-        
-            
-                
-    <section class="widget archives">
-        <div class="widget-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <line x1="5" y1="9" x2="19" y2="9" />
-  <line x1="5" y1="15" x2="19" y2="15" />
-  <line x1="11" y1="4" x2="7" y2="20" />
-  <line x1="17" y1="4" x2="13" y2="20" />
-</svg>
-
-
-
-        </div>
-        <h2 class="widget-title section-title">目錄</h2>
-        
-        <div class="widget--toc">
-            <nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#環境">/環境/</a></li>
-        <li><a href="#ansible-tower-的升級路線">/Ansible Tower 的升級路線/</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-        </div>
-    </section>
-
-            
-        
-    </aside>
-
-
         </div>
         <script 
-                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.c9433a56200c7fa053931db65ffb3761c72efa2034cbab024da4dc851d619762.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');

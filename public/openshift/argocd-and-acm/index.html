@@ -1,32 +1,32 @@
 <!DOCTYPE html>
 <html lang="zh-tw" dir="ltr">
-    <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='本篇介紹 如何在每個託管叢集中連接 ArgoCD/OpenShift GitOps 部署，並在 ACM 單一管理平台中直接瀏覽、控制和管理所部署的 Argo Applications以及 ApplicationSets 配置實戰'><title>在 ACM 透過 OpenShift-GitOps/ArgoCD 管理應用程式</title>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="本篇介紹 如何在每個託管叢集中連接 ArgoCD/OpenShift GitOps 部署，並在 ACM 單一管理平台中直接瀏覽、控制和管理所部署的 Argo Applications以及 ApplicationSets 配置實戰">
+<title>在 ACM 透過 OpenShift-GitOps/ArgoCD 管理應用程式</title>
 
-<link rel='canonical' href='https://blog.yylin.io/openshift/argocd-and-acm/'>
+<link rel='canonical' href='http://localhost:1313/openshift/argocd-and-acm/'>
 
-<link rel="stylesheet" href="/scss/style.min.5dfb59e7e9320a8eb7995abb74271d0b47aa7bd7423004549c2964fd78196c75.css"><meta property='og:title' content='在 ACM 透過 OpenShift-GitOps/ArgoCD 管理應用程式'>
-<meta property='og:description' content='本篇介紹 如何在每個託管叢集中連接 ArgoCD/OpenShift GitOps 部署，並在 ACM 單一管理平台中直接瀏覽、控制和管理所部署的 Argo Applications以及 ApplicationSets 配置實戰'>
-<meta property='og:url' content='https://blog.yylin.io/openshift/argocd-and-acm/'>
+<link rel="stylesheet" href="/scss/style.min.5dfb59e7e9320a8eb7995abb74271d0b47aa7bd7423004549c2964fd78196c75.css"><meta property='og:title' content="在 ACM 透過 OpenShift-GitOps/ArgoCD 管理應用程式">
+<meta property='og:description' content="本篇介紹 如何在每個託管叢集中連接 ArgoCD/OpenShift GitOps 部署，並在 ACM 單一管理平台中直接瀏覽、控制和管理所部署的 Argo Applications以及 ApplicationSets 配置實戰">
+<meta property='og:url' content='http://localhost:1313/openshift/argocd-and-acm/'>
 <meta property='og:site_name' content='Frank&#39;s Notes'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='OpenShift' /><meta property='article:tag' content='CICD' /><meta property='article:tag' content='ArgoCD' /><meta property='article:tag' content='ACM' /><meta property='article:published_time' content='2022-06-25T09:40:40&#43;08:00'/><meta property='article:modified_time' content='2022-06-25T09:40:40&#43;08:00'/>
 <meta name="twitter:title" content="在 ACM 透過 OpenShift-GitOps/ArgoCD 管理應用程式">
 <meta name="twitter:description" content="本篇介紹 如何在每個託管叢集中連接 ArgoCD/OpenShift GitOps 部署，並在 ACM 單一管理平台中直接瀏覽、控制和管理所部署的 Argo Applications以及 ApplicationSets 配置實戰">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-60ZBHV66GB"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-60ZBHV66GB', { 'anonymize_ip': false });
-}
-</script>
-<style>
-	h1 {
-		letter-spacing: 6px;
-	}
-</style>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-60ZBHV66GB"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-60ZBHV66GB');
+        }
+      </script>
     </head>
     <body class="
     article-page
@@ -63,8 +63,6 @@ if (!doNotTrack) {
     <header>
         
             
-            
-            
         
         
         <div class="site-meta">
@@ -75,7 +73,6 @@ if (!doNotTrack) {
         
         
         
-
         <li >
             <a href='/' >
                 
@@ -96,7 +93,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/about/' >
                 
@@ -116,7 +112,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/archives/' >
                 
@@ -137,7 +132,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/search/' >
                 
@@ -157,7 +151,6 @@ if (!doNotTrack) {
         </li>
         
         
-
         <li >
             <a href='/links/' >
                 
@@ -176,12 +169,12 @@ if (!doNotTrack) {
             </a>
         </li>
         
+        <li class="menu-bottom-section">
+            <ol class="menu">
 
-        <div class="menu-bottom-section">
-            
-            
-                <li id="dark-mode-toggle">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <circle cx="8" cy="12" r="2" />
   <rect x="2" y="6" width="20" height="12" rx="6" />
@@ -189,7 +182,7 @@ if (!doNotTrack) {
 
 
 
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <circle cx="16" cy="12" r="2" />
   <rect x="2" y="6" width="20" height="12" rx="6" />
@@ -197,13 +190,56 @@ if (!doNotTrack) {
 
 
 
-                    <span>夜晚模式</span>
-                </li>
-            
-        </div>
+                        <span>夜晚模式</span>
+                    </li>
+                
+            </ol>
+        </li>
     </ol>
 </aside>
-<main class="main full-width">
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目錄</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#概述">概述</a></li>
+        <li><a href="#環境配置-先決條件">環境配置-先決條件</a></li>
+        <li><a href="#於-openshift-gitops--argocd-配置託管叢集">於 OpenShift GitOps / ArgoCD 配置託管叢集</a></li>
+        <li><a href="#從-acm-hub-部署-argocdopenshift-gitops-applicationset">從 ACM Hub 部署 ArgoCD/OpenShift GitOps ApplicationSet</a></li>
+        <li><a href="#reference">Reference</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
     <article class="main-article">
     <header class="article-header">
 
@@ -212,7 +248,7 @@ if (!doNotTrack) {
     <header class="article-category">
         
             <a href="/categories/cloud-service-provider/" >
-                cloud-service-provider
+                Cloud Service Provider
             </a>
         
     </header>
@@ -230,6 +266,9 @@ if (!doNotTrack) {
         
     </div>
 
+    
+    
+    
     
     <footer class="article-time">
         
@@ -267,13 +306,14 @@ if (!doNotTrack) {
 
     
 </div>
+
 </header>
 
     <section class="article-content">
     
     
-    <h2 id="概述">概述</h2>
-<p>從 ACM 2.5 版開始正式 GA 功能，您可以透過 ApplicationSets 來配置 ArgoCD / OpenShift-GitOps ，通過單一管理平台以可擴展的方式管理您的所有 GitOps Applications。</p>
+    <h2 id="概述">概述
+</h2><p>從 ACM 2.5 版開始正式 GA 功能，您可以透過 ApplicationSets 來配置 ArgoCD / OpenShift-GitOps ，通過單一管理平台以可擴展的方式管理您的所有 GitOps Applications。</p>
 <p>ApplicationSet Controller 是一個 Kubernetes Controller，它增加對 ApplicationSet CustomResourceDefinition (CRD) 的支持。</p>
 <p>ApplicationSet Controller 在與 Argo CD 一起安裝時，通過添加額外的功能來支持以叢集管理員為中心的場景來補充它。</p>
 <p>ApplicationSet Ccontroller 提供：</p>
@@ -287,8 +327,8 @@ if (!doNotTrack) {
 </li>
 </ul>
 <p>我們將介紹如何將 ACM 與 OpenShift GitOps 的 ApplicationSets 連接起來，以便在託管 Cluster 中配置和部署 OpenShift GitOps Application 和 ApplicationSet。</p>
-<h2 id="環境配置-先決條件">環境配置-先決條件</h2>
-<ul>
+<h2 id="環境配置-先決條件">環境配置-先決條件
+</h2><ul>
 <li>我們需要使用 Operator Hub 在 ACM Hub 那座 OpenShift Cluster 中安裝 OpenShift GitOps：</li>
 </ul>
 <div class="highlight"><div class="chroma">
@@ -296,8 +336,8 @@ if (!doNotTrack) {
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">$ until oc apply -k https://github.com/RedHat-EMEA-SSA-Team/ns-gitops/tree/bootstrap/bootstrap ; do sleep 2; done
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ until oc apply -k https://github.com/RedHat-EMEA-SSA-Team/ns-gitops/tree/bootstrap/bootstrap ; do sleep 2; done
+</span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
 <li>
@@ -308,8 +348,8 @@ if (!doNotTrack) {
 <p>另一方面，我們需要配置管理不同的 Cluster (e.g. Public Cloud)。在我的例子中，我使用我環境中部署 2 座 OCP Cluster 叢集，並將在這篇文章中用於部署我的 Application。</p>
 </li>
 </ul>
-<h2 id="於-openshift-gitops--argocd-配置託管叢集">於 OpenShift GitOps / ArgoCD 配置託管叢集</h2>
-<p>要在 ACM 中配置和鏈接 OpenShift GitOps，我們可以將一組一個或多個託管 Cluster 註冊到 Argo CD 或 OpenShift GitOps Operator 的實例。</p>
+<h2 id="於-openshift-gitops--argocd-配置託管叢集">於 OpenShift GitOps / ArgoCD 配置託管叢集
+</h2><p>要在 ACM 中配置和鏈接 OpenShift GitOps，我們可以將一組一個或多個託管 Cluster 註冊到 Argo CD 或 OpenShift GitOps Operator 的實例。</p>
 <p>註冊後，我們可以使用從 ACM Hub Application Controller 的 Application 和 ApplicationSets 將我們需要部署的應用程式部署到這些叢集。然後，我們可以設置一個連續的 GitOps 環境，以在開發、暫存和生產環境中跨叢集自動化配置 Application 的一致性。</p>
 <ul>
 <li>首先，我們需要創建 cluster sets 並將託管 clusters 添加到這些 cluster sets：</li>
@@ -325,14 +365,14 @@ if (!doNotTrack) {
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">$ cat acmgitops/managedclusterset.yaml
-
-apiVersion: cluster.open-cluster-management.io/v1alpha1
-kind: ManagedClusterSet
-metadata:
-  name: all-openshift-clusters
-  spec: {}
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ cat acmgitops/managedclusterset.yaml
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">apiVersion: cluster.open-cluster-management.io/v1alpha1
+</span></span><span class="line"><span class="cl">kind: ManagedClusterSet
+</span></span><span class="line"><span class="cl">metadata:
+</span></span><span class="line"><span class="cl">  name: all-openshift-clusters
+</span></span><span class="line"><span class="cl">  spec: {}
+</span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
 <li>
@@ -359,18 +399,18 @@ metadata:
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">$ cat managedclustersetbinding.yaml
-
-apiVersion: cluster.open-cluster-management.io/v1alpha1
-kind: ManagedClusterSetBinding
-metadata:
-  name: all-openshift-clusters
-  namespace: openshift-gitops
-spec:
-  clusterSet: all-openshift-clusters
-
-$ oc apply -f managedclustersetbinding.yaml
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ cat managedclustersetbinding.yaml
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">apiVersion: cluster.open-cluster-management.io/v1alpha1
+</span></span><span class="line"><span class="cl">kind: ManagedClusterSetBinding
+</span></span><span class="line"><span class="cl">metadata:
+</span></span><span class="line"><span class="cl">  name: all-openshift-clusters
+</span></span><span class="line"><span class="cl">  namespace: openshift-gitops
+</span></span><span class="line"><span class="cl">spec:
+</span></span><span class="line"><span class="cl">  clusterSet: all-openshift-clusters
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ oc apply -f managedclustersetbinding.yaml
+</span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
 <li>在託管叢集綁定中使用的 namespace 中，創建放置自定義資源以選擇一組託管叢集以註冊到 ArgoCD 或 OpenShift GitOps Operator instance：</li>
@@ -393,21 +433,21 @@ $ oc apply -f managedclustersetbinding.yaml
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">apiVersion: cluster.open-cluster-management.io/v1alpha1
-kind: Placement
-metadata:
-  name: all-openshift-clusters
-  namespace: openshift-gitops
-spec:
-  predicates:
-  - requiredClusterSelector:
-      labelSelector:
-        matchExpressions:
-        - key: vendor
-          operator: &#34;In&#34;
-          values:
-          - OpenShift
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">apiVersion: cluster.open-cluster-management.io/v1alpha1
+</span></span><span class="line"><span class="cl">kind: Placement
+</span></span><span class="line"><span class="cl">metadata:
+</span></span><span class="line"><span class="cl">  name: all-openshift-clusters
+</span></span><span class="line"><span class="cl">  namespace: openshift-gitops
+</span></span><span class="line"><span class="cl">spec:
+</span></span><span class="line"><span class="cl">  predicates:
+</span></span><span class="line"><span class="cl">  - requiredClusterSelector:
+</span></span><span class="line"><span class="cl">      labelSelector:
+</span></span><span class="line"><span class="cl">        matchExpressions:
+</span></span><span class="line"><span class="cl">        - key: vendor
+</span></span><span class="line"><span class="cl">          operator: &#34;In&#34;
+</span></span><span class="line"><span class="cl">          values:
+</span></span><span class="line"><span class="cl">          - OpenShift
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>注意：只有 OpenShift 叢集註冊到 Argo CD 或 GitOps Operator instance，而不是其他 Kubernetes 叢集。</p>
@@ -433,21 +473,21 @@ spec:
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">apiVersion: apps.open-cluster-management.io/v1alpha1
-kind: GitOpsCluster
-metadata:
-  name: argo-acm-clusters
-  namespace: openshift-gitops
-spec:
-  argoServer:
-    cluster: local-cluster
-    argoNamespace: openshift-gitops
-  placementRef:
-    kind: Placement
-    apiVersion: cluster.open-cluster-management.io/v1alpha1
-    name: all-openshift-clusters
-    namespace: openshift-gitops
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">apiVersion: apps.open-cluster-management.io/v1alpha1
+</span></span><span class="line"><span class="cl">kind: GitOpsCluster
+</span></span><span class="line"><span class="cl">metadata:
+</span></span><span class="line"><span class="cl">  name: argo-acm-clusters
+</span></span><span class="line"><span class="cl">  namespace: openshift-gitops
+</span></span><span class="line"><span class="cl">spec:
+</span></span><span class="line"><span class="cl">  argoServer:
+</span></span><span class="line"><span class="cl">    cluster: local-cluster
+</span></span><span class="line"><span class="cl">    argoNamespace: openshift-gitops
+</span></span><span class="line"><span class="cl">  placementRef:
+</span></span><span class="line"><span class="cl">    kind: Placement
+</span></span><span class="line"><span class="cl">    apiVersion: cluster.open-cluster-management.io/v1alpha1
+</span></span><span class="line"><span class="cl">    name: all-openshift-clusters
+</span></span><span class="line"><span class="cl">    namespace: openshift-gitops
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>這使 Argo CD instance 能夠將 Application 部署到任何 ACM Hub 託管叢集中。</p>
 <p>正如我們從前面的示例中看到的，placementRef.name 被定義為 <code>all-openshift-clusters</code>，並被指定為安裝在 argoNamespace：openshift-gitops 中的 GitOps 實例的目標叢集。</p>
@@ -455,8 +495,8 @@ spec:
 <ul>
 <li>幾分鐘後，我們在 ACM Hub 中生成了 GitOps Cluster CRD，我們將能夠直接從 Application 部分的 ACM Hub 控制台定義 Application 和ApplicationSet。</li>
 </ul>
-<h2 id="從-acm-hub-部署-argocdopenshift-gitops-applicationset">從 ACM Hub 部署 ArgoCD/OpenShift GitOps ApplicationSet</h2>
-<p>一旦我們通過 ACM Hub 中的 GitOps Cluster CRD 啟用了 OpenShift GitOps 和 ACM 之間的整合，我們就可以直接在 ACM Hub 中部署 ApplicationSet，在一個單一的頁面中管理所有 ArgoCD Application。</p>
+<h2 id="從-acm-hub-部署-argocdopenshift-gitops-applicationset">從 ACM Hub 部署 ArgoCD/OpenShift GitOps ApplicationSet
+</h2><p>一旦我們通過 ACM Hub 中的 GitOps Cluster CRD 啟用了 OpenShift GitOps 和 ACM 之間的整合，我們就可以直接在 ACM Hub 中部署 ApplicationSet，在一個單一的頁面中管理所有 ArgoCD Application。</p>
 <p>另一方面，我們還將受益於<a class="link" href="https://argocd-applicationset.readthedocs.io/en/stable/Generators/"  target="_blank" rel="noopener"
     >ArgoCD ApplicationSets 的不同生成器的特性</a>。</p>
 <p>使用這些生成方式，我們可以從不同叢集中的單個  Repository 部署多個 Application，利用 ApplicationSet 為每個託管的 Cluster 的從Repository 中的配置不同對象及要部署的 Application。</p>
@@ -505,36 +545,36 @@ spec:
 </span><span class="lnt">29
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">apiVersion: argoproj.io/v1alpha1
-kind: ApplicationSet
-metadata:
-  name: acm-appsets
-  namespace: openshift-gitops
-spec:
-  generators:
-    - clusterDecisionResource:
-        configMapRef: acm-placement
-        labelSelector:
-          matchLabels:
-            cluster.open-cluster-management.io/placement: acm-appsets-placement
-        requeueAfterSeconds: 180
-  template:
-    metadata:
-      name: &#39;acm-appsets-&#39;
-    spec:
-      destination:
-        namespace: bgdk
-        server: &#39;&#39;
-      project: default
-      source:
-        path: apps/bgd/overlays/bgdk
-        repoURL: &#39;https://github.com/yylin1/ns-apps/&#39;
-        targetRevision: single-app
-      syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">apiVersion: argoproj.io/v1alpha1
+</span></span><span class="line"><span class="cl">kind: ApplicationSet
+</span></span><span class="line"><span class="cl">metadata:
+</span></span><span class="line"><span class="cl">  name: acm-appsets
+</span></span><span class="line"><span class="cl">  namespace: openshift-gitops
+</span></span><span class="line"><span class="cl">spec:
+</span></span><span class="line"><span class="cl">  generators:
+</span></span><span class="line"><span class="cl">    - clusterDecisionResource:
+</span></span><span class="line"><span class="cl">        configMapRef: acm-placement
+</span></span><span class="line"><span class="cl">        labelSelector:
+</span></span><span class="line"><span class="cl">          matchLabels:
+</span></span><span class="line"><span class="cl">            cluster.open-cluster-management.io/placement: acm-appsets-placement
+</span></span><span class="line"><span class="cl">        requeueAfterSeconds: 180
+</span></span><span class="line"><span class="cl">  template:
+</span></span><span class="line"><span class="cl">    metadata:
+</span></span><span class="line"><span class="cl">      name: &#39;acm-appsets-&#39;
+</span></span><span class="line"><span class="cl">    spec:
+</span></span><span class="line"><span class="cl">      destination:
+</span></span><span class="line"><span class="cl">        namespace: bgdk
+</span></span><span class="line"><span class="cl">        server: &#39;&#39;
+</span></span><span class="line"><span class="cl">      project: default
+</span></span><span class="line"><span class="cl">      source:
+</span></span><span class="line"><span class="cl">        path: apps/bgd/overlays/bgdk
+</span></span><span class="line"><span class="cl">        repoURL: &#39;https://github.com/yylin1/ns-apps/&#39;
+</span></span><span class="line"><span class="cl">        targetRevision: single-app
+</span></span><span class="line"><span class="cl">      syncPolicy:
+</span></span><span class="line"><span class="cl">        automated:
+</span></span><span class="line"><span class="cl">          prune: true
+</span></span><span class="line"><span class="cl">          selfHeal: true
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>注意：目標 namespace 可以是 openshift-gitops。BGDK 可能會更改，但它會以這種方式離開，因為我們需要放置一個目標 namespace，即ApplicationSet 本身不需要它（Applicatio bgdk 也不需要）</p>
 <ul>
@@ -609,8 +649,8 @@ spec:
 	
 ></p>
 <p>這些是由 ACM Hub 中生成的 GitOps CRD 自動生成和管理的，它與託管 Cluster 對應。</p>
-<h2 id="reference">Reference</h2>
-<ul>
+<h2 id="reference">Reference
+</h2><ul>
 <li><a class="link" href="https://github.com/RedHat-EMEA-SSA-Team/ns-gitops/"  target="_blank" rel="noopener"
     >https://github.com/RedHat-EMEA-SSA-Team/ns-gitops/</a></li>
 <li><a class="link" href="https://rcarrata.com/openshift/argo-and-acm/"  target="_blank" rel="noopener"
@@ -657,9 +697,9 @@ spec:
 
     
 
-<aside class="related-contents--wrapper">
+<aside class="related-content--wrapper">
     <h2 class="section-title">相關文章</h2>
-    <div class="related-contents">
+    <div class="related-content">
         <div class="flex article-list--tile">
             
                 
@@ -673,6 +713,7 @@ spec:
         </div>
     </a>
 </article>
+
             
         </div>
     </div>
@@ -689,12 +730,12 @@ spec:
         
             2022 - 
         
-        2024 Frank&#39;s Notes
+        2025 Frank&#39;s Notes
     </section>
     
     <section class="powerby">
-        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.10.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 建立 <br />
+        主題 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.29.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 設計
     </section>
 </footer>
 
@@ -771,60 +812,19 @@ spec:
                 >
             </script><link 
                 rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
             ><link 
                 rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
             >
 
             </main>
-    <aside class="sidebar right-sidebar sticky">
-        
-            
-                
-    <section class="widget archives">
-        <div class="widget-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <line x1="5" y1="9" x2="19" y2="9" />
-  <line x1="5" y1="15" x2="19" y2="15" />
-  <line x1="11" y1="4" x2="7" y2="20" />
-  <line x1="17" y1="4" x2="13" y2="20" />
-</svg>
-
-
-
-        </div>
-        <h2 class="widget-title section-title">目錄</h2>
-        
-        <div class="widget--toc">
-            <nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#概述">概述</a></li>
-        <li><a href="#環境配置-先決條件">環境配置-先決條件</a></li>
-        <li><a href="#於-openshift-gitops--argocd-配置託管叢集">於 OpenShift GitOps / ArgoCD 配置託管叢集</a></li>
-        <li><a href="#從-acm-hub-部署-argocdopenshift-gitops-applicationset">從 ACM Hub 部署 ArgoCD/OpenShift GitOps ApplicationSet</a></li>
-        <li><a href="#reference">Reference</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-        </div>
-    </section>
-
-            
-        
-    </aside>
-
-
         </div>
         <script 
-                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.c9433a56200c7fa053931db65ffb3761c72efa2034cbab024da4dc851d619762.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');
