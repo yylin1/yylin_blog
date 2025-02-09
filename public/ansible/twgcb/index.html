@@ -198,55 +198,7 @@
     </ol>
 </aside>
 
-    <aside class="sidebar right-sidebar sticky">
-        
-            
-                
-    <section class="widget archives">
-        <div class="widget-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <line x1="5" y1="9" x2="19" y2="9" />
-  <line x1="5" y1="15" x2="19" y2="15" />
-  <line x1="11" y1="4" x2="7" y2="20" />
-  <line x1="17" y1="4" x2="13" y2="20" />
-</svg>
-
-
-
-        </div>
-        <h2 class="widget-title section-title">目錄</h2>
-        
-        <div class="widget--toc">
-            <nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#-概述-">/ 概述 /</a>
-          <ul>
-            <li><a href="#twgcb-發展與目的">TWGCB 發展與目的</a></li>
-          </ul>
-        </li>
-        <li><a href="#-引入前思考-">/ 引入前思考 /</a></li>
-        <li><a href="#-透過-ansible-結合-twgcb-實現系統自動化合規檢查-">/ 透過 Ansible 結合 TWGCB 實現系統「自動化」合規檢查 /</a>
-          <ul>
-            <li><a href="#展示---產出-rhel-8-主機組態設定檢查報表">展示 - 產出 RHEL 8 主機組態設定檢查報表</a></li>
-            <li><a href="#補充展示---運行修復-rhel-主機設備規則並比對先前報表結果">補充展示 - 運行修復 RHEL 主機設備規則並比對先前報表結果</a></li>
-          </ul>
-        </li>
-        <li><a href="#-結論-">/ 結論 /</a></li>
-        <li><a href="#reference">Reference</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-        </div>
-    </section>
-
-            
-        
-    </aside>
-
+    
 
             <main class="main full-width">
     <article class="main-article">
@@ -321,71 +273,210 @@
     <section class="article-content">
     
     
-    <h2 id="-概述-">/ 概述 /
-</h2><p>TWGCB 由行政院國家資通安全會報技術服務中心發佈，政府組態基準(Government Configuration Baseline，簡稱GCB)目的在於規範資通訊設備 (例如：個人電腦、伺服器主機及網通設備等) 的一致性安全設定 (例如：密碼長度、更新期限等)，以降低成為駭客入侵管道，進而引發資安事件之風險。(擷取資料: <a class="link" href="https://www.nccst.nat.gov.tw/GCB"  target="_blank" rel="noopener"
-    >行政院國家資通安全會報技術服務中心</a>)。</p>
-<h3 id="twgcb-發展與目的">TWGCB 發展與目的
-</h3><p>政府主要目的期望藉由提供電腦作業環境一致性資安防護基準與實作指引，供政府機關及企業能透過建立安全組態，提升資安防護能力。</p>
-<p>本文以提供 <code>TWGCB for Red Hat Enterprise Linux 8</code> 作業系統為例，GCB 主要規範機關內作業系統有一致性安全設定，以降低成為駭客入侵管道，進而引發資安事件之風險：</p>
-<ol>
-<li>發展一致性安全組態設定</li>
-<li>提升作業系統使用安全性</li>
-</ol>
-<p>共計 292 項規定，分基本項目(243項)，防火牆(18項)以及SSH服務(31項)</p>
-<ul>
-<li>
-<p>主要參考下列二項國際知名資訊安全標準：</p>
-<ul>
-<li>CIS (Center for Internet Security) RHEL 8 Benchmark</li>
-<li>DISA(Defense Information Systems Agency) RHEL 8 STIG 以及 TWGCB for RHEL 5 相關內容</li>
-</ul>
-<p><img src="/ansible/twgcb/img/01.png"
-	width="961"
-	height="723"
-	srcset="/ansible/twgcb/img/01_hu10376596329273281823.png 480w, /ansible/twgcb/img/01_hu7084706771291277340.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="132"
-		data-flex-basis="319px"
-	
-> <img src="/ansible/twgcb/img/02.png"
-	width="963"
-	height="722"
-	srcset="/ansible/twgcb/img/02_hu11041581734252056760.png 480w, /ansible/twgcb/img/02_hu17689836911224263188.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="133"
-		data-flex-basis="320px"
-	
-></p>
-</li>
-</ul>
-<blockquote>
-<p>擷取至 <a class="link" href="https://download.nccst.nat.gov.tw/attachfilegcb/TWGCB-01-008_Red%20Hat%20Enterprise%20Linux%208%E6%94%BF%E5%BA%9C%E7%B5%84%E6%85%8B%E5%9F%BA%E6%BA%96%E8%AA%AA%E6%98%8E%E6%96%87%E4%BB%B6v1.0_1100924.pdf"  target="_blank" rel="noopener"
-    >TWGCB-01-008(v1.0)-政府組態基準說明文件</a></p>
-</blockquote>
-<h2 id="-引入前思考-">/ 引入前思考 /
-</h2><p>各企業為確保有所本能符合政府合規檢核基準，企業資安維運團隊的將要思考，如何採用規範及當前大量基礎設施，包含三大面向：</p>
-<ol>
-<li>如何定義系統組態合規標準條例(不影響企業服務)</li>
-<li>大範圍檢查及修正的人力成本？</li>
-<li>人工製作的系統組態稽核報告？</li>
-</ol>
-<p>當前市面上有很多針對 TWGCB 的一些合規 Solution 和產品，但要符合因應企業內部不停需求及<code>客製化</code>的方面相對比較困難，而企業能做什麼：</p>
-<ul>
-<li>需要找一個專家顧問團隊(如 Red Hat Consultant 團隊)，可針對企業環境與既有資安團隊定義的規範重新評估，進行訪談企業內所它需要的一個自動化對應腳本及如何引入 TWGCB 合規機制。</li>
-<li>列舉針對企業不同作業系統做規範定義 (e.g RHEL8)[補充]，顧問團隊在這些規則裡面去取用企業資安團隊能夠接受的相關條例。</li>
-<li>將這些規則列舉並透過後續自動化方式建立，達到 IT 維運團隊能夠透過一連串自動化部署及邏輯檢查，以更加速日常合規檢核及後續對應報表需求的最終目的。</li>
-</ul>
-<blockquote>
-<p>補充: 其他作業系統，若要評估資安條例及防範規範檢查，可以參考<a class="link" href="https://blog.yylin.io/ansible/openscap/"  target="_blank" rel="noopener"
-    >實現 OpenSCAP 自動化邏輯檢查</a> 文章介紹的 OpenSCAP 工具。</p>
-</blockquote>
-<h2 id="-透過-ansible-結合-twgcb-實現系統自動化合規檢查-">/ 透過 Ansible 結合 TWGCB 實現系統「自動化」合規檢查 /
+    
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/ansible-automation-platform/">Ansible Automation Platform</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相關文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/ansible/ansible-tower-upgrade-to-ansible-automation-platform-2/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">針對 Ansible Tower 升級 AAP 2 建議方案及執行確認</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/ansible/twgcb/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">透過自動化進行 TWGCB 臺灣政府組態標準合規 - 邏輯檢查</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/ansible/openscap/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">實現 OpenSCAP 自動化邏輯檢查</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2022 - 
+        
+        2025 Frank&#39;s Notes
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 建立 <br />
+        主題 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.29.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 設計
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.c9433a56200c7fa053931db65ffb3761c72efa2034cbab024da4dc851d619762.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
+自動化合規檢查-">/ 透過 Ansible 結合 TWGCB 實現系統「自動化」合規檢查 /
 </h2><p>上述文中釐清企業狀態與需求，這邊列出當前引入 TWGCB 政府組態規範目標：</p>
 <ul>
 <li>提供一套自動檢測</li>
