@@ -123,8 +123,7 @@ loading="lazy"
 &lt;li>驗證叢集所有節點更新權限是否正常。&lt;/li>
 &lt;/ol>
 &lt;blockquote>
-&lt;p>補充 - NVIDIA GPU Operator 安裝會部署幾個 Pod 服務，用於管理和啟用 GPU 在 OpenShift 中運作。其中一些 Pod 需要 OpenShift 使用一些非 Universal Base Image (UBI) 默認授權的 Images。必須在 OpenShift Cluster 中啟用信任的授權 Images，來啟動 NVIDIA GPU 驅動程式的容器運行。&lt;/p>
-&lt;/blockquote>
+&lt;p>補充 - NVIDIA GPU Operator 安裝會部署幾個 Pod 服務，用於管理和啟用 GPU 在 OpenShift 中運作。其中一些 Pod 需要 OpenShift 使用一些非 Universal Base Image (UBI) 默認授權的 Images。必須在 OpenShift Cluster 中啟用信任的授權 Images，來啟動 NVIDIA GPU 驅動程式的容器運行。&lt;/p>&lt;/blockquote>
 &lt;p>[1] &lt;a class="link" href="https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/steps-overview.html#entitlement-free-supported-versions" target="_blank" rel="noopener"
 >https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/steps-overview.html#entitlement-free-supported-versions&lt;/a>
 [2] &lt;a class="link" href="https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/cluster-entitlement.html#enabling-a-cluster-wide-entitlemenent" target="_blank" rel="noopener"

@@ -5,8 +5,7 @@
 &lt;li>將提供外部應用程式/服務，隔離於對外 Security Zones 區域，並限制只允許特定的 Router 使用某些特定功能(例如：單純網站服務運行, APP 後端服務)等。&lt;/li>
 &lt;/ol>
 &lt;blockquote>
-&lt;p>主要目的：希望透過 Shard Route 負責，在不同 IP 地址，讓內部和外部使用者訪問不同的 Router 以達到 DMZ 與 OCP 訪問限制，來減少成本下能更加提升叢集運作安全性。&lt;/p>
-&lt;/blockquote>
+&lt;p>主要目的：希望透過 Shard Route 負責，在不同 IP 地址，讓內部和外部使用者訪問不同的 Router 以達到 DMZ 與 OCP 訪問限制，來減少成本下能更加提升叢集運作安全性。&lt;/p>&lt;/blockquote>
 &lt;p>補充 - 更多場景情境，歡迎大家可以參考 Luis Javier Arizmendi Alonso 分享針對 OpenShift 於 Security Zones 系列文章 - &lt;a class="link" href="https://itnext.io/security-zones-in-openshift-worker-nodes-part-i-introduction-4f85762962d7" target="_blank" rel="noopener"
 >Security Zones in OpenShift worker nodes&lt;/a>&lt;/p>
 &lt;h2 id="探討--相關架構考量">/探討/ 相關架構考量
@@ -20,7 +19,7 @@
 &lt;p>&lt;img src="https://blog.yylin.io/openshift/security-zones/img/01.png"
 width="516"
 height="593"
-srcset="https://blog.yylin.io/openshift/security-zones/img/01_hu17717156163958657040.png 480w, https://blog.yylin.io/openshift/security-zones/img/01_hu13722892488924364584.png 1024w"
+srcset="https://blog.yylin.io/openshift/security-zones/img/01_hu_f63e44c3af5b4051.png 480w, https://blog.yylin.io/openshift/security-zones/img/01_hu_328a53746f328cfc.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="87"
@@ -28,13 +27,12 @@ data-flex-basis="208px"
 >&lt;/p>
 &lt;p>所以或許另一種選擇，透過有一個大型的 OpenShift「單一叢集跨網段架構」能使更容易維運管理及同時達到提高安全性架構，就是此次架構分享重點。&lt;/p>
 &lt;blockquote>
-&lt;p>這邊還是一個重點，取決於你對於當前環境規劃與架構設計需求而做選擇&lt;/p>
-&lt;/blockquote>
+&lt;p>這邊還是一個重點，取決於你對於當前環境規劃與架構設計需求而做選擇&lt;/p>&lt;/blockquote>
 &lt;h3 id="以下針對本文主要概述-單一叢集跨網段架構-架構圖做細部探討">以下針對本文主要概述「 &lt;code>單一叢集跨網段架構&lt;/code> 」架構圖做細部探討：
 &lt;/h3>&lt;p>&lt;img src="https://blog.yylin.io/openshift/security-zones/img/02.png"
 width="517"
 height="496"
-srcset="https://blog.yylin.io/openshift/security-zones/img/02_hu364572726551734261.png 480w, https://blog.yylin.io/openshift/security-zones/img/02_hu8746873943565230045.png 1024w"
+srcset="https://blog.yylin.io/openshift/security-zones/img/02_hu_26b8f5ae9bb8768e.png 480w, https://blog.yylin.io/openshift/security-zones/img/02_hu_9b09187bef60eda7.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="104"
@@ -59,7 +57,7 @@ data-flex-basis="250px"
 &lt;p>&lt;img src="https://blog.yylin.io/openshift/security-zones/img/03.png"
 width="905"
 height="764"
-srcset="https://blog.yylin.io/openshift/security-zones/img/03_hu16588230497044231463.png 480w, https://blog.yylin.io/openshift/security-zones/img/03_hu2528234340468498705.png 1024w"
+srcset="https://blog.yylin.io/openshift/security-zones/img/03_hu_f4f2efdff5130ec2.png 480w, https://blog.yylin.io/openshift/security-zones/img/03_hu_733dc7c7b445acd6.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="118"
@@ -84,7 +82,7 @@ data-flex-basis="284px"
 &lt;p>&lt;img src="https://blog.yylin.io/openshift/security-zones/img/05.png"
 width="1241"
 height="576"
-srcset="https://blog.yylin.io/openshift/security-zones/img/05_hu12081917762074244046.png 480w, https://blog.yylin.io/openshift/security-zones/img/05_hu3162526130392197028.png 1024w"
+srcset="https://blog.yylin.io/openshift/security-zones/img/05_hu_a1f20e1e6fe80e64.png 480w, https://blog.yylin.io/openshift/security-zones/img/05_hu_13eef0ad05f876a3.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="215"
@@ -96,7 +94,7 @@ data-flex-basis="517px"
 &lt;img src="https://blog.yylin.io/openshift/security-zones/img/06.png"
 width="1115"
 height="513"
-srcset="https://blog.yylin.io/openshift/security-zones/img/06_hu15029002741421235044.png 480w, https://blog.yylin.io/openshift/security-zones/img/06_hu14683882953504960702.png 1024w"
+srcset="https://blog.yylin.io/openshift/security-zones/img/06_hu_80ef615a8fca7301.png 480w, https://blog.yylin.io/openshift/security-zones/img/06_hu_528d9ff53c29bf99.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="217"
@@ -116,7 +114,7 @@ data-flex-basis="521px"
 &lt;p>&lt;img src="https://blog.yylin.io/openshift/security-zones/img/07.png"
 width="1229"
 height="508"
-srcset="https://blog.yylin.io/openshift/security-zones/img/07_hu11390477539653530451.png 480w, https://blog.yylin.io/openshift/security-zones/img/07_hu11762155746729295131.png 1024w"
+srcset="https://blog.yylin.io/openshift/security-zones/img/07_hu_9bbda833146c2992.png 480w, https://blog.yylin.io/openshift/security-zones/img/07_hu_269f319e95c04fe5.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="241"
@@ -271,8 +269,7 @@ data-flex-basis="580px"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>這邊指定對外 External Service 使用的網域&lt;/p>
-&lt;/blockquote>
+&lt;p>這邊指定對外 External Service 使用的網域&lt;/p>&lt;/blockquote>
 &lt;ul>
 &lt;li>設置 ingress&lt;/li>
 &lt;/ul>
@@ -288,7 +285,7 @@ data-flex-basis="580px"
 &lt;/h3>&lt;p>&lt;img src="https://blog.yylin.io/openshift/security-zones/img/04.png"
 width="341"
 height="459"
-srcset="https://blog.yylin.io/openshift/security-zones/img/04_hu9238314658002136427.png 480w, https://blog.yylin.io/openshift/security-zones/img/04_hu9377696025785315388.png 1024w"
+srcset="https://blog.yylin.io/openshift/security-zones/img/04_hu_5eacb07cdb5a46ec.png 480w, https://blog.yylin.io/openshift/security-zones/img/04_hu_f07f885e0546370b.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="74"
@@ -299,8 +296,7 @@ data-flex-basis="178px"
 &lt;li>新增對外服務的 Ingress Controller - service 如何配置&lt;/li>
 &lt;/ul>
 &lt;blockquote>
-&lt;p>設定 Ingress Controller - service 指定 service 服務可以進入&lt;/p>
-&lt;/blockquote>
+&lt;p>設定 Ingress Controller - service 指定 service 服務可以進入&lt;/p>&lt;/blockquote>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
@@ -346,8 +342,7 @@ data-flex-basis="178px"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>檢查 Ingress Controller - default 限制不讓 service 服務進入&lt;/p>
-&lt;/blockquote>
+&lt;p>檢查 Ingress Controller - default 限制不讓 service 服務進入&lt;/p>&lt;/blockquote>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
@@ -426,8 +421,7 @@ data-flex-basis="178px"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>在創建 route 的時候需指定 hostname，不可使用預設名稱，此部分跳過說明，可以看到如以下 route domain 為 &lt;code>.service.ocp4.lab.example.com&lt;/code> 結尾。&lt;/p>
-&lt;/blockquote>
+&lt;p>在創建 route 的時候需指定 hostname，不可使用預設名稱，此部分跳過說明，可以看到如以下 route domain 為 &lt;code>.service.ocp4.lab.example.com&lt;/code> 結尾。&lt;/p>&lt;/blockquote>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
@@ -441,8 +435,7 @@ data-flex-basis="178px"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>#指定 label 讓 rails-postgresql-example 的 route 地址與設置解析&lt;/p>
-&lt;/blockquote>
+&lt;p>#指定 label 讓 rails-postgresql-example 的 route 地址與設置解析&lt;/p>&lt;/blockquote>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
@@ -466,7 +459,7 @@ data-flex-basis="178px"
 &lt;/div>&lt;p>&lt;img src="https://blog.yylin.io/openshift/security-zones/img/08.png"
 width="1127"
 height="647"
-srcset="https://blog.yylin.io/openshift/security-zones/img/08_hu6618985776594160761.png 480w, https://blog.yylin.io/openshift/security-zones/img/08_hu904911471564483782.png 1024w"
+srcset="https://blog.yylin.io/openshift/security-zones/img/08_hu_8fb93c4d4fb608ea.png 480w, https://blog.yylin.io/openshift/security-zones/img/08_hu_1e195720a5e2a6fd.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="174"
@@ -486,7 +479,7 @@ data-flex-basis="418px"
 &lt;/div>&lt;p>&lt;img src="https://blog.yylin.io/openshift/security-zones/img/09.png"
 width="1187"
 height="683"
-srcset="https://blog.yylin.io/openshift/security-zones/img/09_hu12550618811519662957.png 480w, https://blog.yylin.io/openshift/security-zones/img/09_hu6084098090646236718.png 1024w"
+srcset="https://blog.yylin.io/openshift/security-zones/img/09_hu_6a92edb76216eab8.png 480w, https://blog.yylin.io/openshift/security-zones/img/09_hu_f1c54286df2344c2.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="173"
@@ -497,20 +490,17 @@ data-flex-basis="417px"
 &lt;li>本次無討論 Application, External Service 資源放置問題&lt;/li>
 &lt;/ul>
 &lt;blockquote>
-&lt;p>是否建議將屬於 DMZ 區的 Pod 放置於屬於 DMZ 上配置的 Worker Node 節點？&lt;/p>
-&lt;/blockquote>
+&lt;p>是否建議將屬於 DMZ 區的 Pod 放置於屬於 DMZ 上配置的 Worker Node 節點？&lt;/p>&lt;/blockquote>
 &lt;ul>
 &lt;li>因架構規劃，需多新增一個 Ingress 對外提供服務，就有憑證管理需求&lt;/li>
 &lt;/ul>
 &lt;blockquote>
-&lt;p>此部分要採用 OpenShift 本身簽署的部分還是客戶額外簽署的部分？&lt;/p>
-&lt;/blockquote>
+&lt;p>此部分要採用 OpenShift 本身簽署的部分還是客戶額外簽署的部分？&lt;/p>&lt;/blockquote>
 &lt;ul>
 &lt;li>DNS 跨網段拆分問題&lt;/li>
 &lt;/ul>
 &lt;blockquote>
-&lt;p>若各網段有獨立DNS服務器架構情境？&lt;/p>
-&lt;/blockquote>
+&lt;p>若各網段有獨立DNS服務器架構情境？&lt;/p>&lt;/blockquote>
 &lt;h2 id="reference">Reference
 &lt;/h2>&lt;ul>
 &lt;li>&lt;a class="link" href="https://rcarrata.com/openshift/ocp4_route_sharding/" target="_blank" rel="noopener"
@@ -550,8 +540,7 @@ data-flex-basis="417px"
 &lt;/table>
 &lt;blockquote>
 &lt;p>Requirements for installing OpenShift on a single node - &lt;a class="link" href="https://docs.openshift.com/container-platform/4.10/installing/installing_sno/install-sno-preparing-to-install-sno.html#install-sno-requirements-for-installing-on-a-single-node_install-sno-preparing" target="_blank" rel="noopener"
->minimum resource requirements&lt;/a>&lt;/p>
-&lt;/blockquote>
+>minimum resource requirements&lt;/a>&lt;/p>&lt;/blockquote>
 &lt;h3 id="dns-設定">&lt;strong>DNS 設定&lt;/strong>
 &lt;/h3>&lt;table>
 &lt;thead>
@@ -627,8 +616,7 @@ loading="lazy"
 &lt;/li>
 &lt;/ul>
 &lt;blockquote>
-&lt;p>此部分範例設置為 192.168.10.0/24 網段&lt;/p>
-&lt;/blockquote>
+&lt;p>此部分範例設置為 192.168.10.0/24 網段&lt;/p>&lt;/blockquote>
 &lt;p>&lt;img src="https://i.imgur.com/SgPDkJ5.png"
 loading="lazy"
 >
@@ -686,8 +674,7 @@ loading="lazy"
 &lt;/li>
 &lt;/ul>
 &lt;blockquote>
-&lt;p>單節點安裝時間大約 40 分鐘&lt;/p>
-&lt;/blockquote>
+&lt;p>單節點安裝時間大約 40 分鐘&lt;/p>&lt;/blockquote>
 &lt;p>&lt;img src="https://i.imgur.com/rE8Ykdw.png"
 loading="lazy"
 >&lt;/p>
@@ -843,8 +830,7 @@ loading="lazy"
 &lt;li>安裝更新 quay 憑證&lt;/li>
 &lt;/ul>
 &lt;blockquote>
-&lt;p>mirror registry 預設會配置好 CA 憑證，請將 PEM 文件格式添加憑證到系統中信任的 CA 列表中，這邊複製到 /usr/share/pki/ca-trust-source/anchors/ 目錄中&lt;/p>
-&lt;/blockquote>
+&lt;p>mirror registry 預設會配置好 CA 憑證，請將 PEM 文件格式添加憑證到系統中信任的 CA 列表中，這邊複製到 /usr/share/pki/ca-trust-source/anchors/ 目錄中&lt;/p>&lt;/blockquote>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
@@ -854,8 +840,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>更新系統範圍的信任儲存配置，請使用 update-ca-trust 命令：&lt;/p>
-&lt;/blockquote>
+&lt;p>更新系統範圍的信任儲存配置，請使用 update-ca-trust 命令：&lt;/p>&lt;/blockquote>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
@@ -1065,8 +1050,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;blockquote>
 &lt;p>&lt;a class="link" href="https://docs.openshift.com/container-platform/4.10/openshift_images/samples-operator-alt-registry.html" target="_blank" rel="noopener"
->更多配置請參考 Mirroring the OpenShift Container Platform image repository&lt;/a>&lt;/p>
-&lt;/blockquote>
+>更多配置請參考 Mirroring the OpenShift Container Platform image repository&lt;/a>&lt;/p>&lt;/blockquote>
 &lt;h2 id="mirror-後結果">mirror 後結果
 &lt;/h2>&lt;p>&lt;img src="https://i.imgur.com/APzRuyc.png"
 loading="lazy"
@@ -1100,8 +1084,7 @@ loading="lazy"
 &lt;li>驗證叢集所有節點更新權限是否正常。&lt;/li>
 &lt;/ol>
 &lt;blockquote>
-&lt;p>補充 - NVIDIA GPU Operator 安裝會部署幾個 Pod 服務，用於管理和啟用 GPU 在 OpenShift 中運作。其中一些 Pod 需要 OpenShift 使用一些非 Universal Base Image (UBI) 默認授權的 Images。必須在 OpenShift Cluster 中啟用信任的授權 Images，來啟動 NVIDIA GPU 驅動程式的容器運行。&lt;/p>
-&lt;/blockquote>
+&lt;p>補充 - NVIDIA GPU Operator 安裝會部署幾個 Pod 服務，用於管理和啟用 GPU 在 OpenShift 中運作。其中一些 Pod 需要 OpenShift 使用一些非 Universal Base Image (UBI) 默認授權的 Images。必須在 OpenShift Cluster 中啟用信任的授權 Images，來啟動 NVIDIA GPU 驅動程式的容器運行。&lt;/p>&lt;/blockquote>
 &lt;p>[1] &lt;a class="link" href="https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/steps-overview.html#entitlement-free-supported-versions" target="_blank" rel="noopener"
 >https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/steps-overview.html#entitlement-free-supported-versions&lt;/a>
 [2] &lt;a class="link" href="https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/cluster-entitlement.html#enabling-a-cluster-wide-entitlemenent" target="_blank" rel="noopener"
@@ -1507,8 +1490,7 @@ loading="lazy"
 &lt;/div></description></item><item><title>OpenShift Intsall Troubleshooting Notes</title><link>https://blog.yylin.io/openshift/install-troubleshooting/</link><pubDate>Wed, 29 Sep 2021 00:53:25 +0800</pubDate><guid>https://blog.yylin.io/openshift/install-troubleshooting/</guid><description>&lt;p>延伸上一篇 OCP UPI 部署(&lt;a class="link" href="https://blog.yylin.io/p/openshift-4.8.x-upi-install-on-bare-metal" target="_blank" rel="noopener"
 >OpenShift 4.8.x UPI install on Bare metal&lt;/a>)過程遇到問題彙整。&lt;/p>
 &lt;blockquote>
-&lt;p>備註: 由於資源有限情況下，透過單一伺服器(主機)透過 VM 模擬實際節點硬體資源環境，這邊主要透過檢測與除錯，來確保 OpenShift 部署成功。&lt;/p>
-&lt;/blockquote>
+&lt;p>備註: 由於資源有限情況下，透過單一伺服器(主機)透過 VM 模擬實際節點硬體資源環境，這邊主要透過檢測與除錯，來確保 OpenShift 部署成功。&lt;/p>&lt;/blockquote>
 &lt;h2 id="部署常見問題整理-持續更新">部署常見問題整理 (持續更新)
 &lt;/h2>&lt;h3 id="超時等待-bootstrap-節點啟動">超時等待 &lt;code>bootstrap&lt;/code> 節點啟動
 &lt;/h3>&lt;ul>
@@ -1527,8 +1509,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>此情境請透過收集&lt;code>bootstrap&lt;/code> 節點日誌，來確認環境問題&lt;/p>
-&lt;/blockquote>
+&lt;p>此情境請透過收集&lt;code>bootstrap&lt;/code> 節點日誌，來確認環境問題&lt;/p>&lt;/blockquote>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
@@ -1553,8 +1534,7 @@ loading="lazy"
 &lt;li>安裝自己跟建立自己的 cluster(Pod)&lt;/li>
 &lt;li>引導安裝 master x 3&lt;/li>
 &lt;li>master bootstrap 全部安裝完，然後下 wait for complete 確認最終才可移除 bootstrap node&lt;/li>
-&lt;/ol>
-&lt;/blockquote>
+&lt;/ol>&lt;/blockquote>
 &lt;h4 id="reference">Reference:
 &lt;/h4>&lt;ul>
 &lt;li>&lt;a class="link" href="https://docs.openshift.com/container-platform/4.8/installing/installing-troubleshooting.html#installation-bootstrap-gather_installing-troubleshooting" target="_blank" rel="noopener"
@@ -1567,8 +1547,7 @@ loading="lazy"
 &lt;li>大部分 master 無法建置情境，通常可能會有原因是硬碟速度問題(硬碟壞軌)&lt;/li>
 &lt;/ul>
 &lt;blockquote>
-&lt;p>造成叢集有時候部署成功有時候會失敗的情況&lt;/p>
-&lt;/blockquote>
+&lt;p>造成叢集有時候部署成功有時候會失敗的情況&lt;/p>&lt;/blockquote>
 &lt;p>透過簡單運行 &lt;code>fio&lt;/code> 來測試 etcd benchamrk performance 檢測&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -1614,8 +1593,7 @@ loading="lazy"
 &lt;p>[註記] 由於硬體環境資源有限，本實驗是透過 &lt;a class="link" href="https://pve.proxmox.com/wiki/Main_Page" target="_blank" rel="noopener"
 >&lt;code>Proxmox Environment&lt;/code>&lt;/a> 單一伺服器節點來模擬部署 &lt;code>OpenShift&lt;/code> 叢集，並依據官網配置建議硬體需求(Server sizing)資源。
 [共同撰寫編輯]: &lt;a class="link" href="https://k2r2bai.com/" target="_blank" rel="noopener"
->Kyle Bai&lt;/a>&lt;/p>
-&lt;/blockquote>
+>Kyle Bai&lt;/a>&lt;/p>&lt;/blockquote>
 &lt;h2 id="部署版本說明">部署版本說明：
 &lt;/h2>&lt;ul>
 &lt;li>Proxmox Environment v6.1-7
@@ -1663,8 +1641,7 @@ loading="lazy"
 &lt;/li>
 &lt;/ul>
 &lt;blockquote>
-&lt;p>過程中會透過 &lt;code>wget&lt;/code> 下載，因此在有網路狀況下，不需要預先下載。&lt;/p>
-&lt;/blockquote>
+&lt;p>過程中會透過 &lt;code>wget&lt;/code> 下載，因此在有網路狀況下，不需要預先下載。&lt;/p>&lt;/blockquote>
 &lt;hr>
 &lt;h3 id="network-and-hosts-info">Network and Hosts Info
 &lt;/h3>&lt;ul>
@@ -1749,20 +1726,17 @@ loading="lazy"
 &lt;p>這裡為了方便測試，將 PXE / HAProxy / DNS Server 等都放在 bastion上。
 [額外參考資訊]各元件節點最小資源可參考 &lt;a class="link" href="https://docs.openshift.com/container-platform/4.8/installing/installing_platform_agnostic/installing-platform-agnostic.html#minimum-resource-requirements_installing-platform-agnostic" target="_blank" rel="noopener"
 >Minimum resource requirements&lt;/a>。
-請先透過 &lt;code>Proxmox Environment&lt;/code> 開啟對應 &lt;code>hardware&lt;/code> VM。&lt;/p>
-&lt;/blockquote>
+請先透過 &lt;code>Proxmox Environment&lt;/code> 開啟對應 &lt;code>hardware&lt;/code> VM。&lt;/p>&lt;/blockquote>
 &lt;h4 id="補充-network-說明">補充 Network 說明
 &lt;/h4>&lt;blockquote>
 &lt;p>其中 &lt;code>OpenShift subnet CIDR&lt;/code> 請修改為自己當前 Proxmox Environment 網路配置)
 &lt;img src="https://i.imgur.com/8UnOcXL.jpg"
 loading="lazy"
->&lt;/p>
-&lt;/blockquote>
+>&lt;/p>&lt;/blockquote>
 &lt;h2 id="bastion">Bastion
 &lt;/h2>&lt;p>透過 Live CD 安裝 RHEL 8 版本(或使用 CentOS 8)，並確保網路設定正確。&lt;/p>
 &lt;blockquote>
-&lt;p>RHEL 需要確認 &lt;code>subscription&lt;/code> 驗證，確保 repo 源可正常取得&lt;/p>
-&lt;/blockquote>
+&lt;p>RHEL 需要確認 &lt;code>subscription&lt;/code> 驗證，確保 repo 源可正常取得&lt;/p>&lt;/blockquote>
 &lt;h3 id="事前準備-1">事前準備
 &lt;/h3>&lt;p>進入 &lt;code>bastion&lt;/code> 機器，安裝 jq 與 wget 工具等:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
@@ -1803,8 +1777,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>這邊方便測試實驗，所以直接關閉。&lt;/p>
-&lt;/blockquote>
+&lt;p>這邊方便測試實驗，所以直接關閉。&lt;/p>&lt;/blockquote>
 &lt;p>建立 SSH Keys:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -1815,8 +1788,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>這邊方便測試，以 root 來建立。&lt;/p>
-&lt;/blockquote>
+&lt;p>這邊方便測試，以 root 來建立。&lt;/p>&lt;/blockquote>
 &lt;p>導入以下環境變數:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -1869,8 +1841,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;blockquote>
 &lt;p>這部分也可參考 OCP 官網安裝 &lt;a class="link" href="https://docs.openshift.com/container-platform/4.8/installing/installing_bare_metal/installing-bare-metal.html#installation-dns-user-infra-example_installing-bare-metal" target="_blank" rel="noopener"
->BIND&lt;/a>，關於不同 &lt;code>DNS Server&lt;/code> 相關配置方法，會額外補充於後續文章介紹。&lt;/p>
-&lt;/blockquote>
+>BIND&lt;/a>，關於不同 &lt;code>DNS Server&lt;/code> 相關配置方法，會額外補充於後續文章介紹。&lt;/p>&lt;/blockquote>
 &lt;p>編輯 &lt;code>/etc/dnsmasq.d/openshift.conf&lt;/code> 設定檔，以設定 A Record 與 PTR:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -2022,8 +1993,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>請驗證填寫自己對應的 &lt;code>ip address&lt;/code>&lt;/p>
-&lt;/blockquote>
+&lt;p>請驗證填寫自己對應的 &lt;code>ip address&lt;/code>&lt;/p>&lt;/blockquote>
 &lt;h3 id="安裝與設定-http-server">安裝與設定 HTTP Server
 &lt;/h3>&lt;p>安裝與設定 httpd 套件:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
@@ -2046,8 +2016,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>因為 80 是 Ingress-http 使用，除非將 HAProxy 拆成不同節點或用 External LB。&lt;/p>
-&lt;/blockquote>
+&lt;p>因為 80 是 Ingress-http 使用，除非將 HAProxy 拆成不同節點或用 External LB。&lt;/p>&lt;/blockquote>
 &lt;p>啟動 httpd 服務:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -2127,8 +2096,7 @@ loading="lazy"
 &lt;li>Proxy 設定，參考 &lt;a class="link" href="https://docs.openshift.com/container-platform/4.8/installing/installing_bare_metal/installing-restricted-networks-bare-metal.html#installation-configure-proxy_installing-restricted-networks-bare-metal" target="_blank" rel="noopener"
 >Configuring the cluster-wide proxy during installation&lt;/a>。&lt;/li>
 &lt;li>SSH Key 請自行於 &lt;code>bastion&lt;/code> 創建填寫，這裡不多做說明&lt;/li>
-&lt;/ul>
-&lt;/blockquote>
+&lt;/ul>&lt;/blockquote>
 &lt;p>產生 manifests 相關檔案:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -2246,8 +2214,7 @@ loading="lazy"
 loading="lazy"
 >&lt;/p>
 &lt;blockquote>
-&lt;p>確保網卡 IP address 設定為 &lt;code>xx.xx.xx.xx/24&lt;/code>，若沒有設定 Network mask 的話，就會用預設 &lt;code>xx.xx.xx.xx/8&lt;/code>。&lt;/p>
-&lt;/blockquote>
+&lt;p>確保網卡 IP address 設定為 &lt;code>xx.xx.xx.xx/24&lt;/code>，若沒有設定 Network mask 的話，就會用預設 &lt;code>xx.xx.xx.xx/8&lt;/code>。&lt;/p>&lt;/blockquote>
 &lt;p>重新啟動網卡設定:&lt;/p>
 &lt;p>&lt;img src="https://i.imgur.com/KMvs0UZ.png"
 loading="lazy"
@@ -2262,8 +2229,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>確認網路與 DNS 都能夠被解析到。&lt;/p>
-&lt;/blockquote>
+&lt;p>確認網路與 DNS 都能夠被解析到。&lt;/p>&lt;/blockquote>
 &lt;p>確認沒問題後，執行以下指令來安裝 RHCOS，並設定為 Bootstrap 節點:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -2286,8 +2252,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>安裝沒問題後，重新啟動機器，並將 CD-ROM 移除。&lt;/p>
-&lt;/blockquote>
+&lt;p>安裝沒問題後，重新啟動機器，並將 CD-ROM 移除。&lt;/p>&lt;/blockquote>
 &lt;p>Bootstrap 開啟完成後，回到 &lt;code>bastion&lt;/code> 節點執行以下指令來檢查部署狀況:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -2389,8 +2354,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>安裝沒問題後，重新啟動機器，並將 CD-ROM 移除。&lt;/p>
-&lt;/blockquote>
+&lt;p>安裝沒問題後，重新啟動機器，並將 CD-ROM 移除。&lt;/p>&lt;/blockquote>
 &lt;p>Masters 都開啟完成後，回到 &lt;code>bastion&lt;/code> 節點執行以下指令來檢查部署狀況:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -2472,8 +2436,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>網路參考 Bootstrap 設定流程。&lt;/p>
-&lt;/blockquote>
+&lt;p>網路參考 Bootstrap 設定流程。&lt;/p>&lt;/blockquote>
 &lt;p>確認沒問題後，執行以下指令來安裝 RHCOS，並設定為 Workers &amp;amp; Infras 節點:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -2498,8 +2461,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>安裝沒問題後，重新啟動機器，並將 CD-ROM 移除。&lt;/p>
-&lt;/blockquote>
+&lt;p>安裝沒問題後，重新啟動機器，並將 CD-ROM 移除。&lt;/p>&lt;/blockquote>
 &lt;p>Workers &amp;amp; Infras 都開啟完成後，就可以回到 &lt;code>bastion&lt;/code> 節點執行以下指令來檢查部署狀況:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -2542,8 +2504,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>出現 &lt;code>DEBUG&lt;/code> 即可往下操作，因為這部分會需要下載 Images 會比較久&lt;/p>
-&lt;/blockquote>
+&lt;p>出現 &lt;code>DEBUG&lt;/code> 即可往下操作，因為這部分會需要下載 Images 會比較久&lt;/p>&lt;/blockquote>
 &lt;p>開啟一個新的 Terminal，在 &lt;code>bastion&lt;/code> 節點 Approve workers CSR:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -2694,8 +2655,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>這時 Infra 節點會重新啟動。&lt;/p>
-&lt;/blockquote>
+&lt;p>這時 Infra 節點會重新啟動。&lt;/p>&lt;/blockquote>
 &lt;p>搬移 Router 元件至 Infra 節點上:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">

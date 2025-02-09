@@ -112,8 +112,7 @@ loading="lazy"
 &lt;li>安裝更新 quay 憑證&lt;/li>
 &lt;/ul>
 &lt;blockquote>
-&lt;p>mirror registry 預設會配置好 CA 憑證，請將 PEM 文件格式添加憑證到系統中信任的 CA 列表中，這邊複製到 /usr/share/pki/ca-trust-source/anchors/ 目錄中&lt;/p>
-&lt;/blockquote>
+&lt;p>mirror registry 預設會配置好 CA 憑證，請將 PEM 文件格式添加憑證到系統中信任的 CA 列表中，這邊複製到 /usr/share/pki/ca-trust-source/anchors/ 目錄中&lt;/p>&lt;/blockquote>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
@@ -123,8 +122,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>更新系統範圍的信任儲存配置，請使用 update-ca-trust 命令：&lt;/p>
-&lt;/blockquote>
+&lt;p>更新系統範圍的信任儲存配置，請使用 update-ca-trust 命令：&lt;/p>&lt;/blockquote>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
@@ -334,8 +332,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;blockquote>
 &lt;p>&lt;a class="link" href="https://docs.openshift.com/container-platform/4.10/openshift_images/samples-operator-alt-registry.html" target="_blank" rel="noopener"
->更多配置請參考 Mirroring the OpenShift Container Platform image repository&lt;/a>&lt;/p>
-&lt;/blockquote>
+>更多配置請參考 Mirroring the OpenShift Container Platform image repository&lt;/a>&lt;/p>&lt;/blockquote>
 &lt;h2 id="mirror-後結果">mirror 後結果
 &lt;/h2>&lt;p>&lt;img src="https://i.imgur.com/APzRuyc.png"
 loading="lazy"

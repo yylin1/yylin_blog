@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Troubleshooting on Frank's Notes</title><link>https://blog.yylin.io/tags/troubleshooting/</link><description>Recent content in Troubleshooting on Frank's Notes</description><generator>Hugo -- gohugo.io</generator><language>zh-tw</language><lastBuildDate>Wed, 29 Sep 2021 00:53:25 +0800</lastBuildDate><atom:link href="https://blog.yylin.io/tags/troubleshooting/index.xml" rel="self" type="application/rss+xml"/><item><title>OpenShift Intsall Troubleshooting Notes</title><link>https://blog.yylin.io/openshift/install-troubleshooting/</link><pubDate>Wed, 29 Sep 2021 00:53:25 +0800</pubDate><guid>https://blog.yylin.io/openshift/install-troubleshooting/</guid><description>&lt;p>延伸上一篇 OCP UPI 部署(&lt;a class="link" href="https://blog.yylin.io/p/openshift-4.8.x-upi-install-on-bare-metal" target="_blank" rel="noopener"
 >OpenShift 4.8.x UPI install on Bare metal&lt;/a>)過程遇到問題彙整。&lt;/p>
 &lt;blockquote>
-&lt;p>備註: 由於資源有限情況下，透過單一伺服器(主機)透過 VM 模擬實際節點硬體資源環境，這邊主要透過檢測與除錯，來確保 OpenShift 部署成功。&lt;/p>
-&lt;/blockquote>
+&lt;p>備註: 由於資源有限情況下，透過單一伺服器(主機)透過 VM 模擬實際節點硬體資源環境，這邊主要透過檢測與除錯，來確保 OpenShift 部署成功。&lt;/p>&lt;/blockquote>
 &lt;h2 id="部署常見問題整理-持續更新">部署常見問題整理 (持續更新)
 &lt;/h2>&lt;h3 id="超時等待-bootstrap-節點啟動">超時等待 &lt;code>bootstrap&lt;/code> 節點啟動
 &lt;/h3>&lt;ul>
@@ -21,8 +20,7 @@
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>此情境請透過收集&lt;code>bootstrap&lt;/code> 節點日誌，來確認環境問題&lt;/p>
-&lt;/blockquote>
+&lt;p>此情境請透過收集&lt;code>bootstrap&lt;/code> 節點日誌，來確認環境問題&lt;/p>&lt;/blockquote>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
@@ -47,8 +45,7 @@
 &lt;li>安裝自己跟建立自己的 cluster(Pod)&lt;/li>
 &lt;li>引導安裝 master x 3&lt;/li>
 &lt;li>master bootstrap 全部安裝完，然後下 wait for complete 確認最終才可移除 bootstrap node&lt;/li>
-&lt;/ol>
-&lt;/blockquote>
+&lt;/ol>&lt;/blockquote>
 &lt;h4 id="reference">Reference:
 &lt;/h4>&lt;ul>
 &lt;li>&lt;a class="link" href="https://docs.openshift.com/container-platform/4.8/installing/installing-troubleshooting.html#installation-bootstrap-gather_installing-troubleshooting" target="_blank" rel="noopener"
@@ -61,8 +58,7 @@
 &lt;li>大部分 master 無法建置情境，通常可能會有原因是硬碟速度問題(硬碟壞軌)&lt;/li>
 &lt;/ul>
 &lt;blockquote>
-&lt;p>造成叢集有時候部署成功有時候會失敗的情況&lt;/p>
-&lt;/blockquote>
+&lt;p>造成叢集有時候部署成功有時候會失敗的情況&lt;/p>&lt;/blockquote>
 &lt;p>透過簡單運行 &lt;code>fio&lt;/code> 來測試 etcd benchamrk performance 檢測&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">

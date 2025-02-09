@@ -136,8 +136,7 @@
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>注意：只有 OpenShift 叢集註冊到 Argo CD 或 GitOps Operator instance，而不是其他 Kubernetes 叢集。&lt;/p>
-&lt;/blockquote>
+&lt;p>注意：只有 OpenShift 叢集註冊到 Argo CD 或 GitOps Operator instance，而不是其他 Kubernetes 叢集。&lt;/p>&lt;/blockquote>
 &lt;ul>
 &lt;li>創建一個 GitOpsCluster 自定義資源以將託管叢集從放置註冊到 Argo CD 或 OpenShift GitOps 的指定的 instance：&lt;/li>
 &lt;/ul>
@@ -284,8 +283,7 @@ loading="lazy"
 loading="lazy"
 >&lt;/p>
 &lt;blockquote>
-&lt;p>注意：檢查指向在早期步驟中定義的不同託管 Cluster 的目標。&lt;/p>
-&lt;/blockquote>
+&lt;p>注意：檢查指向在早期步驟中定義的不同託管 Cluster 的目標。&lt;/p>&lt;/blockquote>
 &lt;ul>
 &lt;li>每個 Argo ApplicationSet 管理每個託管 Cluster 中的Application ，例如在 BM-Germany Cluster 中部署 BGDK Application 。&lt;/li>
 &lt;/ul>

@@ -2,8 +2,7 @@
 &lt;p>[註記] 由於硬體環境資源有限，本實驗是透過 &lt;a class="link" href="https://pve.proxmox.com/wiki/Main_Page" target="_blank" rel="noopener"
 >&lt;code>Proxmox Environment&lt;/code>&lt;/a> 單一伺服器節點來模擬部署 &lt;code>OpenShift&lt;/code> 叢集，並依據官網配置建議硬體需求(Server sizing)資源。
 [共同撰寫編輯]: &lt;a class="link" href="https://k2r2bai.com/" target="_blank" rel="noopener"
->Kyle Bai&lt;/a>&lt;/p>
-&lt;/blockquote>
+>Kyle Bai&lt;/a>&lt;/p>&lt;/blockquote>
 &lt;h2 id="部署版本說明">部署版本說明：
 &lt;/h2>&lt;ul>
 &lt;li>Proxmox Environment v6.1-7
@@ -51,8 +50,7 @@
 &lt;/li>
 &lt;/ul>
 &lt;blockquote>
-&lt;p>過程中會透過 &lt;code>wget&lt;/code> 下載，因此在有網路狀況下，不需要預先下載。&lt;/p>
-&lt;/blockquote>
+&lt;p>過程中會透過 &lt;code>wget&lt;/code> 下載，因此在有網路狀況下，不需要預先下載。&lt;/p>&lt;/blockquote>
 &lt;hr>
 &lt;h3 id="network-and-hosts-info">Network and Hosts Info
 &lt;/h3>&lt;ul>
@@ -137,20 +135,17 @@
 &lt;p>這裡為了方便測試，將 PXE / HAProxy / DNS Server 等都放在 bastion上。
 [額外參考資訊]各元件節點最小資源可參考 &lt;a class="link" href="https://docs.openshift.com/container-platform/4.8/installing/installing_platform_agnostic/installing-platform-agnostic.html#minimum-resource-requirements_installing-platform-agnostic" target="_blank" rel="noopener"
 >Minimum resource requirements&lt;/a>。
-請先透過 &lt;code>Proxmox Environment&lt;/code> 開啟對應 &lt;code>hardware&lt;/code> VM。&lt;/p>
-&lt;/blockquote>
+請先透過 &lt;code>Proxmox Environment&lt;/code> 開啟對應 &lt;code>hardware&lt;/code> VM。&lt;/p>&lt;/blockquote>
 &lt;h4 id="補充-network-說明">補充 Network 說明
 &lt;/h4>&lt;blockquote>
 &lt;p>其中 &lt;code>OpenShift subnet CIDR&lt;/code> 請修改為自己當前 Proxmox Environment 網路配置)
 &lt;img src="https://i.imgur.com/8UnOcXL.jpg"
 loading="lazy"
->&lt;/p>
-&lt;/blockquote>
+>&lt;/p>&lt;/blockquote>
 &lt;h2 id="bastion">Bastion
 &lt;/h2>&lt;p>透過 Live CD 安裝 RHEL 8 版本(或使用 CentOS 8)，並確保網路設定正確。&lt;/p>
 &lt;blockquote>
-&lt;p>RHEL 需要確認 &lt;code>subscription&lt;/code> 驗證，確保 repo 源可正常取得&lt;/p>
-&lt;/blockquote>
+&lt;p>RHEL 需要確認 &lt;code>subscription&lt;/code> 驗證，確保 repo 源可正常取得&lt;/p>&lt;/blockquote>
 &lt;h3 id="事前準備-1">事前準備
 &lt;/h3>&lt;p>進入 &lt;code>bastion&lt;/code> 機器，安裝 jq 與 wget 工具等:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
@@ -191,8 +186,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>這邊方便測試實驗，所以直接關閉。&lt;/p>
-&lt;/blockquote>
+&lt;p>這邊方便測試實驗，所以直接關閉。&lt;/p>&lt;/blockquote>
 &lt;p>建立 SSH Keys:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -203,8 +197,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>這邊方便測試，以 root 來建立。&lt;/p>
-&lt;/blockquote>
+&lt;p>這邊方便測試，以 root 來建立。&lt;/p>&lt;/blockquote>
 &lt;p>導入以下環境變數:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -257,8 +250,7 @@ loading="lazy"
 &lt;/div>
 &lt;/div>&lt;blockquote>
 &lt;p>這部分也可參考 OCP 官網安裝 &lt;a class="link" href="https://docs.openshift.com/container-platform/4.8/installing/installing_bare_metal/installing-bare-metal.html#installation-dns-user-infra-example_installing-bare-metal" target="_blank" rel="noopener"
->BIND&lt;/a>，關於不同 &lt;code>DNS Server&lt;/code> 相關配置方法，會額外補充於後續文章介紹。&lt;/p>
-&lt;/blockquote>
+>BIND&lt;/a>，關於不同 &lt;code>DNS Server&lt;/code> 相關配置方法，會額外補充於後續文章介紹。&lt;/p>&lt;/blockquote>
 &lt;p>編輯 &lt;code>/etc/dnsmasq.d/openshift.conf&lt;/code> 設定檔，以設定 A Record 與 PTR:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -410,8 +402,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>請驗證填寫自己對應的 &lt;code>ip address&lt;/code>&lt;/p>
-&lt;/blockquote>
+&lt;p>請驗證填寫自己對應的 &lt;code>ip address&lt;/code>&lt;/p>&lt;/blockquote>
 &lt;h3 id="安裝與設定-http-server">安裝與設定 HTTP Server
 &lt;/h3>&lt;p>安裝與設定 httpd 套件:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
@@ -434,8 +425,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>因為 80 是 Ingress-http 使用，除非將 HAProxy 拆成不同節點或用 External LB。&lt;/p>
-&lt;/blockquote>
+&lt;p>因為 80 是 Ingress-http 使用，除非將 HAProxy 拆成不同節點或用 External LB。&lt;/p>&lt;/blockquote>
 &lt;p>啟動 httpd 服務:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -515,8 +505,7 @@ loading="lazy"
 &lt;li>Proxy 設定，參考 &lt;a class="link" href="https://docs.openshift.com/container-platform/4.8/installing/installing_bare_metal/installing-restricted-networks-bare-metal.html#installation-configure-proxy_installing-restricted-networks-bare-metal" target="_blank" rel="noopener"
 >Configuring the cluster-wide proxy during installation&lt;/a>。&lt;/li>
 &lt;li>SSH Key 請自行於 &lt;code>bastion&lt;/code> 創建填寫，這裡不多做說明&lt;/li>
-&lt;/ul>
-&lt;/blockquote>
+&lt;/ul>&lt;/blockquote>
 &lt;p>產生 manifests 相關檔案:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -634,8 +623,7 @@ loading="lazy"
 loading="lazy"
 >&lt;/p>
 &lt;blockquote>
-&lt;p>確保網卡 IP address 設定為 &lt;code>xx.xx.xx.xx/24&lt;/code>，若沒有設定 Network mask 的話，就會用預設 &lt;code>xx.xx.xx.xx/8&lt;/code>。&lt;/p>
-&lt;/blockquote>
+&lt;p>確保網卡 IP address 設定為 &lt;code>xx.xx.xx.xx/24&lt;/code>，若沒有設定 Network mask 的話，就會用預設 &lt;code>xx.xx.xx.xx/8&lt;/code>。&lt;/p>&lt;/blockquote>
 &lt;p>重新啟動網卡設定:&lt;/p>
 &lt;p>&lt;img src="https://i.imgur.com/KMvs0UZ.png"
 loading="lazy"
@@ -650,8 +638,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>確認網路與 DNS 都能夠被解析到。&lt;/p>
-&lt;/blockquote>
+&lt;p>確認網路與 DNS 都能夠被解析到。&lt;/p>&lt;/blockquote>
 &lt;p>確認沒問題後，執行以下指令來安裝 RHCOS，並設定為 Bootstrap 節點:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -674,8 +661,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>安裝沒問題後，重新啟動機器，並將 CD-ROM 移除。&lt;/p>
-&lt;/blockquote>
+&lt;p>安裝沒問題後，重新啟動機器，並將 CD-ROM 移除。&lt;/p>&lt;/blockquote>
 &lt;p>Bootstrap 開啟完成後，回到 &lt;code>bastion&lt;/code> 節點執行以下指令來檢查部署狀況:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -777,8 +763,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>安裝沒問題後，重新啟動機器，並將 CD-ROM 移除。&lt;/p>
-&lt;/blockquote>
+&lt;p>安裝沒問題後，重新啟動機器，並將 CD-ROM 移除。&lt;/p>&lt;/blockquote>
 &lt;p>Masters 都開啟完成後，回到 &lt;code>bastion&lt;/code> 節點執行以下指令來檢查部署狀況:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -860,8 +845,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>網路參考 Bootstrap 設定流程。&lt;/p>
-&lt;/blockquote>
+&lt;p>網路參考 Bootstrap 設定流程。&lt;/p>&lt;/blockquote>
 &lt;p>確認沒問題後，執行以下指令來安裝 RHCOS，並設定為 Workers &amp;amp; Infras 節點:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -886,8 +870,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>安裝沒問題後，重新啟動機器，並將 CD-ROM 移除。&lt;/p>
-&lt;/blockquote>
+&lt;p>安裝沒問題後，重新啟動機器，並將 CD-ROM 移除。&lt;/p>&lt;/blockquote>
 &lt;p>Workers &amp;amp; Infras 都開啟完成後，就可以回到 &lt;code>bastion&lt;/code> 節點執行以下指令來檢查部署狀況:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -930,8 +913,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>出現 &lt;code>DEBUG&lt;/code> 即可往下操作，因為這部分會需要下載 Images 會比較久&lt;/p>
-&lt;/blockquote>
+&lt;p>出現 &lt;code>DEBUG&lt;/code> 即可往下操作，因為這部分會需要下載 Images 會比較久&lt;/p>&lt;/blockquote>
 &lt;p>開啟一個新的 Terminal，在 &lt;code>bastion&lt;/code> 節點 Approve workers CSR:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -1082,8 +1064,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>這時 Infra 節點會重新啟動。&lt;/p>
-&lt;/blockquote>
+&lt;p>這時 Infra 節點會重新啟動。&lt;/p>&lt;/blockquote>
 &lt;p>搬移 Router 元件至 Infra 節點上:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">

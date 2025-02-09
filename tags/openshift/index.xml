@@ -5,8 +5,7 @@
 &lt;li>將提供外部應用程式/服務，隔離於對外 Security Zones 區域，並限制只允許特定的 Router 使用某些特定功能(例如：單純網站服務運行, APP 後端服務)等。&lt;/li>
 &lt;/ol>
 &lt;blockquote>
-&lt;p>主要目的：希望透過 Shard Route 負責，在不同 IP 地址，讓內部和外部使用者訪問不同的 Router 以達到 DMZ 與 OCP 訪問限制，來減少成本下能更加提升叢集運作安全性。&lt;/p>
-&lt;/blockquote>
+&lt;p>主要目的：希望透過 Shard Route 負責，在不同 IP 地址，讓內部和外部使用者訪問不同的 Router 以達到 DMZ 與 OCP 訪問限制，來減少成本下能更加提升叢集運作安全性。&lt;/p>&lt;/blockquote>
 &lt;p>補充 - 更多場景情境，歡迎大家可以參考 Luis Javier Arizmendi Alonso 分享針對 OpenShift 於 Security Zones 系列文章 - &lt;a class="link" href="https://itnext.io/security-zones-in-openshift-worker-nodes-part-i-introduction-4f85762962d7" target="_blank" rel="noopener"
 >Security Zones in OpenShift worker nodes&lt;/a>&lt;/p>
 &lt;h2 id="探討--相關架構考量">/探討/ 相關架構考量
@@ -20,7 +19,7 @@
 &lt;p>&lt;img src="https://blog.yylin.io/openshift/security-zones/img/01.png"
 width="516"
 height="593"
-srcset="https://blog.yylin.io/openshift/security-zones/img/01_hu17717156163958657040.png 480w, https://blog.yylin.io/openshift/security-zones/img/01_hu13722892488924364584.png 1024w"
+srcset="https://blog.yylin.io/openshift/security-zones/img/01_hu_f63e44c3af5b4051.png 480w, https://blog.yylin.io/openshift/security-zones/img/01_hu_328a53746f328cfc.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="87"
@@ -28,13 +27,12 @@ data-flex-basis="208px"
 >&lt;/p>
 &lt;p>所以或許另一種選擇，透過有一個大型的 OpenShift「單一叢集跨網段架構」能使更容易維運管理及同時達到提高安全性架構，就是此次架構分享重點。&lt;/p>
 &lt;blockquote>
-&lt;p>這邊還是一個重點，取決於你對於當前環境規劃與架構設計需求而做選擇&lt;/p>
-&lt;/blockquote>
+&lt;p>這邊還是一個重點，取決於你對於當前環境規劃與架構設計需求而做選擇&lt;/p>&lt;/blockquote>
 &lt;h3 id="以下針對本文主要概述-單一叢集跨網段架構-架構圖做細部探討">以下針對本文主要概述「 &lt;code>單一叢集跨網段架構&lt;/code> 」架構圖做細部探討：
 &lt;/h3>&lt;p>&lt;img src="https://blog.yylin.io/openshift/security-zones/img/02.png"
 width="517"
 height="496"
-srcset="https://blog.yylin.io/openshift/security-zones/img/02_hu364572726551734261.png 480w, https://blog.yylin.io/openshift/security-zones/img/02_hu8746873943565230045.png 1024w"
+srcset="https://blog.yylin.io/openshift/security-zones/img/02_hu_26b8f5ae9bb8768e.png 480w, https://blog.yylin.io/openshift/security-zones/img/02_hu_9b09187bef60eda7.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="104"
@@ -59,7 +57,7 @@ data-flex-basis="250px"
 &lt;p>&lt;img src="https://blog.yylin.io/openshift/security-zones/img/03.png"
 width="905"
 height="764"
-srcset="https://blog.yylin.io/openshift/security-zones/img/03_hu16588230497044231463.png 480w, https://blog.yylin.io/openshift/security-zones/img/03_hu2528234340468498705.png 1024w"
+srcset="https://blog.yylin.io/openshift/security-zones/img/03_hu_f4f2efdff5130ec2.png 480w, https://blog.yylin.io/openshift/security-zones/img/03_hu_733dc7c7b445acd6.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="118"
@@ -84,7 +82,7 @@ data-flex-basis="284px"
 &lt;p>&lt;img src="https://blog.yylin.io/openshift/security-zones/img/05.png"
 width="1241"
 height="576"
-srcset="https://blog.yylin.io/openshift/security-zones/img/05_hu12081917762074244046.png 480w, https://blog.yylin.io/openshift/security-zones/img/05_hu3162526130392197028.png 1024w"
+srcset="https://blog.yylin.io/openshift/security-zones/img/05_hu_a1f20e1e6fe80e64.png 480w, https://blog.yylin.io/openshift/security-zones/img/05_hu_13eef0ad05f876a3.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="215"
@@ -96,7 +94,7 @@ data-flex-basis="517px"
 &lt;img src="https://blog.yylin.io/openshift/security-zones/img/06.png"
 width="1115"
 height="513"
-srcset="https://blog.yylin.io/openshift/security-zones/img/06_hu15029002741421235044.png 480w, https://blog.yylin.io/openshift/security-zones/img/06_hu14683882953504960702.png 1024w"
+srcset="https://blog.yylin.io/openshift/security-zones/img/06_hu_80ef615a8fca7301.png 480w, https://blog.yylin.io/openshift/security-zones/img/06_hu_528d9ff53c29bf99.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="217"
@@ -116,7 +114,7 @@ data-flex-basis="521px"
 &lt;p>&lt;img src="https://blog.yylin.io/openshift/security-zones/img/07.png"
 width="1229"
 height="508"
-srcset="https://blog.yylin.io/openshift/security-zones/img/07_hu11390477539653530451.png 480w, https://blog.yylin.io/openshift/security-zones/img/07_hu11762155746729295131.png 1024w"
+srcset="https://blog.yylin.io/openshift/security-zones/img/07_hu_9bbda833146c2992.png 480w, https://blog.yylin.io/openshift/security-zones/img/07_hu_269f319e95c04fe5.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="241"
@@ -271,8 +269,7 @@ data-flex-basis="580px"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>這邊指定對外 External Service 使用的網域&lt;/p>
-&lt;/blockquote>
+&lt;p>這邊指定對外 External Service 使用的網域&lt;/p>&lt;/blockquote>
 &lt;ul>
 &lt;li>設置 ingress&lt;/li>
 &lt;/ul>
@@ -288,7 +285,7 @@ data-flex-basis="580px"
 &lt;/h3>&lt;p>&lt;img src="https://blog.yylin.io/openshift/security-zones/img/04.png"
 width="341"
 height="459"
-srcset="https://blog.yylin.io/openshift/security-zones/img/04_hu9238314658002136427.png 480w, https://blog.yylin.io/openshift/security-zones/img/04_hu9377696025785315388.png 1024w"
+srcset="https://blog.yylin.io/openshift/security-zones/img/04_hu_5eacb07cdb5a46ec.png 480w, https://blog.yylin.io/openshift/security-zones/img/04_hu_f07f885e0546370b.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="74"
@@ -299,8 +296,7 @@ data-flex-basis="178px"
 &lt;li>新增對外服務的 Ingress Controller - service 如何配置&lt;/li>
 &lt;/ul>
 &lt;blockquote>
-&lt;p>設定 Ingress Controller - service 指定 service 服務可以進入&lt;/p>
-&lt;/blockquote>
+&lt;p>設定 Ingress Controller - service 指定 service 服務可以進入&lt;/p>&lt;/blockquote>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
@@ -346,8 +342,7 @@ data-flex-basis="178px"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>檢查 Ingress Controller - default 限制不讓 service 服務進入&lt;/p>
-&lt;/blockquote>
+&lt;p>檢查 Ingress Controller - default 限制不讓 service 服務進入&lt;/p>&lt;/blockquote>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
@@ -426,8 +421,7 @@ data-flex-basis="178px"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>在創建 route 的時候需指定 hostname，不可使用預設名稱，此部分跳過說明，可以看到如以下 route domain 為 &lt;code>.service.ocp4.lab.example.com&lt;/code> 結尾。&lt;/p>
-&lt;/blockquote>
+&lt;p>在創建 route 的時候需指定 hostname，不可使用預設名稱，此部分跳過說明，可以看到如以下 route domain 為 &lt;code>.service.ocp4.lab.example.com&lt;/code> 結尾。&lt;/p>&lt;/blockquote>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
@@ -441,8 +435,7 @@ data-flex-basis="178px"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>#指定 label 讓 rails-postgresql-example 的 route 地址與設置解析&lt;/p>
-&lt;/blockquote>
+&lt;p>#指定 label 讓 rails-postgresql-example 的 route 地址與設置解析&lt;/p>&lt;/blockquote>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
@@ -466,7 +459,7 @@ data-flex-basis="178px"
 &lt;/div>&lt;p>&lt;img src="https://blog.yylin.io/openshift/security-zones/img/08.png"
 width="1127"
 height="647"
-srcset="https://blog.yylin.io/openshift/security-zones/img/08_hu6618985776594160761.png 480w, https://blog.yylin.io/openshift/security-zones/img/08_hu904911471564483782.png 1024w"
+srcset="https://blog.yylin.io/openshift/security-zones/img/08_hu_8fb93c4d4fb608ea.png 480w, https://blog.yylin.io/openshift/security-zones/img/08_hu_1e195720a5e2a6fd.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="174"
@@ -486,7 +479,7 @@ data-flex-basis="418px"
 &lt;/div>&lt;p>&lt;img src="https://blog.yylin.io/openshift/security-zones/img/09.png"
 width="1187"
 height="683"
-srcset="https://blog.yylin.io/openshift/security-zones/img/09_hu12550618811519662957.png 480w, https://blog.yylin.io/openshift/security-zones/img/09_hu6084098090646236718.png 1024w"
+srcset="https://blog.yylin.io/openshift/security-zones/img/09_hu_6a92edb76216eab8.png 480w, https://blog.yylin.io/openshift/security-zones/img/09_hu_f1c54286df2344c2.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="173"
@@ -497,20 +490,17 @@ data-flex-basis="417px"
 &lt;li>本次無討論 Application, External Service 資源放置問題&lt;/li>
 &lt;/ul>
 &lt;blockquote>
-&lt;p>是否建議將屬於 DMZ 區的 Pod 放置於屬於 DMZ 上配置的 Worker Node 節點？&lt;/p>
-&lt;/blockquote>
+&lt;p>是否建議將屬於 DMZ 區的 Pod 放置於屬於 DMZ 上配置的 Worker Node 節點？&lt;/p>&lt;/blockquote>
 &lt;ul>
 &lt;li>因架構規劃，需多新增一個 Ingress 對外提供服務，就有憑證管理需求&lt;/li>
 &lt;/ul>
 &lt;blockquote>
-&lt;p>此部分要採用 OpenShift 本身簽署的部分還是客戶額外簽署的部分？&lt;/p>
-&lt;/blockquote>
+&lt;p>此部分要採用 OpenShift 本身簽署的部分還是客戶額外簽署的部分？&lt;/p>&lt;/blockquote>
 &lt;ul>
 &lt;li>DNS 跨網段拆分問題&lt;/li>
 &lt;/ul>
 &lt;blockquote>
-&lt;p>若各網段有獨立DNS服務器架構情境？&lt;/p>
-&lt;/blockquote>
+&lt;p>若各網段有獨立DNS服務器架構情境？&lt;/p>&lt;/blockquote>
 &lt;h2 id="reference">Reference
 &lt;/h2>&lt;ul>
 &lt;li>&lt;a class="link" href="https://rcarrata.com/openshift/ocp4_route_sharding/" target="_blank" rel="noopener"
@@ -550,8 +540,7 @@ data-flex-basis="417px"
 &lt;/table>
 &lt;blockquote>
 &lt;p>Requirements for installing OpenShift on a single node - &lt;a class="link" href="https://docs.openshift.com/container-platform/4.10/installing/installing_sno/install-sno-preparing-to-install-sno.html#install-sno-requirements-for-installing-on-a-single-node_install-sno-preparing" target="_blank" rel="noopener"
->minimum resource requirements&lt;/a>&lt;/p>
-&lt;/blockquote>
+>minimum resource requirements&lt;/a>&lt;/p>&lt;/blockquote>
 &lt;h3 id="dns-設定">&lt;strong>DNS 設定&lt;/strong>
 &lt;/h3>&lt;table>
 &lt;thead>
@@ -627,8 +616,7 @@ loading="lazy"
 &lt;/li>
 &lt;/ul>
 &lt;blockquote>
-&lt;p>此部分範例設置為 192.168.10.0/24 網段&lt;/p>
-&lt;/blockquote>
+&lt;p>此部分範例設置為 192.168.10.0/24 網段&lt;/p>&lt;/blockquote>
 &lt;p>&lt;img src="https://i.imgur.com/SgPDkJ5.png"
 loading="lazy"
 >
@@ -686,8 +674,7 @@ loading="lazy"
 &lt;/li>
 &lt;/ul>
 &lt;blockquote>
-&lt;p>單節點安裝時間大約 40 分鐘&lt;/p>
-&lt;/blockquote>
+&lt;p>單節點安裝時間大約 40 分鐘&lt;/p>&lt;/blockquote>
 &lt;p>&lt;img src="https://i.imgur.com/rE8Ykdw.png"
 loading="lazy"
 >&lt;/p>
@@ -974,8 +961,7 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>注意：只有 OpenShift 叢集註冊到 Argo CD 或 GitOps Operator instance，而不是其他 Kubernetes 叢集。&lt;/p>
-&lt;/blockquote>
+&lt;p>注意：只有 OpenShift 叢集註冊到 Argo CD 或 GitOps Operator instance，而不是其他 Kubernetes 叢集。&lt;/p>&lt;/blockquote>
 &lt;ul>
 &lt;li>創建一個 GitOpsCluster 自定義資源以將託管叢集從放置註冊到 Argo CD 或 OpenShift GitOps 的指定的 instance：&lt;/li>
 &lt;/ul>
@@ -1122,8 +1108,7 @@ loading="lazy"
 loading="lazy"
 >&lt;/p>
 &lt;blockquote>
-&lt;p>注意：檢查指向在早期步驟中定義的不同託管 Cluster 的目標。&lt;/p>
-&lt;/blockquote>
+&lt;p>注意：檢查指向在早期步驟中定義的不同託管 Cluster 的目標。&lt;/p>&lt;/blockquote>
 &lt;ul>
 &lt;li>每個 Argo ApplicationSet 管理每個託管 Cluster 中的Application ，例如在 BM-Germany Cluster 中部署 BGDK Application 。&lt;/li>
 &lt;/ul>
@@ -1825,8 +1810,7 @@ loading="lazy"
 &lt;li>驗證叢集所有節點更新權限是否正常。&lt;/li>
 &lt;/ol>
 &lt;blockquote>
-&lt;p>補充 - NVIDIA GPU Operator 安裝會部署幾個 Pod 服務，用於管理和啟用 GPU 在 OpenShift 中運作。其中一些 Pod 需要 OpenShift 使用一些非 Universal Base Image (UBI) 默認授權的 Images。必須在 OpenShift Cluster 中啟用信任的授權 Images，來啟動 NVIDIA GPU 驅動程式的容器運行。&lt;/p>
-&lt;/blockquote>
+&lt;p>補充 - NVIDIA GPU Operator 安裝會部署幾個 Pod 服務，用於管理和啟用 GPU 在 OpenShift 中運作。其中一些 Pod 需要 OpenShift 使用一些非 Universal Base Image (UBI) 默認授權的 Images。必須在 OpenShift Cluster 中啟用信任的授權 Images，來啟動 NVIDIA GPU 驅動程式的容器運行。&lt;/p>&lt;/blockquote>
 &lt;p>[1] &lt;a class="link" href="https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/steps-overview.html#entitlement-free-supported-versions" target="_blank" rel="noopener"
 >https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/steps-overview.html#entitlement-free-supported-versions&lt;/a>
 [2] &lt;a class="link" href="https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/cluster-entitlement.html#enabling-a-cluster-wide-entitlemenent" target="_blank" rel="noopener"
@@ -2235,8 +2219,7 @@ loading="lazy"
 &lt;/h3>&lt;blockquote>
 &lt;p>開始配置 AWS 服務前，使用者必須以 &lt;a class="link" href="https://docs.openshift.com/rosa/rosa_getting_started/rosa-aws-prereqs.html#rosa-policy-iam_prerequisites" target="_blank" rel="noopener"
 >IAM&lt;/a> 身份(參考文件: &lt;a class="link" href="https://docs.openshift.com/rosa/rosa_getting_started/rosa-aws-prereqs.html#rosa-customer-requirements_prerequisites" target="_blank" rel="noopener"
->Customer Requirements&lt;/a>)&lt;/p>
-&lt;/blockquote>
+>Customer Requirements&lt;/a>)&lt;/p>&lt;/blockquote>
 &lt;p>登入 AWS 管理控制台，確認當前使用者&lt;code>已啟用 Red Hat OpenShift&lt;/code>服務
 &lt;img src="https://i.imgur.com/lbpYgG6.png"
 loading="lazy"
@@ -2295,8 +2278,7 @@ loading="lazy"
 &lt;p>創建 Red Hat 帳號
 OpenShift 由 Red Hat SaaS 提供，因此您需要創建一個 Red Hat 帳戶。
 &lt;a class="link" href="https://cloud.redhat.com/" target="_blank" rel="noopener"
->https://cloud.redhat.com/&lt;/a>&lt;/p>
-&lt;/blockquote>
+>https://cloud.redhat.com/&lt;/a>&lt;/p>&lt;/blockquote>
 &lt;hr>
 &lt;h2 id="透過-rosa-指令檢查憑證與資源配置">透過 ROSA 指令檢查憑證與資源配置
 &lt;/h2>&lt;p>這邊以 Red Hat 部署 ROSA 文件部署為主 (&lt;a class="link" href="https://docs.openshift.com/rosa/rosa_getting_started/rosa-creating-cluster.html" target="_blank" rel="noopener"
@@ -2316,8 +2298,7 @@ OpenShift 由 Red Hat SaaS 提供，因此您需要創建一個 Red Hat 帳戶�
 &lt;/div>
 &lt;/div>&lt;p>第一次登錄時，你會需要一個 Token 來登入你的 Red Hat 帳號&lt;/p>
 &lt;blockquote>
-&lt;p>需要創建一組 Red Hat 帳號&lt;/p>
-&lt;/blockquote>
+&lt;p>需要創建一組 Red Hat 帳號&lt;/p>&lt;/blockquote>
 &lt;p>確認登入訊息：&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -2331,8 +2312,7 @@ OpenShift 由 Red Hat SaaS 提供，因此您需要創建一個 Red Hat 帳戶�
 &lt;/div>
 &lt;/div>&lt;p>配置完成後可以透過 &lt;code>rosa whoami&lt;/code> 來檢查你目前所有登錄憑證與狀態&lt;/p>
 &lt;blockquote>
-&lt;p>Red Hat 帳號會附帶 OpenShift Cluster Manager (OCM) 資訊與你的 AWS 帳戶顯示。&lt;/p>
-&lt;/blockquote>
+&lt;p>Red Hat 帳號會附帶 OpenShift Cluster Manager (OCM) 資訊與你的 AWS 帳戶顯示。&lt;/p>&lt;/blockquote>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
@@ -2403,8 +2383,7 @@ OpenShift 由 Red Hat SaaS 提供，因此您需要創建一個 Red Hat 帳戶�
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>需要驗證當前環境，是否已經登入 AWS並確認透過&lt;code>rosa init&lt;/code> 來確認 AWS 資源與配置是否能足夠創建 OpenShift&lt;/p>
-&lt;/blockquote>
+&lt;p>需要驗證當前環境，是否已經登入 AWS並確認透過&lt;code>rosa init&lt;/code> 來確認 AWS 資源與配置是否能足夠創建 OpenShift&lt;/p>&lt;/blockquote>
 &lt;h3 id="申請-aws-帳戶配額">申請 AWS 帳戶配額
 &lt;/h3>&lt;p>在配置 ROSA 時作為預先檢查 &lt;code>$ rosa verify quota --region=${cluster}&lt;/code> 叢集名稱。如果您在剛剛部署但未執行任何操作的帳戶上運行它，您將收到錯誤訊息 EC2 &lt;code>quota 配置不足&lt;/code>。&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">

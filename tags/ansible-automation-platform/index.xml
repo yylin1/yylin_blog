@@ -19,7 +19,7 @@
 &lt;p>&lt;img src="https://blog.yylin.io/ansible/twgcb/img/01.png"
 width="961"
 height="723"
-srcset="https://blog.yylin.io/ansible/twgcb/img/01_hu10376596329273281823.png 480w, https://blog.yylin.io/ansible/twgcb/img/01_hu7084706771291277340.png 1024w"
+srcset="https://blog.yylin.io/ansible/twgcb/img/01_hu_5323c84c792af787.png 480w, https://blog.yylin.io/ansible/twgcb/img/01_hu_bd85821505a37638.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="132"
@@ -27,7 +27,7 @@ data-flex-basis="319px"
 > &lt;img src="https://blog.yylin.io/ansible/twgcb/img/02.png"
 width="963"
 height="722"
-srcset="https://blog.yylin.io/ansible/twgcb/img/02_hu11041581734252056760.png 480w, https://blog.yylin.io/ansible/twgcb/img/02_hu17689836911224263188.png 1024w"
+srcset="https://blog.yylin.io/ansible/twgcb/img/02_hu_bfe024b339d50310.png 480w, https://blog.yylin.io/ansible/twgcb/img/02_hu_9fe4e28f1fd030cc.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="133"
@@ -37,8 +37,7 @@ data-flex-basis="320px"
 &lt;/ul>
 &lt;blockquote>
 &lt;p>擷取至 &lt;a class="link" href="https://download.nccst.nat.gov.tw/attachfilegcb/TWGCB-01-008_Red%20Hat%20Enterprise%20Linux%208%E6%94%BF%E5%BA%9C%E7%B5%84%E6%85%8B%E5%9F%BA%E6%BA%96%E8%AA%AA%E6%98%8E%E6%96%87%E4%BB%B6v1.0_1100924.pdf" target="_blank" rel="noopener"
->TWGCB-01-008(v1.0)-政府組態基準說明文件&lt;/a>&lt;/p>
-&lt;/blockquote>
+>TWGCB-01-008(v1.0)-政府組態基準說明文件&lt;/a>&lt;/p>&lt;/blockquote>
 &lt;h2 id="-引入前思考-">/ 引入前思考 /
 &lt;/h2>&lt;p>各企業為確保有所本能符合政府合規檢核基準，企業資安維運團隊的將要思考，如何採用規範及當前大量基礎設施，包含三大面向：&lt;/p>
 &lt;ol>
@@ -54,8 +53,7 @@ data-flex-basis="320px"
 &lt;/ul>
 &lt;blockquote>
 &lt;p>補充: 其他作業系統，若要評估資安條例及防範規範檢查，可以參考&lt;a class="link" href="https://blog.yylin.io/ansible/openscap/" target="_blank" rel="noopener"
->實現 OpenSCAP 自動化邏輯檢查&lt;/a> 文章介紹的 OpenSCAP 工具。&lt;/p>
-&lt;/blockquote>
+>實現 OpenSCAP 自動化邏輯檢查&lt;/a> 文章介紹的 OpenSCAP 工具。&lt;/p>&lt;/blockquote>
 &lt;h2 id="-透過-ansible-結合-twgcb-實現系統自動化合規檢查-">/ 透過 Ansible 結合 TWGCB 實現系統「自動化」合規檢查 /
 &lt;/h2>&lt;p>上述文中釐清企業狀態與需求，這邊列出當前引入 TWGCB 政府組態規範目標：&lt;/p>
 &lt;ul>
@@ -75,7 +73,7 @@ data-flex-basis="320px"
 &lt;p>&lt;img src="https://blog.yylin.io/ansible/twgcb/img/03.png"
 width="1289"
 height="850"
-srcset="https://blog.yylin.io/ansible/twgcb/img/03_hu11453233817986676866.png 480w, https://blog.yylin.io/ansible/twgcb/img/03_hu11337611815281116846.png 1024w"
+srcset="https://blog.yylin.io/ansible/twgcb/img/03_hu_cd1e251f1109f80e.png 480w, https://blog.yylin.io/ansible/twgcb/img/03_hu_ea62fcdf91c512b1.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="151"
@@ -96,7 +94,7 @@ data-flex-basis="363px"
 &lt;p>&lt;img src="https://blog.yylin.io/ansible/twgcb/img/04.png"
 width="1207"
 height="643"
-srcset="https://blog.yylin.io/ansible/twgcb/img/04_hu16304466249840666709.png 480w, https://blog.yylin.io/ansible/twgcb/img/04_hu9168871375261575034.png 1024w"
+srcset="https://blog.yylin.io/ansible/twgcb/img/04_hu_3b30880b4becd4de.png 480w, https://blog.yylin.io/ansible/twgcb/img/04_hu_9ec56ffb6fd758ff.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="187"
@@ -112,15 +110,14 @@ data-flex-basis="450px"
 &lt;p>&lt;img src="https://blog.yylin.io/ansible/twgcb/img/05.png"
 width="1912"
 height="934"
-srcset="https://blog.yylin.io/ansible/twgcb/img/05_hu7697216096884647341.png 480w, https://blog.yylin.io/ansible/twgcb/img/05_hu15099071333303989943.png 1024w"
+srcset="https://blog.yylin.io/ansible/twgcb/img/05_hu_74d0f0bf8a751bfe.png 480w, https://blog.yylin.io/ansible/twgcb/img/05_hu_f3da423d688c100b.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="204"
 data-flex-basis="491px"
 >&lt;/p>
 &lt;blockquote>
-&lt;p>實際展示影片 (請打開&lt;code>字幕&lt;/code>)&lt;/p>
-&lt;/blockquote>
+&lt;p>實際展示影片 (請打開&lt;code>字幕&lt;/code>)&lt;/p>&lt;/blockquote>
 &lt;div class="video-wrapper">
 &lt;iframe loading="lazy"
 src="https://www.youtube.com/embed/XPlo67IBtQw"
@@ -131,8 +128,7 @@ title="YouTube Video"
 &lt;/div>
 &lt;h3 id="補充展示---運行修復-rhel-主機設備規則並比對先前報表結果">補充展示 - 運行修復 RHEL 主機設備規則並比對先前報表結果
 &lt;/h3>&lt;blockquote>
-&lt;p>邏輯檢查修復部分，需要經過企業內部資安團隊與當前服務不衝突情況下評估，並藉由專業顧問團隊同時釐清需求，才會進行大量修復情境，以下展示以「網路設定」條例做修復展示。&lt;/p>
-&lt;/blockquote>
+&lt;p>邏輯檢查修復部分，需要經過企業內部資安團隊與當前服務不衝突情況下評估，並藉由專業顧問團隊同時釐清需求，才會進行大量修復情境，以下展示以「網路設定」條例做修復展示。&lt;/p>&lt;/blockquote>
 &lt;ul>
 &lt;li>
 &lt;p>作業目的：
@@ -147,7 +143,7 @@ title="YouTube Video"
 &lt;p>&lt;img src="https://blog.yylin.io/ansible/twgcb/img/06.png"
 width="1034"
 height="523"
-srcset="https://blog.yylin.io/ansible/twgcb/img/06_hu14191314222633371221.png 480w, https://blog.yylin.io/ansible/twgcb/img/06_hu14890416031261046585.png 1024w"
+srcset="https://blog.yylin.io/ansible/twgcb/img/06_hu_448649732a0f4e0e.png 480w, https://blog.yylin.io/ansible/twgcb/img/06_hu_a83c1d5c4a4ca96c.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="197"
@@ -157,15 +153,14 @@ data-flex-basis="474px"
 &lt;img src="https://blog.yylin.io/ansible/twgcb/img/07.png"
 width="1083"
 height="515"
-srcset="https://blog.yylin.io/ansible/twgcb/img/07_hu9588483461229734595.png 480w, https://blog.yylin.io/ansible/twgcb/img/07_hu3006203337796922519.png 1024w"
+srcset="https://blog.yylin.io/ansible/twgcb/img/07_hu_b20f53b7499446c1.png 480w, https://blog.yylin.io/ansible/twgcb/img/07_hu_71b972a9f5b417b1.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="210"
 data-flex-basis="504px"
 >&lt;/p>
 &lt;blockquote>
-&lt;p>實際展示影片 (請打開&lt;code>字幕&lt;/code>)&lt;/p>
-&lt;/blockquote>
+&lt;p>實際展示影片 (請打開&lt;code>字幕&lt;/code>)&lt;/p>&lt;/blockquote>
 &lt;div class="video-wrapper">
 &lt;iframe loading="lazy"
 src="https://www.youtube.com/embed/qTY95XwzhzQ"
@@ -195,8 +190,7 @@ title="YouTube Video"
 &lt;/ol>
 &lt;blockquote>
 &lt;p>可以參考實作詳細資訊步驟-參考： &lt;a class="link" href="https://github.com/ansible/workshops/tree/devel/exercises/ansible_smart_mgmt" target="_blank" rel="noopener"
->Automated Smart Management Workshop&lt;/a>&lt;/p>
-&lt;/blockquote>
+>Automated Smart Management Workshop&lt;/a>&lt;/p>&lt;/blockquote>
 &lt;div class="video-wrapper">
 &lt;iframe loading="lazy"
 src="https://www.youtube.com/embed/UXs_XmyAqJE"
@@ -214,8 +208,7 @@ title="YouTube Video"
 &lt;li>產生報告&lt;/li>
 &lt;/ul>
 &lt;blockquote>
-&lt;p>重覆以上輪迴直到某主機的安全強度到一可接受的程度)&lt;/p>
-&lt;/blockquote>
+&lt;p>重覆以上輪迴直到某主機的安全強度到一可接受的程度)&lt;/p>&lt;/blockquote>
 &lt;p>更棒的是，這四階段可以通通 Ansible Automation Platform 自動化，用來解決下面的資安老問題：&lt;/p>
 &lt;ul>
 &lt;li>做資安檢測費時費工&lt;/li>

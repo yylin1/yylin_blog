@@ -136,8 +136,7 @@
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>注意：只有 OpenShift 叢集註冊到 Argo CD 或 GitOps Operator instance，而不是其他 Kubernetes 叢集。&lt;/p>
-&lt;/blockquote>
+&lt;p>注意：只有 OpenShift 叢集註冊到 Argo CD 或 GitOps Operator instance，而不是其他 Kubernetes 叢集。&lt;/p>&lt;/blockquote>
 &lt;ul>
 &lt;li>創建一個 GitOpsCluster 自定義資源以將託管叢集從放置註冊到 Argo CD 或 OpenShift GitOps 的指定的 instance：&lt;/li>
 &lt;/ul>
@@ -284,8 +283,7 @@ loading="lazy"
 loading="lazy"
 >&lt;/p>
 &lt;blockquote>
-&lt;p>注意：檢查指向在早期步驟中定義的不同託管 Cluster 的目標。&lt;/p>
-&lt;/blockquote>
+&lt;p>注意：檢查指向在早期步驟中定義的不同託管 Cluster 的目標。&lt;/p>&lt;/blockquote>
 &lt;ul>
 &lt;li>每個 Argo ApplicationSet 管理每個託管 Cluster 中的Application ，例如在 BM-Germany Cluster 中部署 BGDK Application 。&lt;/li>
 &lt;/ul>
@@ -685,8 +683,7 @@ loading="lazy"
 &lt;/h3>&lt;blockquote>
 &lt;p>開始配置 AWS 服務前，使用者必須以 &lt;a class="link" href="https://docs.openshift.com/rosa/rosa_getting_started/rosa-aws-prereqs.html#rosa-policy-iam_prerequisites" target="_blank" rel="noopener"
 >IAM&lt;/a> 身份(參考文件: &lt;a class="link" href="https://docs.openshift.com/rosa/rosa_getting_started/rosa-aws-prereqs.html#rosa-customer-requirements_prerequisites" target="_blank" rel="noopener"
->Customer Requirements&lt;/a>)&lt;/p>
-&lt;/blockquote>
+>Customer Requirements&lt;/a>)&lt;/p>&lt;/blockquote>
 &lt;p>登入 AWS 管理控制台，確認當前使用者&lt;code>已啟用 Red Hat OpenShift&lt;/code>服務
 &lt;img src="https://i.imgur.com/lbpYgG6.png"
 loading="lazy"
@@ -745,8 +742,7 @@ loading="lazy"
 &lt;p>創建 Red Hat 帳號
 OpenShift 由 Red Hat SaaS 提供，因此您需要創建一個 Red Hat 帳戶。
 &lt;a class="link" href="https://cloud.redhat.com/" target="_blank" rel="noopener"
->https://cloud.redhat.com/&lt;/a>&lt;/p>
-&lt;/blockquote>
+>https://cloud.redhat.com/&lt;/a>&lt;/p>&lt;/blockquote>
 &lt;hr>
 &lt;h2 id="透過-rosa-指令檢查憑證與資源配置">透過 ROSA 指令檢查憑證與資源配置
 &lt;/h2>&lt;p>這邊以 Red Hat 部署 ROSA 文件部署為主 (&lt;a class="link" href="https://docs.openshift.com/rosa/rosa_getting_started/rosa-creating-cluster.html" target="_blank" rel="noopener"
@@ -766,8 +762,7 @@ OpenShift 由 Red Hat SaaS 提供，因此您需要創建一個 Red Hat 帳戶�
 &lt;/div>
 &lt;/div>&lt;p>第一次登錄時，你會需要一個 Token 來登入你的 Red Hat 帳號&lt;/p>
 &lt;blockquote>
-&lt;p>需要創建一組 Red Hat 帳號&lt;/p>
-&lt;/blockquote>
+&lt;p>需要創建一組 Red Hat 帳號&lt;/p>&lt;/blockquote>
 &lt;p>確認登入訊息：&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -781,8 +776,7 @@ OpenShift 由 Red Hat SaaS 提供，因此您需要創建一個 Red Hat 帳戶�
 &lt;/div>
 &lt;/div>&lt;p>配置完成後可以透過 &lt;code>rosa whoami&lt;/code> 來檢查你目前所有登錄憑證與狀態&lt;/p>
 &lt;blockquote>
-&lt;p>Red Hat 帳號會附帶 OpenShift Cluster Manager (OCM) 資訊與你的 AWS 帳戶顯示。&lt;/p>
-&lt;/blockquote>
+&lt;p>Red Hat 帳號會附帶 OpenShift Cluster Manager (OCM) 資訊與你的 AWS 帳戶顯示。&lt;/p>&lt;/blockquote>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
@@ -853,8 +847,7 @@ OpenShift 由 Red Hat SaaS 提供，因此您需要創建一個 Red Hat 帳戶�
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>需要驗證當前環境，是否已經登入 AWS並確認透過&lt;code>rosa init&lt;/code> 來確認 AWS 資源與配置是否能足夠創建 OpenShift&lt;/p>
-&lt;/blockquote>
+&lt;p>需要驗證當前環境，是否已經登入 AWS並確認透過&lt;code>rosa init&lt;/code> 來確認 AWS 資源與配置是否能足夠創建 OpenShift&lt;/p>&lt;/blockquote>
 &lt;h3 id="申請-aws-帳戶配額">申請 AWS 帳戶配額
 &lt;/h3>&lt;p>在配置 ROSA 時作為預先檢查 &lt;code>$ rosa verify quota --region=${cluster}&lt;/code> 叢集名稱。如果您在剛剛部署但未執行任何操作的帳戶上運行它，您將收到錯誤訊息 EC2 &lt;code>quota 配置不足&lt;/code>。&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
